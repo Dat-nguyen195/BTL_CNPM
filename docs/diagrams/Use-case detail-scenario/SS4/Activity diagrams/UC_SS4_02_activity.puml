@@ -1,8 +1,6 @@
 @startuml UC_SS4_02_activity
+!include ../../../common.puml
 title UC_SS4_02 - Báo cáo sự cố phương tiện (Sơ đồ hoạt động)
-skinparam shadowing false
-skinparam ActivityBackgroundColor #E8F1FB
-skinparam ActivityBorderColor #2B6CB0
 
 |Nhân viên vận hành / Kỹ thuật viên|
 start
@@ -13,12 +11,12 @@ start
 |Hệ thống|
 :Tải danh sách xe hiện có tại Hub đã chọn;
 
-if (Hub có phương tiện?) then (không)
+if (Hub có phương tiện?) then ([không])
   :Hiển thị "Không có xe tại Hub này";
   :Vô hiệu hóa nút "Gửi báo cáo sự cố";
   |Nhân viên vận hành / Kỹ thuật viên|
   stop
-else (có)
+else ([có])
 endif
 
 |Nhân viên vận hành / Kỹ thuật viên|
@@ -38,19 +36,19 @@ end note
 :Lưu bản ghi vào st.session_state["incident_log"]\n(thời gian, Hub, mã xe, loại sự cố, mức độ, ghi chú);
 :Hiển thị "Đã ghi nhận sự cố xe [ID] tại Hub [Tên Hub]";
 
-if (Mức độ Cao hoặc Khẩn cấp?) then (có)
+if (Mức độ Cao hoặc Khẩn cấp?) then ([có])
   :Hiển thị cảnh báo đỏ\nyêu cầu kỹ thuật xử lý khẩn cấp;
-else (không)
+else ([không])
 endif
 
 :Ẩn xe khỏi danh sách xe khả dụng ở SS1\n(sinh viên không thể đặt);
 
 |Nhân viên vận hành / Kỹ thuật viên|
-if (Xem lịch sử sự cố?) then (có)
+if (Xem lịch sử sự cố?) then ([có])
   :Mở tab "Nhật ký";
   |Hệ thống|
   :Hiển thị danh sách nhật ký sự cố;
-else (không)
+else ([không])
 endif
 
 |Nhân viên vận hành / Kỹ thuật viên|

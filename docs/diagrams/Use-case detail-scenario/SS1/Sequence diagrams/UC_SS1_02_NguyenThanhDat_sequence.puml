@@ -1,5 +1,5 @@
 @startuml UC_SS1_02_NguyenThanhDat_sequence
-!theme plain
+!include ../../../common.puml
 skinparam sequenceMessageAlign center
 skinparam maxMessageSize 150
 skinparam BoxPadding 10
@@ -28,19 +28,30 @@ group 1. Kiểm tra Hub đích & Trả xe
     Student -> UI: Di chuyển đến Hub đích & bấm "Trả xe"
     activate UI
     
-    alt Hub đích lấp đầy 100% hoặc OFFLINE
+    UI -> AppState: Kiểm tra chỗ đã giữ hoặc chỗ trống tại Hub trả
+    AppState --> UI: Kết quả kiểm tra khả năng tiếp nhận
+    alt Hub chưa tiếp nhận được
         UI -> UI: Trigger gọi ngầm UC_SS7_02:\nĐề xuất điều hướng 1-chạm\nsang Hub lân cận
         note right of UI
             - Bảo toàn cọc
             - Tặng 15p di chuyển miễn phí
         end note
         UI --> Student: Hiển thị gợi ý Hub lân cận
-    else Hub đích khả dụng (Main Flow)
-        UI -> SmartLock: Gửi tín hiệu khóa xe
-        activate SmartLock
-        SmartLock --> UI: Xác nhận đã khóa chốt an toàn\n& Báo cáo số km / điện tiêu thụ
-        deactivate SmartLock
+        Student -> UI: Chọn Hub thay thế
+        UI -> AppState: Chuyển giữ chỗ; bảo toàn cọc;\ncộng 15 phút miễn phí một lần
+        AppState --> UI: Kết quả chuyển giữ chỗ
+        break Chưa chọn được Hub hợp lệ
+            UI --> Student: Chưa hoàn tất trả xe; chuyến đi vẫn IN_USE
+        end
+        UI -> AppState: Kiểm tra lại Hub thay thế trước khi trả
+        AppState --> UI: Hub sẵn sàng tiếp nhận
+    else Hub có chỗ đã giữ hoặc còn chỗ trống
+        UI -> UI: Tiếp tục quy trình trả xe
     end
+        UI -> SmartLock: Gửi tín hiệu khóa xe (mô phỏng)
+        activate SmartLock
+        SmartLock --> UI: Xác nhận đã khóa chốt (mô phỏng)
+        deactivate SmartLock
 end
 
 autonumber 2.1
@@ -49,18 +60,19 @@ group 2. Tính cước & Bồi hoàn cọc
     
     UI -> EWallet: Gửi yêu cầu quyết toán chuyến đi
     activate EWallet
-    EWallet --> UI: Giải phóng 50,000 VNĐ từ locked_balance,\ntrừ cước phát sinh từ wallet_balance
+    EWallet --> UI: Quyết toán 50.000 VNĐ từ held_deposit;\nhoàn dư / thu thêm từ balance / ghi debt
     deactivate EWallet
     
-    UI --> Student: Xuất hóa đơn điện tử (e-invoice)
+    UI -> AppState: Lưu hóa đơn trong phiên
 end
 
 autonumber 3.1
 group 3. Cập nhật Trạng thái
-    UI -> AppState: Cập nhật xe = AVAILABLE\n(Hoặc CHARGING nếu SoC < 20%)
+    UI -> AppState: Chuyển xe tới Hub trả;\ntiêu thụ chỗ giữ hoặc giảm available_slots;\nxe = AVAILABLE / CHARGING; booking = COMPLETED
     activate AppState
     AppState --> UI: Cập nhật hoàn tất
     deactivate AppState
+    UI --> Student: Hiển thị hóa đơn chuyến đi
     deactivate UI
 end
 

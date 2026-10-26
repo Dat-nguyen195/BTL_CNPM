@@ -1,0 +1,34 @@
+@startuml UC_SS1_02_NguyenThanhDat_activity_p1
+!include ../../../diagrams/common.puml
+skinparam activityMessageAlign center
+
+title UC_SS1_02 - Phần 1: Kiểm tra Hub & Điều hướng
+
+|Sinh viên|
+start
+:Di chuyển xe đến Hub đích đã chọn\n& chọn "Trả xe";
+
+|Giao diện SS1|
+:Kiểm tra Hub: có chỗ đã giữ\nhoặc còn chỗ trống hợp lệ;
+while (Cần đổi Hub?) is ([Có])
+  :UC_SS7_02: Gợi ý 2 Hub lân cận;
+  |Sinh viên|
+  :Chọn Hub thay thế\nhoặc tiếp tục chuyến đi;
+  if (Chọn được Hub?) then ([Không])
+    |Giao diện SS1|
+    :Thông báo chưa thể trả xe;\ngiữ chuyến đi IN_USE;
+    stop
+  else ([Có])
+  endif
+  |Trạng thái phiên|
+  :Chuyển giữ chỗ sang Hub mới;\nbảo toàn cọc, thêm 15 phút\nmiễn phí một lần;
+  |Sinh viên|
+  :Di chuyển đến Hub mới;
+  |Giao diện SS1|
+  :Kiểm tra lại khả năng tiếp nhận;
+endwhile ([Không])
+
+|Giao diện SS1|
+(A)
+detach
+@enduml

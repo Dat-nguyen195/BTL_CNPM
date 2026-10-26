@@ -1,0 +1,2 @@
+docs/report/assets/activity_panels/UC_SS1_02_NguyenThanhDat_activity_p1.puml
+docs/report/assets/activity_panels/UC_SS1_02_NguyenThanhDat_activity_p2.puml

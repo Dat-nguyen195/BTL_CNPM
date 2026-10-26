@@ -1,6 +1,6 @@
 
 @startuml UC_SS5_02_DuongDangKhoa_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 skinparam activity {
   MaximumWidth 220
@@ -24,22 +24,23 @@ start
 :Cập nhật SoC và trạng thái cổng sạc;
 
 |Control & State|
-if (Dữ liệu hợp lệ?) then (Có)
+if (Dữ liệu hợp lệ?) then ([Có])
   :Cập nhật trạng thái;
-else (Không)
+else ([Không])
   |UI Layer|
   :Thông báo lỗi kết nối IoT;
   stop
 endif
 
 |Control & State|
-if (SoC >= 90%?) then (Có)
+if (SoC >= 90%?) then ([Có])
   |Hệ thống thông báo|
   :Gửi cảnh báo sạc gần đầy;
+else ([Không])
 endif
 
 |Control & State|
-if (SoC = 100%?) then (Có)
+if (SoC = 100%?) then ([Có])
   |Hệ thống thông báo|
   :Gửi thông báo sạc hoàn tất;
   :Gửi biên nhận năng lượng;
@@ -47,17 +48,17 @@ if (SoC = 100%?) then (Có)
   |Control & State|
   :Bắt đầu thời gian ân hạn 15 phút;
 
-  if (Xe rời cổng trong 15 phút?) then (Có)
+  if (Xe rời cổng trong 15 phút?) then ([Có])
     :Giải phóng cổng sạc;
     :Cập nhật trạng thái AVAILABLE;
-  else (Không)
+  else ([Không])
     :Kiểm tra thời gian chiếm cổng;
 
-    if (Hết thời gian ân hạn?) then (Có)
+    if (Hết thời gian ân hạn?) then ([Có])
       |Tài khoản & Ví điện tử|
-      if (Ví đủ số dư?) then (Có)
+      if (Ví đủ số dư?) then ([Có])
         :Khấu trừ phí Overstay Fee;
-      else (Không)
+      else ([Không])
         :Ghi nhận khoản nợ ví;
       endif
 
@@ -66,11 +67,11 @@ if (SoC = 100%?) then (Có)
 
       |Control & State|
       :Đánh dấu xe Overstay;
-    else (Không)
+    else ([Không])
       :Tiếp tục theo dõi thời gian;
     endif
   endif
-else (Không)
+else ([Không])
   :Tiếp tục giám sát sạc;
 endif
 

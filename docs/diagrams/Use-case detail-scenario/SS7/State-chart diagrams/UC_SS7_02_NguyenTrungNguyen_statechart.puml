@@ -1,5 +1,5 @@
 @startuml UC_SS7_02_NguyenTrungNguyen_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram for SS7_02 Hub Rerouting Lifecycle

@@ -49,3 +49,15 @@
 
 ## 3. Kết luận
 Toàn bộ 22 hạng mục sai lệch, mâu thuẫn và tồn đọng đã được giải quyết triệt để. Báo cáo `REPORT_SUBMISSION_2.tex` đã được biên dịch thành công qua `xelatex` tạo thành `REPORT_SUBMISSION_2.pdf` hoàn chỉnh, sắc nét và đạt chuẩn chất lượng đồ án Kỹ thuật Phần mềm.
+
+
+## Đồng bộ ký hiệu UML ngày 26/10/2026
+
+- Đưa 45 sơ đồ activity/sequence/state-chart Sub2 về `docs/diagrams/common.puml`; bỏ màu riêng ở SS4, thống nhất font, mũi tên, nút đầu/cuối và decision/merge hình thoi.
+- Ghi điều kiện nhánh activity trong ngoặc vuông; bổ sung nhãn cho các nhánh bù trước đó để trống.
+- Sửa activity SS1_02: vòng lặp kiểm tra lại Hub có nhãn rõ ràng, phân biệt chỗ đã giữ với chỗ mới, trạng thái xe với booking, ưu đãi điều hướng 15 phút một lần và dữ liệu hóa đơn trong phiên.
+- Sửa tên xe cũ `PARKED` ở SS4 thành `AVAILABLE`, `MAINTENANCE_OFFLINE` ở SS1 thành `OFFLINE`; đồng bộ ngưỡng pin SS1 là >=20%, các tên `balance`/`held_deposit` và thời điểm hết hạn tại deadline.
+- Đồng bộ số bước 3.3–3.13 của bảng thông điệp SS1_01 với autonumber trên hình; chuẩn hóa role STUDENT.
+- Cập nhật sequence SS1_02 và thuyết minh tương ứng; thêm bảng chú giải UML, phân biệt Activity Final/Flow Final và connector A.
+- Chia sơ đồ activity SS1_02 trong báo cáo thành hai phần nối A; giữ nguồn/ảnh đầy đủ cạnh use case. Dựng lại ảnh, các panel và PDF, đồng bộ danh mục hình theo tham chiếu LaTeX.
+- Sửa đường dẫn include của panel sequence và phạm vi bộ kiểm tra Sub2 để không đếm nhầm các sơ đồ DRAFT Sub3. Bằng chứng của lần cập nhật này ở `docs/audit/submission_2/notation_sync_20261026/`; bằng chứng cũ trong `final/` được giữ như hồ sơ lịch sử.

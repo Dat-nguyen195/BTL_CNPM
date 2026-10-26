@@ -1,5 +1,5 @@
 @startuml UC_SS6_02_HoangVanTan_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS6_02: Dự báo nhu cầu theo giờ & Phân tích hàng đợi, thời gian chờ
@@ -12,9 +12,9 @@ start
 |UI Layer (demand_forecast.py)|
 :Bắt sự kiện tương tác thanh trượt;
 
-if (Tham số đầu vào hợp lệ?) then (Lỗi bộ nhớ / Ngoài khoảng)
+if (Tham số đầu vào hợp lệ?) then ([Lỗi bộ nhớ / Ngoài khoảng])
   :Tự động fallback về giá trị mặc định\n(base=15, surge=1.0, hours=12);
-else (Hợp lệ)
+else ([Hợp lệ])
 endif
 
 |Simulation Engine (HubEventSimulator)|
@@ -24,7 +24,7 @@ repeat
   :Tính lượng khách đến (áp dụng nhiễu ngẫu nhiên phân phối chuẩn);
   :Cộng dồn và tính toán độ dài hàng đợi tích luỹ;
   :Ước tính thời gian chờ trung bình (phút) dựa trên tốc độ phục vụ;
-repeat while (Chưa hết số giờ mô phỏng?)
+repeat while (Chưa hết số giờ mô phỏng?) is ([Có]) not ([Không])
 
 :Đóng gói kết quả tính toán vào DataFrame;
 

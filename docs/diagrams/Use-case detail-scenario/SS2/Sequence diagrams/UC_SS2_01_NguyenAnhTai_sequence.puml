@@ -1,5 +1,5 @@
 @startuml UC_SS2_01_NguyenAnhTai_sequence
-!theme plain
+!include ../../../common.puml
 skinparam sequenceMessageAlign center
 skinparam maxMessageSize 150
 skinparam BoxPadding 10

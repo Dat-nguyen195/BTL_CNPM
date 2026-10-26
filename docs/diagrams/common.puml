@@ -1,6 +1,6 @@
 !theme plain
 skinparam backgroundColor #FFFFFF
-skinparam defaultFontName "DejaVu Sans, Arial, Helvetica, sans-serif"
+skinparam defaultFontName "DejaVu Sans"
 skinparam defaultFontSize 12
 skinparam roundCorner 8
 skinparam shadowing false
@@ -22,18 +22,43 @@ skinparam sequence {
 }
 
 skinparam activity {
-    StartColor #27AE60
-    EndColor #C0392B
+    StartColor #2C3E50
+    EndColor #2C3E50
     BackgroundColor #FFFFFF
     BorderColor #2C3E50
     BarColor #2C3E50
-    DiamondBackgroundColor #FEF9E7
-    DiamondBorderColor #D4AC0D
+    DiamondBackgroundColor #FFFFFF
+    DiamondBorderColor #2C3E50
 }
 
+' UML decision/merge nodes use diamonds; avoid the hexagonal plain-theme style.
+skinparam conditionStyle insideDiamond
+skinparam conditionEndStyle diamond
+skinparam activityMessageAlign center
+
+' The plain theme otherwise leaves the centre of the activity-final node white.
+<style>
+activityDiagram {
+    circle {
+        start, stop, end {
+            BackgroundColor #2C3E50
+            LineColor #2C3E50
+        }
+    }
+}
+stateDiagram {
+    circle {
+        start, stop, end {
+            BackgroundColor #2C3E50
+            LineColor #2C3E50
+        }
+    }
+}
+</style>
+
 skinparam state {
-    StartColor #27AE60
-    EndColor #C0392B
+    StartColor #2C3E50
+    EndColor #2C3E50
     BackgroundColor #FFFFFF
     BorderColor #2C3E50
 }

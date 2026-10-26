@@ -1,34 +1,34 @@
 @startuml
-!theme plain
+!include ../../../common.puml
 |Hệ thống – Multi-level alert logic|
 start
 :Đánh giá tỷ lệ lấp đầy từng Hub (số xe / sức chứa) từ st.session_state["hubs"];
-if (Lấp đầy ≥ 70%?) then (Không)
+if (Lấp đầy ≥ 70%?) then ([Không])
     :Bình thường: tiếp tục giám sát;
     stop
-else (Có)
-    if (Lấp đầy ≥ 85%?) then (Không)
+else ([Có])
+    if (Lấp đầy ≥ 85%?) then ([Không])
         :Chuyển Hub A sang MÀU VÀNG trên Dashboard;
         |Operator|
         :Nhận biết cảnh báo sớm, chuẩn bị nguồn lực điều phối;
         stop
-    else (Có)
+    else ([Có])
         |Hệ thống – Multi-level alert logic|
-        if (Lấp đầy = 100%?) then (Không)
+        if (Lấp đầy = 100%?) then ([Không])
             :Màu ĐỎ nhấp nháy + pop-up/âm thanh; gửi đề xuất điều xe sang SS4;
             |Operator|
             :Nhấp xác nhận cảnh báo;
             |SS1/SS2 · SS4|
             :Tiến hành quy trình Điều phối (SS4);
             stop
-        else (Có)
+        else ([Có])
             |Hệ thống – Multi-level alert logic|
             :Tự động Khóa nhận đặt chỗ/đặt xe; hiển thị Khóa Đỏ;
-            if (Đồng bộ khóa với SS1/SS2 thành công?) then (Có)
+            if (Đồng bộ khóa với SS1/SS2 thành công?) then ([Có])
                 |SS1/SS2 · SS4|
                 :Từ chối mọi truy vấn đặt chỗ mới của Sinh viên;
                 stop
-            else (Không)
+            else ([Không])
                 |Hệ thống – Multi-level alert logic|
                 :Exception 1: bỏ qua khóa tự động, cảnh báo kỹ thuật khẩn cấp;
                 |Operator|

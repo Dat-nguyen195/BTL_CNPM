@@ -1,5 +1,5 @@
 @startuml UC_SS2_01_NguyenAnhTai_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS2_01: Đăng ký xe EV cá nhân
@@ -14,11 +14,11 @@ start
 |Control & State (st.session_state)|
 :Kiểm tra current_user\nvà phân quyền student;
 
-if (Tài khoản hợp lệ và có vai trò student?) then (Không)
+if (Tài khoản hợp lệ và có vai trò student?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Yêu cầu đăng nhập bằng tài khoản\nsinh viên hợp lệ;
   stop
-else (Có)
+else ([Có])
   |Sinh viên ĐHQG-HCM|
  :Chọn Đăng ký xe cá nhân;
 endif
@@ -34,44 +34,47 @@ repeat
   |UI Layer (personal_ev.py)|
  :Kiểm tra tính đầy đủ và hợp lệ;
 
-  if (Có sự cố hệ thống / mất kết nối?) then (Có)
+  if (Có sự cố hệ thống / mất kết nối?) then ([Có])
     |Control & State (st.session_state)|
    :Tạm dừng giao dịch;\nlưu đệm cục bộ khi còn khả năng ghi;
     |UI Layer (personal_ev.py)|
    :Thông báo bảo trì hoặc gián đoạn;\nyêu cầu thử lại sau;
     stop
+  else ([Không])
   endif
 
-  if (Thông tin hợp lệ?) then (Không)
+  if (Thông tin hợp lệ?) then ([Không])
     :Chỉ rõ thông tin thiếu hoặc sai;\nyêu cầu điều chỉnh;
+  else ([Có])
   endif
-repeat while (Cần điều chỉnh thông tin?) is (Có) not (Không)
+repeat while (Cần điều chỉnh thông tin?) is ([Có]) not ([Không])
 
 |Control & State (st.session_state)|
 :Tra cứu biển số xe;
 
-if (Xe đã thuộc tài khoản hiện tại?) then (Có)
+if (Xe đã thuộc tài khoản hiện tại?) then ([Có])
   |UI Layer (personal_ev.py)|
  :Hiển thị hồ sơ hiện có;\nkhông tạo hồ sơ trùng;
   stop
-else (Không)
+else ([Không])
   |Control & State (st.session_state)|
-  if (Biển số thuộc tài khoản khác?) then (Có)
+  if (Biển số thuộc tài khoản khác?) then ([Có])
     |UI Layer (personal_ev.py)|
    :Từ chối đăng ký;\nhướng dẫn liên hệ hỗ trợ;
     stop
+  else ([Không])
   endif
 endif
 
 |Control & State (st.session_state)|
 :Cấp mã xe, ghi thời điểm đăng ký;\nlưu hồ sơ liên kết với sinh viên\nở trạng thái REGISTERED;
 
-if (Lưu hồ sơ thành công?) then (Không)
+if (Lưu hồ sơ thành công?) then ([Không])
   :Tạm dừng giao dịch lỗi;\nbảo lưu dữ liệu đệm còn khả dụng;
   |UI Layer (personal_ev.py)|
  :Thông báo gián đoạn;\nyêu cầu thử lại sau;
   stop
-else (Có)
+else ([Có])
   |UI Layer (personal_ev.py)|
  :Thông báo đăng ký thành công;\nhiển thị thông tin xe;
 endif

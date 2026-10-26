@@ -114,12 +114,14 @@ def check_directories():
     return True, "All 28 subsystem directories verified"
 
 def check_puml_files():
-    puml_files = list(REPO_ROOT.glob("docs/diagrams/**/*.puml"))
-    # Exclude common.puml
-    puml_files = [p for p in puml_files if p.name != "common.puml"]
+    # Sub3 draft diagrams are outside the Sub2 baseline of 46 canonical sources.
+    puml_files = list(REPO_ROOT.glob("docs/diagrams/Use-case detail-scenario/**/*.puml"))
     
     if len(puml_files) != 46:
         return False, f"Expected 46 puml files, got {len(puml_files)}"
+
+    # Report panels must compile as well, with includes resolved from their own directory.
+    puml_files += list(REPO_ROOT.glob("docs/report/assets/*_panels/*.puml"))
     
     # Check syntax using plantuml.jar
     jar_path = REPO_ROOT / "tools" / "plantuml.jar"

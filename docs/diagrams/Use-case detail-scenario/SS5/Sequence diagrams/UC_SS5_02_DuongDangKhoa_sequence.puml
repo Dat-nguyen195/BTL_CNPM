@@ -1,6 +1,6 @@
 
 @startuml UC_SS5_02_DuongDangKhoa_sequence
-!theme plain
+!include ../../../common.puml
 skinparam sequenceMessageAlign center
 skinparam maxMessageSize 150
 skinparam BoxPadding 10

@@ -4,46 +4,60 @@ skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS1_02: Trả xe 1-chiều & Quyết toán ví điện tử
 
-|Sinh viên ĐHQG-HCM|
+|Sinh viên|
 start
 :Di chuyển xe đến Hub đích đã chọn\n& chọn "Trả xe";
 
-|UI Layer (student_booking.py)|
-repeat
-  :Kiểm tra sức chứa Hub đích (available_slots > 0);
-  if (Trạng thái Hub đích?) then (Full 100% hoặc OFFLINE)
-    :Kích hoạt UC_SS7_02: Đề xuất 2 Hub lân cận;
-    |Sinh viên ĐHQG-HCM|
-    :Xác nhận điều hướng 1-chạm\nsang Hub gợi ý;
-    |Control & State (st.session_state)|
-    :Chuyển đặt chỗ sang Hub mới\n(+15 phút thuê miễn phí bổ sung);
-    |Sinh viên ĐHQG-HCM|
-    :Di chuyển tiếp đến Hub mới;
-    |UI Layer (student_booking.py)|
-  else (Khả dụng / Còn chỗ trống)
-    break
+|Giao diện SS1|
+:Kiểm tra Hub: có chỗ đã giữ\nhoặc còn chỗ trống hợp lệ;
+while (Cần đổi Hub?) is ([Có])
+  :UC_SS7_02: Gợi ý 2 Hub lân cận;
+  |Sinh viên|
+  :Chọn Hub thay thế\nhoặc tiếp tục chuyến đi;
+  if (Chọn được Hub?) then ([Không])
+    |Giao diện SS1|
+    :Thông báo chưa thể trả xe;\ngiữ chuyến đi IN_USE;
+    stop
+  else ([Có])
   endif
-repeat while (Cần kiểm tra lại trạm mới)
+  |Trạng thái phiên|
+  :Chuyển giữ chỗ sang Hub mới;\nbảo toàn cọc, thêm 15 phút\nmiễn phí một lần;
+  |Sinh viên|
+  :Di chuyển đến Hub mới;
+  |Giao diện SS1|
+  :Kiểm tra lại khả năng tiếp nhận;
+endwhile ([Không])
 
-|UI Layer (student_booking.py)|
+|Giao diện SS1|
 :Gửi tín hiệu chốt khóa an toàn;
 
-|Khóa thông minh IoT / Trạm Hub|
-:Chốt khóa IoT thành công &\nGửi dữ liệu thời gian/km chuyến đi;
+|IoT (mô phỏng)|
+:Xác nhận chốt khóa (mô phỏng);
 
-|UI Layer (student_booking.py)|
-:Tính toán chi phí chuyến đi\n(Miễn phí 30p đầu + phút bổ sung);
+|Giao diện SS1|
+:Tính phí theo thời gian mô phỏng;\nmiễn 30 phút + ưu đãi điều hướng;
 
-|Tài khoản & Ví điện tử (E-Wallet)|
-:Giải phóng 50,000 VNĐ tiền cọc;\nKhấu trừ cước thuê hoặc ghi nhận nợ;
+|Ví điện tử|
+:Quyết toán cọc 50.000 VNĐ;\nhoàn dư / thu thêm / ghi nợ;
 
-|Control & State (st.session_state)|
-:Tiếp nhận xe tại Hub đích (available_slots - 1);\nĐổi trạng thái xe = AVAILABLE (hoặc CHARGING nếu SoC < 20%);
+|Trạng thái phiên|
+if (Có chỗ đã giữ tại Hub trả?) then ([Có])
+  :destination_holds -= 1;\nkhông trừ chỗ trống lần hai;
+else ([Không])
+  :Giải phóng giữ chỗ cũ nếu có;\navailable_slots -= 1 tại Hub trả;
+endif
+:Chuyển xe tới Hub trả;
+if (SoC < 20%?) then ([Có])
+  :Xe = CHARGING;
+else ([Không])
+  :Xe = AVAILABLE;
+endif
+:Booking = COMPLETED;\nlưu hóa đơn trong phiên;
 
-|UI Layer (student_booking.py)|
-:Xuất hóa đơn điện tử (E-Invoice) bền vững;
+|Giao diện SS1|
+:Hiển thị hóa đơn chuyến đi;
 
-|Sinh viên ĐHQG-HCM|
+|Sinh viên|
 :Xem biên lai chuyến đi & rời trạm;
 stop
 

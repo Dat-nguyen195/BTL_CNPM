@@ -1,5 +1,5 @@
 @startuml UC_SS6_Hub_Operational_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram: Trạng thái Vận hành Hub dưới tác động Mô phỏng Metro Surge & Sự cố Lưới

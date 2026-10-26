@@ -61,9 +61,14 @@ docs/diagrams/
 - **Định dạng nguồn:** PlantUML (`.puml`) mã hóa UTF-8.
 - **Biên dịch hình ảnh:** PNG và SVG tương ứng được render tự động qua `plantuml.jar` với layout engine Smetana.
 - **Chuẩn giao tiếp:**
-  - Sequence diagrams: 6 lifelines chuẩn theo trách nhiệm.
-  - Activity diagrams: 5 swimlanes chuẩn.
+  - Các sơ đồ activity, sequence và state-chart của Submission 2 dùng `!include ../../../common.puml`; không ghi đè màu ký hiệu bằng cấu hình riêng.
+  - Sequence diagrams: phân chia lifeline theo trách nhiệm; mũi tên liền cho lời gọi, mũi tên nét đứt cho phản hồi, `alt` cho các nhánh lựa chọn.
+  - Activity diagrams: nút đầu là chấm đặc; nút cuối là vòng tròn kép; hành động là hình chữ nhật bo góc; decision/merge là hình thoi; fork/join là thanh đậm. Điều kiện nhánh ghi trong `[ ]`; vòng lặp dùng `while` hoặc `repeat` với điều kiện rõ ràng.
+  - Swimlane biểu diễn bên chịu trách nhiệm, không bắt buộc đủ 5 làn khi nghiệp vụ không sử dụng. SS1 dùng các tên ngắn: Sinh viên, Giao diện SS1, Trạng thái phiên, Ví điện tử, IoT (mô phỏng).
   - State-chart diagrams: Chuẩn hóa định danh trạng thái `UPPER_CASE`.
+  - Phân biệt trạng thái **xe** (`AVAILABLE`, `RESERVED`, `IN_USE`, `CHARGING`, `OFFLINE`) và **booking** (`RESERVED`, `IN_USE`, `COMPLETED`, `CANCELLED`, `EXPIRED`). `PARKED` và `MAINTENANCE_OFFLINE` là tên cũ, không dùng thay trạng thái xe hiện tại.
+
+Các ảnh `.png` được dựng lại từ nguồn trước khi biên dịch báo cáo. Sơ đồ SS1_02 đầy đủ nằm cạnh nguồn; bản trong báo cáo được chia thành hai phần tiếp nối bằng connector `A` để giữ khả năng đọc.
 
 ## Sơ đồ Submission 3
 

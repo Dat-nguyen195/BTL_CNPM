@@ -1,0 +1,6 @@
+UC_SS2_02_NguyenAnhTai_sequence_p1: (1234, 1647); canonical groups (1, 2)
+UC_SS2_02_NguyenAnhTai_sequence_p2: (1496, 1593); canonical groups (3,)
+UC_SS2_02_NguyenAnhTai_sequence_p3: (1445, 1454); canonical groups (4,)
+UC_SS2_04_NguyenAnhTai_sequence_p1: (1816, 1675); canonical groups (1, 2)
+UC_SS2_04_NguyenAnhTai_sequence_p2: (1592, 1357); canonical groups (3,)
+UC_SS2_04_NguyenAnhTai_sequence_p3: (1626, 1810); canonical groups (4, 5)

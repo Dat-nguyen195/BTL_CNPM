@@ -1,5 +1,5 @@
 @startuml UC_SS2_04_NguyenAnhTai_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS2_04: Check-out và thanh toán dịch vụ xe EV cá nhân
@@ -14,19 +14,20 @@ start
 |Control & State (st.session_state)|
 :Xác định xe, quyền sử dụng\nvà phiên đỗ đã CHECKED_IN;
 
-if (Có phiên sử dụng hợp lệ?) then (Không)
+if (Có phiên sử dụng hợp lệ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo không tìm được phiên hợp lệ;
   stop
+else ([Có])
 endif
 
 |Control & State (st.session_state)|
-if (Có sử dụng sạc?) then (Có)
+if (Có sử dụng sạc?) then ([Có])
   |IoT / Barie & Trụ sạc tại Hub|
  :Kết thúc sạc nếu còn hoạt động;\nchốt kWh theo từng khung giá;
   |Control & State (st.session_state)|
  :Tính phí sạc thực tế\ncao điểm / thấp điểm;
-else (Không)
+else ([Không])
   :Không phát sinh phí sạc;
 endif
 
@@ -41,9 +42,9 @@ endif
 |Tài khoản & Cổng thanh toán|
 :Đối soát tiền cọc tạm giữ;\nkiểm tra khả năng thanh toán\nsố tiền hóa đơn thực tế;
 
-if (Ví đáp ứng số tiền cần thanh toán?) then (Có)
+if (Ví đáp ứng số tiền cần thanh toán?) then ([Có])
   :Thu đúng số tiền hóa đơn;\ngiải phóng tiền cọc tạm giữ\ntrong cùng giao dịch quyết toán;
-else (Không đủ số dư)
+else ([Không đủ số dư])
   |UI Layer (personal_ev.py)|
  :Thông báo ví không đủ số dư;\nđề nghị hình thức thanh toán khác;
   |Sinh viên ĐHQG-HCM|
@@ -52,11 +53,11 @@ else (Không đủ số dư)
  :Thực hiện thanh toán thay thế;\nđối soát khoản cọc để tránh thu trùng;
 endif
 
-if (Thanh toán đủ và thành công?) then (Không)
+if (Thanh toán đủ và thành công?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo chưa hoàn tất thanh toán;\nyêu cầu thanh toán khoản còn thiếu;\nkhông mở cổng ra;
   stop
-else (Có)
+else ([Có])
   |Control & State (st.session_state)|
  :Ghi nhận hóa đơn đã thanh toán;\nlưu giao dịch và hóa đơn điện tử;
 endif
@@ -70,10 +71,11 @@ endif
 |Control & State (st.session_state)|
 :Kiểm tra phiên và trạng thái quyết toán;
 
-if (Đúng xe và đã quyết toán đầy đủ?) then (Không)
+if (Đúng xe và đã quyết toán đầy đủ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Từ chối mở cổng;\nyêu cầu xác thực hoặc thanh toán bổ sung;
   stop
+else ([Có])
 endif
 
 |UI Layer (personal_ev.py)|
@@ -82,13 +84,13 @@ endif
 |IoT / Barie & Trụ sạc tại Hub|
 :Mở barie;\nxác nhận xe đã rời Hub;
 
-if (Cổng hoạt động và xe đã ra?) then (Không)
+if (Cổng hoạt động và xe đã ra?) then ([Không])
   |Khối Vận hành (Operators)|
  :Xử lý sự cố cổng;\nxác minh hiện diện của xe;
   |Control & State (st.session_state)|
  :Chưa ghi COMPLETED;\nchưa giải phóng vị trí;
   stop
-else (Có)
+else ([Có])
   :Ghi nhận tín hiệu xe đã ra;
 endif
 

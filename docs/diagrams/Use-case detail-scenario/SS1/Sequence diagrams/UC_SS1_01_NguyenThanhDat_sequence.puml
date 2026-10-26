@@ -1,5 +1,5 @@
 @startuml UC_SS1_01_NguyenThanhDat_sequence
-!theme plain
+!include ../../../common.puml
 skinparam sequenceMessageAlign center
 skinparam maxMessageSize 150
 skinparam BoxPadding 10
@@ -28,12 +28,12 @@ group 1. Xác thực & Lựa chọn
     Student -> UI: Chọn Hub cần thuê xe
     activate UI
     
-    UI -> SSO: Kiểm tra phiên (role == 'student')
+    UI -> SSO: Kiểm tra phiên (role == 'STUDENT')
     activate SSO
     SSO --> UI: Xác thực hợp lệ (OK)
     deactivate SSO
     
-    UI -> AppState: Yêu cầu danh sách xe khả dụng\n(status == AVAILABLE, SoC > 20%)
+    UI -> AppState: Yêu cầu danh sách xe khả dụng\n(status == AVAILABLE, SoC >= 20%)
     activate AppState
     AppState --> UI: Trả về danh sách xe thỏa điều kiện
     deactivate AppState
@@ -47,9 +47,9 @@ group 2. Đặt cọc & Giữ chỗ 30p
     Student -> UI: Chọn xe & áp dụng Voucher
     activate UI
     
-    UI -> EWallet: Kiểm tra (wallet_balance >= 50,000 VNĐ)
+    UI -> EWallet: Kiểm tra (balance >= 50,000 VNĐ)
     activate EWallet
-    EWallet --> UI: Đủ số dư, chuyển 50,000 VNĐ\nvào locked_balance
+    EWallet --> UI: Đủ số dư, chuyển 50,000 VNĐ\nvào held_deposit
     deactivate EWallet
     
     UI -> AppState: Cập nhật trạng thái xe = RESERVED\n(Kích hoạt Timer = 30 phút)
@@ -70,7 +70,7 @@ group 3. Quét QR / Nhận xe tại Hub
     activate AppState
     
     alt Đã đủ 30p - No-show
-        AppState -> EWallet: Trừ 10,000 VNĐ (No-show fee),\nhoàn 40,000 VNĐ về wallet_balance
+        AppState -> EWallet: Trừ 10,000 VNĐ (No-show fee),\nhoàn 40,000 VNĐ về balance
         activate EWallet
         EWallet --> AppState: Đã xử lý ví
         deactivate EWallet

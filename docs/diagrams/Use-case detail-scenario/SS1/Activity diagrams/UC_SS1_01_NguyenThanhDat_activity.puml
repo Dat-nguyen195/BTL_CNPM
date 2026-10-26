@@ -1,61 +1,61 @@
 @startuml UC_SS1_01_NguyenThanhDat_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS1_01: Đặt giữ chỗ & Quét QR/PIN nhận xe
 
-|Sinh viên ĐHQG-HCM|
+|Sinh viên|
 start
 :Chọn Hub & Xe cần thuê;
 
-|UI Layer (student_booking.py)|
+|Giao diện SS1|
 :Kiểm tra xác thực VNU-SSO;
 
-|Control & State (st.session_state)|
-:Đọc danh sách xe\n(AVAILABLE, SoC > 20%);
+|Trạng thái phiên|
+:Đọc danh sách xe\n(AVAILABLE, SoC >= 20%);
 
-|UI Layer (student_booking.py)|
-if (Số dư ví >= 50,000 VNĐ?) then (Không đủ)
+|Giao diện SS1|
+if (Số dư ví >= 50,000 VNĐ?) then ([Không đủ])
   :Báo lỗi "Số dư không đủ"\n& chuyển hướng sang Nạp tiền;
   stop
-else (Đủ)
-  |Tài khoản & Ví điện tử|
-  :Khóa 50,000 VNĐ cọc\nvào locked_balance;
+else ([Đủ])
+  |Ví điện tử|
+:Khóa 50.000 VNĐ cọc\nvào held_deposit;
   
-  |Control & State (st.session_state)|
+  |Trạng thái phiên|
   :Đổi xe sang RESERVED\n& Kích hoạt Timer 30p;
   
-  |UI Layer (student_booking.py)|
+  |Giao diện SS1|
   :Xuất mã QR/PIN & đếm ngược;
 endif
 
-|Sinh viên ĐHQG-HCM|
+|Sinh viên|
 :Đến Hub quét QR/PIN\nnhận xe;
 
-|UI Layer (student_booking.py)|
+|Giao diện SS1|
 :Đối chiếu mã & đếm ngược;
-if (Thời gian giữ chỗ?) then (Đã đủ 30p - No-show)
-  |Tài khoản & Ví điện tử|
-  :Phạt 10,000 VNĐ, hoàn 40,000 VNĐ\nvề wallet_balance;
+if (Thời gian giữ chỗ?) then ([Đã đủ 30p - No-show])
+  |Ví điện tử|
+  :Phạt 10,000 VNĐ, hoàn 40,000 VNĐ\nvề balance;
   
-  |Control & State (st.session_state)|
+  |Trạng thái phiên|
   :Đổi xe = AVAILABLE;
   
-  |UI Layer (student_booking.py)|
+  |Giao diện SS1|
   :Báo hết hạn;
   stop
-else (Hợp lệ < 30p)
-  |UI Layer (student_booking.py)|
+else ([Hợp lệ < 30p])
+  |Giao diện SS1|
   :Gửi lệnh mở khóa sang Khóa IoT;
   
-  |Khóa thông minh IoT / Trạm Hub|
+  |IoT (mô phỏng)|
   :Mở chốt an toàn;
   
   fork
-    |Control & State (st.session_state)|
-    :Đổi xe = IN_USE &\nKích hoạt đếm giờ chuyến đi;
+    |Trạng thái phiên|
+    :Xe / Booking = IN_USE;\nghi giờ nhận, giải phóng\n1 chỗ tại Hub xuất phát;
   fork again
-    |UI Layer (student_booking.py)|
+    |Giao diện SS1|
     :Hiển thị màn hình\n'Đang di chuyển';
   end fork
   

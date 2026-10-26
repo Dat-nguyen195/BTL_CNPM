@@ -1,5 +1,5 @@
 @startuml UC_SS2_03_NguyenAnhTai_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS2_03: Check-in xe EV cá nhân
@@ -8,9 +8,9 @@ title Activity Diagram - UC_SS2_03: Check-in xe EV cá nhân
 start
 :Đưa xe đến cổng Hub;
 
-if (Sử dụng mã QR?) then (Có)
+if (Sử dụng mã QR?) then ([Có])
   :Quét QR của đơn;
-else (Không)
+else ([Không])
   :Chọn xác thực bằng PIN;\nnhập mã PIN;
 endif
 
@@ -20,28 +20,31 @@ endif
 |Control & State (st.session_state)|
 :Đối chiếu mã, xe, quyền sử dụng,\nđơn đặt chỗ, Hub và khung giờ;
 
-if (QR/PIN hợp lệ?) then (Không)
+if (QR/PIN hợp lệ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Từ chối mở cổng;\nthông báo mã không hợp lệ;
   stop
+else ([Có])
 endif
 
 |Control & State (st.session_state)|
-if (Đơn đúng Hub và còn trong khung giờ cho phép?) then (Không)
+if (Đơn đúng Hub và còn trong khung giờ cho phép?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Từ chối Check-in;\nthông báo đơn hoặc khung giờ không hợp lệ;
   stop
+else ([Có])
 endif
 
 |Control & State (st.session_state)|
 :Kiểm tra vị trí RESERVED của đơn;
 
-if (Vị trí đã giữ có thể sử dụng?) then (Không)
+if (Vị trí đã giữ có thể sử dụng?) then ([Không])
   |Khối Vận hành (Operators)|
  :Tiếp nhận sự cố vị trí;\nxác minh và xử lý;
   |UI Layer (personal_ev.py)|
  :Thông báo chờ xử lý;\nchưa hoàn tất Check-in;
   stop
+else ([Có])
 endif
 
 |UI Layer (personal_ev.py)|
@@ -50,10 +53,11 @@ endif
 |IoT / Barie & Trụ sạc tại Hub|
 :Mở barie cổng vào;\nxác nhận xe đã qua cổng;
 
-if (Đã xác nhận xe vào?) then (Không)
+if (Đã xác nhận xe vào?) then ([Không])
   |Khối Vận hành (Operators)|
  :Xác minh cổng và hiện diện của xe;
   stop
+else ([Có])
 endif
 
 |Control & State (st.session_state)|
@@ -64,11 +68,11 @@ endif
 :Thông báo Check-in thành công;\nhướng dẫn vị trí đỗ và lịch sạc;
 
 |Control & State (st.session_state)|
-if (Đơn có dịch vụ sạc?) then (Không)
+if (Đơn có dịch vụ sạc?) then ([Không])
   |Sinh viên ĐHQG-HCM|
  :Đỗ xe tại vị trí đã cấp;
   stop
-else (Có)
+else ([Có])
   |Sinh viên ĐHQG-HCM|
  :Đưa xe đến vị trí sạc;\nquét QR để mở trụ;
 endif
@@ -76,10 +80,11 @@ endif
 |Control & State (st.session_state)|
 :Đối chiếu QR, lịch sạc\nvà cổng được phân bổ;
 
-if (Xác thực trụ và lịch sạc hợp lệ?) then (Không)
+if (Xác thực trụ và lịch sạc hợp lệ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Từ chối mở trụ;\nphiên đỗ vẫn đang hoạt động;
   stop
+else ([Có])
 endif
 
 |IoT / Barie & Trụ sạc tại Hub|
@@ -91,13 +96,13 @@ endif
 |IoT / Barie & Trụ sạc tại Hub|
 :Kiểm tra kết nối và điều kiện vận hành;
 
-if (Đủ điều kiện bắt đầu sạc?) then (Không)
+if (Đủ điều kiện bắt đầu sạc?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo kết nối chưa đạt;\nchưa kích hoạt sạc;
   |Khối Vận hành (Operators)|
  :Hỗ trợ xử lý kết nối;
   stop
-else (Có)
+else ([Có])
   |Control & State (st.session_state)|
  :Chuyển cổng được phân bổ sang IN_USE;\nkích hoạt phiên sạc;
 endif

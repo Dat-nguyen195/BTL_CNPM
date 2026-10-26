@@ -1,6 +1,6 @@
 
 @startuml UC_SS5_DuongDangKhoa_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram: Vòng đời Trạng thái Chu trình Sạc & Cổng sạc (Phân hệ SS5)

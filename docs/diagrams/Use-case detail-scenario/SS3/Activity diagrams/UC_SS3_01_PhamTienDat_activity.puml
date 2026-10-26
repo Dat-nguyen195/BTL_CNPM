@@ -1,31 +1,31 @@
 @startuml
-!theme plain
+!include ../../../common.puml
 |Nhân viên Vận hành (Operator)|
 start
 :Truy cập tab "Dashboard Giám sát" trên giao diện SS3;
 
 |Hệ thống SS3 (Dashboard · st.session_state · IoT)|
 :Truy xuất dữ liệu từ st.session_state["hubs"] và Mạng lưới Cảm biến IoT;
-if (IoT phản hồi đúng hạn?) then (Timeout)
+if (IoT phản hồi đúng hạn?) then ([Timeout])
     :Exception 1: hiển thị dữ liệu cache gần nhất + cảnh báo "Dữ liệu thời gian thực đang bị gián đoạn";
-else (Có)
+else ([Có])
 endif
 :Trả về Dashboard: số xe đang hoạt động, tỷ lệ lấp đầy từng Hub, doanh thu tạm tính (VNĐ);
 
-if (Tài khoản Admin?) then (Có)
+if (Tài khoản Admin?) then ([Có])
     :Hiển thị thêm doanh thu tổng hợp và công cụ cấu hình ngưỡng cảnh báo;
-else (Không)
+else ([Không])
 endif
 
 |Nhân viên Vận hành (Operator)|
 :Quan sát các chỉ số cập nhật theo thời gian thực;
 
 |Hệ thống SS3 (Dashboard · st.session_state · IoT)|
-if (Có lỗi nghiêm trọng từ cảm biến?) then (Có)
+if (Có lỗi nghiêm trọng từ cảm biến?) then ([Có])
     :Alt 1: tự động đẩy pop-up / push notification tới Kỹ thuật viên online;
     |Kỹ thuật viên|
     :Nhấp vào thông báo để xem chi tiết;
-else (Không)
+else ([Không])
     |Kỹ thuật viên|
     :Nhấp chọn mục "Log/Lỗi IoT" trên Dashboard;
     |Hệ thống SS3 (Dashboard · st.session_state · IoT)|

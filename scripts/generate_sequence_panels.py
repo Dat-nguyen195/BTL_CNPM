@@ -28,6 +28,9 @@ def main():
         text = (SOURCE / f'{name}.puml').read_text()
         points = list(re.finditer(r'^autonumber (\d+)\.1\s*$', text, re.M))
         header = text[:points[0].start()]
+        # The panels live under report/assets, not the canonical SS2 directory.
+        header = header.replace('!include ../../../common.puml',
+                                '!include ../../../diagrams/common.puml')
         end = text.index('@enduml', points[-1].start())
         chunks = {int(match[1]): text[match.start():points[i+1].start() if i+1 < len(points) else end] for i, match in enumerate(points)}
         ordered = [group for groups, _ in panels for group in groups]

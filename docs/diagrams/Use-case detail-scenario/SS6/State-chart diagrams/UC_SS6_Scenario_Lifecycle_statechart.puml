@@ -1,5 +1,5 @@
 @startuml UC_SS6_Scenario_Lifecycle_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram: Vòng đời Kịch bản Mô phỏng What-if (SS6)

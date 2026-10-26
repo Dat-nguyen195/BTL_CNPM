@@ -1,5 +1,5 @@
 @startuml UC_SS7_01_NguyenTrungNguyen_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS7_01: Mô phỏng sự cố mất điện / lỗi cổng sạc đột ngột
@@ -16,9 +16,9 @@ start
 :Tạo bản sao deepcopy(hubs)\n& giảm số cổng sạc khả dụng;
 :Chuyển các xe đang CHARGING sang WAITING,\nngắt rơ-le bảo vệ pin & miễn phí chờ sạc;
 
-if (Số cổng khả dụng == 0?) then (Mất điện toàn trạm)
+if (Số cổng khả dụng == 0?) then ([Mất điện toàn trạm])
   :Đổi trạng thái Hub = OFFLINE\n& phát cảnh báo nguy cấp;
-else (Hỏng cục bộ một số cổng)
+else ([Hỏng cục bộ một số cổng])
   :Đổi trạng thái cổng lỗi = ERROR;
 endif
 
@@ -28,18 +28,18 @@ endif
 :Hiển thị Event Log & Bảng đề xuất điều phối;
 
 |Kỹ thuật viên / Điều phối viên|
-if (Xác nhận áp dụng kết quả?) then (Chỉ xem thử nghiệm)
+if (Xác nhận áp dụng kết quả?) then ([Chỉ xem thử nghiệm])
   :Giữ nguyên dữ liệu vận hành gốc;
   stop
-else (Nhấn "Áp dụng kết quả mô phỏng")
+else ([Nhấn "Áp dụng kết quả mô phỏng"])
   |Ctrl&State (st.session_state)|
   :Cập nhật st.session_state["hubs"]\n& ghi nhận vào infra_log;
   
   |Phân hệ Đặt xe & Sạc (SS1 & SS2)|
   :Khóa nhận đặt chỗ/sạc mới tại Hub lỗi;
-  if (Có giao dịch đang trả xe/thanh toán?) then (Có)
+  if (Có giao dịch đang trả xe/thanh toán?) then ([Có])
     :Kích hoạt Local Offline Caching\n(Đóng băng công tơ & chờ có điện quyết toán);
-  else (Không)
+  else ([Không])
   endif
   
   |Giám sát & Sự cố (SS3 & SS4)|

@@ -1,5 +1,5 @@
 @startuml UC_SS6_01_HoangVanTan_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS6_01: Mô phỏng đợt tăng đột biến hành khách Metro (Metro Surge)
@@ -22,20 +22,20 @@ start
 :Tự động sinh phương tiện mới (EV-SURGE-xxxx, SoC 10-40%);
 :Giảm số lượng cổng sạc khả dụng;
 
-if (Số chỗ đỗ khả dụng == 0?) then (Hết chỗ)
+if (Số chỗ đỗ khả dụng == 0?) then ([Hết chỗ])
   :Ghi cảnh báo "Hết chỗ đỗ, đề xuất điều phối sang Hub lân cận";
-else (Còn chỗ)
+else ([Còn chỗ])
 endif
 
-if (Cổng sạc khả dụng == 0?) then (Hết cổng)
+if (Cổng sạc khả dụng == 0?) then ([Hết cổng])
   :Ghi cảnh báo đỏ "KHÔNG CÒN cổng sạc khả dụng!";
-else (Còn cổng)
+else ([Còn cổng])
 endif
 
 :Tính tỷ lệ lấp đầy: occupancy = 1 - (available_slots / total_slots);
-if (occupancy > 0.85?) then (Quá tải)
+if (occupancy > 0.85?) then ([Quá tải])
   :Gắn cảnh báo nguy cấp (Critical Overload) vào nhật ký;
-else (Bình thường)
+else ([Bình thường])
 endif
 
 :Tổng hợp bảng so sánh Trước/Sau & Nhật ký sự kiện;
@@ -44,10 +44,10 @@ endif
 :Hiển thị bảng so sánh delta, nhật ký sự kiện và cảnh báo;
 
 |Nhà phân tích / Hub Operator|
-if (Xác nhận áp dụng dữ liệu mô phỏng?) then (Chỉ chạy thử nghiệm / Alt 2)
+if (Xác nhận áp dụng dữ liệu mô phỏng?) then ([Chỉ chạy thử nghiệm / Alt 2])
   :Quan sát dữ liệu nghiên cứu;
   stop
-else (Nhấn nút "Áp dụng kết quả vào hệ thống")
+else ([Nhấn nút "Áp dụng kết quả vào hệ thống"])
   |Control & Memory State|
   :Ghi đè danh sách Hub mới vào st.session_state["hubs"];
   

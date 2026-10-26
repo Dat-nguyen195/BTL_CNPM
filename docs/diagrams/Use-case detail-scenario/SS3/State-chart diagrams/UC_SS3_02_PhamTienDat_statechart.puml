@@ -1,5 +1,5 @@
 @startuml
-!theme plain
+!include ../../../common.puml
 [*] --> BinhThuong
 
 state "Bình thường" as BinhThuong : Tỷ lệ lấp đầy < 70%

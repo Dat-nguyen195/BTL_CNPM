@@ -1,0 +1,40 @@
+@startuml UC_SS1_02_NguyenThanhDat_activity_p2
+!include ../../../diagrams/common.puml
+title UC_SS1_02 - Phần 2: Nhận xe & Quyết toán
+
+|Giao diện SS1|
+(A)
+|Giao diện SS1|
+:Gửi tín hiệu chốt khóa an toàn;
+
+|IoT (mô phỏng)|
+:Xác nhận chốt khóa (mô phỏng);
+
+|Giao diện SS1|
+:Tính phí theo thời gian mô phỏng;\nmiễn 30 phút + ưu đãi điều hướng;
+
+|Ví điện tử|
+:Quyết toán cọc 50.000 VNĐ;\nhoàn dư / thu thêm / ghi nợ;
+
+|Trạng thái phiên|
+if (Có chỗ đã giữ tại Hub trả?) then ([Có])
+  :destination_holds -= 1;\nkhông trừ chỗ trống lần hai;
+else ([Không])
+  :Giải phóng giữ chỗ cũ nếu có;\navailable_slots -= 1 tại Hub trả;
+endif
+:Chuyển xe tới Hub trả;
+if (SoC < 20%?) then ([Có])
+  :Xe = CHARGING;
+else ([Không])
+  :Xe = AVAILABLE;
+endif
+:Booking = COMPLETED;\nlưu hóa đơn trong phiên;
+
+|Giao diện SS1|
+:Hiển thị hóa đơn chuyến đi;
+
+|Sinh viên|
+:Xem biên lai chuyến đi & rời trạm;
+stop
+
+@enduml

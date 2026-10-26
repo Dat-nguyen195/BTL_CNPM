@@ -1,10 +1,7 @@
 @startuml UC_SS4_01_statechart
+!include ../../../common.puml
 title UC_SS4_01 - Vòng đời lệnh điều phối (Sơ đồ trạng thái)
-skinparam shadowing false
-skinparam state {
-  BackgroundColor #E8F1FB
-  BorderColor #2B6CB0
-}
+
 
 [*] --> Nhap : Nhân viên mở tab điều phối
 
@@ -27,13 +24,13 @@ state "Đang thực hiện" as ThucHien {
   state "Cập nhật số chỗ trống" as CapNhatCho
   state "Ghi nhật ký" as GhiLog
   ChuyenXe --> CapNhatXe : đã chuyển xe
-  CapNhatXe --> CapNhatCho : PARKED → DISPATCHED
+  CapNhatXe --> CapNhatCho : AVAILABLE → DISPATCHED
   CapNhatCho --> GhiLog : đã cập nhật chỗ trống
   GhiLog --> [*] : đã ghi dispatch_log
 }
 state "Hoàn tất" as HoanTat
 
-Nhap --> DaHuy : Hub nguồn không có xe PARKED /\nvô hiệu hóa nút gửi lệnh
+Nhap --> DaHuy : Hub nguồn không có xe AVAILABLE /\nvô hiệu hóa nút gửi lệnh
 Nhap --> KiemTra : nhấn "Thực hiện điều phối"
 
 KiemTra --> Nhap : Hub nguồn trùng Hub đích /\nbáo lỗi

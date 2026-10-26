@@ -1,5 +1,5 @@
 @startuml UC_SS1_NguyenThanhDat_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram for SS1 EV Lifecycle
@@ -12,7 +12,7 @@ state IN_USE
 state CHARGING
 state DISPATCHED
 state INCIDENT
-state MAINTENANCE_OFFLINE
+state OFFLINE
 
 AVAILABLE --> RESERVED : Sinh viên đặt giữ chỗ (Cọc 50k)
 RESERVED --> AVAILABLE : Sinh viên hủy đặt xe\n[Hoàn 100% cọc]
@@ -31,8 +31,8 @@ RESERVED --> INCIDENT : Lỗi hệ thống / Mất kết nối IoT
 IN_USE --> INCIDENT : Sự cố trên đường / Tai nạn
 CHARGING --> INCIDENT : Lỗi trạm sạc / Chập điện
 
-INCIDENT --> MAINTENANCE_OFFLINE : Chuyển về xưởng bảo trì chuyên sâu
+INCIDENT --> OFFLINE : Chuyển về xưởng bảo trì chuyên sâu
 INCIDENT --> AVAILABLE : KTV xử lý xong tại chỗ\n[Mở khóa xe]
-MAINTENANCE_OFFLINE --> AVAILABLE : Bảo trì định kỳ / Thay thế linh kiện xong\n[KTV nghiệm thu, mở khóa]
+OFFLINE --> AVAILABLE : Bảo trì định kỳ / Thay thế linh kiện xong\n[KTV nghiệm thu, mở khóa]
 
 @enduml

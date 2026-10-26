@@ -1,5 +1,5 @@
 @startuml UC_SS2_02_NguyenAnhTai_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS2_02: Đặt chỗ đỗ và nhu cầu sạc xe EV cá nhân
@@ -14,10 +14,11 @@ start
 |Control & State (st.session_state)|
 :Kiểm tra tài khoản và danh sách\nxe cá nhân đã đăng ký;
 
-if (Tài khoản và xe hợp lệ?) then (Không)
+if (Tài khoản và xe hợp lệ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Yêu cầu đăng nhập hoặc đăng ký xe;
   stop
+else ([Có])
 endif
 
 |Sinh viên ĐHQG-HCM|
@@ -34,9 +35,9 @@ repeat
  :Kiểm tra lịch đặt, lịch trùng,\nvị trí AVAILABLE trong khung giờ;\nnếu có sạc, kiểm tra cổng tương thích;
 
   |UI Layer (personal_ev.py)|
-  if (Lịch đặt và khả năng phục vụ hợp lệ?) then (Không)
+  if (Lịch đặt và khả năng phục vụ hợp lệ?) then ([Không])
     :Thông báo dữ liệu không hợp lệ,\nhết chỗ hoặc không có cổng phù hợp;\nyêu cầu chọn lại;
-  else (Có)
+  else ([Có])
     :Hiển thị phí đỗ 5.000 VNĐ/lượt,\ncọc giữ chỗ 50.000 VNĐ;\nphí sạc dự kiến nếu có;
     note right
       Cao điểm: 7.000 VNĐ/kWh
@@ -46,7 +47,7 @@ repeat
     |Sinh viên ĐHQG-HCM|
    :Kiểm tra thông tin;\nchọn giữ nguyên hoặc thay đổi;
   endif
-repeat while (Cần sửa hoặc muốn thay đổi lựa chọn?) is (Có) not (Không)
+repeat while (Cần sửa hoặc muốn thay đổi lựa chọn?) is ([Có]) not ([Không])
 
 |Sinh viên ĐHQG-HCM|
 :Áp dụng voucher nếu có;\nxác nhận đặt dịch vụ;
@@ -54,40 +55,41 @@ repeat while (Cần sửa hoặc muốn thay đổi lựa chọn?) is (Có) not 
 |Tài khoản & Ví điện tử|
 :Kiểm tra số dư khả dụng;
 
-if (Số dư khả dụng >= 50.000 VNĐ?) then (Không)
+if (Số dư khả dụng >= 50.000 VNĐ?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo không đủ tiền cọc;\nchưa xác nhận đơn;
   stop
-else (Có)
+else ([Có])
   |Control & State (st.session_state)|
  :Kiểm tra lại lịch và khả dụng\ntại thời điểm xác nhận;
 endif
 
-if (Vị trí và nhu cầu dịch vụ vẫn đáp ứng?) then (Không)
+if (Vị trí và nhu cầu dịch vụ vẫn đáp ứng?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo tài nguyên đã thay đổi;\nyêu cầu chọn lại Hub hoặc lịch;
   stop
-else (Có)
+else ([Có])
   |Tài khoản & Ví điện tử|
  :Tạm giữ 50.000 VNĐ tiền cọc;
 endif
 
-if (Tạm giữ cọc thành công?) then (Không)
+if (Tạm giữ cọc thành công?) then ([Không])
   |UI Layer (personal_ev.py)|
  :Thông báo chưa thể xác nhận đơn;
   stop
+else ([Có])
 endif
 
 |Control & State (st.session_state)|
 :Xác nhận đơn, liên kết xe và vị trí;\ngiữ chỗ AVAILABLE -> RESERVED\ntheo lịch đặt;
 :Đặt hạn nhận chỗ =\nbooking_start_time + 30 phút;
 
-if (Có yêu cầu sạc?) then (Có)
+if (Có yêu cầu sạc?) then ([Có])
   |Phân hệ lập lịch sạc (SS5)|
  :Kiểm tra năng lực sạc dự kiến;\ncấp cổng khi Check-in;
   |Control & State (st.session_state)|
  :Ghi nhận nhu cầu sạc;\nchưa giữ cổng vật lý;
-else (Không)
+else ([Không])
   |Control & State (st.session_state)|
  :Đơn chỉ đỗ xe;\nkhông giữ cổng sạc;
 endif
@@ -98,9 +100,9 @@ endif
 |Control & State (st.session_state)|
 :Chờ sự kiện:\nyêu cầu hủy, yêu cầu Check-in\nhoặc hết hạn nhận chỗ;
 
-if (Sinh viên yêu cầu hủy?) then (Có)
+if (Sinh viên yêu cầu hủy?) then ([Có])
   :Kiểm tra đơn chưa Check-in\nvà điều kiện hủy;
-  if (Được phép hủy?) then (Có)
+  if (Được phép hủy?) then ([Có])
     :Ghi nhận đơn đã hủy;\ngiải phóng lịch giữ chỗ\nRESERVED -> AVAILABLE;
     |Phân hệ lập lịch sạc (SS5)|
    :Hủy yêu cầu sạc nếu có;\ngiải phóng phần phân bổ của đơn;
@@ -109,14 +111,14 @@ if (Sinh viên yêu cầu hủy?) then (Có)
     |UI Layer (personal_ev.py)|
    :Thông báo hủy thành công;
     stop
-  else (Không)
+  else ([Không])
     |UI Layer (personal_ev.py)|
    :Từ chối hủy;\ngiữ đơn theo trạng thái hiện tại;
     stop
   endif
-else (Không)
+else ([Không])
   |Control & State (st.session_state)|
-  if (Đã quá hạn và chưa Check-in?) then (Có)
+  if (Đã quá hạn và chưa Check-in?) then ([Có])
     :Đổi đơn = EXPIRED;\ngiải phóng lịch giữ chỗ\nRESERVED -> AVAILABLE;
     |Phân hệ lập lịch sạc (SS5)|
    :Hủy yêu cầu sạc nếu có;\ngiải phóng cổng đã giữ;
@@ -125,7 +127,7 @@ else (Không)
     |UI Layer (personal_ev.py)|
    :Thông báo đơn hết hiệu lực;
     stop
-  else (Không)
+  else ([Không])
     |UI Layer (personal_ev.py)|
    :Chuyển yêu cầu Check-in sang UC_SS2_03;\nchưa thay đổi trạng thái hiện diện;
     stop

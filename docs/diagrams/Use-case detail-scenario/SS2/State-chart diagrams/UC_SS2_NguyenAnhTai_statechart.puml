@@ -1,5 +1,5 @@
 @startuml UC_SS2_NguyenAnhTai_statechart
-!theme plain
+!include ../../../common.puml
 hide empty description
 
 title State-chart Diagram for SS2 - Personal EV Parking & Charging

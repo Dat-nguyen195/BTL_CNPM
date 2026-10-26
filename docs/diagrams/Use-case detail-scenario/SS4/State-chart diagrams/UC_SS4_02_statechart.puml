@@ -1,18 +1,15 @@
 @startuml UC_SS4_02_statechart
+!include ../../../common.puml
 title UC_SS4_02 - Vòng đời trạng thái phương tiện khi có sự cố (Sơ đồ trạng thái)
-skinparam shadowing false
-skinparam state {
-  BackgroundColor #E8F1FB
-  BorderColor #C0392B
-}
 
-[*] --> PARKED : xe được đăng ký tại Hub
 
-PARKED : sẵn sàng cho thuê (SS1)
+[*] --> AVAILABLE : xe được đăng ký tại Hub
+
+AVAILABLE : sẵn sàng cho thuê (SS1)
 DISPATCHED : đã chuyển đến Hub đích (UC_SS4_01)
 
-PARKED --> DISPATCHED : thực hiện lệnh điều phối
-PARKED --> INCIDENT : báo cáo sự cố\n[xe có trong danh sách của Hub]
+AVAILABLE --> DISPATCHED : thực hiện lệnh điều phối
+AVAILABLE --> INCIDENT : báo cáo sự cố\n[xe có trong danh sách của Hub]
 DISPATCHED --> INCIDENT : báo cáo sự cố\n[xe có trong danh sách của Hub]
 
 state INCIDENT {
@@ -27,7 +24,7 @@ state INCIDENT {
 }
 INCIDENT : bị khóa - ẩn khỏi SS1,\nsinh viên không thể đặt
 
-INCIDENT --> PARKED : đã sửa chữa / xử lý xong\n(giả định - ngoài phạm vi use-case)
+INCIDENT --> AVAILABLE : đã sửa chữa / xử lý xong\n(giả định - ngoài phạm vi use-case)
 INCIDENT --> [*] : xe mất / bị trộm / thanh lý\n(giả định)
 
 note right of INCIDENT

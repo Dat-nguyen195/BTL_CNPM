@@ -1,5 +1,5 @@
 @startuml
-!theme plain
+!include ../../../common.puml
 [*] --> ChoTruyCap
 
 state "Chờ truy cập" as ChoTruyCap : Operator/Admin đã đăng nhập

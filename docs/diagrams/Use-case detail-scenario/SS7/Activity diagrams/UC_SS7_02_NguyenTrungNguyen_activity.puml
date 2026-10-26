@@ -1,5 +1,5 @@
 @startuml UC_SS7_02_NguyenTrungNguyen_activity
-!theme plain
+!include ../../../common.puml
 skinparam activityMessageAlign center
 
 title Activity Diagram - UC_SS7_02: Tự động phát cảnh báo & Đề xuất điều hướng 1-chạm
@@ -12,13 +12,13 @@ start
 :Đọc tọa độ GPS các Hub trong mạng lưới\n& tính khoảng cách Euclidean;
 :Lọc các Hub có available_slots > 0;
 
-if (Tìm thấy Hub khả dụng?) then (Không - Toàn mạng lưới sập/đầy)
+if (Tìm thấy Hub khả dụng?) then ([Không - Toàn mạng lưới sập/đầy])
   |Control & State (st.session_state)|
   :Đóng băng cước phí thời gian chờ phát sinh;
   |UI Layer (student_booking.py)|
   :Báo khẩn cấp "Toàn mạng lưới quá tải/sự cố"\n& miễn phí thời gian chờ cho sinh viên;
   stop
-else (Có - Trích xuất Top 02 Hub gần nhất)
+else ([Có - Trích xuất Top 02 Hub gần nhất])
   |UI Layer (student_booking.py)|
   :Hiển thị Banner cảnh báo & Gợi ý 02 Hub gần nhất\nkèm nút "Chuyển đặt chỗ 1 chạm";
   
@@ -26,13 +26,13 @@ else (Có - Trích xuất Top 02 Hub gần nhất)
   :Thao tác chọn phương án điều hướng\n(Nhấn xác nhận 1-chạm hoặc Tự chọn Hub thứ 3);
   
   |Phân hệ Đặt xe (SS1)|
-  if (Phương án sinh viên chọn?) then (Nhấn xác nhận 1-chạm)
-    if (Hub gợi ý 1 còn slot trống?) then (Còn chỗ)
+  if (Phương án sinh viên chọn?) then ([Nhấn xác nhận 1-chạm])
+    if (Hub gợi ý 1 còn slot trống?) then ([Còn chỗ])
       :Chuyển đích đến sang Hub gợi ý 1;
-    else (Vừa hết chỗ - Exception 2)
+    else ([Vừa hết chỗ - Exception 2])
       :Tự động chuyển sang Hub gợi ý 2;
     endif
-  else (Từ chối & Tự chọn Hub thứ 3)
+  else ([Từ chối & Tự chọn Hub thứ 3])
     :Mở bản đồ & Chuyển đích đến\nsang Hub thứ 3 theo lựa chọn;
   endif
   

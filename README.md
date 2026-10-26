@@ -176,6 +176,7 @@ venv/bin/python scripts/generate_traceability_json.py
 venv/bin/python scripts/generate_traceability_md.py
 venv/bin/python scripts/render_all_diagrams.py
 venv/bin/python scripts/generate_sequence_panels.py
+venv/bin/python scripts/generate_activity_panels.py
 cd docs/report/submission_2
 latexmk -xelatex -interaction=nonstopmode -halt-on-error REPORT_SUBMISSION_2.tex
 ```
