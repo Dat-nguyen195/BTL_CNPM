@@ -1,13 +1,81 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
+top to bottom direction
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS7 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV7 — Nguyễn Trung Nguyên\nUC_SS7_01, UC_SS7_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: InfrastructureFailure
-' Lop/kieu chu tri: RouteSuggestion
-' Lop/kieu chu tri: InfrastructureSimulationService
-' Lop/kieu chu tri: ReroutingService
+skinparam classAttributeIconSize 0
+skinparam nodesep 25
+skinparam ranksep 30
+title Class diagram — SS7 Sự cố hạ tầng và gợi ý Hub thay thế
+
+class InfrastructureFailure <<value object, proposed>> {
+  +failure_id: str
+  +hub_id: str
+  +num_ports_down: int
+  +seed: int
+  +baseline_version: int
+  +event_log: list[str]
+  +metrics: dict[str, Any]
+}
+
+class InfrastructureSimulationService <<proposed service>> {
+  +preview_port_failure(hub_id: str, num_ports_down: int, seed: int = 42): OperationResult[SimulationPreview]
+}
+
+class ReroutingService <<proposed service>> {
+  +suggest_hubs(target_hub_id: str, need_slots: bool = True, need_ports: bool = False, limit: int = 2): OperationResult[list[RouteSuggestion]]
+}
+
+class RouteSuggestion <<value object, proposed>> {
+  +hub_id: str
+  +distance_km: float
+  +available_slots: int
+  +available_ports: int
+  +reason: str
+}
+
+class HubEventSimulator <<implemented>> {
+}
+
+class "core.routing" as RoutingModule <<implemented module>>
+class "sim_infrastructure.render" as SS7UI <<implemented UI>>
+class "SimulationPreview (TV6)" as SimulationPreview <<shared contract>>
+
+InfrastructureSimulationService ..> InfrastructureFailure : tạo bản ghi kết quả
+InfrastructureSimulationService ..> HubEventSimulator : ánh xạ prototype
+InfrastructureSimulationService ..> SimulationPreview : INT-09\nPORT_FAILURE
+ReroutingService ..> RoutingModule : ánh xạ hàm hiện tại
+ReroutingService ..> RouteSuggestion : chuẩn hóa kết quả
+InfrastructureSimulationService -[hidden]down-> ReroutingService
+
+SS7UI ..> HubEventSimulator : lời gọi mô phỏng hiện tại
+SS7UI ..> RoutingModule : lời gọi gợi ý hiện tại
+SS7UI ..> InfrastructureSimulationService : INT-09\nthiết kế mục tiêu
+SS7UI ..> ReroutingService : INT-06\nthiết kế mục tiêu
+
+note right of RoutingModule
+  Hàm hiện có:
+  find_alternative_hubs()
+  find_nearest_alternative_hubs()
+  Chưa lọc trạng thái OFFLINE chuẩn hóa.
+end note
+
+note bottom of SimulationPreview
+  INT-10 apply_preview() thuộc TV6.
+  Khi Apply, coordinator gọi INT-05
+  ChargingService.handle_port_failure()
+  thuộc TV5.
+  Chuyển booking sau xác nhận qua INT-07
+  BookingService thuộc TV1.
+  Đây là shared contracts, chưa phải
+  tích hợp đang chạy trong prototype.
+end note
+
+note bottom of HubEventSimulator
+  Hàm hiện có:
+  simulate_port_failure(target_hub_id, num_ports_down, seed)
+  deepcopy cô lập preview.
+  Chưa có port ID hoặc liên kết
+  tới charging session vật lý.
+end note
 @enduml

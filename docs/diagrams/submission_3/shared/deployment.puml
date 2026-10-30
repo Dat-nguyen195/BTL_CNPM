@@ -1,10 +1,61 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Deployment view — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV7 — Nguyễn Trung Nguyên\nMô tả trình duyệt, Streamlit/Python, seed và session.\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
+skinparam componentStyle rectangle
+title Deployment view — Smart E-Mobility Hub (hiện tại)
 
+actor "Sinh viên /\nKỹ thuật viên" as User
+
+node "Thiết bị người dùng" as Client {
+  artifact "Trình duyệt web" as Browser
+}
+
+node "Máy chạy ứng dụng\n(môi trường triển khai)" as Host {
+  node "Tiến trình Python\nStreamlit server" as Process {
+    component "Ứng dụng Streamlit\nsrc/app.py" as App
+    component "Giao diện phân hệ\nsrc/components/*.py" as Components {
+      component "SS7\nsim_infrastructure.py" as SS7
+    }
+    component "Nghiệp vụ / mô hình\nsrc/core/*.py" as Core {
+      component "HubEventSimulator\ncore/simulator.py" as Simulator
+      component "Định tuyến\ncore/routing.py" as Routing
+      component "Khởi tạo / reset\ncore/state.py" as State
+    }
+    component "st.session_state\n(in-memory, per Streamlit session)" as Session
+  }
+
+  artifact "Dữ liệu seed Hub\nsrc/data/mock_hubs.json" as Seed
+}
+
+User --> Browser
+Browser <--> App : Tương tác giao diện\nvà session Streamlit
+App --> Components : Chọn module\nvà gọi render()
+SS7 --> Simulator : Preview sự cố\n(deepcopy dữ liệu Hub)
+SS7 --> Routing : Gợi ý Hub lân cận
+App --> State : Khởi tạo / reset
+State --> Seed : Đọc khi tạo lại trạng thái
+App --> Session : Đọc / cập nhật\ntrạng thái ứng dụng
+SS7 --> Session : Lưu preview, log,\nport overrides và kết quả Apply
+Simulator --> Session : Không ghi trực tiếp;\ntrả bản mô phỏng cho SS7
+note right of Session
+  Dữ liệu phiên được giữ trong bộ nhớ
+  phía tiến trình ứng dụng; không có
+  database hoặc lưu bền sau phiên.
+  Reset nạp lại seed và khởi tạo state.
+end note
+
+note bottom of Host
+  Chạy theo hướng dẫn tại thư mục gốc:
+  streamlit run src/app.py
+  Host, URL và cổng phụ thuộc môi trường;
+  repository không cấu hình cố định chúng.
+end note
+
+note bottom of Process
+  SS7 hiện mô phỏng và cập nhật state
+  trong prototype. Không có tích hợp
+  IoT/cổng sạc vật lý, SSO, payment
+  gateway, API server hay broker đang chạy.
+end note
 @enduml
