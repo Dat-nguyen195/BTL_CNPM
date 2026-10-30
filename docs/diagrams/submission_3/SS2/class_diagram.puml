@@ -1,13 +1,160 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
+top to bottom direction
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS2 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV2 — Nguyễn Anh Tài\nUC_SS2_01, UC_SS2_02, UC_SS2_03, UC_SS2_04\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: PersonalVehicle
-' Lop/kieu chu tri: ParkingReservation
-' Lop/kieu chu tri: ParkingSession
-' Lop/kieu chu tri: PersonalEVService
+skinparam classAttributeIconSize 0
+skinparam nodesep 25
+skinparam ranksep 30
+title Class diagram — SS2 Xe cá nhân, chỗ đỗ và check-in/out
+
+class PersonalVehicle <<entity, proposed>> {
+  +vehicle_id: str
+  +owner_id: str
+  +owner_name: str
+  +plate_number: str
+  +vehicle_type: str
+  +brand: str
+  +battery_kwh: float
+  +ownership: Ownership = PERSONAL
+  +registered_at: datetime
+  +status: str = "REGISTERED"
+  --
+  +normalize_plate(raw_plate: str): str
+  +is_owned_by(user_id: str): bool
+}
+
+class ParkingReservation <<entity, proposed>> {
+  +reservation_id: str
+  +owner_id: str
+  +vehicle_id: str
+  +plate_number: str
+  +hub_id: str
+  +request_charging: bool
+  +current_soc: float
+  +deposit_held_vnd: int = 50000
+  +created_at: datetime
+  +booking_start_time: datetime
+  +expires_at: datetime
+  +expired_at: datetime | None
+  +status: ParkingReservationStatus
+  --
+  +is_expired(sim_now: datetime): bool
+  +can_check_in(sim_now: datetime): bool
+}
+
+class ParkingSession <<entity, proposed>> {
+  +session_id: str
+  +reservation_id: str
+  +vehicle_id: str
+  +hub_id: str
+  +check_in_time: datetime
+  +check_out_time: datetime | None
+  +charging_request_id: str | None
+  +charging_session_id: str | None
+  +parking_fee_vnd: int = 5000
+  +invoice_id: str | None
+  --
+  +attach_charging_ref(request_id: str, session_id: str | None = None): None
+  +build_parking_charge_line(): ChargeLine
+}
+
+class PersonalEVService <<proposed service>> {
+  -billing_service: BillingService
+  -charging_service: ChargingService
+  --
+  +register_personal_ev(owner_id: str, owner_name: str, plate_number: str, vehicle_type: str, brand: str, battery_kwh: float): OperationResult[PersonalVehicle]
+  +reserve_personal_ev_slot(owner_id: str, vehicle_id: str, hub_id: str, booking_start_time: datetime, request_charging: bool = False, current_soc: float = 50.0, operation_key: str = ""): OperationResult[ParkingReservation]
+  +check_in_personal_ev(owner_id: str, reservation_id: str, operation_key: str = ""): OperationResult[ParkingSession]
+  +check_out_personal_ev(owner_id: str, reservation_id: str, operation_key: str = ""): OperationResult[SettlementResult]
+  +sweep_expired_personal_reservations(sim_now: datetime): OperationResult[list[str]]
+}
+
+class "personal_ev.render" as SS2UI <<implemented UI>> {
+  --
+  +_init_pev_state(): None
+  +render(): None
+}
+
+class "core.personal_ev" as PersonalEVModule <<implemented module>> {
+  --
+  +parse_time(t_str: str): datetime
+  +format_time(dt: datetime): str
+  +register_personal_ev(state: dict, owner_id: str, owner_name: str, plate_number: str, ev_type: str, brand: str, battery_kwh: float): tuple[bool, dict | None, str]
+  +reserve_personal_ev_slot(state: dict, owner_id: str, ev_id: str, hub_id: str, request_charging: bool = False, current_soc: float = 50.0, booking_start_time: str | None = None): tuple[bool, dict | None, str]
+  +sweep_expired_personal_reservations(state: dict): int
+  +check_in_personal_ev(state: dict, reservation_id: str): tuple[bool, str]
+  +check_out_personal_ev(state: dict, reservation_id: str, duration_hours: float = 2.0, kwh_charged: float = 3.5, overstay_minutes: int = 0): tuple[bool, dict | None, str]
+}
+
+class "User / Vehicle (TV1)" as SharedUserVehicle <<shared contract>> {
+  +user_id: str
+  +vehicle_id: str
+  +ownership: Ownership
+  +status: VehicleStatus
+}
+
+class "Hub (TV3)" as SharedHub <<shared contract>> {
+  +hub_id: str
+  +name: str
+  +total_slots: int
+  +available_slots: int
+  +destination_holds: int
+  +charging_ports: dict[str, int]
+}
+
+class "BillingService (TV1)" as BillingService <<shared contract>> {
+  --
+  +hold_deposit(owner_id: str, reference_id: str, amount_vnd: int, operation_key: str): OperationResult[DepositResult]
+  +release_deposit(owner_id: str, reference_id: str, operation_key: str): OperationResult[DepositResult]
+  +settle_no_show(owner_id: str, reference_id: str, operation_key: str): OperationResult[SettlementResult]
+  +settle_invoice(owner_id: str, reference_id: str, charge_lines: list[ChargeLine], operation_key: str): OperationResult[SettlementResult]
+}
+
+class "ChargingService (TV5)" as ChargingService <<shared contract>> {
+  --
+  +request_charging(owner_id: str, vehicle_id: str, hub_id: str, current_soc: float, target_soc: float = 100.0, reservation_id: str | None = None): OperationResult[ChargingRequestResult]
+  +get_bill(session_id: str): OperationResult[ChargingBill]
+}
+
+PersonalVehicle --|> SharedUserVehicle : kế thừa Vehicle\n(ownership=PERSONAL)
+ParkingReservation "0..*" --> "1" PersonalVehicle : gắn với xe cá nhân
+ParkingReservation "0..*" --> "1" SharedHub : giữ chỗ đích\n(destination_holds)
+ParkingReservation "1" --> "0..1" ParkingSession : kích hoạt khi check-in
+ParkingSession "0..*" --> "1" SharedHub : chiếm chỗ vật lý\n(current_vehicles)
+
+PersonalEVService ..> PersonalVehicle : tạo/kiểm tra hồ sơ xe\n(UC_SS2_01)
+PersonalEVService ..> ParkingReservation : đặt chỗ & quét hết hạn\n(UC_SS2_02)
+PersonalEVService ..> ParkingSession : mở/đóng phiên đỗ\n(UC_SS2_03, UC_SS2_04)
+PersonalEVService ..> PersonalEVModule : ánh xạ hàm hiện tại
+PersonalEVService ..> BillingService : hợp đồng tài chính TV1
+PersonalEVService ..> ChargingService : INT-01 request_charging()\nINT-02 get_bill()
+
+SS2UI ..> PersonalEVModule : lời gọi hàm hiện tại
+SS2UI ..> PersonalEVService : thiết kế mục tiêu\n(UC_SS2_01..04)
+
+note right of PersonalEVModule
+  Dữ liệu hiện lưu dạng dict trong session_state;
+  adapter ánh xạ ev_id -> vehicle_id.
+  Hạn đến: expires_at = booking_start_time + 30 phút.
+  Phí đỗ giữ 5.000 VNĐ/lượt (chênh lệch với SRS
+  yêu cầu tính theo giờ).
+end note
+
+note bottom of ChargingService
+  Giao tiếp mục tiêu thuộc TV5:
+  - INT-01 request_charging() khi check-in hợp lệ.
+  - INT-02 get_bill() khi check-out (SS2 chỉ đọc,
+    không tự tính lại giá điện/phí quá giờ).
+  Prototype hiện tại chưa tạo ChargingSession bên SS5
+  khi xe cá nhân check-in.
+end note
+
+note bottom of BillingService
+  Hợp đồng tài chính thuộc TV1:
+  - Cọc 50.000 VNĐ; no-show phạt 10.000, hoàn 40.000 VNĐ.
+  - settle_invoice() đối trừ cọc, thu phí đỗ + phí sạc,
+    ghi nợ nếu thiếu số dư, chống thu trùng theo
+    operation_key và charge_id.
+end note
 @enduml
