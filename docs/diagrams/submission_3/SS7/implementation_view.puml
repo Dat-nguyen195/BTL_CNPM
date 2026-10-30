@@ -1,0 +1,64 @@
+@startuml
+top to bottom direction
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam componentStyle rectangle
+skinparam nodesep 30
+skinparam ranksep 35
+title Implementation view — SS7 (ánh xạ prototype và hợp đồng mục tiêu)
+
+package "Presentation — Streamlit" {
+  component "src/app.py\nnavigation + session bootstrap" as App
+  component "src/components/\nsim_infrastructure.py\nrender() / preview / UI Apply" as SS7UI
+}
+
+package "Application / Core — hiện có" {
+  component "src/core/simulator.py\nHubEventSimulator\nsimulate_port_failure()" as Simulator
+  component "src/core/routing.py\nfind_alternative_hubs()\nfind_nearest_alternative_hubs()" as Routing
+  component "src/core/booking.py\napply_rerouting_to_booking()" as Booking
+  component "src/core/state.py\ninit_session_state()\nbump_state_version()" as State
+}
+
+package "Session data — hiện có" {
+  artifact "st.session_state\nhubs / state_version /\nsim_preview_ss7 / infra_log" as Session
+  artifact "src/data/mock_hubs.json\nHub seed data" as Seed
+}
+
+package "Shared contracts — thiết kế mục tiêu, chưa tích hợp" {
+  interface "INT-09\nInfrastructureSimulationService\npreview_port_failure()" as Preview
+  interface "INT-10\nSimulationCoordinator\napply_preview()" as Apply
+  interface "INT-05\nChargingService\nhandle_port_failure()" as Charging
+  interface "INT-06\nReroutingService\nsuggest_hubs()" as Suggest
+  interface "INT-07\nBookingService\naccept_rerouting()" as Accept
+}
+
+App --> SS7UI : chọn module / render()
+App --> State : khởi tạo và reset
+State --> Seed : đọc seed
+App --> Session : đọc / cập nhật
+SS7UI --> Session : đọc snapshot;\nlưu preview và log
+SS7UI --> Simulator : gọi mô phỏng
+SS7UI --> Routing : gọi gợi ý
+SS7UI --> Booking : sau xác nhận người dùng\n(code hiện có)
+Simulator ..> Session : không ghi trực tiếp;\nnhận snapshot, trả bản sao
+Routing ..> Session : nhận Hub qua đối số
+
+SS7UI ..> Preview : dự kiến thay UI tự tạo preview
+SS7UI ..> Apply : dự kiến dùng Apply chung
+Apply ..> Charging : áp dụng tác động cổng/phiên
+SS7UI ..> Suggest : dự kiến chuẩn hóa gợi ý
+SS7UI ..> Accept : hợp đồng mục tiêu;\nBookingService thuộc TV1
+
+note right of Session
+  State trong bộ nhớ theo Streamlit session.
+  Reset nạp lại dữ liệu seed.
+  Không có repository/database bền vững.
+end note
+
+note bottom of Apply
+  INT-05/06/07/09/10 là shared contracts
+  trong tài liệu Sub3, chưa phải module
+  hoặc API đã triển khai trong prototype.
+end note
+@enduml
