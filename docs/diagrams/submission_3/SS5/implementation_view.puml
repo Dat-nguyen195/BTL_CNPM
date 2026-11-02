@@ -1,0 +1,85 @@
+@startuml
+top to bottom direction
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+skinparam componentStyle rectangle
+skinparam nodesep 30
+skinparam ranksep 35
+
+title Implementation View — SS5 (ánh xạ prototype và hợp đồng mục tiêu)
+
+package "Presentation — Streamlit" {
+  component "src/app.py\nNavigation + session bootstrap" as App
+  component "src/components/\nsmart_charging.py\n_init_ss5() / render()" as SS5UI
+}
+
+package "Application / Core — hiện có" {
+  component "src/core/scheduler.py\nChargingRequest\nChargingSession\nSmartChargingScheduler" as Scheduler
+
+  component "src/core/billing.py\nsettle_overstay_charging()\ncalculate_private_ev_bill()\nrecord_transaction()" as Billing
+
+  component "src/core/policies.py\nHUB_POWER_CAP_KW\nDEFAULT_PORT_CHARGING_KW\nOVERSTAY_GRACE_MINUTES\nOVERSTAY_RATE_PER_BLOCK_VND\nget_kwh_rate()" as Policies
+
+  component "src/core/state.py\nbump_state_version()" as State
+}
+
+package "Session data — hiện có" {
+  artifact "st.session_state\nhubs / scheduler /\nwallets / charging sessions /\ninvoices / state_version" as Session
+}
+
+package "Shared contracts — thiết kế mục tiêu, chưa tích hợp" {
+  interface "INT-01\nChargingService\nrequest_charging()" as Request
+
+  interface "INT-02\nChargingService\nget_bill()" as GetBill
+
+  interface "INT-05\nChargingService\nhandle_port_failure()" as Failure
+
+  interface "BillingService\nsettle_invoice()" as Settle
+}
+
+App --> SS5UI : chọn module / render()
+App --> State : khởi tạo và cập nhật trạng thái
+
+SS5UI --> Session : đọc / cập nhật dữ liệu
+SS5UI --> Scheduler : khởi tạo scheduler;\nthêm yêu cầu / phân bổ cổng
+SS5UI --> Billing : tính phí và thanh toán
+SS5UI --> Policies : lấy cấu hình và biểu giá
+SS5UI --> State : bump_state_version()
+
+Scheduler --> Policies : sử dụng giới hạn công suất,\ntham số sạc và phí quá hạn
+Scheduler ..> Session : quản lý hàng đợi và\ncác phiên sạc
+
+Billing --> Policies : sử dụng biểu giá điện\nvà chính sách tính phí
+
+SS5UI ..> Request : giao diện tiếp nhận yêu cầu sạc
+SS5UI ..> GetBill : giao diện truy xuất hóa đơn
+SS5UI ..> Failure : giao diện xử lý sự cố cổng sạc
+SS5UI ..> Settle : dự kiến chuyển nghiệp vụ\nthanh toán sang TV1
+
+note right of Session
+  Dữ liệu được lưu trong
+  st.session_state của Streamlit.
+
+  Scheduler và các phiên sạc
+  được quản lý trong bộ nhớ.
+
+  Không có repository hoặc
+  cơ sở dữ liệu riêng cho SS5
+  trong prototype hiện tại.
+end note
+
+note bottom of Settle
+  INT-01, INT-02 và INT-05 là
+  các hợp đồng tích hợp mục tiêu.
+
+  ChargingService chưa được
+  triển khai thành module riêng.
+
+  BillingService thuộc TV1.
+  Code gốc hiện vẫn gọi trực tiếp
+  settle_overstay_charging()
+  từ billing.py.
+end note
+
+@enduml
