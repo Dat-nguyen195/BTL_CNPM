@@ -1,8 +1,51 @@
-PROMPT HISTORY SUBMISSION 3 — Hoàng Văn Tấn — 2213074 — SS6
+From: https://gemini.google.com/app/ae9ed9c93ae1cdfb
 
-TRẠNG THÁI: KHUNG NHẬT KÝ; KHÔNG PHẢI HỘI THOẠI CÁ NHÂN ĐÃ HOÀN TẤT.
-Tệp được khởi tạo cùng bộ khung tài liệu cấp nhóm. Không bịa prompt, phản hồi, ngày giờ hoặc xác nhận đã kiểm tra.
 
-Mỗi mục thực tế cần ghi: prompt nguyên văn; công cụ/model nếu biết; phản hồi hoặc tóm tắt có gắn nhãn; phần tự sửa/kiểm tra và quyết định của tác giả.
 
-CHƯA GHI NHẬN PROMPT CÁ NHÂN TRONG TỆP KHUNG NÀY. Thành viên bổ sung lịch sử thật của mình nếu có.
+you asked
+
+message time: 2026-11-02 21:14:54
+
+Tổng hợp các công việc mà phân hệ SS6 phải làm ở submission 3
+
+you asked
+
+message time: 2026-11-02 21:23:14
+
+Giúp tôi hoàn thành toàn bộ nhiệm vụ trong 12 checklist, ghi chú lại công việc tôi phải tự tay làm, thực hiện
+
+you asked
+
+message time: 2026-11-02 21:37:45
+
+Mục truy vết ở traceability của TV6_HoangVanTan không được trích dẫn cứng như vậy vì mỗi máy phải truy cập khác nhau mà, hãy sửa lại
+
+you asked
+
+message time: 2026-11-02 22:03:33
+
+Phần diagram: phải làm luôn implementation_view và deployment có cả png và puml cho SS6 và add vào folder tương ứng
+
+you asked
+
+message time: 2026-11-02 22:09:40
+
+Form REPORT hãy tham khảo để làm cho chính xác REPORT_SUBMISSION_2.pdf
+
+you asked
+
+message time: 2026-11-02 22:35:39
+
+format chưa đúng với file pdf cho lắm, logo đã được import ở D:\CNPM\BTL_1_CNPM\docs\report\submission_3\TV6_HoangVanTan\mau.png
+
+you asked
+
+message time: 2026-11-02 22:49:03
+
+Hãy giúp tôi chỉnh lại format của file REPORT để kích thước các trang phù hợp với nhau
+
+you asked
+
+message time: 2026-11-02 23:27:12
+
+Tham khảo forrmat của Prompt_History_Sprint1_2213074_HoangVanTan.txt, cập nhật file prompt history sub3 của TV6

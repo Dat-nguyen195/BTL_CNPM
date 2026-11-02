@@ -1,0 +1,142 @@
+@startuml implementation_view_ss6
+allowmixing
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI", Arial, SansSerif
+skinparam roundCorner 8
+skinparam packageFontSize 12
+skinparam classFontSize 11
+
+title "Phân hệ SS6: Mô phỏng nhu cầu What-if & Dự báo 24 giờ - Implementation View (Submission 3)\nChủ sở hữu: TV6 — Hoàng Văn Tấn (MSSV: 2213074)"
+
+package "src.components (Presentation Layer)" #Azure {
+    class SimDemandModule <<module>> {
+        + render(): void
+        + render_demand_forecast_tab(): void
+        + render_metro_surge_tab(): void
+        + render_preview_comparison(): void
+        - display_event_log(): void
+        - plot_forecast_charts(): void
+    }
+}
+
+package "src.core.services (Business Services)" #LightYellow {
+    class DemandSimulationService <<service>> {
+        + preview_demand(hub_id, num_students, seed): OperationResult<SimulationPreview>
+    }
+
+    class ForecastService <<service>> {
+        + forecast(hub_id, base_arrival_rate, surge_multiplier, hours, seed): OperationResult<ForecastResult>
+    }
+
+    class SimulationCoordinator <<coordinator>> {
+        + apply_preview(preview_id, expected_version): OperationResult<ApplyResult>
+        + discard_preview(preview_id): OperationResult<bool>
+    }
+}
+
+package "src.core.domain (Domain DTOs)" #MintCream {
+    class DemandScenario <<entity>> {
+        + scenario_id: str
+        + target_hub_id: str
+        + num_students: int
+        + surge_multiplier: float
+        + seed: int
+    }
+
+    class ForecastResult <<dto>> {
+        + forecast_id: str
+        + hub_id: str
+        + hours: int
+        + points: List<ForecastPoint>
+    }
+
+    class ForecastPoint <<value object>> {
+        + hour_label: str
+        + arrivals: int
+        + queue_length: int
+        + wait_time_min: float
+    }
+
+    class SimulationPreview <<dto>> {
+        + preview_id: str
+        + scenario_type: str
+        + baseline_version: int
+        + modified_hubs: List<dict>
+        + metrics: dict
+        + event_log: List<str>
+    }
+
+    class ApplyResult <<dto>> {
+        + preview_id: str
+        + applied: bool
+        + already_applied: bool
+        + new_state_version: int
+    }
+}
+
+package "src.core (Core Engine & State)" #GhostWhite {
+    class HubEventSimulator <<core engine>> {
+        - _original: List<dict>
+        + simulate_metro_surge(target_hub_id, num_new_students, seed): Tuple
+        + generate_demand_forecast(base_arrival_rate, surge_multiplier, hours, seed): List<dict>
+    }
+
+    class StateModule <<state management>> {
+        + get_initial_session_state(): dict
+        + bump_state_version(state): int
+    }
+
+    class PoliciesModule <<constants>> {
+        + METRO_SURGE_HOURS: tuple
+        + DEFAULT_SERVICE_RATE: int
+    }
+}
+
+package "tests (Verification Layer)" #LavenderBlush {
+    class TestSimulations <<test suite>> {
+        + test_metro_surge_deepcopy_isolation_and_unserved_students()
+        + test_demand_forecast_24_hours_and_reproducibility()
+        + test_apply_preview_version_check_and_idempotency()
+    }
+}
+
+package "External Libraries" #WhiteSmoke {
+    component "Streamlit Runtime" as ExtStreamlit
+    component "Plotly Engine" as ExtPlotly
+    component "Pandas Library" as ExtPandas
+    component "Python Stdlib (random, copy)" as ExtPythonStd
+}
+
+' Phụ thuộc nội bộ giữa các tầng
+SimDemandModule ..> DemandSimulationService : invokes INT-08
+SimDemandModule ..> ForecastService : invokes INT-04
+SimDemandModule ..> SimulationCoordinator : invokes INT-10
+
+DemandSimulationService ..> DemandScenario : uses
+DemandSimulationService ..> SimulationPreview : creates
+DemandSimulationService ..> HubEventSimulator : delegates
+
+ForecastService ..> ForecastResult : creates
+ForecastResult *-- "24" ForecastPoint : contains
+ForecastService ..> HubEventSimulator : delegates
+
+SimulationCoordinator ..> SimulationPreview : manages
+SimulationCoordinator ..> ApplyResult : returns
+SimulationCoordinator ..> StateModule : checks version and bumps
+
+HubEventSimulator ..> PoliciesModule : references constants
+HubEventSimulator ..> StateModule : reads sample hubs
+
+' Phụ thuộc thư viện ngoài
+SimDemandModule ..> ExtStreamlit : renders UI controls
+SimDemandModule ..> ExtPlotly : builds Figure
+SimDemandModule ..> ExtPandas : processes DataFrame
+HubEventSimulator ..> ExtPythonStd : Gaussian noise and deepcopy
+
+' Kiểm thử
+TestSimulations ..> HubEventSimulator : tests isolation and metrics
+TestSimulations ..> StateModule : tests version counter
+TestSimulations ..> SimulationCoordinator : tests stale prevention
+
+@enduml
