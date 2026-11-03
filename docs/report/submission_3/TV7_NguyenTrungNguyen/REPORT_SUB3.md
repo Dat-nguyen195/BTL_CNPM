@@ -19,8 +19,8 @@
 
 **MSSV:** 2011710  
 **Phân hệ:** SS7 — Sự cố hạ tầng và gợi ý Hub thay thế  
-**Phiên bản nội dung:** 1.0 
-**Trạng thái:** Nội dung, sơ đồ và test prototype liên quan đã hoàn tất; PDF cá nhân đã xuất và kiểm tra trực quan.
+**Phiên bản nội dung:** 1.1 — cập nhật theo review PR #20 ngày 03/11/2026.
+**Trạng thái:** Báo cáo, nguồn sơ đồ, ảnh xuất và PDF cá nhân đã được cập nhật theo các phát hiện review; còn phân biệt rõ giới hạn prototype và hợp đồng chưa tích hợp.
 **Khoảng thực hiện theo kế hoạch:** 21/10/2026–30/10/2026.
 
 [Hướng dẫn Sub3](<../../../../GUIDANCE_FOR_SUB_3.md>) · [Hợp đồng dùng chung](<../shared/shared_contracts.md>) · [Chỉ mục sơ đồ](<../../../diagrams/submission_3/README.md>)
@@ -46,7 +46,7 @@
 | UC | Tên | Truy vết kế thừa | Vị trí code liên quan |
 |---|---|---|---|
 | `UC_SS7_01` | Mô phỏng sự cố hạ tầng & mất điện trạm sạc | `US-23`, `US-24`; `FR-14`, `FR-15` | `src/components/sim_infrastructure.py`; `src/core/simulator.py` |
-| `UC_SS7_02` | Đề xuất gợi ý điều hướng sang Hub lân cận & cảnh báo | `US-24`, `US-24b`; `FR-15`, `FR-15c` | `src/components/sim_infrastructure.py`; `src/core/routing.py`; thao tác đổi Hub đặt tại `src/core/booking.py` |
+| `UC_SS7_02` | Đề xuất gợi ý điều hướng sang Hub lân cận & cảnh báo | `US-24`, `US-24b`; `FR-15`, `FR-15c` | Gợi ý trong `src/components/sim_infrastructure.py` và `src/components/student_booking.py`; đổi booking từ UI SS1 qua `src/core/booking.py` |
 
 Nguồn scenario, sequence, activity và bảng truy vết Sub2 được liệt kê trong [traceability.md](<traceability.md>). Các sơ đồ Sub2 là đầu vào kế thừa; nếu chúng mô tả IoT/SSO/payment hoạt động hoặc thuật toán khác với code, báo cáo này ghi đó là chênh lệch cần xác nhận, không dùng làm bằng chứng tích hợp.
 
@@ -98,7 +98,7 @@ Implementation view chung cấp hệ thống vẫn thuộc TV3; hình SS7 bên t
 | Mô phỏng cổng lỗi | `src/core/simulator.py` — `HubEventSimulator.simulate_port_failure` | Đã triển khai trên bản sao sâu Hub; trả `(hubs, log, metrics)`. Chưa có ID cổng thật/định tuyến tới charging session theo port ID. Tham số `seed` hiện không quyết định kết quả trong hàm này. |
 | Gợi ý Hub lân cận | `src/core/routing.py` — `find_alternative_hubs`, `find_nearest_alternative_hubs`, `haversine_distance_km` | Đã triển khai; lọc theo chỗ/cổng theo tham số rồi xếp khoảng cách. Chưa lọc một trạng thái hoạt động/offline chuẩn hóa của Hub. |
 | Nạp/reset state và version | `src/core/state.py` — `load_and_normalize_hubs`, `init_session_state`, `bump_state_version` | Đã triển khai; state và version trong session, reset nạp JSON seed. |
-| Đổi Hub booking sau xác nhận | `src/core/booking.py` — `apply_rerouting_to_booking` | Hàm hiện có chuyển giữ chỗ nếu Hub mới còn slot, tăng version và chỉ cộng `REROUTING_EXTRA_FREE_MINUTES` (15 phút) nếu booking chưa nhận ưu đãi. Đây là thao tác hiện tại; hợp đồng `BookingService.accept_rerouting` là thiết kế mục tiêu có kiểm soát version/idempotency chặt hơn. |
+| Đổi Hub booking sau xác nhận | UI `src/components/student_booking.py` gọi `src/core/booking.py` — `apply_rerouting_to_booking` | Luồng hiện có ở UI SS1 chuyển giữ chỗ nếu Hub mới còn slot, tăng version và chỉ cộng `REROUTING_EXTRA_FREE_MINUTES` (15 phút) nếu booking chưa nhận ưu đãi. `sim_infrastructure.py` không gọi hàm này; hợp đồng `BookingService.accept_rerouting` là thiết kế mục tiêu có kiểm soát version/idempotency chặt hơn. |
 | Xử lý phiên/cổng bị lỗi | Hợp đồng `ChargingService.handle_port_failure` do TV5 sở hữu | **Chưa được gọi bởi SS7 prototype.** `src/core/scheduler.py` có model/lập lịch phiên nhưng chưa có adapter `ChargingService` theo `INT-05`. |
 | Schema preview và Apply dùng chung | `SimulationPreview` / `SimulationCoordinator.apply_preview` do TV6 sở hữu | **Thiết kế mục tiêu.** UI hiện giữ `sim_preview_ss7` dictionary và tự kiểm tra `baseline_version`; chưa dùng coordinator chung hoặc đánh dấu Apply lặp theo `preview_id`. |
 
@@ -124,17 +124,18 @@ Nguồn vector: [class_diagram.svg](<../../../diagrams/submission_3/SS7/class_di
 
 | Class ID / lớp | Chủ sở hữu, mức triển khai | Trách nhiệm, thuộc tính và ràng buộc | Quan hệ / truy vết |
 |---|---|---|---|
-| `SS7-CLS-01 InfrastructureFailure` | TV7; value object **đề xuất**, hiện ánh xạ một phần tới preview dictionary | `failure_id: str`; `hub_id: str`; `num_ports_down: int`; `seed: int`; `baseline_version: int`; `event_log: list[str]`; `metrics: dict[str, Any]`. Số cổng lỗi không âm; phạm vi thực tế không vượt tổng cổng. Bản ghi là kết quả/kịch bản, không đại diện sự kiện IoT thật. | Một kịch bản tạo một `SimulationPreview`; UC_SS7_01. |
+| `SS7-CLS-01 InfrastructureFailure` | TV7; value object **đề xuất**, hiện ánh xạ một phần tới preview dictionary | `failure_id: str`; `hub_id: str`; `num_ports_down: int`; `seed: int`; `baseline_version: int`; `event_log: list[str]`; `metrics: dict[str, Any]`. Số cổng lỗi không âm; phạm vi thực tế không vượt tổng cổng. Bản ghi là kết quả/kịch bản, không đại diện sự kiện IoT thật. | Một kịch bản có thể làm đầu vào cho nhiều preview; UC_SS7_01. |
 | `SS7-CLS-02 InfrastructureSimulationService` | TV7; **đề xuất** bọc hàm simulator hiện tại | Tạo preview `PORT_FAILURE` từ snapshot Hub; không sửa Hub thật trước Apply; dùng schema preview và cơ chế Apply chung. | Dùng `HubEventSimulator`; trả `SimulationPreview` của TV6; gọi `ChargingService` chỉ khi Apply qua coordinator. UC_SS7_01, INT-05/09/10. |
 | `SS7-CLS-03 RouteSuggestion` | TV7; value object **đề xuất**, hiện chuẩn hóa dictionary routing | `hub_id: str`; `distance_km: float`; `available_slots: int`; `available_ports: int`; `reason: str`. Snapshot chỉ đúng tại thời điểm gợi ý, không bảo đảm capacity còn nguyên khi Apply. | Được tạo bởi `ReroutingService`; không tự thay booking. UC_SS7_02, INT-06. |
 | `SS7-CLS-04 ReroutingService` | TV7; **đề xuất** bọc `core.routing` | Lọc Hub theo nhu cầu chỗ/cổng và trạng thái vận hành, xếp tăng dần theo Haversine, trả danh sách rỗng nếu không có ứng viên. Không ghi thay đổi vào booking hoặc capacity. | Đọc Hub chuẩn của TV3; đề xuất cho SS1/UI; sau xác nhận, TV1 xử lý booking qua INT-07. UC_SS7_02. |
 | `HubEventSimulator` | Module core hiện có | `simulate_port_failure` làm bản sao sâu danh sách Hub, giảm cổng available, phân bổ cổng ảnh hưởng vào busy trước rồi free, chuyển số xe tương ứng `CHARGING` sang `WAITING`; trả log và metrics. | Được gọi từ component SS7; hiện không biết ID cổng hoặc phiên sạc cụ thể. |
 | `core.routing` | Module core hiện có | Hàm khoảng cách Haversine và các hàm lọc/xếp Hub hiện trả dictionary, không phải `RouteSuggestion` có kiểu riêng. | `ReroutingService` tương lai chuẩn hóa kết quả. |
+| `Hub` | TV3; shared domain model, **không định nghĩa lại bởi TV7** | Dùng tham chiếu tới Hub chuẩn và schema đã chốt; `RouteSuggestion.hub_id` định danh Hub đích, không tạo bản sao entity Hub thuộc SS7. | Mỗi `RouteSuggestion` liên kết đúng một Hub; một Hub có thể được gợi ý trong nhiều kết quả. |
 | `SimulationPreview`, `SimulationCoordinator` | TV6; shared contract, **không sở hữu bởi TV7** | Preview có `preview_id`, `scenario_type`, `baseline_version`, `modified_hubs`, `charging_effects`, `summary`, trạng thái Apply. `apply_preview` kiểm tra version/invariant, commit đồng bộ và chống Apply lặp theo hợp đồng INT-10. | SS7 dùng INT-09/10; không tạo một cơ chế Apply thứ hai. |
 | `ChargingService` | TV5; shared contract, **không sở hữu bởi TV7** | `handle_port_failure(hub_id, port_ids, operation_key)` cập nhật cổng/phiên bị ảnh hưởng, trả công suất và danh sách phiên; không đổi số slot đỗ. | Coordinator gọi INT-05 khi Apply; prototype chưa triển khai adapter này. |
 | `BookingService` | TV1; shared contract, **không sở hữu bởi TV7** | `accept_rerouting(booking_id, new_hub_id, expected_version, operation_key)` xác nhận lại trạng thái/version/capacity và chuyển giữ chỗ nguyên tử; thưởng tối đa một lần. | Chỉ gọi sau xác nhận của người dùng, INT-07. |
 
-**Quan hệ và bội số thiết kế:** một `InfrastructureSimulationService` có thể tạo nhiều preview theo các lần chạy; mỗi preview tham chiếu một kịch bản sự cố và một baseline version. Một `ReroutingService` tạo 0..N `RouteSuggestion` cho một Hub đích; mỗi suggestion tham chiếu đúng một Hub. Một booking có thể được yêu cầu đổi đích nhiều lần, nhưng mỗi thao tác phải kiểm tra lại trạng thái/sức chứa; ưu đãi 15 phút không cộng dồn. Một `SimulationPreview` được Apply nhiều nhất một lần có hiệu lực.
+**Quan hệ và bội số thiết kế:** một kịch bản `InfrastructureFailure` có thể làm đầu vào cho 0..N `SimulationPreview`; mỗi preview lỗi cổng gắn với đúng một kịch bản. Liên kết này mô tả bối cảnh đầu vào/kết quả SS7, không thêm thuộc tính vào schema `SimulationPreview` chung của TV6. Một `ReroutingService` tạo 0..N `RouteSuggestion` cho một Hub đích; mỗi suggestion tham chiếu đúng một `Hub` chuẩn do TV3 sở hữu. Một booking có thể được yêu cầu đổi đích nhiều lần, nhưng mỗi thao tác phải kiểm tra lại trạng thái/sức chứa; ưu đãi 15 phút không cộng dồn. Một `SimulationPreview` được Apply nhiều nhất một lần có hiệu lực.
 
 ### 4.2. Mô tả phương thức trên sơ đồ
 
@@ -228,15 +229,15 @@ Các lệnh cần `PYTHONPATH=src` do repository không có pytest configuration
 3. Routing không loại Hub lỗi/offline dựa trên trạng thái chuẩn; thiếu tọa độ có thể rơi về giá trị mặc định. Bọc service cần validate dữ liệu trước khi đề xuất.
 4. `sim_preview_ss7` là dictionary riêng; UI chưa gọi `SimulationCoordinator`, chưa lưu lịch sử Apply/idempotency và chưa xử lý transaction SS7–SS5.
 5. Chưa có endpoint/port/hosting cấu hình trong repository; deployment view vì vậy không ghi số cổng hoặc topology cloud.
-6. PlantUML JAR được dùng tạm từ thư mục hệ thống để kiểm tra cú pháp và xuất PNG/SVG; ảnh đã được mở để kiểm tra bố cục. Không thêm JAR vào repository. PDF cuối vẫn cần được TV7 xuất, mở và kiểm tra.
+6. Nguồn class diagram và Implementation view SS7 đã được cập nhật theo review PR #20; PNG/SVG được xuất lại từ cùng nguồn. PDF cá nhân đã được xuất, mở kiểm tra bố cục và đặt tại `output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf`.
 
 ## 9. Tự kiểm tra, khai báo AI và đầu ra
 
-- **Xác nhận nội dung:** 30/10/2026.
-- **Tự kiểm tra kỹ thuật:** hai sơ đồ TV7 đã qua PlantUML syntax check và được xuất PNG/SVG; hai test prototype nêu ở mục 7 đã chạy đạt. Các ca bonus ở mức thiết kế chưa chạy; PDF được xuất từ báo cáo này và kiểm tra sau khi tạo.
+- **Xác nhận nội dung:** TV7 xác nhận phần nội dung ban đầu ngày 30/10/2026; cập nhật tài liệu/sơ đồ theo review PR #20 ngày 03/11/2026.
+- **Tự kiểm tra kỹ thuật:** ba sơ đồ TV7 đã qua PlantUML syntax check và được xuất PNG/SVG; hai test prototype nêu ở mục 7 đã chạy đạt. Các ca bonus ở mức thiết kế chưa chạy. PDF được xuất lại từ báo cáo đã cập nhật, gồm các ảnh sơ đồ hiện hành, rồi mở kiểm tra sau khi tạo.
 - **Khai báo AI:** AI assistant using Copilot SDK in VS Code hỗ trợ đọc hướng dẫn/code, soạn và chỉnh báo cáo TV7, tạo nguồn sơ đồ Deployment/SS7 và Implementation SS7, truy vết, test case, khai báo/checklist và xuất bản PDF. TV7 rà soát và chấp nhận nội dung theo xác nhận nêu trên. Không sửa code triển khai. Tên model cụ thể không được cung cấp trong phiên làm việc.
 - **Đóng góp và giới hạn:** TV7 phụ trách SS7 và Deployment view chung; class diagram hệ thống/Implementation view chung cấp hệ thống thuộc TV3. SimulationCoordinator thuộc TV6, ChargingService thuộc TV5, BookingService thuộc TV1. Phần chia sẻ và giao tiếp được ghi theo đúng chủ sở hữu.
 - **Prompt history:** [Bản ghi prompt Sub3](<../../../prompt-history/TV7_NguyenTrungNguyen/prompt_history_NguyenTrungNguyen_sub3.txt>) gồm prompt thực tế của phiên hỗ trợ và tóm tắt công việc; đây là bản ghi bổ sung, không phải transcript toàn bộ hội thoại.
 - **Self-check:** [Checklist và bằng chứng](<self_check.md>).
-- **PDF cá nhân:** `output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf`.
+- **PDF cá nhân:** [REPORT_SUB3_NguyenTrungNguyen_2011710.pdf](<../../../../output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf>) — PDF đã xuất và kiểm tra, được bàn giao cùng nguồn trong cây repository.
 - **LMS:** chưa xác nhận trạng thái nộp; TV7 phải tự tải đúng bộ file và kiểm tra biên nhận/trạng thái trên LMS.

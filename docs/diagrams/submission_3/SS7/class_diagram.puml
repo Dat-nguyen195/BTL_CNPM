@@ -40,12 +40,15 @@ class HubEventSimulator <<implemented>> {
 class "core.routing" as RoutingModule <<implemented module>>
 class "sim_infrastructure.render" as SS7UI <<implemented UI>>
 class "SimulationPreview (TV6)" as SimulationPreview <<shared contract>>
+class "Hub (TV3)" as Hub <<shared domain model>>
 
 InfrastructureSimulationService ..> InfrastructureFailure : tạo bản ghi kết quả
 InfrastructureSimulationService ..> HubEventSimulator : ánh xạ prototype
 InfrastructureSimulationService ..> SimulationPreview : INT-09\nPORT_FAILURE
 ReroutingService ..> RoutingModule : ánh xạ hàm hiện tại
 ReroutingService ..> RouteSuggestion : chuẩn hóa kết quả
+InfrastructureFailure "1" <-- "0..*" SimulationPreview : failure_scenario
+RouteSuggestion "0..*" --> "1" Hub : suggested_hub
 InfrastructureSimulationService -[hidden]down-> ReroutingService
 
 SS7UI ..> HubEventSimulator : lời gọi mô phỏng hiện tại
@@ -69,6 +72,13 @@ note bottom of SimulationPreview
   BookingService thuộc TV1.
   Đây là shared contracts, chưa phải
   tích hợp đang chạy trong prototype.
+end note
+
+note right of SimulationPreview
+  Quan hệ failure_scenario thể hiện
+  bối cảnh đầu vào/kết quả của SS7;
+  không thêm field vào schema chung.
+  Hub dùng model chuẩn do TV3 sở hữu.
 end note
 
 note bottom of HubEventSimulator

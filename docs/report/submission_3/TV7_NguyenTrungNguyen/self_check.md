@@ -1,7 +1,7 @@
 # Tự kiểm tra — Nguyễn Trung Nguyên — SS7
 
-**Phiên bản sản phẩm:** 1.0 (báo cáo TV7 và PDF ngày 30/10/2026).  
-**Trạng thái xác nhận:** 30/10/2026.  
+**Phiên bản sản phẩm:** 1.1 (cập nhật theo review PR #20 ngày 03/11/2026).<br>
+**Trạng thái xác nhận:** TV7 xác nhận nội dung ban đầu ngày 30/10/2026; cập nhật review đã được thực hiện, chờ TV7 xác nhận bản cuối.<br>
 **Nguyên tắc:** tác giả tự kiểm tra, tự sửa và tự chịu trách nhiệm; không có kiểm tra chéo.
 
 ## Task cá nhân kế thừa từ hướng dẫn
@@ -40,9 +40,9 @@
 
 ## Kết quả tự kiểm tra thực tế
 
-- **Đã kiểm tra file/phiên bản nào:** `REPORT_SUB3.md` phiên bản 1.0; `traceability.md`; `test_cases.md`; `ai_usage.md`; nguồn và ảnh Deployment view, class diagram SS7, Implementation view SS7; PDF `output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf`.
-- **Kết quả và bằng chứng:** PlantUML syntax check và xuất PNG/SVG đạt cho ba sơ đồ TV7; PDF cá nhân 13 trang đã được mở kiểm tra bố cục trong phiên hỗ trợ. Test prototype hiện có: PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_simulations.py` — PASS, 2 passed; PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_submission_2_acceptance.py -k rerouting` — PASS, 1 passed, 12 deselected. Sáu test bonus `SS7-TC-01`–`SS7-TC-06` được thiết kế, chưa chạy riêng; xem `test_cases.md`.
-- **Vấn đề còn mở:** báo cáo TV7 chưa mô tả INT-08; prototype chưa tích hợp `ChargingService`/INT-05 hoặc `SimulationCoordinator`/INT-10; chưa có port ID, tích hợp IoT hay phát hiện mất điện thật; routing chưa lọc Hub theo trạng thái OFFLINE chuẩn. Việc nộp LMS và tiêu chí xác nhận dùng chung cấp nhóm chưa được xác nhận.
+- **Đã kiểm tra file/phiên bản nào:** `REPORT_SUB3.md` phiên bản 1.1; `traceability.md`; `test_cases.md`; `ai_usage.md`; nguồn và ảnh Deployment view, class diagram SS7, Implementation view SS7; PDF `output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf`.
+- **Kết quả và bằng chứng:** PlantUML syntax check và xuất PNG/SVG đạt cho ba sơ đồ TV7; PDF cá nhân đã được mở kiểm tra bố cục sau khi cập nhật, gồm 13 trang. Test prototype hiện có: PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_simulations.py` — PASS, 2 passed; PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_submission_2_acceptance.py -k rerouting` — PASS, 1 passed, 12 deselected. Sáu test bonus `SS7-TC-01`–`SS7-TC-06` được thiết kế, chưa chạy riêng; xem `test_cases.md`.
+- **Vấn đề còn mở:** prototype chưa tích hợp `ChargingService`/INT-05 hoặc `SimulationCoordinator`/INT-10; chưa có port ID, tích hợp IoT hay phát hiện mất điện thật; routing chưa lọc Hub theo trạng thái OFFLINE chuẩn. Việc nộp LMS và tiêu chí xác nhận dùng chung cấp nhóm chưa được xác nhận.
 - **Xác nhận của tác giả:** TV7 đã kiểm tra phần của mình  ngày 30/10/2026.
 
-> **Chú thích bổ sung:** Ô `TV7-12` để trống vì chưa có bằng chứng xác nhận tải bộ file lên LMS hoặc biên nhận/trạng thái nộp. Việc đánh dấu phản ánh bằng chứng có trong repository và kiểm tra kỹ thuật đã thực hiện; TV7 tự chịu trách nhiệm xác nhận cuối cùng theo nguyên tắc ở đầu checklist.
+> **Chú thích bổ sung:** Ô `TV7-12` để trống vì chưa có bằng chứng xác nhận tải bộ file lên LMS hoặc biên nhận/trạng thái nộp. Việc đánh dấu phản ánh bằng chứng có trong repository và kiểm tra kỹ thuật đã thực hiện; TV7 cần xác nhận bản cuối và tự chịu trách nhiệm theo nguyên tắc ở đầu checklist.
