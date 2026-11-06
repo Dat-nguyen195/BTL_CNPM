@@ -1,16 +1,170 @@
-@startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
+@startuml class_diagram_ss6
 skinparam backgroundColor white
 skinparam shadowing false
-skinparam defaultFontName SansSerif
-title Class diagram SS6 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV6 — Hoàng Văn Tấn\nUC_SS6_01, UC_SS6_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: DemandScenario
-' Lop/kieu chu tri: ForecastResult
-' Lop/kieu chu tri: ForecastService
-' Lop/kieu chu tri: DemandSimulationService
-' Lop/kieu chu tri: SimulationPreview
-' Lop/kieu chu tri: ApplyResult
-' Lop/kieu chu tri: SimulationCoordinator
+skinparam defaultFontName "Segoe UI", Arial, SansSerif
+skinparam roundCorner 8
+skinparam classFontSize 12
+skinparam classAttributeFontSize 11
+
+title "Phân hệ SS6: Mô phỏng nhu cầu What-if & Dự báo 24 giờ - Class Diagram (Submission 3)\nChủ sở hữu: TV6 — Hoàng Văn Tấn (MSSV: 2213074)"
+
+package "UI & Boundary Layer" #Azure {
+    class SimDemandUI <<boundary>> {
+        + render(): void
+        + render_demand_forecast_tab(): void
+        + render_metro_surge_tab(): void
+        + render_preview_comparison(preview: SimulationPreview): void
+        - display_event_log(logs: List<str>): void
+        - plot_forecast_charts(forecast_df: Any): void
+    }
+}
+
+package "Service & Coordination Layer" #LightYellow {
+    class DemandSimulationService <<service>> {
+        - adapter: HubEventSimulatorAdapter
+        + preview_demand(hub_id: str, num_students: int, seed: int = 42): OperationResult<SimulationPreview>
+    }
+
+    class ForecastService <<service>> {
+        - adapter: HubEventSimulatorAdapter
+        + forecast(hub_id: str, base_arrival_rate: float, surge_multiplier: float, hours: int = 24, seed: int = 42): OperationResult<ForecastResult>
+    }
+
+    class SimulationCoordinator <<coordinator>> {
+        - current_preview: Optional<SimulationPreview>
+        + apply_preview(preview_id: str, expected_version: int): OperationResult<ApplyResult>
+        + discard_preview(preview_id: str): OperationResult<bool>
+        + get_current_preview(): Optional<SimulationPreview>
+    }
+}
+
+package "Core Domain Model & DTOs" #MintCream {
+    enum ScenarioType {
+        DEMAND
+        PORT_FAILURE
+    }
+
+    class DemandScenario <<entity>> {
+        + scenario_id: str
+        + target_hub_id: str
+        + num_students: int
+        + surge_multiplier: float
+        + seed: int
+        + created_at: datetime
+    }
+
+    class ForecastPoint <<value object>> {
+        + hour_label: str
+        + arrivals: int
+        + queue_length: int
+        + wait_time_min: float
+    }
+
+    class ForecastResult <<dto>> {
+        + forecast_id: str
+        + hub_id: str
+        + hours: int
+        + seed: int
+        + service_rate: int
+        + assumptions: str
+        + points: List<ForecastPoint>
+        + peak_hour: str
+        + max_queue: int
+        + max_wait_time: float
+    }
+
+    class SimulationPreview <<dto>> {
+        + preview_id: str
+        + scenario_type: ScenarioType
+        + baseline_version: int
+        + target_hub_id: str
+        + modified_hubs: List<Dict>
+        + event_log: List<str>
+        + metrics: Dict<str, Any>
+        + is_applied: bool
+        + created_at: datetime
+    }
+
+    class ApplyResult <<dto>> {
+        + preview_id: str
+        + applied: bool
+        + already_applied: bool
+        + new_state_version: int
+        + message: str
+    }
+}
+
+package "Shared Architecture Contracts (TV1 / TV3)" #WhiteSmoke {
+    class OperationResult<T> <<shared>> {
+        + ok: bool
+        + data: Optional<T>
+        + error_code: Optional<str>
+        + message: str
+        + state_version: int
+    }
+
+    class Hub <<shared>> {
+        + hub_id: str
+        + name: str
+        + total_slots: int
+        + available_slots: int
+        + charging_ports: Dict
+        + current_vehicles: List<Dict>
+    }
+}
+
+package "Simulation Engine & Adapter Layer" #GhostWhite {
+    class HubEventSimulatorAdapter <<adapter>> {
+        - engine: HubEventSimulator
+        + simulate_metro_surge(target_hub_id: str, num_students: int, seed: int): Tuple<List<Dict>, List<str>, Dict>
+        + generate_demand_forecast(base_rate: float, surge_mult: float, hours: int, seed: int): List<Dict>
+    }
+
+    class HubEventSimulator <<core engine>> {
+        - _original: List<Dict>
+        + simulate_metro_surge(target_hub_id: str, num_new_students: int, seed: Optional<int>): Tuple
+        + generate_demand_forecast(base_arrival_rate: float, surge_multiplier: float, hours: int, seed: Optional<int>): List<Dict>
+    }
+}
+
+' Relationships & Dependencies
+SimDemandUI ..> DemandSimulationService : invokes INT-08
+SimDemandUI ..> ForecastService : invokes INT-04
+SimDemandUI ..> SimulationCoordinator : invokes INT-10
+SimDemandUI ..> SimulationPreview : displays
+
+DemandSimulationService ..> HubEventSimulatorAdapter : delegates
+ForecastService ..> HubEventSimulatorAdapter : delegates
+HubEventSimulatorAdapter --> HubEventSimulator : wraps
+
+DemandSimulationService ..> SimulationPreview : creates
+DemandSimulationService ..> DemandScenario : uses
+ForecastService ..> ForecastResult : creates
+ForecastResult *-- "24" ForecastPoint : contains
+
+SimulationCoordinator ..> SimulationPreview : manages & applies
+SimulationCoordinator ..> ApplyResult : produces
+SimulationCoordinator ..> Hub : updates in session_state
+
+DemandSimulationService ..> OperationResult : returns
+ForecastService ..> OperationResult : returns
+SimulationCoordinator ..> OperationResult : returns
+
+SimulationPreview o-- ScenarioType : typed by
+
+note right of SimulationCoordinator
+  <b>Nguyên tắc bảo đảm Invariant:</b>
+  1. Deepcopy isolation: Preview không can thiệp state gốc.
+  2. Idempotency: Áp dụng lại cùng preview trả về already_applied=True.
+  3. Stale prevention: Chỉ commit khi baseline_version == current_state_version.
+  4. Đạt chuẩn liên phân hệ: SS7 tái sử dụng SimulationPreview và ApplyResult.
+end note
+
+note bottom of ForecastService
+  <b>Dự báo 24 giờ (INT-04):</b>
+  - Nhận tham số hours=24 (không dùng mặc định 12h).
+  - Tái tạo kết quả nhất quán với cùng seed.
+  - Phân tích hàng đợi & thời gian chờ trung bình.
+end note
+
 @enduml
