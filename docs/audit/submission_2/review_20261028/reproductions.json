@@ -1,0 +1,17 @@
+{
+  "return_ui": {
+    "exceptions": [
+      "'free_minutes_applied'"
+    ],
+    "booking_status": "COMPLETED",
+    "balance": 135000,
+    "held": 0,
+    "stored_invoice_total": 15000
+  },
+  "invalid_voucher": {
+    "code": "SAIMA123",
+    "expected_total": 15000,
+    "actual_total": 10000,
+    "discount": 5000
+  }
+}
