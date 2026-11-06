@@ -1,0 +1,84 @@
+@startuml implementation
+title Phân hệ SS3 & Tổng thể: Development / Implementation View (Submission 3)\n Chủ sở hữu: TV3 — Phạm Tiến Đạt (MSSV: 2410724) 
+
+skinparam componentStyle uml2
+skinparam wrapWidth 240
+skinparam ranksep 65
+skinparam nodesep 35
+skinparam Padding 6
+skinparam shadowing false
+
+top to bottom direction
+
+node "Client Tier: Máy trạm Nhân viên Giám sát / Quản trị viên / Sinh viên" <<device>> {
+    node "Trình duyệt Web hiện đại (Chrome / Edge / Firefox)" <<execution environment>> {
+        component "Plotly.js Interactive Runtime\n(Render biểu đồ KPI, Bản đồ & Dự báo 24h)" <<component>> as ClientPlotly
+        component "Giao diện Web Streamlit\n(HTML5 / CSS3 / WebSockets)" <<component>> as ClientStreamlit
+    }
+}
+
+node "Application Server Tier: Máy chủ ứng dụng / Trạm làm việc" <<device>> {
+    node "Python 3.12 Runtime & Streamlit Framework" <<execution environment>> {
+
+        package "Tầng Trình diễn (Presentation Layer — src/app.py & src/components/)" as P_UI {
+            component "src/components/hub_monitor.py\n(SS3 UI — Operator Dashboard - TV3)" <<component>> as UI_SS3
+            component "src/components/student_booking.py & personal_ev.py\n(SS1 & SS2 UI — Đặt xe chung & Xe cá nhân)" <<component>> as UI_BookingPEV
+            component "src/components/dispatch_incident.py & smart_charging.py\n(SS4 & SS5 UI — Điều phối, Sự cố & Sạc 150kW)" <<component>> as UI_OpsCharging
+            component "src/components/sim_demand.py & sim_infrastructure.py\n(SS6 & SS7 UI — Mô phỏng What-if & Hạ tầng)" <<component>> as UI_Sim
+        }
+
+        package "Tầng Dịch vụ & Điều phối (In-Memory Business Services — src/core/)" as P_SVC {
+            component "MonitoringService (Proposed Adapter)\n(Tổng hợp KPI, Doanh thu thực thu & Cảnh báo 4 mức)" <<component>> as Core_Monitor
+            component "BookingService & PersonalEVService\n(src/core/booking.py & personal_ev.py)" <<component>> as Core_BookingPEV
+            component "BillingService\n(src/core/billing.py — Giữ cọc, Quyết toán & Chống thu trùng)" <<component>> as Core_Billing
+            component "ChargingService & SmartChargingScheduler\n(src/core/scheduler.py — Hàng đợi ưu tiên & Trần 150kW)" <<component>> as Core_Scheduler
+            component "SimulationCoordinator, Forecast & Rerouting\n(src/core/simulator.py & routing.py)" <<component>> as Core_SimRouting
+        }
+
+        package "Tầng Động cơ Lõi & Chính sách (Core Engine & Policies)" as P_CORE {
+            component "src/core/policies.py\n(Ngưỡng 70/85/100%, TTL 30p, Ân hạn 15p, Biểu phí)" <<component>> as Core_Policies
+            component "src/core/state.py\n(Session State Adapter, Entities, Enums & Invariants)" <<component>> as Core_State
+        }
+
+        rectangle "Bộ nhớ RAM phiên làm việc (In-Memory Session State)" as P_MEM {
+            database "st.session_state.hubs\n(Dữ liệu mạng lưới 6 trạm vận hành gốc)" <<memory>> as DB_Hubs
+            database "st.session_state.wallet & bookings\n(Sổ cái ledger, tiền cọc, nợ & lịch sử đặt chỗ)" <<memory>> as DB_Wallet
+            database "st.session_state.state_version & sim_preview\n(Bộ đếm phiên bản chống Stale Apply & Cache)" <<memory>> as DB_Version
+        }
+    }
+}
+
+ClientStreamlit <..> UI_SS3 : HTTP / WebSocket (TCP Port 8501)\nJSON State & Graph Payloads
+ClientPlotly <.. UI_SS3 : Gửi cấu hình biểu đồ & Bản đồ Hub
+
+UI_SS3 --> Core_Monitor : INT-03: get_network_snapshot()\n& evaluate_hub_alerts()
+UI_BookingPEV --> Core_BookingPEV : Đặt chỗ, Check-in/out,\nHủy & Quét hết hạn 30p
+UI_OpsCharging --> Core_Scheduler : Phân bổ cổng, Tick +15p\n& Rút sạc (Unplug)
+UI_Sim --> Core_SimRouting : INT-04, INT-08, INT-09, INT-10:\nForecast, Preview & Apply
+
+Core_Monitor ..> Core_Billing : Đọc doanh thu thực thu\n(Tách cọc & công nợ)
+Core_Monitor ..> Core_Scheduler : INT-02: get_bill()\n& đọc tải công suất
+Core_BookingPEV --> Core_Billing : hold_deposit / settle_no_show\n/ settle_invoice
+Core_BookingPEV --> Core_Scheduler : INT-01, INT-02:\nrequest_charging & get_bill
+Core_SimRouting --> Core_Scheduler : INT-05:\nhandle_port_failure()
+
+Core_Monitor --> Core_Policies : Đối chiếu ngưỡng\n70% / 85% / 100%
+Core_Monitor --> Core_State : Kiểm tra bảo toàn sức chứa\nvalidate_hub_capacity()
+Core_BookingPEV --> Core_State : Cập nhật xe & chỗ giữ trước
+Core_Billing --> Core_State : Ghi nhận biến động ví
+Core_Scheduler --> Core_Policies : Áp dụng trần 150kW\n& ân hạn 15p
+Core_SimRouting --> Core_State : Deepcopy isolation &\nKiểm tra baseline_version
+
+Core_State ..> DB_Hubs : Đọc / Cập nhật\ntrạng thái 6 Hub
+Core_State ..> DB_Wallet : Ghi bất biến\nLedger & Invoice
+Core_State ..> DB_Version : Tăng state_version (bump)\nsau mỗi giao dịch
+
+note right of P_MEM
+  **Nguyên tắc triển khai Prototype:**
+  - Toàn bộ trạng thái lưu in-memory trong st.session_state.
+  - Không kết nối Cơ sở dữ liệu bên ngoài (RDBMS/NoSQL).
+  - Làm mới chỉ số qua cơ chế Streamlit rerun (in-process).
+  - Bảo toàn sức chứa và tách biệt tiền cọc khỏi doanh thu.
+end note
+
+@enduml
