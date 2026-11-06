@@ -1,17 +1,199 @@
+
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS5 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV5 — Dương Đăng Khoa\nUC_SS5_01, UC_SS5_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: ChargingRequest
-' Lop/kieu chu tri: ChargingRequestResult
-' Lop/kieu chu tri: ChargingSession
-' Lop/kieu chu tri: ChargingPort
-' Lop/kieu chu tri: ChargingBill
-' Lop/kieu chu tri: PortFailureResult
-' Lop/kieu chu tri: ChargingService
-' Lop/kieu chu tri: SmartChargingScheduler
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+title Class Diagram SS5 - Smart Charging Scheduler
+
+legend right
+  |= Stereotype |= Meaning |
+  | <<Implemented>> | Exists in original source code |
+  | <<Required - Not Implemented>> | Required by design/interface, absent from original code |
+  | <<External>> | Owned by another subsystem |
+endlegend
+
+package "SS5 - Smart Charging" {
+
+    class ChargingRequest <<Implemented>> {
+        +vehicle_id: str
+        +hub_id: str
+        +battery_soc: float
+        +has_student_booking: bool
+        +requested_at: datetime
+        +priority_score: float
+        +ownership: str
+        +owner_id: Optional[str]
+        +target_soc: float
+        +port_kw: float
+        --
+        +__post_init__(): void
+        +__repr__(): str
+    }
+
+    class ChargingSession <<Implemented>> {
+        +session_id: str
+        +vehicle_id: str
+        +hub_id: str
+        +port_id: str
+        +port_kw: float
+        +current_soc: float
+        +target_soc: float
+        +status: str
+        +started_at: datetime
+        +completed_at: Optional[datetime]
+        +alert_90_sent: bool
+        +grace_deadline: Optional[datetime]
+        +overstay_minutes: int
+        +overstay_fee: int
+        +energy_delivered_kwh: float
+    }
+
+    class SmartChargingScheduler <<Implemented>> {
+        -cap_kw: float
+        -_queue: List[ChargingRequest]
+        -_active_sessions: Dict[str, ChargingSession]
+        --
+        +__init__(cap_kw: float = HUB_POWER_CAP_KW): void
+        {static} +calculate_priority(request: ChargingRequest): float
+        +add_request(request: ChargingRequest): void
+        +remove_request(vehicle_id: str): Optional[ChargingRequest]
+        +get_sorted_queue(): List[ChargingRequest]
+        +allocate_ports(hub_id: str, available_port_count: int, current_active_kw: float = 0.0): List[Dict]
+        +advance_simulation_tick(minutes: int = 15): List[Dict]
+        +unplug_vehicle(session_id: str): Optional[ChargingSession]
+        +queue_length: int
+        +get_queue_as_dicts(): list
+    }
+
+    class ChargingService <<Required - Not Implemented>> {
+        +request_charging(owner_id, vehicle_id, hub_id, current_soc, target_soc, reservation_id): OperationResult
+        +get_bill(session_id): OperationResult
+        +handle_port_failure(hub_id, port_ids, operation_key): OperationResult
+    }
+
+    class ChargingRequestResult <<Required - Not Implemented>> {
+        +request_id: str
+        +vehicle_id: str
+        +hub_id: str
+        +status: ChargingStatus
+        +session_id: Optional[str]
+    }
+
+    class ChargingPort <<Required - Not Implemented>> {
+        +port_id: str
+        +hub_id: str
+        +status: PortStatus
+        +max_power_kw: float
+    }
+
+    class ChargingBill <<Required - Not Implemented>> {
+        +session_id: str
+        +energy_delivered_kwh: float
+        +energy_fee_vnd: int
+        +overstay_fee_vnd: int
+        +charge_lines: List[ChargeLine]
+        +payment_status: str
+        +collected_amount_vnd: int
+    }
+
+    class PortFailureResult <<Required - Not Implemented>> {
+        +hub_id: str
+        +affected_port_ids: List[str]
+        +affected_session_ids: List[str]
+        +remaining_capacity_kw: float
+    }
+}
+
+package "Billing - Original billing.py" {
+
+    class BillingFunctions <<Module>> {
+        +settle_overstay_charging(wallet, session_id, vehicle_id, overstay_fee, energy_fee, kwh_charged, sim_time): Dict
+        +calculate_private_ev_bill(parking_fee, kwh_consumed, checkin_time_str, overstay_minutes): Dict
+        +record_transaction(wallet, tx_type, amount, booking_id, note, sim_time): Dict
+        +record_wallet_debt(wallet, amount, reason, sim_time): void
+    }
+}
+
+package "External Contracts" {
+
+    class OperationResult <<External>> {
+        +ok: bool
+        +data: T
+        +error_code: str
+        +message: str
+        +state_version: int
+    }
+
+    class ChargeLine <<External - TV1>> {
+        +charge_id: str
+        +source_id: str
+        +kind: str
+        +amount_vnd: int
+    }
+
+    class BillingService <<External - TV1>> {
+        +settle_invoice(owner_id, reference_id, charge_lines, operation_key): OperationResult
+    }
+}
+
+SmartChargingScheduler "1" o-- "0..*" ChargingRequest : queue
+SmartChargingScheduler "1" o-- "0..*" ChargingSession : active sessions
+
+ChargingSession ..> ChargingPort : port_id reference
+
+ChargingService ..> SmartChargingScheduler : uses
+ChargingService ..> ChargingRequest : creates
+ChargingService ..> ChargingRequestResult : returns
+ChargingService ..> ChargingBill : returns
+ChargingService ..> PortFailureResult : returns
+
+ChargingBill "1" o-- "1..*" ChargeLine : contains
+ChargingService ..> BillingService : submits fees
+BillingService ..> ChargeLine : settles
+
+BillingFunctions ..> ChargingSession : receives session data
+BillingFunctions ..> ChargingBill : produces invoice data
+
+note right of SmartChargingScheduler
+  Original implementation: scheduler.py
+
+  - Calculates priority score.
+  - Maintains the waiting queue.
+  - Allocates charging ports under Hub power cap.
+  - Advances charging simulation.
+  - Tracks grace period and overstay fees.
+  - Unplugs vehicles and releases sessions.
+end note
+
+note bottom of ChargingService
+  Required service interface from
+  SS5 subsystem contract:
+
+  INT-01: request_charging
+  INT-02: get_bill
+  INT-05: handle_port_failure
+
+  These methods do not exist in
+  the original source code.
+end note
+
+note bottom of BillingFunctions
+  Original billing.py contains functions,
+  not a BillingService class.
+
+  settle_overstay_charging() directly
+  modifies wallet balance and records debt.
+end note
+
+note bottom of ChargingPort
+  Original scheduler.py stores port_id
+  as a string in ChargingSession.
+
+  It does not define a ChargingPort class
+  or maintain a port object.
+end note
+
 @enduml
