@@ -5,4 +5,20 @@ Tệp được khởi tạo cùng bộ khung tài liệu cấp nhóm. Không b�
 
 Mỗi mục thực tế cần ghi: prompt nguyên văn; công cụ/model nếu biết; phản hồi hoặc tóm tắt có gắn nhãn; phần tự sửa/kiểm tra và quyết định của tác giả.
 
-CHƯA GHI NHẬN PROMPT CÁ NHÂN TRONG TỆP KHUNG NÀY. Thành viên bổ sung lịch sử thật của mình nếu có.
+## Prompt 1 — yêu cầu ban đầu
+
+- **Thời điểm:** 2026-10-28 14:46 (UTC+7; lấy từ thời điểm phiên hội thoại).
+- **Công cụ/model:** AI assistant using Copilot SDK in VS Code; model cụ thể không được phiên làm việc cung cấp.
+- **Prompt nguyên văn:** “đọc file guidance for sub 3 và làm phần của TV7”
+- **Tóm tắt phản hồi:** đọc hướng dẫn, code SS7, hợp đồng chung, sơ đồ và test; hoàn thiện tài liệu TV7; tạo Deployment view và class diagram SS7; chạy test prototype liên quan và render sơ đồ.
+- **Tác giả rà soát / quyết định:** không có xác nhận được ghi ở thời điểm prompt này. Xác nhận nội dung được ghi riêng ở Prompt 2.
+
+## Prompt 2 — hoàn thiện các mục TV7 còn thiếu
+
+- **Thời điểm:** 2026-10-30 19:54 (UTC+7; lấy từ thời điểm phiên hội thoại).
+- **Công cụ/model:** AI assistant using Copilot SDK in VS Code; model cụ thể không được phiên làm việc cung cấp.
+- **Prompt nguyên văn:** “tôi đã kiểm tra phần của TV7 đã thấy chấp nhận được. hãy điền hết những phần còn lại mà TV7 phải điền trong submission 3.”
+- **Tóm tắt phản hồi:** ghi nhận TV7 đã xem và chấp nhận phần nội dung; hoàn thiện khai báo AI, self-check và prompt history; tạo Implementation view riêng cho SS7 để không thay thế view hệ thống của TV3; chuẩn bị PDF cá nhân.
+- **Quyết định của tác giả:** người dùng cho biết đã xem phần TV7 và thấy chấp nhận được. Đây là xác nhận nội dung trong hội thoại, không phải xác nhận đã nộp LMS.
+
+Đây là bản ghi bổ sung các prompt thực tế nhìn thấy trong phiên hỗ trợ, kèm tóm tắt được ghi nhãn; không phải transcript toàn bộ hội thoại hoặc export từ nền tảng bên ngoài.

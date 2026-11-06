@@ -1,6 +1,6 @@
 # Submission 3 — báo cáo và bộ khung làm việc
 
-**Trạng thái:** đã khởi tạo thư mục/file nguồn; nội dung cá nhân và sơ đồ vẫn DRAFT.  
+**Trạng thái:** TV7 đã hoàn thiện báo cáo, nguồn và ảnh các view cá nhân, đồng thời xuất PDF. Các phần cá nhân khác tiếp tục theo trạng thái trong file của từng thành viên.
 **Bắt đầu:** 21/10/2026. **Kết thúc:** 30/10/2026.  
 **Nguyên tắc:** mỗi thành viên tự làm, tự kiểm tra và tự chịu trách nhiệm; không có kiểm tra chéo hoặc deadline theo từng task.
 
@@ -37,4 +37,4 @@ Dự án đã có cây `docs/report/submission_3/` với `mau.png`. Cấu trúc 
 4. Ghi phạm vi AI và prompt thực tế; không coi khung được sinh tự động là đóng góp hoàn chỉnh của cá nhân.
 5. Xuất ảnh sau khi thiết kế hoàn thiện; đưa đủ hình, bảng, thuyết minh và các phụ lục cần thiết vào PDF để nộp theo LMS.
 
-Các file `.puml` hiện chỉ có note DRAFT, không phải class/deployment diagram đã hoàn thiện. Không tạo PDF/PNG rỗng hoặc tự ghi PASS để làm đủ danh sách. `mau.png` là tệp sẵn có được giữ nguyên.
+Các file `.puml` phải được kiểm tra theo trạng thái ở [chỉ mục sơ đồ](<../../diagrams/submission_3/README.md>); không coi source đã điền là ảnh đã render hoặc xác nhận của chủ sở hữu. Không tạo PDF/PNG rỗng hoặc tự ghi PASS để làm đủ danh sách. `mau.png` là tệp sẵn có được giữ nguyên.
