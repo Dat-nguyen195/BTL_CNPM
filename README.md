@@ -184,3 +184,14 @@ latexmk -xelatex -interaction=nonstopmode -halt-on-error REPORT_SUBMISSION_2.tex
 Các test xác thực luồng prototype với dữ liệu trong phiên. SSO, IoT, barie và cổng thanh toán thật được mô phỏng; ba tiêu chí PARTIAL được công khai trong ma trận và báo cáo.
 
 Chính sách giữ chỗ cập nhật ngày 21/10/2026: SS1 có hạn 30 phút kể từ khi đặt; SS2 có hạn Check-in 30 phút kể từ giờ đến đã chọn. Tại đúng deadline, lượt chưa nhận/Check-in hết hiệu lực. Cọc vẫn 50.000đ, phí no-show 10.000đ, hoàn 40.000đ. Ân hạn rút sạc và ưu đãi điều hướng vẫn 15 phút. Các booking đã lưu deadline trước đó giữ thông tin của thời điểm tạo; dùng phiên demo mới/Reset để kiểm tra chính sách mới.
+
+
+## Submission 3 - revision tích hợp06/11/2026
+
+- [Bộ nguồn7 thành viên](docs/report/submission_3/README.md).
+- [Review chi tiết theo đề giảng viên/SRS](docs/review/REVIEW_SUBMISSION_3_20261106.md).
+- [Kế hoạch chốt bài](docs/report/submission_3/COMPLETION_PLAN.md).
+- [Bộ7 PDF và SHA256SUMS](output/submission_3/README.md).
+- [Truy vết17 UC](docs/traceability/submission_3.md).
+
+Bản tích hợp cần các chủ sở hữu đọc/hiểu và xác nhận trước nộp LMS; service OOP đề xuất không đồng nghĩa đã có code. Xem review/open_issues cho các chênh lệch MVP còn cần triển khai trước demo/final.

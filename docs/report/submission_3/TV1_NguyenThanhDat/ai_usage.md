@@ -1,18 +1,8 @@
-# Khai báo AI — Nguyễn Thành Đạt — SS1
+# Khai báo AI SS1
 
-**Trạng thái:** khung; tác giả chưa xác nhận mức đóng góp cá nhân.
+Chưa có xác nhận đầy đủ của tác giả về công cụ/phạm vi trước đợt tích hợp. Không tự suy đoán hoặc điền thay tên model/phần tác giả thực hiện.
 
-## Phần hỗ trợ ở cấp nhóm đã biết
 
-AI (Codex) đã hỗ trợ rà soát cách tổ chức thư mục, tạo hướng dẫn và bộ khung Markdown/PlantUML. Bộ khung chưa phải báo cáo hay thiết kế hoàn chỉnh, chưa xác nhận kết quả test.
+## Bổ sung khi tổng hợp 06/11/2026
 
-## Tác giả bổ sung theo thực tế
-
-- **Công cụ/model thực tế đã dùng:** [CHƯA ĐIỀN].
-- **Phạm vi và mức đóng góp của AI:** [CHƯA ĐIỀN].
-- **Phần cá nhân tự phân tích/sửa/kiểm tra:** [CHƯA ĐIỀN].
-- **Gợi ý đã giữ/bỏ và lý do:** [CHƯA ĐIỀN].
-- **Nội dung dùng chung và chủ sở hữu:** [CHƯA ĐIỀN].
-- **Prompt history:** [Tệp cá nhân Submission 3](<../../../prompt-history/TV1_NguyenThanhDat/prompt_history_NguyenThanhDat_sub3.txt>).
-
-Không coi việc tạo tệp log là bằng chứng đã dùng AI hoặc đã lưu đầy đủ lịch sử cá nhân; chỉ ghi nội dung thật, không tự dựng hội thoại/thời gian.
+Codex (AI assistant trong phiên làm việc của trưởng nhóm) đọc đề giảng viên, SRS, code và bài bàn giao; hỗ trợ review, sửa/bổ sung Markdown/PlantUML, danh mục phương thức/truy vết, kiểm tra kỹ thuật và tạo PDF. Mức đóng góp AI trong đợt này là trực tiếp soạn/chỉnh nội dung và tự động hóa kiểm tra; không phải chỉ sửa chính tả. Trưởng nhóm yêu cầu công việc; chủ sở hữu chưa xác nhận đã đọc/hiểu mọi bản sửa. Lịch sử prompt trước giữ nguyên; bản ghi revision ở docs/prompt-history/submission_3_integration_20261106.md, không giả lập hội thoại cá nhân bị thiếu.

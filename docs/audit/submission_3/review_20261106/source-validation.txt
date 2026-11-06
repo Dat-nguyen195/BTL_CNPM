@@ -1,0 +1,2 @@
+Canonical UC: 17; detailed diagram method entries: 70; member reports: 7
+PASS

@@ -1,94 +1,121 @@
-# Submission 3 — Nguyễn Thành Đạt — SS1
+# Submission 3 - Nguyễn Thành Đạt - SS1
 
-**MSSV:** 2410709  
-**Phân hệ:** SS1 — Đặt, nhận, trả và hủy xe  
-**Trạng thái:** DRAFT / KHUNG CHƯA HOÀN THIỆN.  
-**Khoảng thực hiện:** 21/10/2026–30/10/2026.
+**MSSV:** 2410709. **Revision:** 06/11/2026. **Trạng thái:** bản tích hợp kỹ thuật, cần chủ sở hữu đọc và xác nhận trước nộp.
 
-[Hướng dẫn và phân công](<../../../../GUIDANCE_FOR_SUB_3.md>) · [Quyết định dùng chung](<../shared/shared_contracts.md>)
+Nội dung được bổ sung/chỉnh trong đợt tổng hợp theo yêu cầu trưởng nhóm, có AI hỗ trợ; không ghi nhận thay tác giả rằng họ đã tự làm hoặc tự xác nhận. Nguồn bàn giao cũ giữ trong lịch sử Git.
 
-Khung này do AI khởi tạo ở cấp nhóm. Tác giả phải bổ sung nội dung, tự kiểm tra và khai báo đóng góp thực tế. Các mục [CHƯA ĐIỀN] không phải nội dung hoàn thành.
+## 1. Phạm vi
 
-## 1. Phạm vi và đóng góp
+- `UC_SS1_01`: Tra cứu, Đặt xe & Nhận xe qua QR/PIN.
+- `UC_SS1_02`: Trả xe, Cập nhật vị trí & Quyết toán ví điện tử.
+- `UC_SS1_03`: Hủy đặt chỗ & Hoàn cọc / Phạt quá giờ.
 
-- **UC_SS1_01** — Tra cứu, Đặt xe & Nhận xe qua QR/PIN.
-- **UC_SS1_02** — Trả xe, Cập nhật vị trí & Quyết toán ví điện tử.
-- **UC_SS1_03** — Hủy đặt chỗ & Hoàn cọc / Phạt quá giờ.
+## Kiến trúc chung và trạng thái phiên bản tích hợp
 
-**Đóng góp thực tế của cá nhân:** [CHƯA ĐIỀN].
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.py -> components/core -> dữ liệu seed và session ở tiến trình server. Không có database bắt buộc, SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện, không tạo telemetry nền. Chạy từ repository: `streamlit run src/app.py`; host/cổng phụ thuộc cấu hình, không cố định trong dự án.
 
-## 2. Deployment view
+![Deployment view chung](../../../diagrams/submission_3/shared/deployment.png)
 
-[Nguồn sơ đồ triển khai chung](<../../../diagrams/submission_3/shared/deployment.puml>)
+![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
 
-- **Vị trí phân hệ SS1:** [CHƯA ĐIỀN].
-- **Thiết bị/tiến trình, dữ liệu và giao tiếp:** [CHƯA ĐIỀN].
-- **Mô phỏng và giới hạn hiện tại:** [CHƯA ĐIỀN].
-- Ảnh được xuất cạnh nguồn PlantUML sau khi chủ sở hữu hoàn thiện; đưa ảnh và thuyết minh vào PDF cuối.
+Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
 
-## 3. Development/Implementation view
+## 2. Class diagram SS1
 
-[Nguồn sơ đồ module chung](<../../../diagrams/submission_3/shared/implementation.puml>)
+![Class diagram SS1](../../../diagrams/submission_3/SS1/class_diagram.png)
 
-- **Module giao diện hiện tại:** `src/components/student_booking.py`.
-- **Core/service/adapter và phụ thuộc:** [CHƯA ĐIỀN].
-- **Ánh xạ code hiện tại / thiết kế đề xuất:** [CHƯA ĐIỀN].
+Mô hình OOP là thiết kế đề xuất, trừ HubEventSimulator thực sự tồn tại ở SS6. Service trong sơ đồ là giao tiếp nội bộ, không phải server độc lập.
 
-## 4. Class diagram cá nhân
+## 3. Mô tả lớp, thuộc tính và ràng buộc
 
-[Nguồn class diagram SS1](<../../../diagrams/submission_3/SS1/class_diagram.puml>)
+### `User`
 
-**Lớp/kiểu chủ trì theo hướng dẫn:** `User`, `Vehicle`, `SharedVehicle`, `Booking`, `BookingService`, `OperationResult`, `Wallet`, `Transaction`, `Invoice`, `ChargeLine`, `DepositResult`, `SettlementResult`, `BillingService`.
+Định danh và vai trò thiết kế; prototype chọn người dùng mô phỏng, chưa xác thực SSO thật.
 
-Chưa có sơ đồ lớp chi tiết trong bộ khung này. Bổ sung thuộc tính, phương thức, quan hệ và bội số; lớp dùng chung tham chiếu đúng chủ sở hữu. Không tạo bản sao hình/sơ đồ chung trong thư mục cá nhân.
+Thuộc tính và kiểu: `user_id: str`, `role: UserRole`.
 
-## 5. Mô tả lớp
+### `Vehicle`
 
-Sao chép mẫu dưới đây cho từng lớp thực tế đưa vào sơ đồ:
+Định danh, ownership, Hub, SoC 0–100 và trạng thái dùng chung. Không cho xe PERSONAL được thuê/điều chuyển như SHARED.
 
-- **Class ID / tên:** [CHƯA ĐIỀN].
-- **Trách nhiệm và chủ sở hữu:** [CHƯA ĐIỀN].
-- **Mức triển khai:** [CHƯA ĐIỀN: code hiện có / ánh xạ hàm-dictionary / đề xuất].
-- **Thuộc tính, kiểu và đơn vị:** [CHƯA ĐIỀN].
-- **Quan hệ và bội số:** [CHƯA ĐIỀN].
-- **Invariant và Method ID:** [CHƯA ĐIỀN].
+Thuộc tính và kiểu: `vehicle_id: str`, `ownership: Ownership`, `hub_id: str`, `battery_soc: float`, `status: VehicleStatus`.
 
-## 6. Mô tả phương thức
+### `SharedVehicle`
 
-Mọi phương thức trên class diagram phải có mô tả tương ứng. Sao chép mẫu cho từng phương thức:
+Chuyên biệt Vehicle với ownership SHARED; xe RESERVED/IN_USE/INCIDENT không được tái phân bổ trái vòng đời.
 
-- **Method ID / lớp / chữ ký:** [CHƯA ĐIỀN].
-- **Mục đích, bên gọi và quyền:** [CHƯA ĐIỀN].
-- **Tham số / kết quả / kiểu / đơn vị:** [CHƯA ĐIỀN].
-- **Tiền điều kiện / hậu điều kiện:** [CHƯA ĐIỀN].
-- **Các bước xử lý / tác động dữ liệu:** [CHƯA ĐIỀN].
-- **Lỗi, xử lý lặp và xung đột:** [CHƯA ĐIỀN].
-- **Truy vết đến UC, sequence/activity và test:** [CHƯA ĐIỀN].
+Thuộc tính và kiểu: `ownership: Ownership = SHARED`.
 
-## 7. Truy vết Sub1–Sub2–Sub3
+### `Booking`
 
-[Bảng truy vết cá nhân](<traceability.md>)
+Vòng đời RESERVED/IN_USE/COMPLETED/CANCELLED/EXPIRED; nguồn bắt buộc, đích dự kiến 0..1, khi trả ghi Hub thực tế. Hết hạn chỉ áp dụng khi chưa nhận.
 
-Bổ sung lớp/phương thức và test còn thiếu vào bảng nguồn rồi đưa nội dung cần thiết vào PDF.
+Thuộc tính và kiểu: `booking_id: str`, `student_id: str`, `vehicle_id: str`, `hub_id: str`, `destination_hub_id: Optional[str]`, `created_at: datetime`, `expires_at: datetime`, `pickup_time: Optional[datetime]`, `return_time: Optional[datetime]`, `extra_free_minutes: int`, `status: BookingStatus`.
 
-## 8. Test case bonus
+### `Wallet`
 
-[Khung test case](<test_cases.md>)
+Số dư khả dụng, held và nợ không âm, VNĐ nguyên. Held không là doanh thu. Thiết kế sở hữu bởi User, prototype hiện một ví trong session.
 
-Chưa có test Sub3 được thực thi trong quá trình khởi tạo cấu trúc. Test Sub2 chỉ được viện dẫn khi đã đối chiếu đúng tiêu chí; không sao chép trạng thái VERIFIED thành kết quả Sub3.
+Thuộc tính và kiểu: `owner_id: str`, `balance_vnd: int`, `held_deposit_vnd: int`, `debt_vnd: int`.
 
-## 9. Giới hạn và quyết định thiết kế
+### `Transaction`
 
-- **Quyết định áp dụng:** dùng hợp đồng và quyền sở hữu chung đã chốt.
-- **Giới hạn thuộc phân hệ:** [CHƯA ĐIỀN].
-- **Vấn đề đã tự xử lý / còn mở:** [CHƯA ĐIỀN].
+Bản ghi bất biến về thao tác tài chính, ID ổn định; chống thu lại bằng reference/charge/key ở thiết kế.
 
-## 10. Tự kiểm tra và khai báo AI
+Thuộc tính và kiểu: `tx_id: str`, `reference_id: str`, `charge_id: Optional[str]`, `amount_vnd: int`, `kind: str`, `created_at: datetime`.
 
-[Checklist tự chịu trách nhiệm](<self_check.md>) · [Khai báo AI](<ai_usage.md>)
+### `Invoice`
 
-**Xác nhận tự kiểm tra:** CHƯA XÁC NHẬN. Chỉ cập nhật sau khi tác giả thực sự tự kiểm tra.
+Hóa đơn gắn reference, dòng phí không âm, tách số đã thu và nợ; không tự có số km khi chưa có nguồn đo.
 
-## 11. Đầu ra khi hoàn thiện
+Thuộc tính và kiểu: `invoice_id: str`, `reference_id: str`, `charge_lines: list[ChargeLine]`, `paid_vnd: int`, `debt_vnd: int`.
 
-Xuất PDF vào `output/submission_3/REPORT_SUB3_NguyenThanhDat_2410709.pdf`. Tên này là đường dẫn đầu ra dự kiến; hiện chưa tạo PDF rỗng hoặc ảnh giả hoàn thành.
+### `ChargeLine`
+
+Giá trị khoản phí; cùng charge_id cùng nghĩa và số tiền. Không tạo ID mới để thu lại cùng khoản.
+
+Thuộc tính và kiểu: `charge_id: str`, `source_id: str`, `kind: str`, `amount_vnd: int`.
+
+### `DepositResult`
+
+Kết quả giữ/hoàn cọc theo reference, trạng thái xử lý idempotent.
+
+Thuộc tính và kiểu: `reference_id: str`, `held_vnd: int`, `released_vnd: int`, `status: str`.
+
+### `SettlementResult`
+
+Kết quả quyết toán từ ledger, bao gồm paid/refunded/debt và dòng phí; khoản nợ là kết quả nghiệp vụ có kiểm soát.
+
+Thuộc tính và kiểu: `invoice_id: str`, `charge_lines: list[ChargeLine]`, `paid_vnd: int`, `refunded_vnd: int`, `debt_vnd: int`, `status: str`.
+
+### `OperationResult<T>`
+
+Kiểu kết quả chung do TV1 sở hữu; ok/data/error_code/message/state_version, lỗi không để commit dở dang.
+
+Thuộc tính và kiểu: `ok: bool`, `data: Optional[T]`, `error_code: Optional[str]`, `message: str`, `state_version: int`.
+
+### `BookingService`
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo quyền sở hữu.
+
+### `BillingService`
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo quyền sở hữu.
+
+## 4. Mô tả mọi phương thức
+
+Xem [method_catalog.md](method_catalog.md), được nhúng đầy đủ trong PDF. Danh mục có chữ ký, đầu vào/đầu ra, điều kiện, tác động, lỗi và quy tắc gọi lặp cho từng phương thức được vẽ.
+
+## 5. Ánh xạ và giới hạn
+
+Các hàm hiện tại nằm trong core.booking/core.billing, model chủ yếu là dictionary; chưa có sổ cọc theo reference/operation_key hoặc dedup charge_id dùng chung. UI lọc ownership nhưng core.create_shared_booking chưa chặn PERSONAL. PIN trong core là 4 chữ số, chưa mở khóa IoT. US-06 thiếu nguồn quãng đường; trả xe thiếu tiền ghi nợ. INT-07 là mục tiêu kiểm tra version và ưu đãi một lần, không nhận là đã hoàn tất.
+
+## 6. Chính sách và ranh giới thiết kế
+
+Giữ xe SS1 30 phút từ tạo; hạn SS2 30 phút từ giờ đến. Cọc 50.000, no-show phạt10.000/hoàn40.000 VNĐ. Reroute thêm15 phút miễn phí tối đa một lần, không đổi TTL. Sạc grace15 phút, phí10.000/khối15 phút bắt đầu sau grace; công suất mặc định150 kW/Hub và11 kW/cổng, cấu hình từng test có thể khác. Phí đỗ prototype5.000 VNĐ/lượt khác SRS tính theo giờ, phải ghi chênh lệch. Ownership PERSONAL/SHARED và binding nguồn lực không được trộn.
+
+NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu năng là mục tiêu thiết kế. Prototype per-session không chứng minh tính nhất quán toàn mạng giữa nhiều phiên; thiết kế tương lai cần shared storage/transaction/version và authorization thật. Đề không bắt buộc thêm database cho Sub3.
+
+## 7. Truy vết, test, đóng góp và AI
+
+Các phụ lục traceability.md, test_cases.md, self_check.md và ai_usage.md được nhúng khi build PDF. Các test trên core/UI prototype không chứng minh service OOP đề xuất đã triển khai. Không tự xác nhận PASS cho test chưa có nguồn và log tái chạy.

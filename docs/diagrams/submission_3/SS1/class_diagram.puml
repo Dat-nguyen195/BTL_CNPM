@@ -1,22 +1,128 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS1 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV1 — Nguyễn Thành Đạt\nUC_SS1_01, UC_SS1_02, UC_SS1_03\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: User
-' Lop/kieu chu tri: Vehicle
-' Lop/kieu chu tri: SharedVehicle
-' Lop/kieu chu tri: Booking
-' Lop/kieu chu tri: BookingService
-' Lop/kieu chu tri: OperationResult
-' Lop/kieu chu tri: Wallet
-' Lop/kieu chu tri: Transaction
-' Lop/kieu chu tri: Invoice
-' Lop/kieu chu tri: ChargeLine
-' Lop/kieu chu tri: DepositResult
-' Lop/kieu chu tri: SettlementResult
-' Lop/kieu chu tri: BillingService
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classAttributeFontSize 12
+skinparam nodesep 28
+skinparam ranksep 32
+title SS1 - thiết kế Sub3, revision 06/11/2026
+class User <<proposed model>> {
+  +user_id: str
+  +role: UserRole
+}
+class Vehicle <<proposed model>> {
+  +vehicle_id: str
+  +ownership: Ownership
+  +hub_id: str
+  +battery_soc: float
+  +status: VehicleStatus
+}
+class SharedVehicle <<proposed model>> {
+  +ownership: Ownership = SHARED
+}
+class Booking <<proposed model>> {
+  +booking_id: str
+  +student_id: str
+  +vehicle_id: str
+  +hub_id: str
+  +destination_hub_id: Optional[str]
+  +created_at: datetime
+  +expires_at: datetime
+  +pickup_time: Optional[datetime]
+  +return_time: Optional[datetime]
+  +extra_free_minutes: int
+  +status: BookingStatus
+}
+class Wallet <<proposed model>> {
+  +owner_id: str
+  +balance_vnd: int
+  +held_deposit_vnd: int
+  +debt_vnd: int
+}
+class Transaction <<proposed model>> {
+  +tx_id: str
+  +reference_id: str
+  +charge_id: Optional[str]
+  +amount_vnd: int
+  +kind: str
+  +created_at: datetime
+}
+class Invoice <<proposed model>> {
+  +invoice_id: str
+  +reference_id: str
+  +charge_lines: list[ChargeLine]
+  +paid_vnd: int
+  +debt_vnd: int
+}
+class ChargeLine <<proposed model>> {
+  +charge_id: str
+  +source_id: str
+  +kind: str
+  +amount_vnd: int
+}
+class DepositResult <<proposed model>> {
+  +reference_id: str
+  +held_vnd: int
+  +released_vnd: int
+  +status: str
+}
+class SettlementResult <<proposed model>> {
+  +invoice_id: str
+  +charge_lines: list[ChargeLine]
+  +paid_vnd: int
+  +refunded_vnd: int
+  +debt_vnd: int
+  +status: str
+}
+class OperationResult<T> <<proposed model>> {
+  +ok: bool
+  +data: Optional[T]
+  +error_code: Optional[str]
+  +message: str
+  +state_version: int
+}
+class BookingService <<proposed service>> {
+  +create_booking(student_id: str, hub_id: str, vehicle_id: str,\n destination_hub_id: Optional[str] = None,\n voucher_code: Optional[str] = None): OperationResult[Booking]
+  +pickup(booking_id: str, pin: str): OperationResult[Booking]
+  +cancel(booking_id: str): OperationResult[Booking]
+  +return_vehicle(booking_id: str, return_hub_id: str): OperationResult[SettlementResult]
+  +expire_reservations(sim_now: datetime): OperationResult[list[str]]
+  +accept_rerouting(booking_id: str, new_hub_id: str,\n expected_version: int, operation_key: str): OperationResult[Booking]
+}
+class BillingService <<proposed service>> {
+  +hold_deposit(owner_id: str, reference_id: str, amount_vnd: int,\n operation_key: str): OperationResult[DepositResult]
+  +release_deposit(owner_id: str, reference_id: str,\n operation_key: str): OperationResult[DepositResult]
+  +settle_no_show(owner_id: str, reference_id: str,\n operation_key: str): OperationResult[SettlementResult]
+  +settle_invoice(owner_id: str, reference_id: str,\n charge_lines: list[ChargeLine],\n operation_key: str): OperationResult[SettlementResult]
+}
+SharedVehicle --|> Vehicle
+User "1" -- "0..*" Booking : tạo
+Booking "0..*" --> "1" SharedVehicle
+Booking "0..*" --> "1" Hub : nguồn
+Booking "0..*" --> "0..1" Hub : đích dự kiến
+User "1" -- "1" Wallet
+Wallet "1" o-- "0..*" Transaction
+Invoice "1" *-- "0..*" ChargeLine
+Booking "1" -- "0..1" Invoice
+BookingService ..> BillingService
+BookingService ..> Booking
+BillingService ..> Wallet
+BillingService ..> Invoice
+class Hub <<shared TV3>>
+enum BookingStatus {
+RESERVED
+IN_USE
+COMPLETED
+CANCELLED
+EXPIRED
+}
+
+legend bottom
+  Proposed = thiết kế, chưa phải lớp đang chạy.
+  Shared = tham chiếu chủ sở hữu; không định nghĩa lại.
+  Tiền: VNĐ nguyên; SoC: %; năng lượng: kWh; công suất: kW.
+  datetime thiết kế: UTC+7 theo đồng hồ mô phỏng.
+endlegend
 @enduml

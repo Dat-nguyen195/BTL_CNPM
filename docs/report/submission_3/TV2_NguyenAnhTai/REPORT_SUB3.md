@@ -1,12 +1,14 @@
 # BÁO CÁO THIẾT KẾ CHI TIẾT — SUBMISSION 3 (PHÂN HỆ SS2)
 
+> **Revision tích hợp06/11/2026:** có chỉnh sửa với Codex hỗ trợ; chủ sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được dùng khi khác nhận định của bản bàn giao trước.
+
 **Dự án:** Smart E-Mobility Hub — BEE BRAVE (Nhóm 7)  
 **Môn học:** Công nghệ Phần mềm CO3001 — HK261  
 **Họ và tên:** Nguyễn Anh Tài  
 **MSSV:** 2413035  
 **Vai trò & Phân hệ phụ trách:** Thành viên 2 (TV2) — Phân hệ SS2: Quản lý Xe điện Cá nhân, Đặt chỗ & Check-in/Check-out  
-**Phiên bản:** 1.0  
-**Ngày hoàn thiện:** 31/10/2026 (UTC+7)  
+**Phiên bản:** 1.1 - tích hợp06/11/2026<br>
+**Ngày bản bàn giao:** 31/10/2026 (UTC+7)<br>
 
 [Hướng dẫn và phân công](<../../../../GUIDANCE_FOR_SUB_3.md>) · [Quyết định dùng chung](<../shared/shared_contracts.md>)
 
@@ -123,7 +125,7 @@ Sơ đồ lớp phân hệ SS2 thể hiện đầy đủ các thực thể miề
 * **Nhóm module/UI đã triển khai trong prototype (Ánh xạ thực thi):**
   * `personal_ev.render` (`<<implemented UI>>` — `SS2-CLS-05`) và `core.personal_ev` (`<<implemented module>>` — `SS2-CLS-06`).
 * **Nhóm lớp/hợp đồng dùng chung tham chiếu (`<<shared contract>>`):**
-  * `User / Vehicle (TV1)`, `Hub (TV3)`, `BillingService (TV1)` và `ChargingService (TV5)`.
+  * `User và Vehicle (TV1)`, `Hub (TV3)`, `BillingService (TV1)` và `ChargingService (TV5)`.
 
 ---
 
@@ -202,7 +204,7 @@ Các lớp dưới đây thuộc quyền sở hữu của các thành viên khá
 
 | Lớp / Hợp đồng (`<<shared contract>>`) | Chủ sở hữu | Vai trò và thuộc tính/giao tiếp mà SS2 tham chiếu |
 | :--- | :--- | :--- |
-| **`User / Vehicle (TV1)`** | **TV1 — Nguyễn Thành Đạt** | Cung cấp định danh tài khoản `user_id: str` và lớp cơ sở `Vehicle` (`vehicle_id: str`, `ownership: Ownership`, `status: VehicleStatus`) để `PersonalVehicle` kế thừa với `ownership = Ownership.PERSONAL`. |
+| **`User và Vehicle (TV1)`** | **TV1 — Nguyễn Thành Đạt** | Cung cấp định danh tài khoản `user_id: str` và lớp cơ sở `Vehicle` (`vehicle_id: str`, `ownership: Ownership`, `status: VehicleStatus`) để `PersonalVehicle` kế thừa với `ownership = Ownership.PERSONAL`. |
 | **`Hub (TV3)`** | **TV3 — Phạm Tiến Đạt** | Thực thể trạm chuẩn (`hub_id: str`, `name: str`, `total_slots: int`, `available_slots: int`, `destination_holds: int`, `charging_ports: dict[str, int]`). SS2 kiểm tra và cập nhật `destination_holds`, `available_slots` và `current_vehicles`. |
 | **`BillingService (TV1)`** | **TV1 — Nguyễn Thành Đạt** | Hợp đồng tài chính dùng chung xử lý khóa cọc (`hold_deposit`), hoàn cọc (`release_deposit`), phạt quá hạn (`settle_no_show`) và quyết toán hóa đơn tổng hợp (`settle_invoice`). |
 | **`ChargingService (TV5)`** | **TV5 — Dương Đăng Khoa** | Hợp đồng dịch vụ sạc thông minh cung cấp giao tiếp `INT-01` (`request_charging`) khi xe cá nhân check-in và `INT-02` (`get_bill`) khi xe cá nhân check-out. |
@@ -348,7 +350,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Tham số** | • `owner_id: str` — Mã sinh viên đặt chỗ.<br>• `vehicle_id: str` — Mã xe cá nhân đã đăng ký (`PEV-XXXXXX`, ánh xạ từ `ev_id`).<br>• `hub_id: str` — Mã Hub điểm đến.<br>• `booking_start_time: datetime` (Đơn vị: `UTC+7`) — Thời điểm dự kiến đến trạm đã chọn.<br>• `request_charging: bool = False` — Có đăng ký dịch vụ sạc hay không.<br>• `current_soc: float = 50.0` (Đơn vị: `%`, `0..100`) — Phần trăm pin ước tính khi đến trạm.<br>• `operation_key: str = ""` — Khóa chống thực thi lặp giao dịch đặt cọc. |
 | **Kết quả trả về** | `OperationResult[ParkingReservation]`:<br>• Khi thành công: `ok = True`, `data = ParkingReservation` ở trạng thái `RESERVED` với `expires_at = booking_start_time + 30 phút`, `state_version` tăng +1.<br>• Khi thất bại: `ok = False`, `data = None`, `error_code` thuộc `{NOT_FOUND, FORBIDDEN, INVALID_INPUT, CONFLICTING_OPERATION, NO_CAPACITY, INSUFFICIENT_FUNDS, DEBT_BLOCKED}`. |
 | **Điều kiện trước** | Xe `vehicle_id` đã tồn tại trong `personal_evs` và thuộc sở hữu của `owner_id`; `booking_start_time >= current_sim_time`; xe chưa có đơn nào đang ở trạng thái `RESERVED` hoặc `CHECKED_IN`. |
-| **Xử lý chính** | 1. Tra cứu `vehicle_id` trong `personal_evs`; nếu không tồn tại trả `NOT_FOUND`, nếu `!is_owned_by(owner_id)` trả `FORBIDDEN`.<br>2. Kiểm tra `booking_start_time >= sim_now`; nếu ở quá khứ trả `INVALID_INPUT`.<br>3. Kiểm tra không có đơn `ParkingReservation` nào của `vehicle_id` đang ở trạng thái `RESERVED` hoặc `CHECKED_IN`; nếu có trả `CONFLICTING_OPERATION`.<br>4. Tra cứu `Hub` theo `hub_id`; kiểm tra `hub.available_slots > 0` (nếu hết chỗ trả `NO_CAPACITY`). Nếu `request_charging == True`, kiểm tra `hub.charging_ports["available"] > 0` (nếu hết cổng khả dụng trả `NO_CAPACITY`).<br>5. Sinh mã `reservation_id = f"PRES-{uuid4().hex[:6].upper()}"` và gọi hợp đồng `BillingService.hold_deposit(owner_id, reservation_id, 50000, operation_key)` (trong prototype gọi `billing.hold_deposit`). Nếu ví đang có nợ (`debt > 0`) hoặc số dư `< 50.000 VNĐ`, dừng ngay và trả lỗi tài chính mà không trừ chỗ của Hub.<br>6. Cập nhật giữ chỗ tại Hub: `hub.destination_holds += 1`, `hub.available_slots -= 1` (chưa thêm xe vào `hub.current_vehicles` và chưa trừ cổng sạc vật lý).<br>7. Tính `expires_at = booking_start_time + timedelta(minutes=30)` (`PEV_ARRIVAL_EXPIRY_MINUTES`), lưu `ParkingReservation` với `status = RESERVED` và tăng `state_version`. |
+| **Xử lý chính** | 1. Tra cứu `vehicle_id` trong `personal_evs`; nếu không tồn tại trả `NOT_FOUND`, nếu `!is_owned_by(owner_id)` trả `FORBIDDEN`.<br>2. Kiểm tra `booking_start_time >= sim_now`; nếu ở quá khứ trả `INVALID_INPUT`.<br>3. Kiểm tra không có đơn `ParkingReservation` nào của `vehicle_id` đang ở trạng thái `RESERVED` hoặc `CHECKED_IN`; nếu có trả `CONFLICTING_OPERATION`.<br>4. Tra cứu `Hub` theo `hub_id`; kiểm tra `hub.available_slots > 0` (nếu hết chỗ trả `NO_CAPACITY`). Trong prototype, đặt kèm sạc còn kiểm tra cổng trống và có thể trả `NO_CAPACITY`. Trong thiết kế mục tiêu, bước này chỉ ghi nhu cầu sạc; yêu cầu được tạo khi check-in qua `INT-01`, có thể chờ trong queue, không coi đặt chỗ là đã giữ cổng thực sự.<br>5. Sinh mã `reservation_id = f"PRES-{uuid4().hex[:6].upper()}"` và gọi hợp đồng `BillingService.hold_deposit(owner_id, reservation_id, 50000, operation_key)` (trong prototype gọi `billing.hold_deposit`). Nếu ví đang có nợ (`debt > 0`) hoặc số dư `< 50.000 VNĐ`, dừng ngay và trả lỗi tài chính mà không trừ chỗ của Hub.<br>6. Cập nhật giữ chỗ tại Hub: `hub.destination_holds += 1`, `hub.available_slots -= 1` (chưa thêm xe vào `hub.current_vehicles` và chưa trừ cổng sạc vật lý).<br>7. Tính `expires_at = booking_start_time + timedelta(minutes=30)` (`PEV_ARRIVAL_EXPIRY_MINUTES`), lưu `ParkingReservation` với `status = RESERVED` và tăng `state_version`. |
 | **Điều kiện sau** | • Khi thành công: Ví giảm `balance -= 50.000 VNĐ`, tăng `held_deposit += 50.000 VNĐ`; Hub đích tăng `destination_holds += 1`, giảm `available_slots -= 1` (bảo toàn tổng sức chứa Hub); đơn mới có `expires_at == booking_start_time + 30 phút`.<br>• Khi thất bại ở bất kỳ bước kiểm tra nào: Số dư ví và số chỗ của Hub không bị thay đổi. |
 | **Lỗi/ngoại lệ** | • `NOT_FOUND`: Không tìm thấy `vehicle_id` hoặc `hub_id`.<br>• `FORBIDDEN`: Xe thuộc tài khoản sinh viên khác.<br>• `INVALID_INPUT`: Thời gian đến trạm không hợp lệ hoặc nằm trong quá khứ.<br>• `CONFLICTING_OPERATION`: Xe đang có lượt đặt chỗ `RESERVED` hoặc `CHECKED_IN` chưa hoàn tất.<br>• `NO_CAPACITY`: Hub hết chỗ đỗ trống hoặc hết cổng sạc trống (khi `request_charging = True`).<br>• `DEBT_BLOCKED` / `INSUFFICIENT_FUNDS`: Ví đang có khoản nợ chưa thanh toán hoặc số dư khả dụng `< 50.000 VNĐ`. |
 | **Xử lý lặp/xung đột** | Kiểm tra trùng đơn đang hoạt động theo `vehicle_id` (`RESERVED` / `CHECKED_IN`) và truyền `operation_key` xuống `BillingService.hold_deposit()` để ngăn khóa cọc hai lần cho cùng một thao tác bấm nút. |
@@ -427,20 +429,55 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 
 ---
 
-## 7. Truy vết Sub1–Sub2–Sub3
+## 7. Truy vết Sub1-Sub2-Sub3 (revision tích hợp)
 
-[Bảng truy vết cá nhân chi tiết](<traceability.md>)
 
-Bảng dưới đây tổng hợp chuỗi truy vết xuyên suốt từ Yêu cầu (SRS Sub1) → Use Case & Sơ đồ Sequence/Activity (Sub2) → Lớp & Phương thức thiết kế (Sub3) → Mã nguồn thực thi & Kiểm thử của phân hệ SS2:
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
 
-| US / FR (SRS Sub1) | Use Case (Sub2) | Thông điệp Sequence / Nhánh Activity (Sub2) | Lớp thiết kế (Sub3) | Method ID / Chữ ký phương thức (Sub3) | Code hiện tại (`src/`) | Test ID & Kiểm thử tự động |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `US-08`<br>`FR-03` | `UC_SS2_01`<br>Đăng ký xe EV cá nhân | • `UC_SS2_01_NguyenAnhTai_sequence.puml`: Nhóm 2 (`Nhập và kiểm tra thông tin đăng ký`), Nhóm 3 (`3.1 Tra cứu biển số`, `3.2 Cấp mã xe, ghi thời điểm đăng ký và trạng thái REGISTERED`)<br>• `UC_SS2_01_NguyenAnhTai_activity.puml`: Nhánh kiểm tra trùng biển số & lưu hồ sơ | `PersonalVehicle`<br>(`SS2-CLS-01`)<br>`PersonalEVService`<br>(`SS2-CLS-04`) | • `SS2-MTH-01`: `PersonalVehicle.normalize_plate()`<br>• `SS2-MTH-07`: `PersonalEVService.register_personal_ev()` | `src/core/personal_ev.py`:<br>`register_personal_ev()`<br>`src/components/personal_ev.py`:<br>Tab 1 (`pev_reg_form`) | • `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`)<br>• `TC-SS2-01` (Luồng chính)<br>• `TC-SS2-02` (Lỗi trùng biển số) |
-| `US-09`<br>`US-10`<br>`US-12`<br>`FR-04`<br>`FR-05b` | `UC_SS2_02`<br>Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá nhân | • `UC_SS2_02_NguyenAnhTai_sequence.puml`: Nhóm 2 (`Kiểm tra thời gian, lịch trùng và vị trí AVAILABLE`), Nhóm 3 (`Tạm giữ 50.000 VNĐ tiền cọc`, `Đặt hạn Check-in = booking_start_time + 30 phút`), Nhóm 4 (`Hủy đơn hoặc hết hạn trước Check-in`)<br>• `UC_SS2_02_NguyenAnhTai_activity.puml`: Nhánh kiểm tra cọc, giữ chỗ `destination_holds` và xử lý quá hạn 30 phút | `PersonalVehicle`<br>(`SS2-CLS-01`)<br>`ParkingReservation`<br>(`SS2-CLS-02`)<br>`PersonalEVService`<br>(`SS2-CLS-04`)<br>`BillingService` *(TV1)* | • `SS2-MTH-02`: `PersonalVehicle.is_owned_by()`<br>• `SS2-MTH-03`: `ParkingReservation.is_expired()`<br>• `SS2-MTH-08`: `PersonalEVService.reserve_personal_ev_slot()`<br>• `SS2-MTH-11`: `PersonalEVService.sweep_expired_personal_reservations()`<br>• `BillingService.hold_deposit()` / `settle_no_show()` | `src/core/personal_ev.py`:<br>`reserve_personal_ev_slot()`<br>`sweep_expired_personal_reservations()`<br>`src/core/billing.py`:<br>`hold_deposit()`<br>`settle_pev_noshow_penalty()` | • `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`)<br>• `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`)<br>• `TC-SS2-03` (Luồng chính)<br>• `TC-SS2-04` (Lỗi hết chỗ/thiếu cọc) |
-| `US-11b`<br>`FR-03b` | `UC_SS2_03`<br>Check-in xe EV cá nhân tại cổng Hub | • `UC_SS2_03_NguyenAnhTai_sequence.puml`: Nhóm 1 (`1.1 Đối chiếu QR/PIN, xe, đơn đặt chỗ, Hub và khung giờ`), Nhóm 2 (`Ghi thời điểm Check-in; đơn = CHECKED_IN; vị trí RESERVED -> OCCUPIED`), Nhóm 3 (`Kích hoạt phiên sạc`)<br>• `UC_SS2_03_NguyenAnhTai_activity.puml`: Nhánh kiểm tra hạn `arrival_deadline` và chuyển `destination_holds` sang hiện diện vật lý | `ParkingReservation`<br>(`SS2-CLS-02`)<br>`ParkingSession`<br>(`SS2-CLS-03`)<br>`PersonalEVService`<br>(`SS2-CLS-04`)<br>`ChargingService` *(TV5)* | • `SS2-MTH-04`: `ParkingReservation.can_check_in()`<br>• `SS2-MTH-05`: `ParkingSession.attach_charging_ref()`<br>• `SS2-MTH-09`: `PersonalEVService.check_in_personal_ev()`<br>• `SS2-MTH-11`: `PersonalEVService.sweep_expired_personal_reservations()`<br>• `INT-01`: `ChargingService.request_charging()` | `src/core/personal_ev.py`:<br>`check_in_personal_ev()`<br>`sweep_expired_personal_reservations()`<br>`src/components/personal_ev.py`:<br>Tab 3 (`btn_checkin_...`) | • `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`)<br>• `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`)<br>• `TC-SS2-05` (Check-in ở 29p59s)<br>• `TC-SS2-06` (Quá hạn ở 30p00s & gọi lặp) |
-| `US-09`<br>`US-10`<br>`US-11`<br>`US-11b`<br>`US-12`<br>`FR-03b`<br>`FR-04`<br>`FR-05b`<br>`FR-15b` | `UC_SS2_04`<br>Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân | • `UC_SS2_04_NguyenAnhTai_sequence.puml`: Nhóm 2 (`Kết thúc sạc và lập hóa đơn tổng hợp 5.000đ + điện + overstay`), Nhóm 3 (`Quyết toán hóa đơn thực tế; đối soát khoản cọc 50.000 VNĐ`), Nhóm 5 (`Kết thúc phiên; đơn = COMPLETED; giải phóng vị trí/cổng một lần`)<br>• `UC_SS2_04_NguyenAnhTai_activity.puml`: Nhánh tính phí cao/thấp điểm, ân hạn 15 phút, ghi nợ khi thiếu số dư | `ParkingSession`<br>(`SS2-CLS-03`)<br>`PersonalEVService`<br>(`SS2-CLS-04`)<br>`BillingService` *(TV1)*<br>`ChargingService` *(TV5)* | • `SS2-MTH-06`: `ParkingSession.build_parking_charge_line()`<br>• `SS2-MTH-10`: `PersonalEVService.check_out_personal_ev()`<br>• `INT-02`: `ChargingService.get_bill()`<br>• `BillingService.settle_invoice()` | `src/core/personal_ev.py`:<br>`check_out_personal_ev()`<br>`src/core/billing.py`:<br>`release_held_deposit_full()`<br>`record_wallet_debt()`<br>`src/components/personal_ev.py`:<br>Tab 4 (`btn_checkout_...`) | • `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`)<br>• `TC-SS2-07` (Check-out đủ số dư, giờ cao điểm + overstay)<br>• `TC-SS2-08` (Check-out thiếu tiền ghi nợ & chống gọi lặp) |
+## UC_SS2_01 - Đăng ký xe EV cá nhân lên hệ thống
 
----
+- **Yêu cầu:** US-08, FR-03.
+- **Scenario:** [UC_SS2_NguyenAnhTai.md](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md>).
+- **Sequence:** [UC_SS2_01_NguyenAnhTai_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_01_NguyenAnhTai_sequence.puml>).
+- **Activity:** [UC_SS2_01_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_01_NguyenAnhTai_activity.puml>).
+- **Thiết kế:** `PersonalEVService.register_personal_ev`, `PersonalVehicle.normalize_plate`. Class diagram SS2, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_personal_ev.py::test_register_personal_ev_success_and_duplicate`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
+
+## UC_SS2_02 - Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá nhân
+
+- **Yêu cầu:** US-09, US-10, FR-04, FR-05b.
+- **Scenario:** [UC_SS2_NguyenAnhTai.md](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md>).
+- **Sequence:** [UC_SS2_02_NguyenAnhTai_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_02_NguyenAnhTai_sequence.puml>).
+- **Activity:** [UC_SS2_02_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_02_NguyenAnhTai_activity.puml>).
+- **Thiết kế:** `PersonalEVService.reserve_personal_ev_slot`, `PersonalEVService.sweep_expired_personal_reservations`. Class diagram SS2, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_future_arrival_and_exact_expiry`, `tests/test_submission_2_acceptance.py::test_personal_invalid_reservation_has_no_financial_or_capacity_effect`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
+
+## UC_SS2_03 - Check-in xe EV cá nhân tại cổng Hub (QR/Biển số)
+
+- **Yêu cầu:** US-11b, US-10, FR-03b, FR-04.
+- **Scenario:** [UC_SS2_NguyenAnhTai.md](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md>).
+- **Sequence:** [UC_SS2_03_NguyenAnhTai_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_03_NguyenAnhTai_sequence.puml>).
+- **Activity:** [UC_SS2_03_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_03_NguyenAnhTai_activity.puml>).
+- **Thiết kế:** `PersonalEVService.check_in_personal_ev`, `ParkingSession.attach_charging_ref`. Class diagram SS2, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
+
+## UC_SS2_04 - Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân
+
+- **Yêu cầu:** US-09, US-10, US-11, US-11b, FR-03b, FR-05b, FR-15b.
+- **Scenario:** [UC_SS2_NguyenAnhTai.md](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md>).
+- **Sequence:** [UC_SS2_04_NguyenAnhTai_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_04_NguyenAnhTai_sequence.puml>).
+- **Activity:** [UC_SS2_04_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_04_NguyenAnhTai_activity.puml>).
+- **Thiết kế:** `PersonalEVService.check_out_personal_ev`, `BillingService.settle_invoice`. Class diagram SS2, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
+
 
 ## 8. Test case bonus
 
@@ -505,8 +542,25 @@ Theo đúng yêu cầu tại Mục 5.2 và Mục 7 của Hướng dẫn, phân h
 
 ---
 
-## 11. Đầu ra khi hoàn thiện
+## 11. Bộ file revision tích hợp
 
-* **Báo cáo PDF cá nhân:** `output/submission_3/REPORT_SUB3_NguyenAnhTai_2413035.pdf`
-* **Nguồn và ảnh sơ đồ lớp SS2:** `docs/diagrams/submission_3/SS2/class_diagram.puml`, `docs/diagrams/submission_3/SS2/class_diagram.svg`, `docs/diagrams/submission_3/SS2/class_diagram.png`
-* **Bộ tài liệu thành phần của TV2:** `docs/report/submission_3/TV2_NguyenAnhTai/REPORT_SUB3.md`, `traceability.md`, `test_cases.md`, `self_check.md`, `ai_usage.md`.
+PDF chuẩn được build vào output/submission_3/ từ nguồn Markdown/PlantUML cùng revision, kèm catalog, truy vết, test, self-check, AI và kiến trúc chung. Chủ sở hữu cần mở lại, xác nhận và nộp theo quy định LMS đã kiểm chứng.
+
+## Kiến trúc chung và trạng thái phiên bản tích hợp
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.py -> components/core -> dữ liệu seed và session ở tiến trình server. Không có database bắt buộc, SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện, không tạo telemetry nền. Chạy từ repository: `streamlit run src/app.py`; host/cổng phụ thuộc cấu hình, không cố định trong dự án.
+
+![Deployment view chung](../../../diagrams/submission_3/shared/deployment.png)
+
+![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
+
+Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
+
+## Hiệu chỉnh tích hợp 06/11/2026
+
+PersonalVehicle kế thừa Vehicle riêng, liên kết User qua owner_id; bỏ lớp gộp User/Vehicle. Hub trên sơ đồ là projection của TV3. Chữ ký service có owner_id/key là đề xuất; hàm core hiện check-in/out chỉ nhận reservation_id, chưa có authorization thật. Báo cáo SRS và ID truy vết theo traceability.md revision tích hợp. Bộ PDF bàn giao cũ đã thay bằng bản build từ nguồn đã đồng bộ.
+
+
+## Class diagram revision tích hợp
+
+![Class diagram SS2](../../../diagrams/submission_3/SS2/class_diagram.png)

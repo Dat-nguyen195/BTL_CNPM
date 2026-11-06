@@ -1,14 +1,68 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS3 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV3 — Phạm Tiến Đạt\nUC_SS3_01, UC_SS3_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: Hub
-' Lop/kieu chu tri: OccupancySnapshot
-' Lop/kieu chu tri: NetworkSnapshot
-' Lop/kieu chu tri: Alert
-' Lop/kieu chu tri: MonitoringService
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classAttributeFontSize 12
+skinparam nodesep 28
+skinparam ranksep 32
+title SS3 - thiết kế Sub3, revision 06/11/2026
+class Hub <<proposed model>> {
+  +hub_id: str
+  +name: str
+  +latitude: float
+  +longitude: float
+  +total_slots: int
+  +available_slots: int
+  +destination_holds: int
+  +background_occupied: int
+  +current_vehicles: list[Vehicle]
+  +charging_ports: dict[str,int]
+}
+class OccupancySnapshot <<proposed model>> {
+  +hub_id: str
+  +captured_at: datetime
+  +total_slots: int
+  +available_slots: int
+  +present_vehicles: int
+  +destination_holds: int
+  +background_occupied: int
+  +occupancy_pct: float
+  +level: str
+  +available_ports: int
+  +offline_ports: int
+}
+class NetworkSnapshot <<proposed model>> {
+  +captured_at: datetime
+  +state_version: int
+  +hubs: list[OccupancySnapshot]
+  +collected_revenue_vnd: int
+  +held_deposit_vnd: int
+  +debt_vnd: int
+}
+class Alert <<proposed model>> {
+  +alert_id: str
+  +hub_id: str
+  +kind: str
+  +level: str
+  +message: str
+  +captured_at: datetime
+}
+class MonitoringService <<proposed service>> {
+  +get_network_snapshot(): OperationResult[NetworkSnapshot]
+  +classify_occupancy(occupancy_pct: float): str
+}
+NetworkSnapshot "1" *-- "0..*" OccupancySnapshot
+OccupancySnapshot "0..*" --> "1" Hub
+Alert "0..*" --> "1" Hub
+MonitoringService ..> NetworkSnapshot
+MonitoringService ..> Alert
+
+legend bottom
+  Proposed = thiết kế, chưa phải lớp đang chạy.
+  Shared = tham chiếu chủ sở hữu; không định nghĩa lại.
+  Tiền: VNĐ nguyên; SoC: %; năng lượng: kWh; công suất: kW.
+  datetime thiết kế: UTC+7 theo đồng hồ mô phỏng.
+endlegend
 @enduml

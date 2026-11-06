@@ -1,72 +1,33 @@
-@startuml deployment_view_ss6
+@startuml
 skinparam backgroundColor white
 skinparam shadowing false
-skinparam defaultFontName "Segoe UI", Arial, SansSerif
-skinparam roundCorner 8
-skinparam nodeFontSize 13
-skinparam componentFontSize 11
-
-title "Phân hệ SS6: Mô phỏng nhu cầu What-if & Dự báo 24 giờ - Deployment View (Submission 3)\nChủ sở hữu: TV6 — Hoàng Văn Tấn (MSSV: 2213074)"
-
-node "Client Tier: Máy trạm Nhà phân tích / Quản trị viên" as ClientNode <<device>> {
-    node "Trình duyệt Web hiện đại (Chrome / Edge / Firefox)" as Browser <<execution environment>> {
-        component "Giao diện Web Streamlit\n(HTML5 / CSS3 / WebSockets)" as WebUI <<component>>
-        component "Plotly.js Interactive Runtime\n(Render biểu đồ kép 24h & Thẻ KPI)" as PlotlyRuntime <<component>>
-    }
+skinparam defaultFontName SansSerif
+title Deployment SS6 - prototype hiện tại
+node "Máy người dùng" {
+ artifact "Browser / Plotly UI" as Browser
 }
-
-node "Application Server Tier: Máy chủ ứng dụng / Trạm làm việc" as AppServer <<device>> {
-    node "Python 3.12 Runtime & Streamlit Framework" as PythonEnv <<execution environment>> {
-        
-        package "Tầng Trình diễn (Presentation Layer)" {
-            component "src/components/sim_demand.py\n(Controller & View Component)" as SimDemandComp <<component>>
-        }
-
-        package "Tầng Dịch vụ & Điều phối (In-Memory Services)" {
-            component "DemandSimulationService\n(Mô phỏng Metro Surge cách ly)" as DemandServiceComp <<component>>
-            component "ForecastService\n(Động cơ dự báo phụ tải 24 giờ)" as ForecastServiceComp <<component>>
-            component "SimulationCoordinator\n(Điều phối cam kết Preview & Version check)" as CoordComp <<component>>
-        }
-
-        package "Tầng Động cơ Mô phỏng (Core Engine)" {
-            component "src/core/simulator.py\n[HubEventSimulator]\n(Gaussian Noise, Seeded RNG, Deepcopy)" as SimEngineComp <<component>>
-        }
-
-        node "Bộ nhớ RAM phiên làm việc (In-Memory Session State)" as RAMNode {
-            database "st.session_state['hubs']\n(Dữ liệu mạng lưới trạm vận hành gốc)" as HubsState <<memory>>
-            artifact "st.session_state['state_version']\n(Bộ đếm phiên bản chống Stale Apply)" as VersionState <<memory>>
-            database "st.session_state['sim_preview_ss6']\n(Vùng đệm cô lập chứa Preview & Event Log)" as PreviewBuffer <<memory>>
-        }
-    }
+node "Máy chạy ứng dụng" {
+ node "Tiến trình Python / Streamlit" {
+  component "src/app.py" as App
+  component "components/sim_demand.py" as UI
+  component "core/simulator.py - HubEventSimulator" as Engine
+  component "core/state.py" as State
+  component "st.session_state - hubs / version / sim_preview_ss6" as Session
+ }
+ artifact "data/mock_hubs.json" as Seed
 }
-
-' Communication protocols
-Browser -- AppServer : " HTTP / WebSocket (TCP Port 8501)\n JSON State & Graph Payloads "
-
-WebUI ..> SimDemandComp : " Tương tác Slider,\n Bấm nút Tạo Preview / Áp dụng "
-SimDemandComp ..> PlotlyRuntime : " Gửi cấu hình biểu đồ Figure "
-
-SimDemandComp --> DemandServiceComp : " INT-08: preview_demand() "
-SimDemandComp --> ForecastServiceComp : " INT-04: forecast(hours=24) "
-SimDemandComp --> CoordComp : " INT-10: apply_preview() "
-
-DemandServiceComp ..> SimEngineComp : " Thực thi simulate_metro_surge() "
-ForecastServiceComp ..> SimEngineComp : " Thực thi generate_demand_forecast() "
-
-SimEngineComp ..> HubsState : " 1. copy.deepcopy(hubs)\n [Cô lập dữ liệu gốc] "
-SimEngineComp ..> PreviewBuffer : " 2. Đóng gói kết quả Preview\n [modified_hubs, metrics, logs] "
-
-CoordComp ..> VersionState : " Kiểm tra baseline_version == state_version\n Tăng version sau khi commit (bump) "
-CoordComp ..> HubsState : " Cập nhật modified_hubs vào vận hành\n [Khi commit hợp lệ] "
-CoordComp ..> PreviewBuffer : " Xóa PreviewBuffer sau khi áp dụng/hủy "
-
-note right of RAMNode
-  <b>Nguyên tắc triển khai Prototype:</b>
-  - Toàn bộ trạng thái lưu in-memory trong session_state.
-  - Không kết nối Cơ sở dữ liệu bên ngoài (RDBMS/NoSQL).
-  - Thuật toán dự báo và mô phỏng chạy in-process CPU.
-  - Tính cô lập (Isolation) bảo vệ dữ liệu trạm gốc.
+Browser <--> App : giao diện Streamlit
+App --> UI
+App --> State : khởi tạo / reset
+State --> Seed : đọc seed
+UI --> Engine : simulate_metro_surge / forecast
+UI --> Session : preview / Apply / version
+UI --> State : bump_state_version
+note bottom
+ Không có DemandSimulationService/ForecastService/
+ SimulationCoordinator đang chạy trong deployment hiện tại.
+ Các service này là thiết kế mục tiêu ở class diagram.
+ Không có database, worker hoặc microservice riêng.
+ Forecast mặc định12 giờ, có thể chọn24 tường minh.
 end note
-
 @enduml
-

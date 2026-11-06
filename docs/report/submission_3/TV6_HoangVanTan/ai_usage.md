@@ -29,3 +29,8 @@
 - **Xác minh kết quả kiểm thử:** Tự chạy kiểm thử, đọc log assert và xác nhận tính đúng đắn của toàn bộ 7 ca test case.
 - **Tổng hợp truy vết cấp nhóm:** Chịu trách nhiệm trực tiếp thu thập dữ liệu từ các thành viên khác để hoàn thiện file ma trận 17 Use Case toàn hệ thống [`docs/traceability/submission_3.md`](../../../traceability/submission_3.md).
 - **Kiểm tra trực quan tài liệu:** Rà soát định dạng bảng, mục lục, căn lề và xuất file PDF cá nhân cuối cùng.
+
+
+## Bổ sung khi tổng hợp 06/11/2026
+
+Codex (AI assistant trong phiên làm việc của trưởng nhóm) đọc đề giảng viên, SRS, code và bài bàn giao; hỗ trợ review, sửa/bổ sung Markdown/PlantUML, danh mục phương thức/truy vết, kiểm tra kỹ thuật và tạo PDF. Mức đóng góp AI trong đợt này là trực tiếp soạn/chỉnh nội dung và tự động hóa kiểm tra; không phải chỉ sửa chính tả. Trưởng nhóm yêu cầu công việc; chủ sở hữu chưa xác nhận đã đọc/hiểu mọi bản sửa. Lịch sử prompt trước giữ nguyên; bản ghi revision ở docs/prompt-history/submission_3_integration_20261106.md, không giả lập hội thoại cá nhân bị thiếu.

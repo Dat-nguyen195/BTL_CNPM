@@ -1,10 +1,100 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram cấp hệ thống — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV3 — Phạm Tiến Đạt\nTổng hợp từ sơ đồ cá nhân và lớp dùng chung đã chốt.\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classAttributeFontSize 12
+skinparam nodesep 28
+skinparam ranksep 32
+title Class diagram hệ thống - tổng quan thiết kế mục tiêu
+package "TV1 - SS1 / tài chính" {
+ class User
+ class Vehicle
+ class SharedVehicle
+ class Booking
+ class BookingService
+ class Wallet
+ class Invoice
+ class BillingService
+}
+package "TV2 - SS2" {
+ class PersonalVehicle
+ class ParkingReservation
+ class ParkingSession
+ class PersonalEVService
+}
+package "TV3 - SS3" {
+ class Hub
+ class NetworkSnapshot
+ class MonitoringService
+}
+package "TV4 - SS4" {
+ class DispatchOrder
+ class VehicleIncident
+ class DispatchService
+ class IncidentService
+}
+package "TV5 - SS5" {
+ class ChargingRequest
+ class ChargingSession
+ class ChargingService
+ class SmartChargingScheduler
+}
+package "TV6 - SS6 / mô phỏng chung" {
+ class ForecastResult
+ class SimulationPreview
+ class DemandSimulationService
+ class ForecastService
+ class SimulationCoordinator
+}
+package "TV7 - SS7" {
+ class InfrastructureFailure
+ class InfrastructureSimulationService
+ class RouteSuggestion
+ class ReroutingService
+}
+SharedVehicle --|> Vehicle
+PersonalVehicle --|> Vehicle
+User "1" -- "0..*" Booking
+User "1" -- "0..*" PersonalVehicle
+User "1" -- "1" Wallet
+Booking "0..*" --> "1" SharedVehicle
+Booking "0..*" --> "1" Hub : nguồn
+Booking "0..*" --> "0..1" Hub : đích dự kiến
+Booking "1" -- "0..1" Invoice
+ParkingReservation "0..*" --> "1" Hub
+ParkingReservation "0..*" --> "1" PersonalVehicle
+ParkingReservation "1" -- "0..1" ParkingSession
+ParkingSession "1" -- "0..1" ChargingSession
+ChargingSession "0..*" --> "1" Vehicle
+ChargingSession "0..*" --> "1" Hub
+DispatchOrder "0..*" --> "1..*" SharedVehicle
+VehicleIncident "0..*" --> "1" Vehicle
+NetworkSnapshot "0..*" ..> Hub
+PersonalEVService ..> ChargingService : INT-01/02
+PersonalEVService ..> BillingService
+BookingService ..> BillingService
+ChargingService ..> SmartChargingScheduler
+ChargingService ..> BillingService
+MonitoringService ..> NetworkSnapshot : INT-03
+ForecastService ..> ForecastResult : INT-04
+DemandSimulationService ..> SimulationPreview : INT-08
+InfrastructureSimulationService ..> SimulationPreview : INT-09
+InfrastructureSimulationService ..> InfrastructureFailure
+ReroutingService ..> RouteSuggestion : INT-06
+RouteSuggestion "0..*" --> "1" Hub
+SimulationCoordinator ..> ChargingService : INT-05 khi Apply
+SimulationCoordinator ..> SimulationPreview : INT-10
+BookingService ..> RouteSuggestion : INT-07 sau xác nhận
+DispatchService ..> DispatchOrder
+IncidentService ..> VehicleIncident
+note bottom
+ Tổng quan lược thuộc tính/phương thức để đọc ranh giới.
+ Chi tiết và mọi phương thức: SS1..SS7/class_diagram.puml,
+ REPORT_SUB3.md và method_catalog.md tương ứng.
+ Hub TV3; Vehicle/User/Wallet TV1; ChargingService TV5;
+ SimulationPreview/Coordinator TV6. Mỗi kiểu một chủ sở hữu.
+ OOP service là thiết kế đề xuất, không khẳng định đã tích hợp.
+end note
 @enduml

@@ -29,7 +29,7 @@ package "SS5 - Smart Charging" {
         +target_soc: float
         +port_kw: float
         --
-        +__post_init__(): void
+        +__post_init__(): None
         +__repr__(): str
     }
 
@@ -56,12 +56,12 @@ package "SS5 - Smart Charging" {
         -_queue: List[ChargingRequest]
         -_active_sessions: Dict[str, ChargingSession]
         --
-        +__init__(cap_kw: float = HUB_POWER_CAP_KW): void
+        +__init__(cap_kw: float = HUB_POWER_CAP_KW): None
         {static} +calculate_priority(request: ChargingRequest): float
-        +add_request(request: ChargingRequest): void
+        +add_request(request: ChargingRequest): None
         +remove_request(vehicle_id: str): Optional[ChargingRequest]
         +get_sorted_queue(): List[ChargingRequest]
-        +allocate_ports(hub_id: str, available_port_count: int, current_active_kw: float = 0.0): List[Dict]
+        +allocate_ports(hub_id: str, available_port_count: int,\n current_active_kw: float = 0.0): List[Dict]
         +advance_simulation_tick(minutes: int = 15): List[Dict]
         +unplug_vehicle(session_id: str): Optional[ChargingSession]
         +queue_length: int
@@ -69,9 +69,9 @@ package "SS5 - Smart Charging" {
     }
 
     class ChargingService <<Required - Not Implemented>> {
-        +request_charging(owner_id, vehicle_id, hub_id, current_soc, target_soc, reservation_id): OperationResult
-        +get_bill(session_id): OperationResult
-        +handle_port_failure(hub_id, port_ids, operation_key): OperationResult
+        +request_charging(owner_id: str, vehicle_id: str, hub_id: str,\n current_soc: float, target_soc: float = 100.0,\n reservation_id: Optional[str] = None): OperationResult[ChargingRequestResult]
+        +get_bill(session_id: str): OperationResult[ChargingBill]
+        +handle_port_failure(hub_id: str, port_ids: list[str],\n operation_key: str): OperationResult[PortFailureResult]
     }
 
     class ChargingRequestResult <<Required - Not Implemented>> {
@@ -109,11 +109,11 @@ package "SS5 - Smart Charging" {
 
 package "Billing - Original billing.py" {
 
-    class BillingFunctions <<Module>> {
-        +settle_overstay_charging(wallet, session_id, vehicle_id, overstay_fee, energy_fee, kwh_charged, sim_time): Dict
-        +calculate_private_ev_bill(parking_fee, kwh_consumed, checkin_time_str, overstay_minutes): Dict
-        +record_transaction(wallet, tx_type, amount, booking_id, note, sim_time): Dict
-        +record_wallet_debt(wallet, amount, reason, sim_time): void
+    class BillingFunctions <<implemented module>> {
+        +settle_overstay_charging(wallet: Dict[str, Any],\n session_id: str, vehicle_id: str, overstay_fee: int, energy_fee: int=0,\n kwh_charged: float=0.0, sim_time: Optional[str]=None): Dict[str, Any]
+        +calculate_private_ev_bill(parking_fee: int=PARKING_PER_VISIT_VND,\n kwh_consumed: float=0.0, checkin_time_str: Optional[str]=None,\n overstay_minutes: int=0): Dict[str, Any]
+        +record_transaction(wallet: Dict[str, Any], tx_type: str,\n amount: int, booking_id: Optional[str]=None, note: str='',\n sim_time: Optional[str]=None): Dict[str, Any]
+        +record_wallet_debt(wallet: Dict[str, Any], amount: int,\n reason: str='', sim_time: Optional[str]=None): None
     }
 }
 
@@ -135,7 +135,7 @@ package "External Contracts" {
     }
 
     class BillingService <<External - TV1>> {
-        +settle_invoice(owner_id, reference_id, charge_lines, operation_key): OperationResult
+        +settle_invoice(owner_id: str, reference_id: str,\n charge_lines: list[ChargeLine],\n operation_key: str): OperationResult[SettlementResult]
     }
 }
 

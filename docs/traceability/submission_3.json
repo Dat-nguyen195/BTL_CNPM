@@ -1,0 +1,492 @@
+{
+  "revision": "2026-11-06",
+  "status": "TECHNICALLY_REVIEWED_AWAITING_OWNER_CONFIRMATION",
+  "use_cases": {
+    "UC_SS1_01": {
+      "name": "Tra cứu, Đặt xe & Nhận xe qua QR/PIN",
+      "owner": "Nguyễn Thành Đạt",
+      "subsystem": "SS1",
+      "user_stories": [
+        "US-01",
+        "US-02",
+        "US-03",
+        "US-03b",
+        "US-04"
+      ],
+      "functional_requirements": [
+        "FR-01",
+        "FR-01b",
+        "FR-01c"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS1/Usecase scenario/UC_SS1_NguyenThanhDat.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS1/Sequence diagrams/UC_SS1_01_NguyenThanhDat_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS1/Activity diagrams/UC_SS1_01_NguyenThanhDat_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS1/class_diagram.puml",
+      "design_methods": [
+        "BookingService.create_booking",
+        "BookingService.pickup"
+      ],
+      "prototype_tests": [
+        "tests/test_core_state_and_billing.py::test_booking_pickup_return_capacity_conservation",
+        "tests/test_submission_2_acceptance.py::test_student_ui_filters_available_vehicles_and_books_voucher"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS1_02": {
+      "name": "Trả xe, Cập nhật vị trí & Quyết toán ví điện tử",
+      "owner": "Nguyễn Thành Đạt",
+      "subsystem": "SS1",
+      "user_stories": [
+        "US-05b",
+        "US-06"
+      ],
+      "functional_requirements": [
+        "FR-01c",
+        "FR-15b"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS1/Usecase scenario/UC_SS1_NguyenThanhDat.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS1/Sequence diagrams/UC_SS1_02_NguyenThanhDat_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS1/Activity diagrams/UC_SS1_02_NguyenThanhDat_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS1/class_diagram.puml",
+      "design_methods": [
+        "BookingService.return_vehicle",
+        "BillingService.settle_invoice"
+      ],
+      "prototype_tests": [
+        "tests/test_core_state_and_billing.py::test_booking_pickup_return_capacity_conservation",
+        "tests/test_core_state_and_billing.py::test_no_silent_debt_loss",
+        "tests/test_submission_2_readiness_fixes.py::test_r08_alternate_hub_return_releases_destination_hold"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS1_03": {
+      "name": "Hủy đặt chỗ & Hoàn cọc / Phạt quá giờ",
+      "owner": "Nguyễn Thành Đạt",
+      "subsystem": "SS1",
+      "user_stories": [
+        "US-05"
+      ],
+      "functional_requirements": [
+        "FR-02"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS1/Usecase scenario/UC_SS1_NguyenThanhDat.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS1/Sequence diagrams/UC_SS1_03_NguyenThanhDat_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS1/Activity diagrams/UC_SS1_03_NguyenThanhDat_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS1/class_diagram.puml",
+      "design_methods": [
+        "BookingService.cancel",
+        "BookingService.expire_reservations",
+        "BillingService.release_deposit",
+        "BillingService.settle_no_show"
+      ],
+      "prototype_tests": [
+        "tests/test_core_state_and_billing.py::test_noshow_expiry_and_penalty",
+        "tests/test_core_state_and_billing.py::test_early_cancellation_full_refund",
+        "tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS2_01": {
+      "name": "Đăng ký xe EV cá nhân lên hệ thống",
+      "owner": "Nguyễn Anh Tài",
+      "subsystem": "SS2",
+      "user_stories": [
+        "US-08"
+      ],
+      "functional_requirements": [
+        "FR-03"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_01_NguyenAnhTai_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_01_NguyenAnhTai_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS2/class_diagram.puml",
+      "design_methods": [
+        "PersonalEVService.register_personal_ev",
+        "PersonalVehicle.normalize_plate"
+      ],
+      "prototype_tests": [
+        "tests/test_personal_ev.py::test_register_personal_ev_success_and_duplicate"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS2_02": {
+      "name": "Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá nhân",
+      "owner": "Nguyễn Anh Tài",
+      "subsystem": "SS2",
+      "user_stories": [
+        "US-09",
+        "US-10"
+      ],
+      "functional_requirements": [
+        "FR-04",
+        "FR-05b"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_02_NguyenAnhTai_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_02_NguyenAnhTai_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS2/class_diagram.puml",
+      "design_methods": [
+        "PersonalEVService.reserve_personal_ev_slot",
+        "PersonalEVService.sweep_expired_personal_reservations"
+      ],
+      "prototype_tests": [
+        "tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle",
+        "tests/test_submission_2_acceptance.py::test_personal_future_arrival_and_exact_expiry",
+        "tests/test_submission_2_acceptance.py::test_personal_invalid_reservation_has_no_financial_or_capacity_effect"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS2_03": {
+      "name": "Check-in xe EV cá nhân tại cổng Hub (QR/Biển số)",
+      "owner": "Nguyễn Anh Tài",
+      "subsystem": "SS2",
+      "user_stories": [
+        "US-11b",
+        "US-10"
+      ],
+      "functional_requirements": [
+        "FR-03b",
+        "FR-04"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_03_NguyenAnhTai_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_03_NguyenAnhTai_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS2/class_diagram.puml",
+      "design_methods": [
+        "PersonalEVService.check_in_personal_ev",
+        "ParkingSession.attach_charging_ref"
+      ],
+      "prototype_tests": [
+        "tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle",
+        "tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS2_04": {
+      "name": "Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân",
+      "owner": "Nguyễn Anh Tài",
+      "subsystem": "SS2",
+      "user_stories": [
+        "US-09",
+        "US-10",
+        "US-11",
+        "US-11b"
+      ],
+      "functional_requirements": [
+        "FR-03b",
+        "FR-05b",
+        "FR-15b"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_04_NguyenAnhTai_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_04_NguyenAnhTai_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS2/class_diagram.puml",
+      "design_methods": [
+        "PersonalEVService.check_out_personal_ev",
+        "BillingService.settle_invoice"
+      ],
+      "prototype_tests": [
+        "tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle",
+        "tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS3_01": {
+      "name": "Giám sát mạng lưới Hub, KPI & Doanh thu thời gian thực",
+      "owner": "Phạm Tiến Đạt",
+      "subsystem": "SS3",
+      "user_stories": [
+        "US-07",
+        "US-13"
+      ],
+      "functional_requirements": [
+        "FR-05",
+        "FR-15b"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS3/Usecase scenario/UC_SS3_PhamTienDat.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS3/Sequence diagrams/UC_SS3_01_PhamTienDat_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS3/Activity diagrams/UC_SS3_01_PhamTienDat_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS3/class_diagram.puml",
+      "design_methods": [
+        "MonitoringService.get_network_snapshot"
+      ],
+      "prototype_tests": [
+        "tests/test_submission_2_acceptance.py::test_dashboard_shows_actual_booking_ledger_and_revenue"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS3_02": {
+      "name": "Cảnh báo phân cấp chiếm dụng Hub & Sự cố IoT",
+      "owner": "Phạm Tiến Đạt",
+      "subsystem": "SS3",
+      "user_stories": [
+        "US-13b",
+        "US-14"
+      ],
+      "functional_requirements": [
+        "FR-05c",
+        "FR-06"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS3/Usecase scenario/UC_SS3_PhamTienDat.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS3/Sequence diagrams/UC_SS3_02_PhamTienDat_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS3/Activity diagrams/UC_SS3_02_PhamTienDat_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS3/class_diagram.puml",
+      "design_methods": [
+        "MonitoringService.get_network_snapshot",
+        "MonitoringService.classify_occupancy"
+      ],
+      "prototype_tests": [
+        "tests/test_core_state_and_billing.py::test_occupancy_threshold_levels"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS4_01": {
+      "name": "Lập lệnh điều chuyển phương tiện cân bằng phụ tải",
+      "owner": "Đặng Hoàng Quý Nhân",
+      "subsystem": "SS4",
+      "user_stories": [
+        "US-15"
+      ],
+      "functional_requirements": [
+        "FR-07"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS4/Usecase scenario/UC_SS4_DangHoangQuyNhan.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS4/Sequence diagrams/UC_SS4_01_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS4/Activity diagrams/UC_SS4_01_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS4/class_diagram.puml",
+      "design_methods": [
+        "DispatchService.create_order",
+        "DispatchService.complete_order"
+      ],
+      "prototype_tests": [
+        "tests/test_submission_2_acceptance.py::test_dispatch_ui_moves_vehicle_and_conserves_capacity"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS4_02": {
+      "name": "Báo cáo, tiếp nhận xử lý và khắc phục sự cố phương tiện",
+      "owner": "Đặng Hoàng Quý Nhân",
+      "subsystem": "SS4",
+      "user_stories": [
+        "US-16",
+        "US-17"
+      ],
+      "functional_requirements": [
+        "FR-08"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS4/Usecase scenario/UC_SS4_DangHoangQuyNhan.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS4/Sequence diagrams/UC_SS4_02_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS4/Activity diagrams/UC_SS4_02_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS4/class_diagram.puml",
+      "design_methods": [
+        "IncidentService.report_vehicle_incident",
+        "IncidentService.acknowledge",
+        "IncidentService.resolve"
+      ],
+      "prototype_tests": [
+        "tests/test_submission_2_acceptance.py::test_incident_ui_report_acknowledge_resolve_and_history"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS5_01": {
+      "name": "Lập lịch sạc tự động theo điểm ưu tiên & Giới hạn công suất lưới",
+      "owner": "Dương Đăng Khoa",
+      "subsystem": "SS5",
+      "user_stories": [
+        "US-10",
+        "US-12",
+        "US-18",
+        "US-20"
+      ],
+      "functional_requirements": [
+        "FR-04",
+        "FR-09",
+        "FR-11"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_01_DuongDangKhoa_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_01_DuongDangKhoa_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS5/class_diagram.puml",
+      "design_methods": [
+        "SmartChargingScheduler.calculate_priority",
+        "SmartChargingScheduler.allocate_ports",
+        "ChargingService.request_charging"
+      ],
+      "prototype_tests": [
+        "tests/test_scheduler_and_charging.py::test_priority_scores_matching_plan_specification",
+        "tests/test_scheduler_and_charging.py::test_deterministic_tie_breaking",
+        "tests/test_scheduler_and_charging.py::test_allocation_and_power_cap",
+        "tests/test_submission_2_readiness_fixes.py::test_r09_repeated_charging_allocation_obeys_power_cap"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS5_02": {
+      "name": "Giám sát hàng chờ sạc, hoàn thành, ân hạn & Tính phí quá giờ",
+      "owner": "Dương Đăng Khoa",
+      "subsystem": "SS5",
+      "user_stories": [
+        "US-12",
+        "US-19",
+        "US-19b"
+      ],
+      "functional_requirements": [
+        "FR-05b",
+        "FR-10",
+        "FR-10b",
+        "FR-15b"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_02_DuongDangKhoa_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_02_DuongDangKhoa_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS5/class_diagram.puml",
+      "design_methods": [
+        "SmartChargingScheduler.advance_simulation_tick",
+        "SmartChargingScheduler.unplug_vehicle",
+        "ChargingService.get_bill"
+      ],
+      "prototype_tests": [
+        "tests/test_scheduler_and_charging.py::test_simulation_tick_and_overstay",
+        "tests/test_submission_2_acceptance.py::test_charging_completion_notification_survives_rerun_and_receipt_is_recorded",
+        "tests/test_submission_2_readiness_fixes.py::test_r11_overstay_charging_settlement_and_debt"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS6_01": {
+      "name": "Mô phỏng tăng đột biến nhu cầu khách Metro (What-if Metro Surge)",
+      "owner": "Hoàng Văn Tấn",
+      "subsystem": "SS6",
+      "user_stories": [
+        "US-21"
+      ],
+      "functional_requirements": [
+        "FR-12"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS6/Usecase scenario/UC_SS6_HoangVanTan.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS6/Sequence diagrams/UC_SS6_01_HoangVanTan_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS6/Activity diagrams/UC_SS6_01_HoangVanTan_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS6/class_diagram.puml",
+      "design_methods": [
+        "DemandSimulationService.preview_demand",
+        "SimulationCoordinator.apply_preview",
+        "HubEventSimulator.simulate_metro_surge"
+      ],
+      "prototype_tests": [
+        "tests/test_simulations.py::test_metro_surge_deepcopy_isolation_and_unserved_students"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS6_02": {
+      "name": "Dự báo phụ tải nhu cầu và phân tích hàng đợi 24h",
+      "owner": "Hoàng Văn Tấn",
+      "subsystem": "SS6",
+      "user_stories": [
+        "US-22"
+      ],
+      "functional_requirements": [
+        "FR-13"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS6/Usecase scenario/UC_SS6_HoangVanTan.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS6/Sequence diagrams/UC_SS6_02_HoangVanTan_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS6/Activity diagrams/UC_SS6_02_HoangVanTan_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS6/class_diagram.puml",
+      "design_methods": [
+        "ForecastService.forecast",
+        "HubEventSimulator.generate_demand_forecast"
+      ],
+      "prototype_tests": [
+        "tests/test_submission_2_acceptance.py::test_forecast_24h_queue_wait_and_reproducibility"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS7_01": {
+      "name": "Mô phỏng sự cố hạ tầng & Mất điện trạm sạc",
+      "owner": "Nguyễn Trung Nguyên",
+      "subsystem": "SS7",
+      "user_stories": [
+        "US-23",
+        "US-24"
+      ],
+      "functional_requirements": [
+        "FR-14",
+        "FR-15"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_01_NguyenTrungNguyen_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_01_NguyenTrungNguyen_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS7/class_diagram.puml",
+      "design_methods": [
+        "InfrastructureSimulationService.preview_port_failure",
+        "HubEventSimulator.simulate_port_failure",
+        "SimulationCoordinator.apply_preview"
+      ],
+      "prototype_tests": [
+        "tests/test_simulations.py::test_port_failure_distinguishes_free_vs_busy_ports",
+        "tests/test_submission_2_acceptance.py::test_infrastructure_preview_isolated_apply_and_stale_rejected"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    },
+    "UC_SS7_02": {
+      "name": "Đề xuất gợi ý điều hướng tự động sang Hub lân cận & Cảnh báo",
+      "owner": "Nguyễn Trung Nguyên",
+      "subsystem": "SS7",
+      "user_stories": [
+        "US-24",
+        "US-24b"
+      ],
+      "functional_requirements": [
+        "FR-15",
+        "FR-15c"
+      ],
+      "scenario": "docs/diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md",
+      "sequence": "docs/diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_02_NguyenTrungNguyen_sequence.puml",
+      "activity": "docs/diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_02_NguyenTrungNguyen_activity.puml",
+      "class_diagram": "docs/diagrams/submission_3/SS7/class_diagram.puml",
+      "design_methods": [
+        "ReroutingService.suggest_hubs",
+        "BookingService.accept_rerouting"
+      ],
+      "prototype_tests": [
+        "tests/test_submission_2_acceptance.py::test_rerouting_selects_two_hubs_and_transfers_hold_once",
+        "tests/test_core_state_and_billing.py::test_haversine_distance_accuracy"
+      ],
+      "status": "DESIGN_REVIEWED_OWNER_PENDING"
+    }
+  },
+  "members": {
+    "1": [
+      "NguyenThanhDat",
+      "Nguyễn Thành Đạt",
+      "2410709"
+    ],
+    "2": [
+      "NguyenAnhTai",
+      "Nguyễn Anh Tài",
+      "2413035"
+    ],
+    "3": [
+      "PhamTienDat",
+      "Phạm Tiến Đạt",
+      "2410724"
+    ],
+    "4": [
+      "DangHoangQuyNhan",
+      "Đặng Hoàng Quý Nhân",
+      "2412401"
+    ],
+    "5": [
+      "DuongDangKhoa",
+      "Dương Đăng Khoa",
+      "2411589"
+    ],
+    "6": [
+      "HoangVanTan",
+      "Hoàng Văn Tấn",
+      "2213074"
+    ],
+    "7": [
+      "NguyenTrungNguyen",
+      "Nguyễn Trung Nguyên",
+      "2011710"
+    ]
+  }
+}

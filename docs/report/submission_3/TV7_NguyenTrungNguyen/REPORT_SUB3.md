@@ -17,9 +17,11 @@
 
 # Submission 3 — Nguyễn Trung Nguyên — SS7
 
+> **Revision tích hợp06/11/2026:** có chỉnh sửa với Codex hỗ trợ; chủ sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được dùng khi khác nhận định của bản bàn giao trước.
+
 **MSSV:** 2011710  
 **Phân hệ:** SS7 — Sự cố hạ tầng và gợi ý Hub thay thế  
-**Phiên bản nội dung:** 1.1 — cập nhật theo review PR #20 ngày 03/11/2026.
+**Phiên bản nội dung:** 1.2 - tích hợp06/11/2026, kế thừa review PR20 ngày03/11/2026.
 **Trạng thái:** Báo cáo, nguồn sơ đồ, ảnh xuất và PDF cá nhân đã được cập nhật theo các phát hiện review; còn phân biệt rõ giới hạn prototype và hợp đồng chưa tích hợp.
 **Khoảng thực hiện theo kế hoạch:** 21/10/2026–30/10/2026.
 
@@ -241,3 +243,23 @@ Các lệnh cần `PYTHONPATH=src` do repository không có pytest configuration
 - **Self-check:** [Checklist và bằng chứng](<self_check.md>).
 - **PDF cá nhân:** [REPORT_SUB3_NguyenTrungNguyen_2011710.pdf](<../../../../output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf>) — PDF đã xuất và kiểm tra, được bàn giao cùng nguồn trong cây repository.
 - **LMS:** chưa xác nhận trạng thái nộp; TV7 phải tự tải đúng bộ file và kiểm tra biên nhận/trạng thái trên LMS.
+
+
+## Kiến trúc chung và trạng thái phiên bản tích hợp
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.py -> components/core -> dữ liệu seed và session ở tiến trình server. Không có database bắt buộc, SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện, không tạo telemetry nền. Chạy từ repository: `streamlit run src/app.py`; host/cổng phụ thuộc cấu hình, không cố định trong dự án.
+
+![Deployment view chung](../../../diagrams/submission_3/shared/deployment.png)
+
+![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
+
+Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
+
+## Hiệu chỉnh tích hợp 06/11/2026
+
+INT-08 thuộc DemandSimulationService/TV6, không phải nghĩa vụ hiện thực riêng của SS7; SS7 cần dùng schema/INT-10 chung và mô tả INT-05/06/07/09. Quan hệ failure_scenario là phụ thuộc bối cảnh, không phải thuộc tính thêm vào SimulationPreview. INT-07 version/key/ưu đãi một lần là hợp đồng mục tiêu; chưa có coordinator hay adapter cổng vật lý đang chạy.
+
+
+## Class diagram revision tích hợp
+
+![Class diagram SS7](../../../diagrams/submission_3/SS7/class_diagram.png)

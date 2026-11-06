@@ -63,10 +63,10 @@ class PersonalEVService <<proposed service>> {
   -billing_service: BillingService
   -charging_service: ChargingService
   --
-  +register_personal_ev(owner_id: str, owner_name: str, plate_number: str, vehicle_type: str, brand: str, battery_kwh: float): OperationResult[PersonalVehicle]
-  +reserve_personal_ev_slot(owner_id: str, vehicle_id: str, hub_id: str, booking_start_time: datetime, request_charging: bool = False, current_soc: float = 50.0, operation_key: str = ""): OperationResult[ParkingReservation]
-  +check_in_personal_ev(owner_id: str, reservation_id: str, operation_key: str = ""): OperationResult[ParkingSession]
-  +check_out_personal_ev(owner_id: str, reservation_id: str, operation_key: str = ""): OperationResult[SettlementResult]
+  +register_personal_ev(owner_id: str, owner_name: str,\n plate_number: str, vehicle_type: str, brand: str,\n battery_kwh: float): OperationResult[PersonalVehicle]
+  +reserve_personal_ev_slot(owner_id: str, vehicle_id: str,\n hub_id: str, booking_start_time: datetime,\n request_charging: bool = False, current_soc: float = 50.0,\n operation_key: str = ""): OperationResult[ParkingReservation]
+  +check_in_personal_ev(owner_id: str, reservation_id: str,\n operation_key: str = ""): OperationResult[ParkingSession]
+  +check_out_personal_ev(owner_id: str, reservation_id: str,\n operation_key: str = ""): OperationResult[SettlementResult]
   +sweep_expired_personal_reservations(sim_now: datetime): OperationResult[list[str]]
 }
 
@@ -80,44 +80,34 @@ class "core.personal_ev" as PersonalEVModule <<implemented module>> {
   --
   +parse_time(t_str: str): datetime
   +format_time(dt: datetime): str
-  +register_personal_ev(state: dict, owner_id: str, owner_name: str, plate_number: str, ev_type: str, brand: str, battery_kwh: float): tuple[bool, dict | None, str]
-  +reserve_personal_ev_slot(state: dict, owner_id: str, ev_id: str, hub_id: str, request_charging: bool = False, current_soc: float = 50.0, booking_start_time: str | None = None): tuple[bool, dict | None, str]
+  +register_personal_ev(state: dict, owner_id: str, owner_name: str,\n plate_number: str, ev_type: str, brand: str,\n battery_kwh: float): tuple[bool, dict | None, str]
+  +reserve_personal_ev_slot(state: dict, owner_id: str, ev_id: str,\n hub_id: str, request_charging: bool = False, current_soc: float = 50.0,\n booking_start_time: str | None = None): tuple[bool, dict | None, str]
   +sweep_expired_personal_reservations(state: dict): int
   +check_in_personal_ev(state: dict, reservation_id: str): tuple[bool, str]
-  +check_out_personal_ev(state: dict, reservation_id: str, duration_hours: float = 2.0, kwh_charged: float = 3.5, overstay_minutes: int = 0): tuple[bool, dict | None, str]
+  +check_out_personal_ev(state: dict, reservation_id: str,\n duration_hours: float = 2.0, kwh_charged: float = 3.5,\n overstay_minutes: int = 0): tuple[bool, dict | None, str]
 }
 
-class "User / Vehicle (TV1)" as SharedUserVehicle <<shared contract>> {
-  +user_id: str
-  +vehicle_id: str
-  +ownership: Ownership
-  +status: VehicleStatus
-}
+class User <<shared TV1>>
+class Vehicle <<shared TV1>>
 
-class "Hub (TV3)" as SharedHub <<shared contract>> {
-  +hub_id: str
-  +name: str
-  +total_slots: int
-  +available_slots: int
-  +destination_holds: int
-  +charging_ports: dict[str, int]
-}
+class "Hub (TV3)" as SharedHub <<shared contract, projection>>
 
 class "BillingService (TV1)" as BillingService <<shared contract>> {
   --
-  +hold_deposit(owner_id: str, reference_id: str, amount_vnd: int, operation_key: str): OperationResult[DepositResult]
-  +release_deposit(owner_id: str, reference_id: str, operation_key: str): OperationResult[DepositResult]
-  +settle_no_show(owner_id: str, reference_id: str, operation_key: str): OperationResult[SettlementResult]
-  +settle_invoice(owner_id: str, reference_id: str, charge_lines: list[ChargeLine], operation_key: str): OperationResult[SettlementResult]
+  +hold_deposit(owner_id: str, reference_id: str, amount_vnd: int,\n operation_key: str): OperationResult[DepositResult]
+  +release_deposit(owner_id: str, reference_id: str,\n operation_key: str): OperationResult[DepositResult]
+  +settle_no_show(owner_id: str, reference_id: str,\n operation_key: str): OperationResult[SettlementResult]
+  +settle_invoice(owner_id: str, reference_id: str,\n charge_lines: list[ChargeLine],\n operation_key: str): OperationResult[SettlementResult]
 }
 
 class "ChargingService (TV5)" as ChargingService <<shared contract>> {
   --
-  +request_charging(owner_id: str, vehicle_id: str, hub_id: str, current_soc: float, target_soc: float = 100.0, reservation_id: str | None = None): OperationResult[ChargingRequestResult]
+  +request_charging(owner_id: str, vehicle_id: str, hub_id: str,\n current_soc: float, target_soc: float = 100.0,\n reservation_id: str | None = None): OperationResult[ChargingRequestResult]
   +get_bill(session_id: str): OperationResult[ChargingBill]
 }
 
-PersonalVehicle --|> SharedUserVehicle : kế thừa Vehicle\n(ownership=PERSONAL)
+PersonalVehicle --|> Vehicle : kế thừa Vehicle\n(ownership=PERSONAL)
+User "1" -- "0..*" PersonalVehicle : owner
 ParkingReservation "0..*" --> "1" PersonalVehicle : gắn với xe cá nhân
 ParkingReservation "0..*" --> "1" SharedHub : giữ chỗ đích\n(destination_holds)
 ParkingReservation "1" --> "0..1" ParkingSession : kích hoạt khi check-in

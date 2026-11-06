@@ -1,34 +1,25 @@
-# Truy vết cá nhân — Nguyễn Trung Nguyên — SS7
+# Truy vết SS7 - revision 06/11/2026
 
-**Phạm vi:** `UC_SS7_01`, `UC_SS7_02`
-**Trạng thái:** Bản truy vết đã hoàn thiện; TV7 xác nhận nội dung ngày 30/10/2026.
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
 
-[Manifest Sub2](<../../../traceability/submission_2.json>) · [Báo cáo TV7](<REPORT_SUB3.md>) · [Hợp đồng dùng chung](<../shared/shared_contracts.md>)
+## UC_SS7_01 - Mô phỏng sự cố hạ tầng & Mất điện trạm sạc
 
-| US | FR | UC / scenario | Sequence / activity | Lớp, method và giao tiếp Sub3 | Code prototype / test |
-|---|---|---|---|---|---|
-| `US-23`, `US-24` | `FR-14`, `FR-15` | `UC_SS7_01` — mô phỏng sự cố hạ tầng, lỗi cổng/mất điện | [Scenario](<../../../diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md>); [sequence](<../../../diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_01_NguyenTrungNguyen_sequence.puml>); [activity](<../../../diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_01_NguyenTrungNguyen_activity.puml>) | `InfrastructureFailure`; `InfrastructureSimulationService.preview_port_failure` — INT-09; `SimulationCoordinator.apply_preview` — INT-10 (TV6); `ChargingService.handle_port_failure` — INT-05 (TV5); `SS7-MTH-01/02` | `src/components/sim_infrastructure.py`; `src/core/simulator.py`; hiện có `test_port_failure_distinguishes_free_vs_busy_ports`; thiết kế bổ sung `SS7-TC-01`–`SS7-TC-03` |
-| `US-24`, `US-24b` | `FR-15`, `FR-15c` | `UC_SS7_02` — gợi ý Hub thay thế và cảnh báo | [Scenario](<../../../diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md>); [sequence](<../../../diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_02_NguyenTrungNguyen_sequence.puml>); [activity](<../../../diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_02_NguyenTrungNguyen_activity.puml>) | `RouteSuggestion`; `ReroutingService.suggest_hubs` — INT-06; sau xác nhận, `BookingService.accept_rerouting` — INT-07 (TV1); `SS7-MTH-03` | Gợi ý: `src/components/sim_infrastructure.py`/`student_booking.py`; đổi booking prototype hiện tại: `src/components/student_booking.py` gọi `src/core/booking.py`; test `test_rerouting_selects_two_hubs_and_transfers_hold_once`; thiết kế bổ sung `SS7-TC-04`–`SS7-TC-06` |
+- **Yêu cầu:** US-23, US-24, FR-14, FR-15.
+- **Scenario:** [UC_SS7_NguyenTrungNguyen.md](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md>).
+- **Sequence:** [UC_SS7_01_NguyenTrungNguyen_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_01_NguyenTrungNguyen_sequence.puml>).
+- **Activity:** [UC_SS7_01_NguyenTrungNguyen_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_01_NguyenTrungNguyen_activity.puml>).
+- **Thiết kế:** `InfrastructureSimulationService.preview_port_failure`, `HubEventSimulator.simulate_port_failure`, `SimulationCoordinator.apply_preview`. Class diagram SS7, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_simulations.py::test_port_failure_distinguishes_free_vs_busy_ports`, `tests/test_submission_2_acceptance.py::test_infrastructure_preview_isolated_apply_and_stale_rejected`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
-## Luồng gọi và trạng thái triển khai
+## UC_SS7_02 - Đề xuất gợi ý điều hướng tự động sang Hub lân cận & Cảnh báo
 
-### UC_SS7_01
-
-1. UI lấy `hubs` và `state_version` của session.
-2. Prototype tạo `HubEventSimulator` và gọi `simulate_port_failure(target_hub_id, num_ports_down, seed=42)`.
-3. Kết quả trên bản sao sâu được giữ trong `sim_preview_ss7`; người dùng có thể xem hoặc hủy mà không thay Hub gốc.
-4. Prototype chỉ Apply khi version nền bằng version hiện tại, sau đó gán snapshot Hub và tăng version. Giao tiếp đích của Sub3 là `SimulationCoordinator.apply_preview` (INT-10), tích hợp `ChargingService.handle_port_failure` (INT-05) và chống Apply trùng.
-
-**Nhánh cần thể hiện rõ:** Hub không tồn tại; số cổng không hợp lệ; cổng lỗi ảnh hưởng cổng rảnh/đang bận; preview cũ; không có tích hợp nguồn điện/IoT thật. Cờ `seed` hiện không quyết định kết quả hàm mô phỏng cổng lỗi.
-
-### UC_SS7_02
-
-1. Hợp đồng mục tiêu: UI SS1/SS7 gọi `ReroutingService.suggest_hubs` với nhu cầu thực tế. Prototype hiện gọi trực tiếp `find_alternative_hubs` từ `student_booking.py` hoặc `sim_infrastructure.py`. UI mô phỏng cổng lỗi yêu cầu cổng sạc (`need_ports=True`, `need_slots=False`); luồng trả xe yêu cầu slot.
-2. Service trả danh sách snapshot xếp theo khoảng cách; danh sách rỗng là nhánh hợp lệ. Không coi gợi ý là đặt giữ chỗ.
-3. Trong prototype, người dùng xác nhận ở `student_booking.py`, rồi UI gọi trực tiếp `apply_rerouting_to_booking` trong `core/booking.py`. Theo hợp đồng mục tiêu, UI chuyển yêu cầu cho TV1 qua `BookingService.accept_rerouting` (INT-07), nơi kiểm tra lại version, booking và capacity, chuyển giữ chỗ và cấp tối đa một lần ưu đãi 15 phút.
-
-**Khác biệt lịch sử:** sequence/activity Sub2 có nội dung SSO/IoT, trạng thái `OFFLINE`, tự động Apply và Euclidean; các thành phần này chưa có trong prototype. Hàm routing hiện dùng Haversine, lọc capacity nhưng chưa loại Hub theo trạng thái hoạt động chuẩn. Cần kiểm tra và xin chủ sở hữu Sub2 xác nhận mọi chỉnh sửa trước khi sửa nguồn lịch sử.
-
-## Ca kiểm thử
-
-Chi tiết dữ liệu, bước chạy, kết quả mong đợi và trạng thái hiện tại ở [test_cases.md](<test_cases.md>). Các test cũ chỉ được dẫn như kiểm tra phần assertion tương ứng; không xem chúng là bằng chứng cho toàn bộ UC.
+- **Yêu cầu:** US-24, US-24b, FR-15, FR-15c.
+- **Scenario:** [UC_SS7_NguyenTrungNguyen.md](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Usecase scenario/UC_SS7_NguyenTrungNguyen.md>).
+- **Sequence:** [UC_SS7_02_NguyenTrungNguyen_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Sequence diagrams/UC_SS7_02_NguyenTrungNguyen_sequence.puml>).
+- **Activity:** [UC_SS7_02_NguyenTrungNguyen_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS7/Activity diagrams/UC_SS7_02_NguyenTrungNguyen_activity.puml>).
+- **Thiết kế:** `ReroutingService.suggest_hubs`, `BookingService.accept_rerouting`. Class diagram SS7, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_submission_2_acceptance.py::test_rerouting_selects_two_hubs_and_transfers_hold_once`, `tests/test_core_state_and_billing.py::test_haversine_distance_accuracy`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.

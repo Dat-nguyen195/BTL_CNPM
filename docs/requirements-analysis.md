@@ -249,3 +249,21 @@ Dưới đây là các yêu cầu phi chức năng tổng quát cho toàn hệ t
 ## Ghi chú xác thực prototype cho Submission #2 (21/10/2026)
 
 Các mã US/FR và nội dung yêu cầu ở trên là baseline truy vết. Nhãn triển khai trong bảng FR chỉ mô tả chức năng prototype, không chứng nhận đầy đủ mọi tiêu chí sản phẩm. Ma trận `docs/traceability/submission_2.md` ghi rõ bằng chứng tự động và ba mục PARTIAL: US-06 chưa đo quãng đường; US-12 chưa xác thực đầy đủ hành trình riêng của nhân viên vận hành; US-21 chưa dự báo biến động doanh thu. SSO, IoT, QR/barie và ví thanh toán dùng mô phỏng trong phiên. SS2 áp dụng cọc 50.000đ, hạn check-in 30 phút sau giờ đến đã đặt, hoàn cọc khi quyết toán check-out; cổng sạc được cấp khi check-in, chỗ đỗ được giữ ngay khi xác nhận.
+
+
+## Đối chiếu mức triển khai cho Submission 3 - 06/11/2026
+
+Yêu cầu/ID SRS ở trên được giữ nguyên. Các nhãn Implemented cũ không là xác nhận đã có tích hợp sản xuất. Revision Sub3 đối chiếu như sau:
+
+| Phạm vi | Hiện trạng được xác minh trong source | Giới hạn / thiết kế mục tiêu |
+| --- | --- | --- |
+| FR01/01b/01c/02/15b | Booking, PIN4 chữ số, trả xe và tài chính mô phỏng trong session | Không SSO/IoT/QR khóa xe thật; chưa sổ cọc theo reference/charge/key dùng chung; thiếu nguồn km US06 |
+| FR03/03b/04/05b | Hồ sơ cá nhân, giữ chỗ, check-in/out bằng thao tác UI | Barie/QR là mô phỏng; phí đỗ5.000 VNĐ/lượt khác US09 theo giờ; điện theo giờ checkout; chưa ChargingService tích hợp |
+| FR05/05c/06 | Dashboard/rerun, ngưỡng70/85/100 và offline mock | Doanh thu chỉ một số loại ledger SS1; estimate kW có thể tính offline, không telemetry thật |
+| FR07/08 | Điều chuyển/sự cố có workflow UI và log trong session | Không file log lưu bền; thiếu service transaction/authorization/binding khi phục hồi; đề xuất bổ sung trong Sub3 |
+| FR09/10/10b/11 | Score SoC/booking, tie FIFO/ID, power cap, tick/notify/grace/overstay | Giá điện và thời gian chờ chưa là trọng số score, US12 confirm chưa đầy đủ; charging service/port-ID adapter còn đề xuất |
+| FR12/13 | Deepcopy Metro Surge, dự báo có thể chọn24 giờ, seed tái lập | Default core/UI12; wait là ước lượng theo8 xe/giờ; US21 chưa dự báo doanh thu; coordinator chung chưa có |
+| FR14/15/15c | Lỗi cổng số đếm, preview Apply ở UI, gợi ý routing | Chưa port/session adapter, OFFLINE filter chuẩn và atomic cross-service Apply; chuyển booking sau xác nhận |
+| NFR | Prototype dùng session và mock auth, unit/UI tests | Chưa chứng minh tải/availability/multi-session consistency hoặc bảo mật production; cần benchmark và kiến trúc lưu/chia sẻ dữ liệu khi mở rộng |
+
+Chi tiết thiết kế và việc còn mở tại docs/report/submission_3/shared/open_issues.md và docs/review/REVIEW_SUBMISSION_3_20261106.md. Không đổi yêu cầu để khớp phần prototype còn thiếu.

@@ -1,21 +1,15 @@
-# Đầu ra Submission 3
+# Submission 3 - bộ PDF revision 06/11/2026
 
-**Trạng thái:** PDF cá nhân TV7 đã được xuất và kiểm tra theo review PR #20; các PDF thành viên khác chỉ được thêm sau khi hoàn thiện và tự kiểm tra.
+Bảy báo cáo dưới đây được build từ nguồn đã tích hợp; có hai view kiến trúc chung, class diagram, mô tả lớp/phương thức và phụ lục truy vết/test/self-check/AI. Đây là bộ kỹ thuật để tác giả mở lại và xác nhận; chưa có bằng chứng nộp LMS.
 
-Nguồn được quản lý ở `docs/report/submission_3/`; nguồn sơ đồ và ảnh xuất quản lý tại `docs/diagrams/submission_3/`. Không sửa trực tiếp bản PDF để lệch với nguồn.
+- [REPORT_SUB3_DangHoangQuyNhan_2412401.pdf](REPORT_SUB3_DangHoangQuyNhan_2412401.pdf).
+- [REPORT_SUB3_DuongDangKhoa_2411589.pdf](REPORT_SUB3_DuongDangKhoa_2411589.pdf).
+- [REPORT_SUB3_HoangVanTan_2213074.pdf](REPORT_SUB3_HoangVanTan_2213074.pdf).
+- [REPORT_SUB3_NguyenAnhTai_2413035.pdf](REPORT_SUB3_NguyenAnhTai_2413035.pdf).
+- [REPORT_SUB3_NguyenThanhDat_2410709.pdf](REPORT_SUB3_NguyenThanhDat_2410709.pdf).
+- [REPORT_SUB3_NguyenTrungNguyen_2011710.pdf](REPORT_SUB3_NguyenTrungNguyen_2011710.pdf).
+- [REPORT_SUB3_PhamTienDat_2410724.pdf](REPORT_SUB3_PhamTienDat_2410724.pdf).
 
-## Tên PDF dự kiến
+[SHA256SUMS](SHA256SUMS.txt) định danh đúng bộ PDF. Nguồn: docs/report/submission_3 và docs/diagrams/submission_3. Script build: scripts/build_submission_3.py; toolchain: scripts/requirements-submission3.txt. Bản PDF/DOCX bàn giao trước giữ trong lịch sử Git, không trộn với đầu ra canonical revision này.
 
-- `REPORT_SUB3_NguyenThanhDat_2410709.pdf` — Nguyễn Thành Đạt.
-- `REPORT_SUB3_NguyenAnhTai_2413035.pdf` — Nguyễn Anh Tài.
-- `REPORT_SUB3_PhamTienDat_2410724.pdf` — Phạm Tiến Đạt.
-- `REPORT_SUB3_DangHoangQuyNhan_2412401.pdf` — Đặng Hoàng Quý Nhân.
-- `REPORT_SUB3_DuongDangKhoa_2411589.pdf` — Dương Đăng Khoa.
-- `REPORT_SUB3_HoangVanTan_2213074.pdf` — Hoàng Văn Tấn.
-- `REPORT_SUB3_NguyenTrungNguyen_2011710.pdf` — Nguyễn Trung Nguyên.
-
-Hiện có: [PDF của Nguyễn Trung Nguyên](<REPORT_SUB3_NguyenTrungNguyen_2011710.pdf>).
-
-Xuất báo cáo cá nhân sang PDF bằng công cụ soạn thảo của tác giả, bảo đảm có đủ hai view kiến trúc, class diagram, mô tả lớp/phương thức, truy vết và khai báo đóng góp. Các file Markdown con cần được đưa vào nội dung báo cáo cuối, không chỉ dẫn link thay phần bắt buộc.
-
-Chỉ tạo ZIP tổng hợp nếu hướng dẫn LMS yêu cầu hoặc để lưu bộ nguồn. Không coi ZIP thay cho PDF cá nhân nếu LMS không cho phép. Không tạo file PDF/PNG 0 byte để giả làm đầu ra đã hoàn thiện.
+Kế hoạch chốt: docs/report/submission_3/COMPLETION_PLAN.md. Mỗi chủ sở hữu cần đọc/hiểu bản sửa, khai báo AI/đóng góp đúng, xác nhận PDF rồi nộp theo LMS đã kiểm chứng. Không mặc định các service đề xuất đã có code hoặc test PASS, không dùng ZIP/source thay báo cáo doc/docx/pdf bắt buộc.

@@ -71,3 +71,8 @@
 | Gợi ý 2 Hub và chuyển giữ chỗ | PowerShell: `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_submission_2_acceptance.py -k rerouting` | PASS — 1 passed, 12 deselected. |
 
 Hai lệnh cần `PYTHONPATH=src` vì repository không có pytest configuration đưa thư mục `src` vào import path. Các ca `SS7-TC-01` đến `SS7-TC-06` là test case bonus được thiết kế, không phải kết quả kiểm thử riêng; kết quả PASS ở trên chỉ áp dụng cho test hiện có được nêu trong bảng.
+
+
+## Đối chiếu thực thi 06/11/2026
+
+Bộ49 test hiện có đã chạy PASS (log baseline chung). Các tên test dẫn trong traceability.md được đối chiếu với nguồn. Nhãn PASS của bản bàn giao chỉ có hiệu lực trong phạm vi các assert thực sự có trong test đó; các điều kiện mở rộng/operation_key/service đề xuất vẫn DESIGNED. Không dùng test của core để xác nhận service chưa tồn tại.

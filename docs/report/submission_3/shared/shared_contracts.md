@@ -298,3 +298,14 @@ apply_preview(
 **Lỗi chung:** `NOT_FOUND`, `INVALID_INPUT`, `FORBIDDEN`, `INVALID_STATE`, `EXPIRED`, `NO_CAPACITY`, `INSUFFICIENT_FUNDS`, `DEBT_BLOCKED`, `STALE_STATE`, `CONFLICTING_OPERATION`, `CONFLICTING_CHARGE`; chỉ sử dụng mã phù hợp với thao tác. Kết quả xử lý có phát sinh nợ theo chính sách trả xe không bị nhầm với lỗi làm mất trạng thái trả xe vật lý.
 
 **Trách nhiệm tự kiểm thử đã chốt:** chủ sở hữu service tự kiểm tra điều kiện và kết quả của service; bên gọi tự kiểm tra ánh xạ đầu vào/đầu ra và cách xử lý lỗi trong phần mình. Không giao nhiệm vụ kiểm tra bài của thành viên khác. Mỗi người ghi đầy đủ mô tả cho các phương thức đã đưa vào class diagram; không cần vẽ lại mọi service dùng chung nếu phân hệ chỉ tham chiếu giao tiếp của nó.
+
+
+## Revision tích hợp 06/11/2026
+
+Không đổi quyền sở hữu/chữ ký mục 2.2–2.3. Các trường tối thiểu của SimulationPreview gồm `preview_id`, `scenario_type`, `baseline_version`, `modified_hubs`, `charging_effects`, `summary`, `is_applied`; được thêm `target_hub_id` và `event_log` để ánh xạ UI. Adapter ánh xạ `metrics` của prototype vào `summary`, không thay thế hay bỏ `charging_effects`. Thiết kế dùng `scenario_type=DEMAND/PORT_FAILURE`. Prototype chưa có đầy đủ DTO này.
+
+Hub chuẩn có `hub_id/name/latitude/longitude/total_slots/available_slots/destination_holds/background_occupied/current_vehicles/charging_ports`. Trong sơ đồ con, Hub rỗng hoặc một projection không tạo lớp chủ sở hữu mới. `PersonalVehicle` kế thừa `Vehicle`, liên kết `User` qua `owner_id`; không kế thừa lớp gộp User/Vehicle.
+
+Trong thiết kế, `datetime` dùng UTC+7 theo đồng hồ mô phỏng; adapter đọc chuỗi naive hiện có theo quy ước này, không khẳng định prototype đã timezone-aware. `BookingStatus` và `ParkingReservationStatus` là enum thiết kế riêng; không tuyên bố `ReservationStatus` hiện có chứa IN_USE/CHECKED_IN.
+
+Snapshot doanh thu mục tiêu cộng khoản thu thực đã đối soát của SS1/SS2/SS5, loại cọc và tiền hoàn, tách khoản nợ; hiện dashboard chỉ cộng một số giao dịch SS1. Dashboard hiện ước tính `(total-available)*7.4 kW` có thể tính cả offline, khác scheduler mặc định 11 kW/cổng; không dùng ước tính này như số đo công suất thật. Các điểm này được ghi trong open_issues.md.

@@ -19,11 +19,11 @@ class InfrastructureFailure <<value object, proposed>> {
 }
 
 class InfrastructureSimulationService <<proposed service>> {
-  +preview_port_failure(hub_id: str, num_ports_down: int, seed: int = 42): OperationResult[SimulationPreview]
+  +preview_port_failure(hub_id: str, num_ports_down: int,\n seed: int = 42): OperationResult[SimulationPreview]
 }
 
 class ReroutingService <<proposed service>> {
-  +suggest_hubs(target_hub_id: str, need_slots: bool = True, need_ports: bool = False, limit: int = 2): OperationResult[list[RouteSuggestion]]
+  +suggest_hubs(target_hub_id: str, need_slots: bool = True,\n need_ports: bool = False,\n limit: int = 2): OperationResult[list[RouteSuggestion]]
 }
 
 class RouteSuggestion <<value object, proposed>> {
@@ -35,6 +35,7 @@ class RouteSuggestion <<value object, proposed>> {
 }
 
 class HubEventSimulator <<implemented>> {
+  +simulate_port_failure(target_hub_id: str = "HUB-004",\n num_ports_down: int = 3,\n seed: Optional[int] = 42): tuple[list[dict],list[str],dict]
 }
 
 class "core.routing" as RoutingModule <<implemented module>>
@@ -47,7 +48,7 @@ InfrastructureSimulationService ..> HubEventSimulator : ánh xạ prototype
 InfrastructureSimulationService ..> SimulationPreview : INT-09\nPORT_FAILURE
 ReroutingService ..> RoutingModule : ánh xạ hàm hiện tại
 ReroutingService ..> RouteSuggestion : chuẩn hóa kết quả
-InfrastructureFailure "1" <-- "0..*" SimulationPreview : failure_scenario
+InfrastructureSimulationService ..> SimulationPreview : scenario context, not a field
 RouteSuggestion "0..*" --> "1" Hub : suggested_hub
 InfrastructureSimulationService -[hidden]down-> ReroutingService
 

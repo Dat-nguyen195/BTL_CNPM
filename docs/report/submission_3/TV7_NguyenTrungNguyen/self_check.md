@@ -1,48 +1,23 @@
-# Tự kiểm tra — Nguyễn Trung Nguyên — SS7
+# Tự kiểm tra SS7 - bản tích hợp 06/11/2026
 
-**Phiên bản sản phẩm:** 1.1 (cập nhật theo review PR #20 ngày 03/11/2026).<br>
-**Trạng thái xác nhận:** TV7 xác nhận nội dung ban đầu ngày 30/10/2026; cập nhật review đã được thực hiện, chờ TV7 xác nhận bản cuối.<br>
-**Nguyên tắc:** tác giả tự kiểm tra, tự sửa và tự chịu trách nhiệm; không có kiểm tra chéo.
+**Xác nhận của tác giả:** CHỜ CHỦ SỞ HỮU XÁC NHẬN BẢN MỚI.
 
-## Task cá nhân kế thừa từ hướng dẫn
+Checklist bản bàn giao trước được giữ trong lịch sử Git. Không chuyển SELF_CHECKED/FINAL hoặc PASS cũ sang revision mới như bằng chứng tác giả đã phê duyệt. Nội dung được review/chỉnh và bổ sung theo yêu cầu trưởng nhóm với Codex hỗ trợ.
 
-- [x] `TV7-01` — Lập danh sách lớp SS7 và thông tin thực tế cho Deployment view.
-- [x] `TV7-02` — Mô tả triển khai hiện tại và sử dụng schema preview/Apply đã chốt ở mục 2.3.
-- [x] `TV7-03` — Tạo class diagram SS7 và Deployment view, đủ nguồn + ảnh.
-- [ ] `TV7-04` — Mô tả tác động sự cố, gợi ý Hub và cách gọi giao tiếp `INT-05` đến `INT-10` trong phần SS7.
-- [x] `TV7-05` — Mô tả đủ phương thức, điều kiện Apply/điều hướng và giới hạn tích hợp ngoài.
-- [x] `TV7-06` — Hoàn thành báo cáo nháp, truy vết, test case bonus nếu thực hiện và khai báo AI.
-- [x] `TV7-07` — Tự kiểm tra SS7, sự cố, điều hướng và Deployment view; ghi `self_check.md`.
-- [x] `TV7-08` — Tự đối chiếu ánh xạ dữ liệu vào ChargingService/SimulationCoordinator; kiểm tra hướng dẫn chạy và vòng đời session.
-- [x] `TV7-09` — Tự sửa lỗi, kiểm tra lại; xuất Deployment view hoàn chỉnh có chú giải/thuyết minh.
-- [x] `TV7-10` — Cung cấp nguồn, ảnh, phiên bản và thuyết minh triển khai chung cho cả nhóm.
-- [x] `TV7-11` — Xuất PDF cá nhân hoàn chỉnh, kiểm tra hình deployment và bàn giao cùng nguồn.
-- [ ] `TV7-12` — Xác nhận đúng bộ file và hoàn tất trách nhiệm nộp theo LMS.
+## Đã có bằng chứng kỹ thuật trong đợt tích hợp
 
-> **Chú thích bổ sung:** Báo cáo SS7 nêu INT-05/06/07/09/10; chưa mô tả INT-08, nên `TV7-04` chưa được đánh dấu hoàn tất. INT-08 thuộc `DemandSimulationService` của TV6; cần xác nhận với hướng dẫn/chủ sở hữu nếu yêu cầu mục này phải bao gồm cả INT-08.
+- [x] Có báo cáo, hai view kiến trúc chung, class diagram SS và danh mục mọi phương thức được vẽ.
+- [x] Có truy vết UC đúng ID/path SRS/Sub2, test source đang tồn tại; có khai báo AI đợt tổng hợp.
+- [x] Bộ kiểm thử prototype hiện có:49/49 PASS; phạm vi core/UI, không thay cho test service đề xuất.
+- [x] Nguồn/sơ đồ được kiểm tra cấu trúc và cú pháp; bằng chứng ở docs/audit/submission_3/review_20261106/.
 
-## Tiêu chí chất lượng trước khi bàn giao
+## Tác giả tự xác nhận trước nộp
 
-- [x] Có đủ Deployment view và Development/Implementation view; phân biệt đúng vai trò hai view.
-- [ ] Phạm vi UC cá nhân đầy đủ: SS1 có 3, SS2 có 4, SS3–SS7 mỗi SS có 2.
-- [x] Class diagram thể hiện trách nhiệm, kiểu dữ liệu, quan hệ và bội số hợp lý.
-- [x] Mọi phương thức được vẽ có mô tả tương ứng; tên và chữ ký khớp nhau.
-- [x] Có điều kiện trước/sau, lỗi, tác động dữ liệu và quy tắc xử lý lặp khi cần.
-- [x] Truy vết đến đúng UC và thông điệp/nhánh từ Sub2; không dùng ID tự đặt thay ID chuẩn.
-- [ ] Lớp và giao tiếp dùng chung khớp bản đã chốt; không có bảy định nghĩa Hub khác nhau.
-- [x] Mốc 30 phút đúng phạm vi; các quy tắc 15 phút khác không bị thay theo.
-- [x] Trạng thái và đơn vị đúng; bảo toàn sức chứa, công suất và tài chính được giải thích.
-- [x] Phân biệt code hiện tại với thiết kế đề xuất, mock và mở rộng tương lai.
-- [x] Test có đầu vào/kết quả cụ thể; trạng thái PASS có bằng chứng thực thi.
-- [x] PDF đọc được, không cắt hình/bảng; đóng góp cá nhân và AI được khai báo đúng.
+- [ ] Đã đọc, hiểu và tự điều chỉnh toàn bộ nội dung revision mới, có thể giải thích từng quyết định thiết kế.
+- [ ] Đã kiểm tra lớp/thuộc tính/method/đơn vị/quan hệ, code hiện có và phần đề xuất; chấp nhận các giới hạn được công khai.
+- [ ] Đã đối chiếu chính sách/hợp đồng và phần mình sở hữu với revision chung.
+- [ ] Đã khai báo công cụ/phạm vi/mức đóng góp AI trước đây và đợt tổng hợp đúng thực tế, không giả lập prompt thiếu.
+- [ ] Đã mở đúng PDF build cuối, kiểm tra ảnh/bảng/chữ/phụ lục/tên/MSSV, xác nhận phiên bản có hash.
+- [ ] Đã thực hiện trách nhiệm nộp theo quy định LMS đã xác minh; có biên nhận/trạng thái thành công thật.
 
-> **Chú thích bổ sung:** Các ô được đánh dấu phản ánh phần SS7 và bằng chứng trong bộ file TV7. Chưa đánh dấu tiêu chí phạm vi UC toàn nhóm và xác nhận bảy định nghĩa Hub dùng chung vì cần đối chiếu sản phẩm của toàn nhóm, không thể xác nhận chỉ từ phần TV7. PDF đã được xuất và kiểm tra bố cục trong phiên hỗ trợ; TV7 cần mở lại bản cuối trước khi nộp.
-
-## Kết quả tự kiểm tra thực tế
-
-- **Đã kiểm tra file/phiên bản nào:** `REPORT_SUB3.md` phiên bản 1.1; `traceability.md`; `test_cases.md`; `ai_usage.md`; nguồn và ảnh Deployment view, class diagram SS7, Implementation view SS7; PDF `output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf`.
-- **Kết quả và bằng chứng:** PlantUML syntax check và xuất PNG/SVG đạt cho ba sơ đồ TV7; PDF cá nhân đã được mở kiểm tra bố cục sau khi cập nhật, gồm 13 trang. Test prototype hiện có: PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_simulations.py` — PASS, 2 passed; PowerShell `$env:PYTHONPATH = (Resolve-Path .\src).Path; python -m pytest -q tests/test_submission_2_acceptance.py -k rerouting` — PASS, 1 passed, 12 deselected. Sáu test bonus `SS7-TC-01`–`SS7-TC-06` được thiết kế, chưa chạy riêng; xem `test_cases.md`.
-- **Vấn đề còn mở:** prototype chưa tích hợp `ChargingService`/INT-05 hoặc `SimulationCoordinator`/INT-10; chưa có port ID, tích hợp IoT hay phát hiện mất điện thật; routing chưa lọc Hub theo trạng thái OFFLINE chuẩn. Việc nộp LMS và tiêu chí xác nhận dùng chung cấp nhóm chưa được xác nhận.
-- **Xác nhận của tác giả:** TV7 đã kiểm tra phần của mình  ngày 30/10/2026.
-
-> **Chú thích bổ sung:** Ô `TV7-12` để trống vì chưa có bằng chứng xác nhận tải bộ file lên LMS hoặc biên nhận/trạng thái nộp. Việc đánh dấu phản ánh bằng chứng có trong repository và kiểm tra kỹ thuật đã thực hiện; TV7 cần xác nhận bản cuối và tự chịu trách nhiệm theo nguyên tắc ở đầu checklist.
+Ngày/người xác nhận sẽ do tác giả ghi sau khi thực hiện. Không có chữ ký/biên nhận LMS do AI tạo thay.

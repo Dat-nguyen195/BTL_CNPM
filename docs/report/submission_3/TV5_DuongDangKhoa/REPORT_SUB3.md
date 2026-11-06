@@ -1,5 +1,7 @@
 # Submission 3 — Dương Đăng Khoa — SS5
 
+> **Revision tích hợp06/11/2026:** có chỉnh sửa với Codex hỗ trợ; chủ sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được dùng khi khác nhận định của bản bàn giao trước.
+
 **MSSV:** 2411589  
 **Phân hệ:** SS5 — Lập lịch, phiên sạc và phí quá giờ  
 **Trạng thái:** DRAFT — ĐÃ HOÀN THIỆN NỘI DUNG, CHỜ KIỂM TRA KẾT QUẢ TEST VÀ XUẤT PDF  
@@ -100,6 +102,8 @@ Trong code hiện tại, giao diện SS5 gọi trực tiếp hàm `settle_overst
 ## 4. Class diagram cá nhân
 
 [Nguồn class diagram SS5](../../../diagrams/submission_3/SS5/class_diagram.puml)
+
+![Class diagram SS5](../../../diagrams/submission_3/SS5/class_diagram.png)
 
 Class diagram SS5 thể hiện các lớp và kiểu dữ liệu chính của phân hệ:
 
@@ -326,58 +330,33 @@ Trong mã hiện tại, cổng sạc được biểu diễn bằng các ID và d
 - Ghi nhận giao dịch và khoản nợ ví theo luồng billing hiện tại.
 - Cần đối chiếu với trách nhiệm BillingService trong kiến trúc chung.
 
-## 7. Truy vết Sub1–Sub2–Sub3
+## 7. Truy vết Sub1-Sub2-Sub3 (revision tích hợp)
 
-### UC_SS5_01 — Lập lịch sạc tự động theo điểm ưu tiên và giới hạn công suất
 
-- **US:** `US-10`, `US-18`, `US-20`
-- **FR:** `FR-04`, `FR-05b`, `FR-09`, `FR-11`
-- **Scenario:** `docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md`
-- **Sequence:** `docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_01_DuongDangKhoa_sequence.puml`
-- **Activity:** `docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_01_DuongDangKhoa_activity.puml`
-- **Component:** `src/components/smart_charging.py`
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
 
-Các thành phần SS5 liên quan:
+## UC_SS5_01 - Lập lịch sạc tự động theo điểm ưu tiên & Giới hạn công suất lưới
 
-- `ChargingRequest`
-- `SmartChargingScheduler.calculate_priority()`
-- `SmartChargingScheduler.get_sorted_queue()`
-- `SmartChargingScheduler.allocate_ports()`
-- `ChargingSession`
+- **Yêu cầu:** US-10, US-12, US-18, US-20, FR-04, FR-09, FR-11.
+- **Scenario:** [UC_SS5_DuongDangKhoa.md](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md>).
+- **Sequence:** [UC_SS5_01_DuongDangKhoa_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_01_DuongDangKhoa_sequence.puml>).
+- **Activity:** [UC_SS5_01_DuongDangKhoa_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_01_DuongDangKhoa_activity.puml>).
+- **Thiết kế:** `SmartChargingScheduler.calculate_priority`, `SmartChargingScheduler.allocate_ports`, `ChargingService.request_charging`. Class diagram SS5, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_scheduler_and_charging.py::test_priority_scores_matching_plan_specification`, `tests/test_scheduler_and_charging.py::test_deterministic_tie_breaking`, `tests/test_scheduler_and_charging.py::test_allocation_and_power_cap`, `tests/test_submission_2_readiness_fixes.py::test_r09_repeated_charging_allocation_obeys_power_cap`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
-Các nhánh xử lý chính:
+## UC_SS5_02 - Giám sát hàng chờ sạc, hoàn thành, ân hạn & Tính phí quá giờ
 
-- Yêu cầu sạc hợp lệ hoặc không hợp lệ.
-- Xếp thứ tự theo điểm ưu tiên.
-- Còn cổng sạc hoặc hết cổng sạc.
-- Cấp phiên sạc hoặc tiếp tục chờ.
-- Tổng công suất trong giới hạn hoặc vượt giới hạn.
+- **Yêu cầu:** US-12, US-19, US-19b, FR-05b, FR-10, FR-10b, FR-15b.
+- **Scenario:** [UC_SS5_DuongDangKhoa.md](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md>).
+- **Sequence:** [UC_SS5_02_DuongDangKhoa_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_02_DuongDangKhoa_sequence.puml>).
+- **Activity:** [UC_SS5_02_DuongDangKhoa_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_02_DuongDangKhoa_activity.puml>).
+- **Thiết kế:** `SmartChargingScheduler.advance_simulation_tick`, `SmartChargingScheduler.unplug_vehicle`, `ChargingService.get_bill`. Class diagram SS5, catalog cùng thư mục.
+- **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
+- **Test prototype:** `tests/test_scheduler_and_charging.py::test_simulation_tick_and_overstay`, `tests/test_submission_2_acceptance.py::test_charging_completion_notification_survives_rerun_and_receipt_is_recorded`, `tests/test_submission_2_readiness_fixes.py::test_r11_overstay_charging_settlement_and_debt`.
+- **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
-### UC_SS5_02 — Giám sát hàng chờ sạc, hoàn thành, ân hạn và phí quá giờ
-
-- **US:** `US-12`, `US-19`, `US-19b`
-- **FR:** `FR-04`, `FR-05b`, `FR-10`, `FR-10b`
-- **Scenario:** `docs/diagrams/Use-case detail-scenario/SS5/Usecase scenario/UC_SS5_DuongDangKhoa.md`
-- **Sequence:** `docs/diagrams/Use-case detail-scenario/SS5/Sequence diagrams/UC_SS5_02_DuongDangKhoa_sequence.puml`
-- **Activity:** `docs/diagrams/Use-case detail-scenario/SS5/Activity diagrams/UC_SS5_02_DuongDangKhoa_activity.puml`
-- **Component:** `src/components/smart_charging.py`
-
-Các thành phần SS5 liên quan:
-
-- `ChargingSession`
-- `SmartChargingScheduler.advance_simulation_tick()`
-- `SmartChargingScheduler.unplug_vehicle()`
-- `settle_overstay_charging()`
-
-Các nhánh xử lý chính:
-
-- SoC chưa đạt 100% hoặc đã hoàn thành.
-- SoC đạt ngưỡng 90% và phát thông báo.
-- Xe rời cổng trong thời gian ân hạn hoặc tiếp tục chiếm cổng.
-- Phát sinh phí quá giờ.
-- Thanh toán đủ hoặc ghi nhận nợ ví theo luồng hiện tại.
-
-Bảng truy vết cá nhân được lưu trong `traceability.md`. Các ID US/FR được giữ theo tài liệu nguồn; không tạo ID chuẩn mới để thay thế.
 
 ## 8. Test case bonus
 
@@ -469,17 +448,20 @@ AI được sử dụng để hỗ trợ:
 
 Tác giả chịu trách nhiệm kiểm tra tính chính xác, đối chiếu với mã nguồn và tài liệu nhóm, chạy test, xác nhận kết quả và hoàn thiện bản nộp cuối cùng.
 
-## 11. Đầu ra khi hoàn thiện
+## 11. Bộ file revision tích hợp
 
-Đường dẫn PDF dự kiến:
+PDF chuẩn được build vào output/submission_3/ từ nguồn Markdown/PlantUML cùng revision, kèm catalog, truy vết, test, self-check, AI và kiến trúc chung. Chủ sở hữu cần mở lại, xác nhận và nộp theo quy định LMS đã kiểm chứng.
 
-`output/submission_3/REPORT_SUB3_DuongDangKhoa_2411589.pdf`
+## Kiến trúc chung và trạng thái phiên bản tích hợp
 
-Trước khi xuất PDF cần:
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.py -> components/core -> dữ liệu seed và session ở tiến trình server. Không có database bắt buộc, SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện, không tạo telemetry nền. Chạy từ repository: `streamlit run src/app.py`; host/cổng phụ thuộc cấu hình, không cố định trong dự án.
 
-- Đưa ảnh Deployment View chung và Development/Implementation View chung vào báo cáo.
-- Đưa ảnh class diagram SS5 vào đúng mục.
-- Kiểm tra bảng, sơ đồ và nội dung không bị cắt.
-- Đối chiếu trạng thái test với kết quả thực tế.
-- Cập nhật trạng thái tự kiểm tra sau khi tác giả xác nhận.
-- Kiểm tra tên file và đường dẫn đầu ra theo hướng dẫn Submission 3.
+![Deployment view chung](../../../diagrams/submission_3/shared/deployment.png)
+
+![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
+
+Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
+
+## Hiệu chỉnh tích hợp 06/11/2026
+
+Các chữ ký ChargingService/BillingFunctions được bổ sung kiểu/tham số mặc định đúng code hoặc hợp đồng. Ảnh class_diagram thiếu đuôi được thay bằng PNG/SVG chuẩn từ đúng nguồn. Catalog bổ sung điều kiện, tác động và lỗi mọi phương thức; test mới thiết kế vẫn DESIGNED. Không khẳng định ChargingService đã được tích hợp hoặc billing đã có dedup charge_id. Nguồn DOCX/PDF cũ lưu trong lịch sử Git, không dùng thay bản build mới.

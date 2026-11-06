@@ -1,13 +1,59 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Class diagram SS4 — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV4 — Đặng Hoàng Quý Nhân\nUC_SS4_01, UC_SS4_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-' Lop/kieu chu tri: DispatchOrder
-' Lop/kieu chu tri: VehicleIncident
-' Lop/kieu chu tri: DispatchService
-' Lop/kieu chu tri: IncidentService
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classAttributeFontSize 12
+skinparam nodesep 28
+skinparam ranksep 32
+title SS4 - thiết kế Sub3, revision 06/11/2026
+class DispatchOrder <<proposed model>> {
+  +dispatch_id: str
+  +vehicle_ids: list[str]
+  +source_hub_id: str
+  +destination_hub_id: str
+  +created_by: str
+  +created_at: datetime
+  +completed_at: Optional[datetime]
+  +status: str
+}
+class VehicleIncident <<proposed model>> {
+  +incident_id: str
+  +vehicle_id: str
+  +hub_id: str
+  +reported_by: str
+  +assigned_to: Optional[str]
+  +description: str
+  +severity: str
+  +reported_at: datetime
+  +resolved_at: Optional[datetime]
+  +previous_status: VehicleStatus
+  +status: str
+}
+class DispatchService <<proposed service>> {
+  +create_order(actor_id: str, source_hub_id: str,\n destination_hub_id: str, vehicle_ids: list[str],\n operation_key: str): OperationResult[DispatchOrder]
+  +complete_order(actor_id: str, dispatch_id: str,\n operation_key: str): OperationResult[DispatchOrder]
+}
+class IncidentService <<proposed service>> {
+  +report_vehicle_incident(actor_id: str, vehicle_id: str,\n description: str, severity: str,\n operation_key: str): OperationResult[VehicleIncident]
+  +acknowledge(actor_id: str, incident_id: str): OperationResult[VehicleIncident]
+  +resolve(actor_id: str, incident_id: str,\n operation_key: str): OperationResult[VehicleIncident]
+}
+DispatchOrder "0..*" --> "1" Hub : nguồn
+DispatchOrder "0..*" --> "1" Hub : đích
+DispatchOrder "0..*" --> "1..*" SharedVehicle : xe điều chuyển
+VehicleIncident "0..*" --> "1" Vehicle
+DispatchService ..> DispatchOrder
+IncidentService ..> VehicleIncident
+class Hub <<shared TV3>>
+class Vehicle <<shared TV1>>
+class SharedVehicle <<shared TV1>>
+
+legend bottom
+  Proposed = thiết kế, chưa phải lớp đang chạy.
+  Shared = tham chiếu chủ sở hữu; không định nghĩa lại.
+  Tiền: VNĐ nguyên; SoC: %; năng lượng: kWh; công suất: kW.
+  datetime thiết kế: UTC+7 theo đồng hồ mô phỏng.
+endlegend
 @enduml

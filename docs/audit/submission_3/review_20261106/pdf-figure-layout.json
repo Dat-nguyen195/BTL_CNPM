@@ -1,0 +1,263 @@
+[
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS1/class_diagram.png",
+    "pixels": [
+      1167,
+      1058
+    ],
+    "overview_scale": 0.459,
+    "complete_class_panels": 14
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS2/class_diagram.png",
+    "pixels": [
+      2865,
+      1451
+    ],
+    "overview_scale": 0.267,
+    "complete_class_panels": 8
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS3/class_diagram.png",
+    "pixels": [
+      432,
+      982
+    ],
+    "overview_scale": 0.735,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS4/class_diagram.png",
+    "pixels": [
+      806,
+      718
+    ],
+    "overview_scale": 0.676,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS5/class_diagram.png",
+    "pixels": [
+      2911,
+      1693
+    ],
+    "overview_scale": 0.263,
+    "complete_class_panels": 12
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS6/class_diagram.png",
+    "pixels": [
+      1343,
+      702
+    ],
+    "overview_scale": 0.57,
+    "complete_class_panels": 9
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/deployment.png",
+    "pixels": [
+      1665,
+      1148
+    ],
+    "overview_scale": 0.423,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS7/implementation_view.png",
+    "pixels": [
+      2220,
+      712
+    ],
+    "overview_scale": 0.345,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/SS7/class_diagram.png",
+    "pixels": [
+      1882,
+      881
+    ],
+    "overview_scale": 0.407,
+    "complete_class_panels": 5
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/implementation.png",
+    "pixels": [
+      2108,
+      633
+    ],
+    "overview_scale": 0.363,
+    "complete_class_panels": 0
+  },
+  {
+    "figure": "docs/diagrams/submission_3/shared/system_classes.png",
+    "pixels": [
+      3303,
+      540
+    ],
+    "overview_scale": 0.232,
+    "complete_class_panels": 0
+  }
+]

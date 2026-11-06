@@ -1,0 +1,86 @@
+[
+  {
+    "source": "docs/diagrams/submission_3/SS1/class_diagram.puml",
+    "source_sha256": "e514773b11dc92d1fd102dde651878e93a7e3cd5ddf67891c18e118a5bd0edeb",
+    "png_sha256": "4e462066303768a1fa645bd97f5693784c777d43e62e426a43c3460082c2a765",
+    "svg_sha256": "918f91eb6b13ef618343771b3221575ea82af102a83bbb75e553533528ab4c1e"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS2/class_diagram.puml",
+    "source_sha256": "aeacbb5c1c6816b5c693cfbb428cbbc9f5ae515783ada6bf33c990b73a3763db",
+    "png_sha256": "a52af742350e037398eecb7073cf61f6a9a417a3de6956c7f3b53390d6c334a5",
+    "svg_sha256": "bbf7fa63fcff82bce73a3d79650a6691b3437d94c5747bce910bcf45b1c64ff9"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS3/class_diagram.puml",
+    "source_sha256": "8e6bed340e0db7787ba963ef2dd10c231c6a6caaecf43597ff1d8f65a423b558",
+    "png_sha256": "6db5a16838026918eb4324896ca224958a8c17c9bb85c86e7559486a6263ff26",
+    "svg_sha256": "45c32c2d996acb6d69a3ba0ab2c45159648544aca3247e1c81329cd44726fc08"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS4/class_diagram.puml",
+    "source_sha256": "d807f72b91bf5451e2d9574d00d66911bc281e5198d13c25413d9bfb5c76327e",
+    "png_sha256": "8b7446ea0de5543b024a0411a37a0d69848a75ae2a885e0d4fd7b71544f2fbe0",
+    "svg_sha256": "762719369717641e45ae79c6fad213c09e2eb9455046c5327fef076e9d970362"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS5/class_diagram.puml",
+    "source_sha256": "5b2a97d877c50e4d1230f64c1e046d7e7c3b669d32584364519f9c20cbc90674",
+    "png_sha256": "ee052cc7bcfa63d4ebaf2f4823773fcd378bd4a327916a65ead6d14f4e11a554",
+    "svg_sha256": "fdb035ac126cbedf2eb5cba0471771b80f084340d7e7d000e9833d2d65b28edc"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS5/implementation_view.puml",
+    "source_sha256": "3433ba194115cf4d704eff59529013bc93deb2a6d29a1bdfac261c2cd35e4077",
+    "png_sha256": "e757888bf287b5b3e0171c0474214d167279d289ffadf1cb2c1caa628b934ba5",
+    "svg_sha256": "26d4fe885b9a34b1a3bb7c3f90e13ff588b92acd90a373a26d4b6aa2677ffecc"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS6/class_diagram.puml",
+    "source_sha256": "75b4de1eb0127c6b7bfe427a61bab18ab5e7c569f69f52cc486f2007bdc8ae80",
+    "png_sha256": "15e1c549377b59849fdee06324924d10f1522f7b5739bd5bc1b7b569e67c19b0",
+    "svg_sha256": "a7baddafaf5612b1303876ef712093122a35fe4656d287f17f7744ec176b9e1f"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS6/deployment_view.puml",
+    "source_sha256": "df027fee5dc6ccc83480c041c74cef8e3c1152a01b330377fab611c41fe0cfc0",
+    "png_sha256": "84d87af0a06df1206aed74b0270eb8fc5b2fb57160cfbc86f72319ca23b5ce0d",
+    "svg_sha256": "43b78a349d20cbdb3a200a7a652958884c3d3abc99674f1f3f0cfd823cea6f61"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS6/implementation_view.puml",
+    "source_sha256": "8edaf8f58baeabf3a6dfcfcf3de4bca9053273e4966779ccd3f3c10fb3fe3279",
+    "png_sha256": "9119bc8dfe1cb109ec5ac9d385f5a4d4bdaf4e13a01517dcf3a484e9fb74c1e5",
+    "svg_sha256": "6c0bf2b93e8c424c1c8659fd7147cd8ad6e72f3937a3a2e9780c6bdeea8f052d"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS7/class_diagram.puml",
+    "source_sha256": "608455a05490c4f3331ab2298eaba67c32ddb7b042c48a246c880ab65f076f9f",
+    "png_sha256": "0f3814ae61c2ed2e204570ec3f9e054306fa1e36c32e384ba2ba91e635b1c8fb",
+    "svg_sha256": "ce39ebb8f13938c40a6879633e71603d58f597fd3ceb91111b7a933eb083caa6"
+  },
+  {
+    "source": "docs/diagrams/submission_3/SS7/implementation_view.puml",
+    "source_sha256": "b62d1b37c8da97b1797b143c43993cc4aeb329849006bc8b94257290562c8d84",
+    "png_sha256": "0c38c84123467abc293fe1b1817ff23752d4a0328211e40e18f218264b4d8a19",
+    "svg_sha256": "61b46b0f4ab43e92c80e861913af822b4500fdabeae59539decdd58da0e699e4"
+  },
+  {
+    "source": "docs/diagrams/submission_3/shared/deployment.puml",
+    "source_sha256": "449b13102ef4f6b72744c62e6d004b80913f8a6b42321bf85eef9ae6881a6196",
+    "png_sha256": "649d0a049503450996339bafcb4f05185babd5081c3429a15049869eae7e65ae",
+    "svg_sha256": "93fcaf2ecd9a67fd02acca099558adea983909ca2361c9b7805aa91181cc7b0d"
+  },
+  {
+    "source": "docs/diagrams/submission_3/shared/implementation.puml",
+    "source_sha256": "6677c161d9971d4b48715542a727039794aca9f485f2b1315515db348cc3be0c",
+    "png_sha256": "6bd5a5aa0641225682656331998e2a5b861cc1e72433efdc927841ada6cfcf3b",
+    "svg_sha256": "a43526b8443e5a717c26d92ee26353f4ca852b2199ee2c1cfa01dc789cefd09f"
+  },
+  {
+    "source": "docs/diagrams/submission_3/shared/system_classes.puml",
+    "source_sha256": "07d817d1f2bd898a0405e0bd89f776f2e9af56f4668b979e5cc09c223678e269",
+    "png_sha256": "2a0e2c05797f4c6e1185c31f6d9e81f73d06c044eb33339ee72c9ad15b521ec0",
+    "svg_sha256": "8191d43f5f4abe632455d0650a3535348c43ef5f7814b4bf2cb91fa7fde53e44"
+  }
+]

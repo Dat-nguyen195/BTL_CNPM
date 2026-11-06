@@ -1,0 +1,5 @@
+# Document toolchain only; use an isolated environment, not the MVP runtime.
+reportlab>=4.4
+markdown-it-py>=3.0
+pypdf>=6.0
+Pillow>=10.0

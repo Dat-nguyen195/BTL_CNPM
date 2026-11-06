@@ -1,5 +1,7 @@
 # GUIDANCE FOR SUBMISSION 3
 
+> **Cập nhật trạng thái06/11/2026:** phân công và hạn trong bản1.3 là kế hoạch gốc. Bộ nguồn tích hợp hiện đã có đủ7 phần thiết kế; xem docs/review/REVIEW_SUBMISSION_3_20261106.md và docs/report/submission_3/COMPLETION_PLAN.md. Xác nhận tác giả và LMS vẫn chờ thực hiện; không hiểu các ô task ban đầu là tình trạng nguồn hiện tại.
+
 **Dự án:** Smart E-Mobility Hub — BEE BRAVE (Nhóm 7)  
 **Môn học:** Công nghệ Phần mềm CO3001 — HK261  
 **Trưởng nhóm:** Nguyễn Thành Đạt — 2410709  
@@ -910,24 +912,24 @@ Các hạng mục theo dõi: Lớp/giao tiếp, Sơ đồ, Mô tả, PDF nháp, 
 
 | Thành viên | Tiến độ / đường dẫn sản phẩm |
 | --- | --- |
-| TV1 — Nguyễn Thành Đạt | Đã hoàn thành hướng dẫn/phân công, bộ khung thư mục, hợp đồng dùng chung và gửi hướng dẫn cho nhóm. Thiết kế/báo cáo SS1 vẫn DRAFT; kiểm tra LMS chưa xác nhận. |
-| TV2 — Nguyễn Anh Tài | — |
-| TV3 — Phạm Tiến Đạt | — |
-| TV4 — Đặng Hoàng Quý Nhân | — |
-| TV5 — Dương Đăng Khoa | — |
-| TV6 — Hoàng Văn Tấn | — |
-| TV7 — Nguyễn Trung Nguyên | — |
+| TV1 — Nguyễn Thành Đạt | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV2 — Nguyễn Anh Tài | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV3 — Phạm Tiến Đạt | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV4 — Đặng Hoàng Quý Nhân | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV5 — Dương Đăng Khoa | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV6 — Hoàng Văn Tấn | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
+| TV7 — Nguyễn Trung Nguyên | Có bộ nguồn/PDF revision tích hợp06/11/2026; đã review kỹ thuật, chờ chủ sở hữu đọc/xác nhận. |
 
 | Sản phẩm chung | Chủ sở hữu / tổng hợp | Nội dung và trạng thái |
 | --- | --- | --- |
 | Hướng dẫn và phân công | TV1 | `GUIDANCE_FOR_SUB_3.md`; **Trạng thái:** đã hoàn thiện và gửi cho nhóm theo xác nhận trưởng nhóm. |
 | Cấu trúc và bộ khung Sub3 | TV1 điều phối, có hỗ trợ AI | Cây báo cáo, sơ đồ, truy vết, prompt và đầu ra theo mục 4.1; **Trạng thái:** đã khởi tạo và kiểm tra cấu trúc; nội dung cá nhân còn là khung. |
 | Hợp đồng liên phân hệ | TV1 | `docs/report/submission_3/shared/shared_contracts.md` tập hợp quyết định mục 2.2–2.3; **Trạng thái:** đã hoàn thành tài liệu hợp đồng thiết kế, chưa phải xác nhận đã triển khai code. |
-| Development/Implementation view | TV3 | Nguồn, ảnh và thuyết minh kiến trúc module; **Trạng thái:** — |
-| Deployment view | TV7 | Nguồn, ảnh và thuyết minh triển khai hiện tại; **Trạng thái:** — |
-| Class diagram cấp hệ thống | TV3 | Sơ đồ liên kết từ bản các chủ sở hữu bàn giao; **Trạng thái:** — |
-| Truy vết 17 UC và danh mục test | TV6 | Bảng tổng hợp, dẫn nguồn và trạng thái thực tế do tác giả cung cấp; **Trạng thái:** — |
-| Danh sách vấn đề tự báo | TV4 | Tổng hợp vấn đề, chủ sở hữu và kết quả xử lý do tác giả cung cấp; **Trạng thái:** — |
+| Development/Implementation view | TV3 | Đã bổ sung nguồn/ảnh/thuyết minh trong revision tích hợp06/11; chờ TV3 xác nhận. |
+| Deployment view | TV7 | Đã tiếp nhận từ PR20, dùng chung revision tích hợp06/11; chờ xác nhận cuối. |
+| Class diagram cấp hệ thống | TV3 | Đã bổ sung tổng quan quyền sở hữu/liên kết; chi tiết ở7 sơ đồ SS, chờ TV3 xác nhận. |
+| Truy vết 17 UC và danh mục test | TV6 | Đã sửa ID/path/test theo SRS và nguồn;17 UC REVIEWED/OWNER_PENDING. |
+| Danh sách vấn đề tự báo | TV4 | Đã bổ sung13 vấn đề chốt nộp/giới hạn prototype, ghi chủ sở hữu và trạng thái có bằng chứng. |
 | Bộ báo cáo sẵn sàng nộp | Mỗi người; TV1 tập hợp | PDF, nguồn, ảnh, xác nhận tự kiểm tra và danh sách phiên bản; **Trạng thái:** — |
 
 ## 10. Cách sử dụng AI và ghi nhận đóng góp
@@ -940,3 +942,14 @@ Các hạng mục theo dõi: Lớp/giao tiếp, Sơ đồ, Mô tả, PDF nháp, 
 - Các thư mục/biên bản Sub1 và Sub2 là lịch sử; cập nhật phần hiện hành cho Sub3 mà không sửa prompt gốc hoặc ghi lại lịch sử thành việc mới hoàn thành.
 
 **Việc đầu tiên của mỗi thành viên:** đọc phạm vi SS/UC, sequence/activity và quyết định mục 2.2–2.3; bắt đầu thiết kế phần mình mà không chờ họp. **Việc đầu tiên của trưởng nhóm:** kiểm tra LMS, cung cấp hướng dẫn này cho nhóm và tập hợp các quyết định dùng chung vào `shared_contracts.md`.
+
+
+## Revision tích hợp 06/11/2026
+
+Không đổi quyền sở hữu/chữ ký mục 2.2–2.3. Các trường tối thiểu của SimulationPreview gồm `preview_id`, `scenario_type`, `baseline_version`, `modified_hubs`, `charging_effects`, `summary`, `is_applied`; được thêm `target_hub_id` và `event_log` để ánh xạ UI. Adapter ánh xạ `metrics` của prototype vào `summary`, không thay thế hay bỏ `charging_effects`. Thiết kế dùng `scenario_type=DEMAND/PORT_FAILURE`. Prototype chưa có đầy đủ DTO này.
+
+Hub chuẩn có `hub_id/name/latitude/longitude/total_slots/available_slots/destination_holds/background_occupied/current_vehicles/charging_ports`. Trong sơ đồ con, Hub rỗng hoặc một projection không tạo lớp chủ sở hữu mới. `PersonalVehicle` kế thừa `Vehicle`, liên kết `User` qua `owner_id`; không kế thừa lớp gộp User/Vehicle.
+
+Trong thiết kế, `datetime` dùng UTC+7 theo đồng hồ mô phỏng; adapter đọc chuỗi naive hiện có theo quy ước này, không khẳng định prototype đã timezone-aware. `BookingStatus` và `ParkingReservationStatus` là enum thiết kế riêng; không tuyên bố `ReservationStatus` hiện có chứa IN_USE/CHECKED_IN.
+
+Snapshot doanh thu mục tiêu cộng khoản thu thực đã đối soát của SS1/SS2/SS5, loại cọc và tiền hoàn, tách khoản nợ; hiện dashboard chỉ cộng một số giao dịch SS1. Dashboard hiện ước tính `(total-available)*7.4 kW` có thể tính cả offline, khác scheduler mặc định 11 kW/cổng; không dùng ước tính này như số đo công suất thật. Các điểm này được ghi trong open_issues.md.

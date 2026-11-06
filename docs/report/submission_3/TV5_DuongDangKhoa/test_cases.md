@@ -166,3 +166,7 @@ pytest -v tests/test_scheduler_and_charging.py
 ```
 
 **Important:** Chỉ cập nhật trạng thái thành PASS hoặc FAIL sau khi thực thi test và lưu lại bằng chứng tương ứng.
+
+## Đối chiếu thực thi 06/11/2026
+
+Bộ49 test hiện có đã chạy PASS (log baseline chung). Các tên test dẫn trong traceability.md được đối chiếu với nguồn. Nhãn PASS của bản bàn giao chỉ có hiệu lực trong phạm vi các assert thực sự có trong test đó; các điều kiện mở rộng/operation_key/service đề xuất vẫn DESIGNED. Không dùng test của core để xác nhận service chưa tồn tại.

@@ -1,10 +1,72 @@
 @startuml
-' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
-' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
 skinparam backgroundColor white
 skinparam shadowing false
 skinparam defaultFontName SansSerif
-title Development / Implementation view — DRAFT
-note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV3 — Phạm Tiến Đạt\nMô tả module, tầng, phụ thuộc và ánh xạ mã nguồn.\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
-
+skinparam classAttributeIconSize 0
+skinparam classFontSize 14
+skinparam classAttributeFontSize 12
+skinparam nodesep 28
+skinparam ranksep 32
+title Implementation view - prototype hiện tại
+package "src" {
+ component "app.py\nentry point / navigation" as App
+ package "components - giao diện và điều phối hiện tại" {
+  component "student_booking.py (SS1)" as SS1
+  component "personal_ev.py (SS2)" as SS2
+  component "hub_monitor.py (SS3)" as SS3
+  component "dispatch_incident.py (SS4)" as SS4
+  component "smart_charging.py (SS5)" as SS5
+  component "sim_demand.py (SS6)" as SS6
+  component "sim_infrastructure.py (SS7)" as SS7
+ }
+ package "core - nghiệp vụ đang triển khai" {
+  component booking
+  component personal_ev
+  component billing
+  component scheduler
+  component simulator
+  component routing
+  component state
+  component policies
+ }
+ artifact "data/mock_hubs.json" as Seed
+ component "st.session_state\nstate / wallet / previews / scheduler" as Session
+}
+App --> SS1
+App --> SS2
+App --> SS3
+App --> SS4
+App --> SS5
+App --> SS6
+App --> SS7
+App --> state
+SS1 --> booking
+SS1 --> routing
+SS2 --> personal_ev
+SS3 --> policies
+SS4 --> state
+SS5 --> scheduler
+SS5 --> billing
+SS6 --> simulator
+SS6 --> state
+SS7 --> simulator
+SS7 --> routing
+SS7 --> booking
+booking --> billing
+booking --> state
+personal_ev --> billing
+personal_ev --> state
+scheduler --> policies
+state --> Seed
+App ..> Session
+SS4 ..> Session
+SS6 ..> Session
+SS7 ..> Session
+note bottom
+ Mũi tên là phụ thuộc chính, không liệt kê mọi import thư viện.
+ SS3/SS4 và Apply SS6/SS7 còn xử lý nghiệp vụ trong render().
+ Các service OOP trong class diagrams là thiết kế mục tiêu,
+ không có package core.services hoặc core.domain đang triển khai.
+ Một ứng dụng module, không có microservice/API server riêng.
+end note
 @enduml
