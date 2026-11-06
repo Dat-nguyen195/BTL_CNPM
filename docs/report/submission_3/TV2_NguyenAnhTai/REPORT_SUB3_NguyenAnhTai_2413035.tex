@@ -1,0 +1,3729 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS2 - Nguyễn Anh Tài},
+    pdfauthor={Nhóm BEE BRAVE - Nguyễn Anh Tài}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS2 -- Nguyễn Anh Tài}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS2 -- Nguyễn Anh Tài}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS2: Đăng ký Sạc \& Đỗ xe cá nhân (Personal EV Charging \& Parking)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Nguyễn Anh Tài\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2413035\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{buxe1o-cuxe1o-thiux1ebft-kux1ebf-chi-tiux1ebft-submission-3-phuxe2n-hux1ec7-ss2}{%
+\section{BÁO CÁO THIẾT KẾ CHI TIẾT --- SUBMISSION 3 (PHÂN HỆ
+SS2)}\label{buxe1o-cuxe1o-thiux1ebft-kux1ebf-chi-tiux1ebft-submission-3-phuxe2n-hux1ec7-ss2}}
+
+\begin{quote}
+\textbf{Revision tích hợp06/11/2026:} có chỉnh sửa với Codex hỗ trợ; chủ
+sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được
+dùng khi khác nhận định của bản bàn giao trước.
+\end{quote}
+
+\textbf{Dự án:} Smart E-Mobility Hub --- BEE BRAVE (Nhóm 7)\\
+\textbf{Môn học:} Công nghệ Phần mềm CO3001 --- HK261\\
+\textbf{Họ và tên:} Nguyễn Anh Tài\\
+\textbf{MSSV:} 2413035\\
+\textbf{Vai trò \& Phân hệ phụ trách:} Thành viên 2 (TV2) --- Phân hệ
+SS2: Quản lý Xe điện Cá nhân, Đặt chỗ \& Check-in/Check-out\\
+\textbf{Phiên bản:} 1.1 - tích hợp06/11/2026 \textbf{Ngày bản bàn giao:}
+31/10/2026 (UTC+7)
+
+\href{../../../../GUIDANCE_FOR_SUB_3.md}{Hướng dẫn và phân công} ·
+\href{../shared/shared_contracts.md}{Quyết định dùng chung}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}{%
+\subsection{1. Phạm vi và đóng
+góp}\label{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}}
+
+\hypertarget{cuxe1c-use-case-kux1ebf-thux1eeba-vuxe0-phux1ea1m-vi-phuxe2n-hux1ec7-ss2}{%
+\subsubsection{1.1. Các Use Case kế thừa và phạm vi phân hệ
+SS2}\label{cuxe1c-use-case-kux1ebf-thux1eeba-vuxe0-phux1ea1m-vi-phuxe2n-hux1ec7-ss2}}
+
+Phân hệ \textbf{SS2 (Personal EV \& Parking Subsystem)} quản lý trọn vẹn
+vòng đời dịch vụ dành cho sinh viên sở hữu phương tiện điện cá nhân
+(\texttt{Ownership\ =\ PERSONAL}) tại các trạm thông minh ĐHQG-HCM, bao
+gồm \textbf{4 Use Case hiện hành}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{\texttt{UC\_SS2\_01} --- Đăng ký xe EV cá nhân lên hệ thống
+  (\texttt{UC\_Dang\_Ki\_EV}):} Sinh viên đăng ký hồ sơ phương tiện cá
+  nhân (biển số, loại xe, hãng xe, dung lượng pin \texttt{kWh}), chuẩn
+  hóa biển số để chống đăng ký trùng trên toàn hệ thống và cấp mã định
+  danh \texttt{PEV-XXXXXX}.
+\item
+  \textbf{\texttt{UC\_SS2\_02} --- Đặt trước chỗ đỗ và nhu cầu sạc xe EV
+  cá nhân (\texttt{UC\_Dat\_Cho\_Va\_Sac}):} Sinh viên chọn xe cá nhân
+  đã đăng ký, chọn Hub đích, giờ dự kiến đến trạm
+  (\texttt{booking\_start\_time}), tùy chọn đăng ký nhu cầu sạc và mức
+  pin ước tính (\texttt{current\_soc}), tạm khóa cọc giữ chỗ
+  \texttt{50.000\ VNĐ} qua hợp đồng tài chính và giữ trước 1 chỗ đỗ
+  (\texttt{destination\_holds\ +=\ 1}, \texttt{available\_slots\ -=\ 1})
+  với hạn check-in
+  \texttt{expires\_at\ =\ booking\_start\_time\ +\ 30\ phút}.
+\item
+  \textbf{\texttt{UC\_SS2\_03} --- Check-in xe EV cá nhân tại cổng Hub
+  (\texttt{UC\_Check\_In}):} Quét hết hạn các lượt đặt chỗ quá hạn trước
+  khi xử lý; kiểm tra điều kiện check-in hợp lệ trong khung giờ
+  \texttt{{[}booking\_start\_time,\ expires\_at)}, chuyển chỗ giữ trước
+  thành hiện diện vật lý tại Hub (\texttt{destination\_holds\ -=\ 1},
+  giữ nguyên \texttt{available\_slots} để không trừ hai lần), kích hoạt
+  phiên đỗ \texttt{ParkingSession} và gửi yêu cầu sạc sang phân hệ SS5
+  (\texttt{INT-01}) nếu đơn có đăng ký sạc.
+\item
+  \textbf{\texttt{UC\_SS2\_04} --- Check-out và thanh toán tổng hợp dịch
+  vụ xe EV cá nhân (\texttt{UC\_Check\_Out\_Thanh\_Toan}):} Giải phóng
+  vị trí đỗ vật lý tại Hub (\texttt{available\_slots\ +=\ 1}), đọc hóa
+  đơn điện năng và phí chiếm dụng quá giờ từ phân hệ SS5
+  (\texttt{INT-02}), ghép với dòng phí đỗ xe cá nhân
+  (\texttt{5.000\ VNĐ/lượt} theo prototype hiện hành) và gọi hợp đồng
+  quyết toán \texttt{BillingService.settle\_invoice()} để đối trừ cọc
+  \texttt{50.000\ VNĐ}, khấu trừ ví hoặc ghi nhận nợ minh bạch.
+\end{enumerate}
+
+\hypertarget{ux111uxf3ng-guxf3p-thux1ef1c-tux1ebf-cux1ee7a-cuxe1-nhuxe2n-vuxe0-phux1ea7n-duxf9ng-chung}{%
+\subsubsection{1.2. Đóng góp thực tế của cá nhân và phần dùng
+chung}\label{ux111uxf3ng-guxf3p-thux1ef1c-tux1ebf-cux1ee7a-cuxe1-nhuxe2n-vuxe0-phux1ea7n-duxf9ng-chung}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Hạng mục
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Chủ sở hữu / Người thực hiện
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Phạm vi đóng góp của TV2 (Nguyễn Anh Tài --- 2413035)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Thiết kế chi tiết Phân hệ SS2} & \textbf{TV2 --- Nguyễn Anh Tài}
+& Chủ trì thiết kế sơ đồ lớp SS2
+(\href{../../../diagrams/submission_3/SS2/class_diagram.puml}{class\_diagram.puml},
+\href{../../../diagrams/submission_3/SS2/class_diagram.svg}{class\_diagram.svg},
+\href{../../../diagrams/submission_3/SS2/class_diagram.png}{class\_diagram.png}),
+đặc tả các lớp \texttt{PersonalVehicle}, \texttt{ParkingReservation},
+\texttt{ParkingSession}, \texttt{PersonalEVService} và enum
+\texttt{ParkingReservationStatus}. \\
+\textbf{Ánh xạ mã nguồn \& Chính sách SS2} & \textbf{TV2 --- Nguyễn Anh
+Tài} & Đối chiếu 5 hàm nghiệp vụ trong \texttt{src/core/personal\_ev.py}
+và giao diện \texttt{src/components/personal\_ev.py}; đặc tả quy tắc
+\texttt{expires\_at\ =\ booking\_start\_time\ +\ 30\ phút}, bảo toàn sức
+chứa Hub khi giữ chỗ/check-in/check-out và công khai chênh lệch phí đỗ
+\texttt{5.000\ VNĐ/lượt} so với SRS. \\
+\textbf{Áp dụng hợp đồng liên phân hệ} & \textbf{TV1}
+(\texttt{BillingService}), \textbf{TV3} (\texttt{Hub}), \textbf{TV5}
+(\texttt{ChargingService}) --- \textbf{TV2 áp dụng} & Tham chiếu đúng mô
+hình \texttt{User}, \texttt{Vehicle}, \texttt{Hub} và tích hợp 4 giao
+tiếp tài chính của \texttt{BillingService} (TV1) cùng 2 giao tiếp sạc
+\texttt{INT-01}, \texttt{INT-02} của \texttt{ChargingService} (TV5) vào
+thiết kế SS2. \\
+\textbf{Kiến trúc chung (Deployment \& Implementation View)} &
+\textbf{TV7} (Deployment view), \textbf{TV3} (Implementation view \&
+System Class Diagram) & Sử dụng kiến trúc chung đã chốt của nhóm và
+thuyết minh rõ vị trí, luồng dữ liệu, phụ thuộc mã nguồn của phân hệ SS2
+trong hai góc nhìn kiến trúc. \\
+\textbf{Truy vết \& Kiểm thử SS2} & \textbf{TV2 --- Nguyễn Anh Tài}
+(cung cấp đầu vào cho \textbf{TV6} tổng hợp) & Hoàn thiện bảng truy vết
+\texttt{US/FR\ →\ UC\ →\ Sequence/Activity\ →\ Class\ →\ Method\ →\ Test}
+tại \url{traceability.md} và thiết kế/đối chiếu bộ kiểm thử SS2 tại
+\url{test_cases.md}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{deployment-view}{%
+\subsection{2. Deployment view}\label{deployment-view}}
+
+\href{../../../diagrams/submission_3/shared/deployment.puml}{Nguồn sơ đồ
+triển khai chung} \emph{(Chủ sở hữu tổng hợp sơ đồ chung: TV7 --- Nguyễn
+Trung Nguyên)}
+
+\hypertarget{mux1ee9c-triux1ec3n-khai-hiux1ec7n-tux1ea1i-vuxe0-vux1ecb-truxed-cux1ee7a-phuxe2n-hux1ec7-ss2}{%
+\subsubsection{2.1. Mức triển khai hiện tại và vị trí của phân hệ
+SS2}\label{mux1ee9c-triux1ec3n-khai-hiux1ec7n-tux1ea1i-vuxe0-vux1ecb-truxed-cux1ee7a-phuxe2n-hux1ec7-ss2}}
+
+Hệ thống prototype hiện tại được triển khai theo mô hình \textbf{ứng
+dụng web đơn khối chạy cục bộ (Single-Process Modular Monolith)} trên
+nền tảng \textbf{Python 3 + Streamlit}, khởi chạy bằng lệnh
+\texttt{streamlit\ run\ src/app.py}:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Nút phía người dùng (Client Browser):} Trình duyệt web của
+  Sinh viên ĐHQG-HCM hoặc Nhân viên vận hành kết nối qua giao thức
+  HTTP/WebSocket tới tiến trình Streamlit Server (mặc định tại
+  \texttt{localhost:8501}). Giao diện của phân hệ SS2 được hiển thị
+  thành 4 tab nghiệp vụ tương ứng với 4 Use Case
+  (\texttt{Đăng\ ký\ xe\ mới}, \texttt{Đặt\ chỗ\ \&\ Sạc},
+  \texttt{Check-in\ trạm}, \texttt{Check-out\ \&\ Quyết\ toán}).
+\item
+  \textbf{Nút thực thi ứng dụng (Streamlit Application Runtime):} Toàn
+  bộ thành phần giao diện \texttt{src/components/personal\_ev.py} và
+  mô-đun nghiệp vụ lõi \texttt{src/core/personal\_ev.py} chạy trong cùng
+  một tiến trình Python với \texttt{src/app.py}. Không có API server
+  tách rời, message broker hay microservice riêng cho SS2 trong bản
+  triển khai hiện tại.
+\item
+  \textbf{Tầng lưu trữ dữ liệu trong phiên (In-Memory Session Store \&
+  Seed Files):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Khi khởi tạo phiên làm việc (\texttt{init\_session\_state} trong
+    \texttt{src/core/state.py}), dữ liệu trạm ban đầu được nạp từ tệp
+    tĩnh \texttt{src/data/mock\_hubs.json} vào
+    \texttt{st.session\_state{[}"hubs"{]}}.
+  \item
+    Dữ liệu riêng của phân hệ SS2 được duy trì trực tiếp trong bộ nhớ
+    phiên làm việc \texttt{st.session\_state}, bao gồm danh sách xe cá
+    nhân \texttt{st.session\_state{[}"personal\_evs"{]}}, danh sách lượt
+    đặt chỗ/đỗ xe
+    \texttt{st.session\_state{[}"personal\_reservations"{]}} và hóa đơn
+    gần nhất \texttt{st.session\_state{[}"last\_pev\_invoice"{]}}.
+  \item
+    Mọi biến động số dư, tiền cọc tạm giữ (\texttt{held\_deposit}) và
+    khoản nợ (\texttt{debt}) của sinh viên sử dụng dịch vụ SS2 được ghi
+    nhận chung vào \texttt{st.session\_state{[}"wallet"{]}} kèm nhật ký
+    giao dịch bất biến (\texttt{wallet{[}"ledger"{]}}), đồng thời tăng
+    bộ đếm phiên bản trạng thái
+    \texttt{st.session\_state{[}"state\_version"{]}} qua
+    \texttt{bump\_state\_version()}.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{vuxf2ng-ux111ux1eddi-dux1eef-liux1ec7u-cux1a1-chux1ebf-rerunreset-vuxe0-giux1edbi-hux1ea1n-muxf4-phux1ecfng-cux1ee7a-ss2}{%
+\subsubsection{2.2. Vòng đời dữ liệu, cơ chế Rerun/Reset và giới hạn mô
+phỏng của
+SS2}\label{vuxf2ng-ux111ux1eddi-dux1eef-liux1ec7u-cux1a1-chux1ebf-rerunreset-vuxe0-giux1edbi-hux1ea1n-muxf4-phux1ecfng-cux1ee7a-ss2}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Vòng đời Session \& Rerun:} Mỗi khi sinh viên bấm nút xác nhận
+  trên một trong 4 tab của \texttt{src/components/personal\_ev.py},
+  Streamlit thực thi hàm xử lý tương ứng trong
+  \texttt{src/core/personal\_ev.py}, cập nhật trực tiếp các dictionary
+  trong \texttt{st.session\_state} và gọi \texttt{st.rerun()} để làm mới
+  giao diện ngay lập tức. Khi người dùng bấm nút Reset hệ thống hoặc mở
+  một phiên trình duyệt mới (\texttt{force\_reset=True}), dữ liệu
+  \texttt{personal\_evs} và \texttt{personal\_reservations} quay về
+  trạng thái seed mặc định.
+\item
+  \textbf{Các tích hợp ngoại vi đang ở mức mô phỏng (Simulated External
+  Integrations):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Xác thực VNU-SSO:} Được mô phỏng thông qua đối tượng người
+    dùng đang đăng nhập trong phiên
+    (\texttt{st.session\_state{[}"current\_user"{]}} /
+    \texttt{active\_user}), chưa kết nối máy chủ CAS/OAuth2 thực tế của
+    ĐHQG-HCM.
+  \item
+    \textbf{Cổng Barie IoT, Cảm biến vị trí đỗ và Quét mã QR/Biển số
+    (\texttt{UC\_SS2\_03}, \texttt{UC\_SS2\_04}):} Được mô phỏng bằng
+    thao tác bấm nút xác thực trên giao diện Streamlit và các ô nhập
+    thông số mô phỏng (thời gian đỗ \texttt{duration\_hours}, điện năng
+    nạp \texttt{kwh\_charged}, số phút quá hạn
+    \texttt{overstay\_minutes}) khi check-out, chưa kết nối phần cứng
+    camera ANPR, barie vật lý hay trụ sạc OCPP thực tế.
+  \item
+    \textbf{Cổng thanh toán \& Ví điện tử:} Sử dụng ví nội bộ trong
+    \texttt{st.session\_state{[}"wallet"{]}} thông qua
+    \texttt{src/core/billing.py}, chưa kết nối cổng thanh toán ngân hàng
+    bên ngoài.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{developmentimplementation-view}{%
+\subsection{3. Development/Implementation
+view}\label{developmentimplementation-view}}
+
+\href{../../../diagrams/submission_3/shared/implementation.puml}{Nguồn
+sơ đồ module chung} \emph{(Chủ sở hữu tổng hợp sơ đồ chung: TV3 --- Phạm
+Tiến Đạt)}
+
+\hypertarget{kiux1ebfn-truxfac-phuxe2n-tux1ea7ng-vuxe0-phux1ee5-thuux1ed9c-module-cux1ee7a-phuxe2n-hux1ec7-ss2}{%
+\subsubsection{3.1. Kiến trúc phân tầng và phụ thuộc module của phân hệ
+SS2}\label{kiux1ebfn-truxfac-phuxe2n-tux1ea7ng-vuxe0-phux1ee5-thuux1ed9c-module-cux1ee7a-phuxe2n-hux1ec7-ss2}}
+
+Trong kiến trúc phần mềm của dự án, phân hệ SS2 tuân thủ cấu trúc phân
+tầng từ giao diện trình bày xuống lõi nghiệp vụ và quản lý trạng
+thái/chính sách:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{src/}
+\NormalTok{├── app.py                              \# Điểm vào ứng dụng; điều hướng menu sang phân hệ SS2}
+\NormalTok{├── components/}
+\NormalTok{│   └── personal\_ev.py                  \# Tầng Presentation (UI SS2): \_init\_pev\_state(), render() (4 Tabs)}
+\NormalTok{└── core/}
+\NormalTok{    ├── personal\_ev.py                  \# Tầng Business Logic (Core SS2): 5 hàm nghiệp vụ chính + 2 hàm thời gian}
+\NormalTok{    ├── billing.py                      \# Tầng Financial Core (Dùng chung với SS1/SS5): giữ/hoàn/phạt cọc \& ghi nợ}
+\NormalTok{    ├── scheduler.py                    \# Tầng Charging Core (SS5 {-} mục tiêu kết nối qua INT{-}01, INT{-}02)}
+\NormalTok{    ├── policies.py                     \# Tầng Business Policies: hằng số phí đỗ, giá điện cao/thấp điểm, cọc, hạn 30p}
+\NormalTok{    └── state.py                        \# Tầng State \& Vocabulary: Enum chuẩn hóa, kiểm tra invariant, bump\_state\_version()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Phụ thuộc thực tế trong mã nguồn hiện tại
+  (\texttt{Implemented\ Dependencies}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{src/components/personal\_ev.py} phụ thuộc trực tiếp vào
+    \texttt{src/core/personal\_ev.py} (gọi 4 hàm
+    \texttt{register\_personal\_ev},
+    \texttt{reserve\_personal\_ev\_slot},
+    \texttt{check\_in\_personal\_ev}, \texttt{check\_out\_personal\_ev})
+    và \texttt{src/core/policies.py} (đọc các hằng số biểu phí để hiển
+    thị lên UI).
+  \item
+    \texttt{src/core/personal\_ev.py} phụ thuộc vào:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \texttt{src/core/state.py}: nhập \texttt{VehicleStatus},
+      \texttt{ReservationStatus}, \texttt{bump\_state\_version}.
+    \item
+      \texttt{src/core/policies.py}: nhập
+      \texttt{PEV\_PARKING\_FEE\_PER\_VISIT\_VND} (\texttt{5.000}),
+      \texttt{PEV\_OFFPEAK\_KWH\_RATE\_VND} (\texttt{3.000}),
+      \texttt{PEV\_PEAK\_KWH\_RATE\_VND} (\texttt{7.000}),
+      \texttt{OVERSTAY\_GRACE\_MINUTES} (\texttt{15}),
+      \texttt{OVERSTAY\_RATE\_PER\_BLOCK\_VND} (\texttt{10.000}),
+      \texttt{PEV\_RESERVATION\_DEPOSIT\_VND} (\texttt{50.000}),
+      \texttt{PEV\_ARRIVAL\_EXPIRY\_MINUTES} (\texttt{30}),
+      \texttt{PEV\_NOSHOW\_PENALTY\_VND} (\texttt{10.000}),
+      \texttt{PEV\_NOSHOW\_REFUND\_VND} (\texttt{40.000}) và hàm
+      \texttt{is\_peak\_hour()}.
+    \item
+      \texttt{src/core/billing.py}: nhập \texttt{hold\_deposit},
+      \texttt{release\_held\_deposit\_full},
+      \texttt{record\_wallet\_debt},
+      \texttt{settle\_pev\_noshow\_penalty}.
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Phụ thuộc theo thiết kế mục tiêu Submission 3
+  (\texttt{Proposed\ Service\ Dependencies}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Giao diện \texttt{personal\_ev.render} chỉ gọi tới lớp dịch vụ
+    \texttt{PersonalEVService}.
+  \item
+    \texttt{PersonalEVService} thao tác trên các thực thể miền
+    \texttt{PersonalVehicle}, \texttt{ParkingReservation},
+    \texttt{ParkingSession}, cập nhật trạng thái chỗ đỗ trên
+    \texttt{Hub} (TV3), ủy quyền toàn bộ giao dịch ví/cọc/hóa đơn cho
+    \texttt{BillingService} (TV1) và giao tiếp với
+    \texttt{ChargingService} (TV5) qua \texttt{INT-01}
+    (\texttt{request\_charging}) và \texttt{INT-02}
+    (\texttt{get\_bill}).
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{bux1ea3ng-uxe1nh-xux1ea1-giux1eefa-muxe3-nguux1ed3n-hiux1ec7n-tux1ea1i-vuxe0-thiux1ebft-kux1ebf-hux1b0ux1edbng-ux111ux1ed1i-tux1b0ux1ee3ng-mux1ee5c-tiuxeau}{%
+\subsubsection{3.2. Bảng ánh xạ giữa Mã nguồn hiện tại và Thiết kế hướng
+đối tượng mục
+tiêu}\label{bux1ea3ng-uxe1nh-xux1ea1-giux1eefa-muxe3-nguux1ed3n-hiux1ec7n-tux1ea1i-vuxe0-thiux1ebft-kux1ebf-hux1b0ux1edbng-ux111ux1ed1i-tux1b0ux1ee3ng-mux1ee5c-tiuxeau}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Thành phần trong Code hiện tại
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vị trí file
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Thành phần Thiết kế Sub3 tương ứng
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái triển khai \& Ghi chú Adapter
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Bản ghi \texttt{dict} trong \texttt{state{[}"personal\_evs"{]}} &
+\texttt{src/core/state.py}, \texttt{src/core/personal\_ev.py} & Lớp thực
+thể \texttt{PersonalVehicle} (\texttt{SS2-CLS-01}) & \textbf{Ánh xạ từ
+dictionary / Thiết kế đề xuất.} Adapter ánh xạ khóa \texttt{ev\_id} →
+\texttt{vehicle\_id}, \texttt{plate} → \texttt{plate\_number},
+\texttt{type} → \texttt{vehicle\_type}. \\
+Bản ghi \texttt{dict} trong \texttt{state{[}"personal\_reservations"{]}}
+& \texttt{src/core/personal\_ev.py} & Lớp thực thể
+\texttt{ParkingReservation} (\texttt{SS2-CLS-02}) & \textbf{Ánh xạ từ
+dictionary / Thiết kế đề xuất.} Adapter ánh xạ \texttt{ev\_id} →
+\texttt{vehicle\_id}, \texttt{arrival\_deadline} → \texttt{expires\_at},
+\texttt{deposit\_held} → \texttt{deposit\_held\_vnd}. \\
+Các trường \texttt{check\_in\_time}, \texttt{check\_out\_time},
+\texttt{charging\_port\_allocated}, \texttt{invoice} trong dict
+reservation \& bản ghi \texttt{hub{[}"current\_vehicles"{]}} &
+\texttt{src/core/personal\_ev.py} & Lớp thực thể \texttt{ParkingSession}
+(\texttt{SS2-CLS-03}) & \textbf{Thiết kế đề xuất tách lớp.} Tách riêng
+vòng đời phiên đỗ vật lý (từ lúc Check-in đến Check-out) khỏi đơn đặt
+chỗ trước (\texttt{ParkingReservation}) và lưu
+\texttt{charging\_request\_id}, \texttt{charging\_session\_id}. \\
+Module \texttt{src/core/personal\_ev.py} (5 hàm nghiệp vụ trả về
+\texttt{Tuple}) & \texttt{src/core/personal\_ev.py} & Lớp dịch vụ
+\texttt{PersonalEVService} (\texttt{SS2-CLS-04}) & \textbf{Ánh xạ từ
+module hàm sang Service.} Bọc 5 hàm hiện có vào 5 phương thức chuẩn trả
+về \texttt{OperationResult{[}T{]}} và ẩn tham số \texttt{state} ở tầng
+adapter session. \\
+Các lệnh gọi \texttt{hold\_deposit},
+\texttt{release\_held\_deposit\_full},
+\texttt{settle\_pev\_noshow\_penalty}, \texttt{record\_wallet\_debt} &
+\texttt{src/core/billing.py}, \texttt{src/core/personal\_ev.py} & Hợp
+đồng \texttt{BillingService} (\texttt{hold\_deposit},
+\texttt{release\_deposit}, \texttt{settle\_no\_show},
+\texttt{settle\_invoice}) & \textbf{Hợp đồng dùng chung (TV1 chủ trì).}
+Trong thiết kế mục tiêu, \texttt{check\_out\_personal\_ev} gửi danh sách
+\texttt{ChargeLine} qua \texttt{BillingService.settle\_invoice()} thay
+vì trừ trực tiếp \texttt{wallet{[}"balance"{]}} trong SS2. \\
+Thao tác giảm
+\texttt{hub{[}"charging\_ports"{]}{[}"available"{]}\ -=\ 1} khi check-in
+và tự nhân \texttt{kwh\_charged\ *\ energy\_rate} khi check-out &
+\texttt{src/core/personal\_ev.py} & Hợp đồng \texttt{ChargingService}
+(\texttt{INT-01:\ request\_charging}, \texttt{INT-02:\ get\_bill}) &
+\textbf{Hợp đồng dùng chung (TV5 chủ trì).} Prototype hiện tại chưa tạo
+phiên sạc bên \texttt{scheduler.py} khi xe cá nhân check-in; thiết kế
+Sub3 chuẩn hóa bằng lệnh gọi \texttt{INT-01} và \texttt{INT-02}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{class-diagram-cuxe1-nhuxe2n}{%
+\subsection{4. Class diagram cá
+nhân}\label{class-diagram-cuxe1-nhuxe2n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Nguồn PlantUML:}
+  \href{../../../diagrams/submission_3/SS2/class_diagram.puml}{docs/diagrams/submission\_3/SS2/class\_diagram.puml}
+\item
+  \textbf{Nguồn SVG:}
+  \href{../../../diagrams/submission_3/SS2/class_diagram.svg}{docs/diagrams/submission\_3/SS2/class\_diagram.svg}
+\item
+  \textbf{Nguồn PNG:}
+  \href{../../../diagrams/submission_3/SS2/class_diagram.png}{docs/diagrams/submission\_3/SS2/class\_diagram.png}
+\end{itemize}
+
+\hypertarget{tux1ed5ng-quan-cuxe1c-lux1edbp-vuxe0-quan-hux1ec7-trong-class-diagram-ss2}{%
+\subsubsection{4.1. Tổng quan các lớp và quan hệ trong Class Diagram
+SS2}\label{tux1ed5ng-quan-cuxe1c-lux1edbp-vuxe0-quan-hux1ec7-trong-class-diagram-ss2}}
+
+Sơ đồ lớp phân hệ SS2 thể hiện đầy đủ các thực thể miền, lớp dịch vụ đề
+xuất của SS2, các module/UI đã triển khai trong prototype và các hợp
+đồng dùng chung tham chiếu tới TV1, TV3, TV5:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Nhóm lớp do TV2 (SS2) sở hữu và thiết kế chi tiết:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    \texttt{PersonalVehicle}
+    (\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-01}): Kế thừa từ lớp trừu tượng \texttt{Vehicle}
+    (TV1) với \texttt{ownership\ =\ Ownership.PERSONAL}.Một sinh viên
+    (\texttt{User}) có thể sở hữu nhiều xe cá nhân
+    (\texttt{1\ ──►\ 0..*}).
+  \item
+    \texttt{ParkingReservation}
+    (\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-02}): Đại diện cho một lượt đặt trước chỗ đỗ (và
+    tùy chọn nhu cầu sạc) của một \texttt{PersonalVehicle} tại một
+    \texttt{Hub} xác định. Quan hệ với \texttt{PersonalVehicle} là
+    \texttt{0..*\ ──►\ 1} (nhiều lượt đặt theo lịch sử, nhưng tại một
+    thời điểm mỗi xe chỉ có tối đa 1 đơn ở trạng thái \texttt{RESERVED}
+    hoặc \texttt{CHECKED\_IN}). Quan hệ với \texttt{Hub} là
+    \texttt{0..*\ ──►\ 1} (tăng \texttt{destination\_holds} khi đang giữ
+    chỗ).
+  \item
+    \texttt{ParkingSession}
+    (\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-03}): Đại diện cho phiên đỗ xe vật lý tại Hub
+    sau khi sinh viên Check-in thành công. Liên kết \texttt{0..1} từ một
+    \texttt{ParkingReservation} (\texttt{1\ ──►\ 0..1}), chiếm 1 vị trí
+    vật lý trong \texttt{Hub} (\texttt{0..*\ ──►\ 1}) và tham chiếu tới
+    yêu cầu/phiên sạc của SS5 qua \texttt{charging\_request\_id} và
+    \texttt{charging\_session\_id}.
+  \item
+    \texttt{PersonalEVService}
+    (\texttt{\textless{}\textless{}proposed\ service\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-04}): Lớp dịch vụ điều phối cả 4 Use Case của
+    SS2, ánh xạ trực tiếp tới module \texttt{core.personal\_ev}, đồng
+    thời gọi \texttt{BillingService} (TV1) và \texttt{ChargingService}
+    (TV5).
+  \item
+    \texttt{ParkingReservationStatus}
+    (\texttt{\textless{}\textless{}enumeration\textgreater{}\textgreater{}}):
+    Định nghĩa tập trạng thái chuẩn của lượt đặt chỗ SS2 gồm
+    \texttt{RESERVED}, \texttt{CHECKED\_IN}, \texttt{COMPLETED},
+    \texttt{EXPIRED}.
+  \end{enumerate}
+\item
+  \textbf{Nhóm module/UI đã triển khai trong prototype (Ánh xạ thực
+  thi):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{personal\_ev.render}
+    (\texttt{\textless{}\textless{}implemented\ UI\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-05}) và \texttt{core.personal\_ev}
+    (\texttt{\textless{}\textless{}implemented\ module\textgreater{}\textgreater{}}
+    --- \texttt{SS2-CLS-06}).
+  \end{itemize}
+\item
+  \textbf{Nhóm lớp/hợp đồng dùng chung tham chiếu
+  (\texttt{\textless{}\textless{}shared\ contract\textgreater{}\textgreater{}}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{User\ và\ Vehicle\ (TV1)}, \texttt{Hub\ (TV3)},
+    \texttt{BillingService\ (TV1)} và \texttt{ChargingService\ (TV5)}.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{muxf4-tux1ea3-lux1edbp-class-descriptions}{%
+\subsection{5. Mô tả lớp (Class
+Descriptions)}\label{muxf4-tux1ea3-lux1edbp-class-descriptions}}
+
+Dưới đây là đặc tả chi tiết cho toàn bộ các lớp và module xuất hiện trên
+Class Diagram của phân hệ SS2 theo mẫu thống nhất tại Mục 6.1 của Hướng
+dẫn.
+
+\hypertarget{lux1edbp-personalvehicle-ss2-cls-01}{%
+\subsubsection{\texorpdfstring{5.1. Lớp \texttt{PersonalVehicle}
+(\texttt{SS2-CLS-01})}{5.1. Lớp PersonalVehicle (SS2-CLS-01)}}\label{lux1edbp-personalvehicle-ss2-cls-01}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Class ID / Tên lớp} & \texttt{SS2-CLS-01} /
+\texttt{PersonalVehicle} \\
+\textbf{Trách nhiệm} & Biểu diễn hồ sơ phương tiện điện cá nhân của sinh
+viên đã đăng ký vào hệ thống ĐHQG-HCM (\texttt{UC\_SS2\_01}), lưu trữ
+thông tin định danh chủ sở hữu, biển số chuẩn hóa, thông số pin danh
+định và đảm bảo tách biệt hoàn toàn với đội xe dùng chung
+(\texttt{ownership\ =\ PERSONAL}). Chủ trì: \textbf{TV2 --- Nguyễn Anh
+Tài (SS2)}. \\
+\textbf{Mức triển khai} & \textbf{Ánh xạ từ dictionary / Thiết kế đề
+xuất
+(\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}})}
+--- hiện đang lưu dạng phần tử \texttt{dict} trong
+\texttt{st.session\_state{[}"personal\_evs"{]}} (khởi tạo tại
+\texttt{src/core/state.py} và thêm mới tại
+\texttt{src/core/personal\_ev.py}). \\
+\textbf{Thuộc tính} & • \texttt{vehicle\_id:\ str} (Bắt buộc) --- Mã
+định danh phương tiện duy nhất (định dạng \texttt{PEV-XXXXXX}); ánh xạ
+từ khóa \texttt{ev\_id} trong code hiện tại.• \texttt{owner\_id:\ str}
+(Bắt buộc) --- Mã tài khoản sinh viên sở hữu xe (tham chiếu
+\texttt{User.user\_id}).• \texttt{owner\_name:\ str} (Bắt buộc) --- Họ
+và tên chủ sở hữu phương tiện.• \texttt{plate\_number:\ str} (Bắt buộc)
+--- Biển số xe viết hoa đã cắt khoảng trắng thừa (ví dụ
+\texttt{59-X1\ 888.88}), duy nhất trên toàn hệ thống sau khi chuẩn hóa;
+ánh xạ từ khóa \texttt{plate}.• \texttt{vehicle\_type:\ str} (Bắt buộc)
+--- Phân loại phương tiện (\texttt{"scooter"}, \texttt{"bike"},
+\texttt{"car"}); ánh xạ từ khóa \texttt{type}.• \texttt{brand:\ str}
+(Tùy chọn/Chuỗi) --- Hãng và dòng xe (ví dụ
+\texttt{"VinFast\ Klara\ S"}).• \texttt{battery\_kwh:\ float} (Bắt buộc,
+đơn vị: \texttt{kWh}) --- Dung lượng pin danh định của xe
+(\texttt{0.5\ \textless{}=\ battery\_kwh\ \textless{}=\ 120.0}).•
+\texttt{ownership:\ Ownership\ =\ PERSONAL} (Bắt buộc, chỉ đọc) --- Phân
+loại quyền sở hữu phương tiện, luôn cố định là
+\texttt{Ownership.PERSONAL}.• \texttt{registered\_at:\ datetime} (Bắt
+buộc, đơn vị: \texttt{UTC+7}) --- Thời điểm đăng ký hồ sơ theo đồng hồ
+mô phỏng (\texttt{YYYY-MM-DD\ HH:MM:SS}).•
+\texttt{status:\ str\ =\ "REGISTERED"} (Bắt buộc) --- Trạng thái hồ sơ
+đăng ký xe trong hệ thống. \\
+\textbf{Quan hệ} & • Kế thừa (\texttt{-\/-\textbar{}\textgreater{}}) từ
+lớp trừu tượng \texttt{Vehicle} (do TV1 sở hữu).• Liên kết
+\texttt{0..*\ ──►\ 1} với \texttt{User} (một sinh viên sở hữu
+\texttt{0..*} xe cá nhân; mỗi \texttt{PersonalVehicle} thuộc đúng
+\texttt{1} chủ xe).• Liên kết \texttt{1\ ◄──\ 0..*} với
+\texttt{ParkingReservation} (một xe cá nhân có thể có nhiều lượt đặt chỗ
+theo thời gian). \\
+\textbf{Ràng buộc (Invariants)} & 1. Biển số chuẩn hóa
+\texttt{normalize\_plate(plate\_number)} không được rỗng và là duy nhất
+trong toàn bộ tập \texttt{personal\_evs}.2. \texttt{ownership} luôn bằng
+\texttt{Ownership.PERSONAL}; xe cá nhân tuyệt đối không xuất hiện trong
+danh sách xe cho thuê của SS1 hoặc danh sách điều chuyển của SS4.3.
+\texttt{battery\_kwh\ \textgreater{}\ 0}. \\
+\textbf{Phương thức} & \texttt{SS2-MTH-01} (\texttt{normalize\_plate}),
+\texttt{SS2-MTH-02} (\texttt{is\_owned\_by}). \\
+\textbf{Truy vết} & • Yêu cầu: \texttt{US-08}, \texttt{FR-03}.• Use
+Case: \texttt{UC\_SS2\_01}.• Code hiện tại:
+\texttt{src/core/personal\_ev.py} (\texttt{register\_personal\_ev}),
+\texttt{src/core/state.py} (\texttt{init\_session\_state}). \\
+\end{longtable}
+
+\hypertarget{lux1edbp-parkingreservation-ss2-cls-02}{%
+\subsubsection{\texorpdfstring{5.2. Lớp \texttt{ParkingReservation}
+(\texttt{SS2-CLS-02})}{5.2. Lớp ParkingReservation (SS2-CLS-02)}}\label{lux1edbp-parkingreservation-ss2-cls-02}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Class ID / Tên lớp} & \texttt{SS2-CLS-02} /
+\texttt{ParkingReservation} \\
+\textbf{Trách nhiệm} & Quản lý thông tin lượt đặt trước chỗ đỗ và đăng
+ký nhu cầu sạc của xe điện cá nhân tại một Hub xác định
+(\texttt{UC\_SS2\_02}), theo dõi thời gian dự kiến đến
+(\texttt{booking\_start\_time}), hạn chót check-in 30 phút
+(\texttt{expires\_at}), khoản tiền cọc tạm giữ (\texttt{50.000\ VNĐ}) và
+trạng thái vòng đời đơn đặt chỗ. Chủ trì: \textbf{TV2 --- Nguyễn Anh Tài
+(SS2)}. \\
+\textbf{Mức triển khai} & \textbf{Ánh xạ từ dictionary / Thiết kế đề
+xuất
+(\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}})}
+--- hiện đang lưu dạng phần tử \texttt{dict} trong
+\texttt{st.session\_state{[}"personal\_reservations"{]}} tại
+\texttt{src/core/personal\_ev.py}. \\
+\textbf{Thuộc tính} & • \texttt{reservation\_id:\ str} (Bắt buộc) --- Mã
+định danh lượt đặt chỗ (định dạng \texttt{PRES-XXXXXX}).•
+\texttt{owner\_id:\ str} (Bắt buộc) --- Mã sinh viên tạo lệnh đặt chỗ.•
+\texttt{vehicle\_id:\ str} (Bắt buộc) --- Mã phương tiện cá nhân được
+đặt chỗ; ánh xạ từ khóa \texttt{ev\_id}.• \texttt{plate\_number:\ str}
+(Bắt buộc) --- Biển số xe cá nhân; ánh xạ từ khóa \texttt{plate}.•
+\texttt{hub\_id:\ str} (Bắt buộc) --- Mã trạm Hub điểm đến.•
+\texttt{request\_charging:\ bool} (Bắt buộc) --- Cờ đánh dấu sinh viên
+có đăng ký sử dụng dịch vụ sạc hay chỉ đỗ xe.•
+\texttt{current\_soc:\ float} (Bắt buộc, đơn vị: \texttt{\%}) --- Mức
+phần trăm pin ước tính khi đến trạm
+(\texttt{0.0\ \textless{}=\ current\_soc\ \textless{}=\ 100.0}).•
+\texttt{deposit\_held\_vnd:\ int\ =\ 50000} (Bắt buộc, đơn vị:
+\texttt{VNĐ}) --- Số tiền cọc giữ chỗ đã khóa tạm thời
+(\texttt{50.000\ VNĐ}); ánh xạ từ \texttt{deposit\_held}.•
+\texttt{created\_at:\ datetime} (Bắt buộc, đơn vị: \texttt{UTC+7}) ---
+Thời điểm bấm tạo lệnh đặt chỗ.•
+\texttt{booking\_start\_time:\ datetime} (Bắt buộc, đơn vị:
+\texttt{UTC+7}) --- Thời điểm dự kiến xe đến trạm do sinh viên chọn
+(\texttt{booking\_start\_time\ \textgreater{}=\ created\_at}).•
+\texttt{expires\_at:\ datetime} (Bắt buộc, đơn vị: \texttt{UTC+7}) ---
+Hạn chót nhận chỗ \texttt{=\ booking\_start\_time\ +\ 30\ phút}; ánh xạ
+từ khóa \texttt{arrival\_deadline} trong code.•
+\texttt{expired\_at:\ datetime\ \textbar{}\ None} (Tùy chọn, đơn vị:
+\texttt{UTC+7}) --- Thời điểm hệ thống quét và đánh dấu đơn quá hạn
+(\texttt{EXPIRED}), mặc định \texttt{None}.•
+\texttt{status:\ ParkingReservationStatus} (Bắt buộc) --- Trạng thái đơn
+theo tập enum chuẩn
+\texttt{RESERVED\ /\ CHECKED\_IN\ /\ COMPLETED\ /\ EXPIRED}. \\
+\textbf{Quan hệ} & • Liên kết \texttt{0..*\ ──►\ 1} với
+\texttt{PersonalVehicle} (mỗi đơn gắn với đúng 1 xe cá nhân thuộc sở hữu
+của \texttt{owner\_id}).• Liên kết \texttt{0..*\ ──►\ 1} với
+\texttt{Hub} (TV3 --- giữ chỗ trước tại Hub đích qua
+\texttt{destination\_holds}).• Liên kết \texttt{1\ ──►\ 0..1} với
+\texttt{ParkingSession} (kích hoạt tối đa 1 phiên đỗ vật lý khi Check-in
+thành công). \\
+\textbf{Ràng buộc (Invariants)} & 1. \textbf{Quy tắc hạn 30 phút của
+SS2:}
+\texttt{expires\_at\ ==\ booking\_start\_time\ +\ timedelta(minutes=30)}
+(tính từ giờ đến đã chọn \texttt{booking\_start\_time}, tuyệt đối không
+tính từ \texttt{created\_at}).2. Tại mọi thời điểm, một
+\texttt{vehicle\_id} chỉ có tối đa 1 bản ghi \texttt{ParkingReservation}
+đang ở trạng thái \texttt{RESERVED} hoặc \texttt{CHECKED\_IN}.3. Khi đơn
+chuyển sang \texttt{RESERVED}, Hub đích phải tăng
+\texttt{destination\_holds\ +=\ 1} và giảm
+\texttt{available\_slots\ -=\ 1}; khi đơn chuyển sang \texttt{EXPIRED},
+phải hoàn trả \texttt{destination\_holds\ -=\ 1} và
+\texttt{available\_slots\ +=\ 1} đúng một lần. \\
+\textbf{Phương thức} & \texttt{SS2-MTH-03} (\texttt{is\_expired}),
+\texttt{SS2-MTH-04} (\texttt{can\_check\_in}). \\
+\textbf{Truy vết} & • Yêu cầu: \texttt{US-09}, \texttt{US-10},
+\texttt{US-11b}, \texttt{US-12}, \texttt{FR-03b}, \texttt{FR-04},
+\texttt{FR-05b}.• Use Case: \texttt{UC\_SS2\_02}, \texttt{UC\_SS2\_03},
+\texttt{UC\_SS2\_04}.• Code hiện tại: \texttt{src/core/personal\_ev.py}
+(\texttt{reserve\_personal\_ev\_slot},
+\texttt{sweep\_expired\_personal\_reservations},
+\texttt{check\_in\_personal\_ev}). \\
+\end{longtable}
+
+\hypertarget{lux1edbp-parkingsession-ss2-cls-03}{%
+\subsubsection{\texorpdfstring{5.3. Lớp \texttt{ParkingSession}
+(\texttt{SS2-CLS-03})}{5.3. Lớp ParkingSession (SS2-CLS-03)}}\label{lux1edbp-parkingsession-ss2-cls-03}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Class ID / Tên lớp} & \texttt{SS2-CLS-03} /
+\texttt{ParkingSession} \\
+\textbf{Trách nhiệm} & Biểu diễn phiên đỗ xe vật lý của phương tiện cá
+nhân bên trong Hub từ thời điểm Check-in qua cổng (\texttt{UC\_SS2\_03})
+cho đến khi hoàn tất quyết toán và Check-out rời trạm
+(\texttt{UC\_SS2\_04}). Lưu giữ liên kết tham chiếu sang yêu cầu/phiên
+sạc của SS5 và tạo dòng phí đỗ xe chuẩn \texttt{ChargeLine} để gửi quyết
+toán. Chủ trì: \textbf{TV2 --- Nguyễn Anh Tài (SS2)}. \\
+\textbf{Mức triển khai} & \textbf{Thiết kế đề xuất tách lớp
+(\texttt{\textless{}\textless{}entity,\ proposed\textgreater{}\textgreater{}})}
+--- trong prototype hiện tại, các thuộc tính của phiên đỗ
+(\texttt{check\_in\_time}, \texttt{check\_out\_time},
+\texttt{charging\_port\_allocated}, \texttt{invoice}) đang được gộp
+chung vào dictionary của \texttt{ParkingReservation} và danh sách
+\texttt{hub{[}"current\_vehicles"{]}}. \\
+\textbf{Thuộc tính} & • \texttt{session\_id:\ str} (Bắt buộc) --- Mã
+định danh phiên đỗ xe tại Hub.• \texttt{reservation\_id:\ str} (Bắt
+buộc, duy nhất) --- Mã đơn đặt chỗ gốc đã kích hoạt phiên đỗ này.•
+\texttt{vehicle\_id:\ str} (Bắt buộc) --- Mã phương tiện cá nhân đang
+hiện diện vật lý tại Hub.• \texttt{hub\_id:\ str} (Bắt buộc) --- Mã Hub
+nơi xe đang đỗ.• \texttt{check\_in\_time:\ datetime} (Bắt buộc, đơn vị:
+\texttt{UTC+7}) --- Thời điểm xác thực Check-in và mở barie vào trạm.•
+\texttt{check\_out\_time:\ datetime\ \textbar{}\ None} (Tùy chọn, đơn
+vị: \texttt{UTC+7}) --- Thời điểm hoàn tất quyết toán và rời trạm
+(\texttt{None} khi xe đang đỗ).•
+\texttt{charging\_request\_id:\ str\ \textbar{}\ None} (Tùy chọn) --- Mã
+yêu cầu sạc bên phân hệ SS5 (nhận từ \texttt{INT-01} nếu đơn có nhu cầu
+sạc).• \texttt{charging\_session\_id:\ str\ \textbar{}\ None} (Tùy chọn)
+--- Mã phiên sạc thực tế bên SS5 khi xe được cấp cổng sạc (dùng để gọi
+\texttt{INT-02} khi check-out).•
+\texttt{parking\_fee\_vnd:\ int\ =\ 5000} (Bắt buộc, đơn vị:
+\texttt{VNĐ/lượt}) --- Phí đỗ xe mặc định theo quy định của prototype
+(\texttt{5.000\ VNĐ/lượt}).•
+\texttt{invoice\_id:\ str\ \textbar{}\ None} (Tùy chọn) --- Mã hóa đơn
+tổng hợp sau khi quyết toán thành công (\texttt{PINV-XXXXXX}). \\
+\textbf{Quan hệ} & • Liên kết \texttt{0..1\ ◄──\ 1} với
+\texttt{ParkingReservation} (chỉ tồn tại khi đơn đặt chỗ đã Check-in).•
+Liên kết \texttt{0..*\ ──►\ 1} với \texttt{Hub} (TV3 --- xe chiếm 1 vị
+trí vật lý trong \texttt{current\_vehicles} của Hub).• Phụ thuộc tham
+chiếu tới \texttt{ChargingService} / \texttt{ChargingSession} (TV5) qua
+\texttt{charging\_request\_id} và \texttt{charging\_session\_id}. \\
+\textbf{Ràng buộc (Invariants)} & 1. \texttt{ParkingSession} không tự
+quản lý thuật toán cấp cổng sạc hay tự tính tiền điện/phí quá giờ; mọi
+thông tin sạc được liên kết qua \texttt{charging\_request\_id} /
+\texttt{charging\_session\_id} của SS5.2. Khi \texttt{ParkingSession}
+đang hoạt động (\texttt{check\_out\_time\ is\ None}), phương tiện tương
+ứng phải nằm trong \texttt{hub.current\_vehicles} với
+\texttt{ownership\ =\ PERSONAL}. Khi kết thúc phiên
+(\texttt{check\_out\_time\ is\ not\ None}), phương tiện được rút khỏi
+\texttt{hub.current\_vehicles} và \texttt{hub.available\_slots} tăng
+thêm đúng \texttt{1} một lần duy nhất. \\
+\textbf{Phương thức} & \texttt{SS2-MTH-05}
+(\texttt{attach\_charging\_ref}), \texttt{SS2-MTH-06}
+(\texttt{build\_parking\_charge\_line}). \\
+\textbf{Truy vết} & • Yêu cầu: \texttt{US-11}, \texttt{US-11b},
+\texttt{US-12}, \texttt{FR-03b}, \texttt{FR-04}, \texttt{FR-05b},
+\texttt{FR-15b}.• Use Case: \texttt{UC\_SS2\_03}, \texttt{UC\_SS2\_04}.•
+Code hiện tại: \texttt{src/core/personal\_ev.py}
+(\texttt{check\_in\_personal\_ev},
+\texttt{check\_out\_personal\_ev}). \\
+\end{longtable}
+
+\hypertarget{lux1edbp-personalevservice-ss2-cls-04}{%
+\subsubsection{\texorpdfstring{5.4. Lớp \texttt{PersonalEVService}
+(\texttt{SS2-CLS-04})}{5.4. Lớp PersonalEVService (SS2-CLS-04)}}\label{lux1edbp-personalevservice-ss2-cls-04}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Class ID / Tên lớp} & \texttt{SS2-CLS-04} /
+\texttt{PersonalEVService} \\
+\textbf{Trách nhiệm} & Lớp dịch vụ nghiệp vụ trung tâm của phân hệ SS2,
+điều phối toàn bộ 4 Use Case (\texttt{UC\_SS2\_01} →
+\texttt{UC\_SS2\_04}) và tác vụ quét hết hạn tự động; đảm bảo tính toàn
+vẹn giữa trạng thái đơn đặt chỗ, sức chứa Hub (\texttt{Hub}), dịch vụ
+sạc (\texttt{ChargingService} --- TV5) và dịch vụ tài chính
+(\texttt{BillingService} --- TV1). Chủ trì: \textbf{TV2 --- Nguyễn Anh
+Tài (SS2)}. \\
+\textbf{Mức triển khai} & \textbf{Ánh xạ từ module hàm sang lớp Service
+(\texttt{\textless{}\textless{}proposed\ service\textgreater{}\textgreater{}})}
+--- ánh xạ 1--1 với 5 hàm nghiệp vụ đã triển khai trong
+\texttt{src/core/personal\_ev.py}. \\
+\textbf{Thuộc tính} & • \texttt{-billing\_service:\ BillingService} (Bắt
+buộc) --- Tham chiếu tới dịch vụ tài chính dùng chung do TV1 sở hữu.•
+\texttt{-charging\_service:\ ChargingService} (Bắt buộc) --- Tham chiếu
+tới dịch vụ lập lịch và tính phí sạc do TV5 sở hữu. \\
+\textbf{Quan hệ} & • Phụ thuộc điều phối (\texttt{..\textgreater{}}) tới
+\texttt{PersonalVehicle}, \texttt{ParkingReservation},
+\texttt{ParkingSession} và \texttt{Hub} (TV3).• Phụ thuộc hợp đồng
+(\texttt{..\textgreater{}}) tới \texttt{BillingService} (TV1) và
+\texttt{ChargingService} (TV5 --- \texttt{INT-01}, \texttt{INT-02}).•
+Ánh xạ thực thi (\texttt{..\textgreater{}}) tới module
+\texttt{core.personal\_ev} (\texttt{SS2-CLS-06}). \\
+\textbf{Ràng buộc (Invariants)} & 1. Mọi phương thức trả về kiểu chuẩn
+\texttt{OperationResult{[}T{]}}; khi xảy ra lỗi (\texttt{ok\ =\ False}),
+tuyệt đối không làm thay đổi dở dang số dư ví hoặc số chỗ trống của
+Hub.2. Trước khi xử lý \texttt{check\_in\_personal\_ev}, luôn thực thi
+quét các đơn quá hạn (\texttt{sweep\_expired\_personal\_reservations})
+để giải phóng tài nguyên kịp thời.3. Mọi biến động tiền cọc, phạt quá
+hạn và thanh toán hóa đơn đều ủy quyền qua \texttt{BillingService} kèm
+\texttt{operation\_key} và \texttt{charge\_id} ổn định để chống thu
+trùng. \\
+\textbf{Phương thức} & \texttt{SS2-MTH-07}
+(\texttt{register\_personal\_ev}), \texttt{SS2-MTH-08}
+(\texttt{reserve\_personal\_ev\_slot}), \texttt{SS2-MTH-09}
+(\texttt{check\_in\_personal\_ev}), \texttt{SS2-MTH-10}
+(\texttt{check\_out\_personal\_ev}), \texttt{SS2-MTH-11}
+(\texttt{sweep\_expired\_personal\_reservations}). \\
+\textbf{Truy vết} & • Yêu cầu: \texttt{US-08}, \texttt{US-09},
+\texttt{US-10}, \texttt{US-11}, \texttt{US-11b}, \texttt{US-12},
+\texttt{FR-03}, \texttt{FR-03b}, \texttt{FR-04}, \texttt{FR-05b},
+\texttt{FR-15b}.• Use Case: \texttt{UC\_SS2\_01}, \texttt{UC\_SS2\_02},
+\texttt{UC\_SS2\_03}, \texttt{UC\_SS2\_04}.• Code hiện tại:
+\texttt{src/core/personal\_ev.py}. \\
+\end{longtable}
+
+\hypertarget{module-giao-diux1ec7n-personal_ev.render-ss2-cls-05-module-nghiux1ec7p-vux1ee5-core.personal_ev-ss2-cls-06}{%
+\subsubsection{\texorpdfstring{5.5. Module giao diện
+\texttt{personal\_ev.render} (\texttt{SS2-CLS-05}) \& Module nghiệp vụ
+\texttt{core.personal\_ev}
+(\texttt{SS2-CLS-06})}{5.5. Module giao diện personal\_ev.render (SS2-CLS-05) \& Module nghiệp vụ core.personal\_ev (SS2-CLS-06)}}\label{module-giao-diux1ec7n-personal_ev.render-ss2-cls-05-module-nghiux1ec7p-vux1ee5-core.personal_ev-ss2-cls-06}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Class ID / Tên lớp} & • \texttt{SS2-CLS-05} /
+\texttt{personal\_ev.render} (\texttt{src/components/personal\_ev.py}
+---
+\texttt{\textless{}\textless{}implemented\ UI\textgreater{}\textgreater{}})•
+\texttt{SS2-CLS-06} / \texttt{core.personal\_ev}
+(\texttt{src/core/personal\_ev.py} ---
+\texttt{\textless{}\textless{}implemented\ module\textgreater{}\textgreater{}}) \\
+\textbf{Trách nhiệm} & • \texttt{personal\_ev.render}: Khởi tạo các khóa
+trạng thái SS2 trong \texttt{st.session\_state}
+(\texttt{\_init\_pev\_state}) và kết xuất giao diện 4 tab tương tác
+người dùng (\texttt{render}).• \texttt{core.personal\_ev}: Cung cấp 2
+hàm tiện ích chuyển đổi thời gian (\texttt{parse\_time},
+\texttt{format\_time}) và 5 hàm nghiệp vụ thực thi trực tiếp trên
+\texttt{st.session\_state} trong prototype hiện hành. Chủ trì:
+\textbf{TV2 --- Nguyễn Anh Tài (SS2)}. \\
+\textbf{Mức triển khai} & \textbf{Đã có trong code
+(\texttt{\textless{}\textless{}implemented\ UI\textgreater{}\textgreater{}}
+và
+\texttt{\textless{}\textless{}implemented\ module\textgreater{}\textgreater{}})}
+--- đang hoạt động và được kiểm thử tự động bởi
+\texttt{tests/test\_personal\_ev.py} và
+\texttt{tests/test\_reservation\_30\_minutes.py}. \\
+\textbf{Thuộc tính} & Không lưu thuộc tính thực thể trên module; thao
+tác trực tiếp trên \texttt{st.session\_state{[}"personal\_evs"{]}},
+\texttt{st.session\_state{[}"personal\_reservations"{]}},
+\texttt{st.session\_state{[}"hubs"{]}},
+\texttt{st.session\_state{[}"wallet"{]}}. \\
+\textbf{Quan hệ} & • \texttt{personal\_ev.render} gọi trực tiếp
+\texttt{core.personal\_ev} trong prototype và hướng tới gọi
+\texttt{PersonalEVService} trong thiết kế mục tiêu.•
+\texttt{core.personal\_ev} gọi các hàm trong
+\texttt{src/core/billing.py} (\texttt{hold\_deposit},
+\texttt{release\_held\_deposit\_full},
+\texttt{settle\_pev\_noshow\_penalty}, \texttt{record\_wallet\_debt}) và
+\texttt{src/core/policies.py}. \\
+\textbf{Ràng buộc (Invariants)} & Mọi thay đổi trạng thái thành công
+trong \texttt{core.personal\_ev} đều gọi
+\texttt{bump\_state\_version(state)} và bảo toàn phương trình sức chứa
+Hub
+(\texttt{available\_slots\ +\ present\_vehicles\ +\ destination\_holds\ +\ background\_occupied\ ==\ total\_slots}). \\
+\textbf{Phương thức} & • Trên \texttt{personal\_ev.render}:
+\texttt{SS2-IMP-01} (\texttt{\_init\_pev\_state}), \texttt{SS2-IMP-02}
+(\texttt{render}).• Trên \texttt{core.personal\_ev}: \texttt{SS2-IMP-03}
+(\texttt{parse\_time}), \texttt{SS2-IMP-04} (\texttt{format\_time}),
+cùng 5 hàm nghiệp vụ ánh xạ trực tiếp vào \texttt{SS2-MTH-07} →
+\texttt{SS2-MTH-11}. \\
+\textbf{Truy vết} & \texttt{UC\_SS2\_01} → \texttt{UC\_SS2\_04};
+\texttt{src/components/personal\_ev.py},
+\texttt{src/core/personal\_ev.py}. \\
+\end{longtable}
+
+\hypertarget{bux1ea3ng-tux1ed5ng-hux1ee3p-cuxe1c-lux1edbp-vuxe0-hux1ee3p-ux111ux1ed3ng-duxf9ng-chung-tham-chiux1ebfu-truxean-sux1a1-ux111ux1ed3-ss2}{%
+\subsubsection{5.6. Bảng tổng hợp các Lớp và Hợp đồng dùng chung tham
+chiếu trên sơ đồ
+SS2}\label{bux1ea3ng-tux1ed5ng-hux1ee3p-cuxe1c-lux1edbp-vuxe0-hux1ee3p-ux111ux1ed3ng-duxf9ng-chung-tham-chiux1ebfu-truxean-sux1a1-ux111ux1ed3-ss2}}
+
+Các lớp dưới đây thuộc quyền sở hữu của các thành viên khác theo Mục
+2.2--2.3 của Hướng dẫn; phân hệ SS2 tham chiếu trực tiếp mà không định
+nghĩa lại khác thuộc tính:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Lớp / Hợp đồng
+(\texttt{\textless{}\textless{}shared\ contract\textgreater{}\textgreater{}})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Chủ sở hữu
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vai trò và thuộc tính/giao tiếp mà SS2 tham chiếu
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\texttt{User\ và\ Vehicle\ (TV1)}} & \textbf{TV1 --- Nguyễn
+Thành Đạt} & Cung cấp định danh tài khoản \texttt{user\_id:\ str} và lớp
+cơ sở \texttt{Vehicle} (\texttt{vehicle\_id:\ str},
+\texttt{ownership:\ Ownership}, \texttt{status:\ VehicleStatus}) để
+\texttt{PersonalVehicle} kế thừa với
+\texttt{ownership\ =\ Ownership.PERSONAL}. \\
+\textbf{\texttt{Hub\ (TV3)}} & \textbf{TV3 --- Phạm Tiến Đạt} & Thực thể
+trạm chuẩn (\texttt{hub\_id:\ str}, \texttt{name:\ str},
+\texttt{total\_slots:\ int}, \texttt{available\_slots:\ int},
+\texttt{destination\_holds:\ int},
+\texttt{charging\_ports:\ dict{[}str,\ int{]}}). SS2 kiểm tra và cập
+nhật \texttt{destination\_holds}, \texttt{available\_slots} và
+\texttt{current\_vehicles}. \\
+\textbf{\texttt{BillingService\ (TV1)}} & \textbf{TV1 --- Nguyễn Thành
+Đạt} & Hợp đồng tài chính dùng chung xử lý khóa cọc
+(\texttt{hold\_deposit}), hoàn cọc (\texttt{release\_deposit}), phạt quá
+hạn (\texttt{settle\_no\_show}) và quyết toán hóa đơn tổng hợp
+(\texttt{settle\_invoice}). \\
+\textbf{\texttt{ChargingService\ (TV5)}} & \textbf{TV5 --- Dương Đăng
+Khoa} & Hợp đồng dịch vụ sạc thông minh cung cấp giao tiếp
+\texttt{INT-01} (\texttt{request\_charging}) khi xe cá nhân check-in và
+\texttt{INT-02} (\texttt{get\_bill}) khi xe cá nhân check-out. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c-method-descriptions}{%
+\subsection{6. Mô tả phương thức (Method
+Descriptions)}\label{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c-method-descriptions}}
+
+Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô tả đầy đủ
+dưới đây theo mẫu chuẩn tại Mục 6.2 của Hướng dẫn.
+
+\hypertarget{cuxe1c-phux1b0ux1a1ng-thux1ee9c-cux1ee7a-lux1edbp-thux1ef1c-thux1ec3-personalvehicle-parkingreservation-parkingsession}{%
+\subsubsection{\texorpdfstring{6.1. Các phương thức của lớp thực thể
+\texttt{PersonalVehicle}, \texttt{ParkingReservation},
+\texttt{ParkingSession}}{6.1. Các phương thức của lớp thực thể PersonalVehicle, ParkingReservation, ParkingSession}}\label{cuxe1c-phux1b0ux1a1ng-thux1ee9c-cux1ee7a-lux1edbp-thux1ef1c-thux1ec3-personalvehicle-parkingreservation-parkingsession}}
+
+\hypertarget{ss2-mth-01-personalvehicle.normalize_plate}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-01} ---
+\texttt{PersonalVehicle.normalize\_plate}}{SS2-MTH-01 --- PersonalVehicle.normalize\_plate}}\label{ss2-mth-01-personalvehicle.normalize_plate}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-01} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalVehicle.normalize\_plate(raw\_plate:\ str):\ str} \\
+\textbf{Mục đích và bên gọi} & Chuẩn hóa chuỗi biển số xe đầu vào về
+dạng chuẩn thống nhất (cắt khoảng trắng hai đầu, chuyển thành chữ in
+hoa, loại bỏ dấu cách \texttt{"\ "} và dấu gạch ngang \texttt{"-"}) để
+so sánh chống trùng lặp biển số bất kể cách gõ của người dùng. Bên gọi:
+\texttt{PersonalEVService.register\_personal\_ev()}. \\
+\textbf{Tham số} & \texttt{raw\_plate:\ str} --- Chuỗi biển số thô do
+sinh viên nhập trên biểu mẫu (ví dụ \texttt{"59-x1\ 77777"} hoặc
+\texttt{"59X1-77777"}). \\
+\textbf{Kết quả trả về} & \texttt{str} --- Chuỗi biển số rút gọn đã
+chuẩn hóa (ví dụ \texttt{"59X177777"}); trả về chuỗi rỗng \texttt{""}
+nếu đầu vào chỉ chứa khoảng trắng hoặc ký tự phân cách. \\
+\textbf{Điều kiện trước} & \texttt{raw\_plate} là kiểu chuỗi
+(\texttt{str}). \\
+\textbf{Xử lý chính} & Thực hiện
+\texttt{raw\_plate.strip().upper().replace("\ ",\ "").replace("-",\ "")}. \\
+\textbf{Điều kiện sau} & Không làm thay đổi trạng thái hệ thống (hàm
+thuần túy --- pure function); hai biển số cùng ký tự chữ-số nhưng khác
+cách đặt dấu gạch ngang/khoảng trắng luôn cho ra cùng một chuỗi kết
+quả. \\
+\textbf{Lỗi/ngoại lệ} & Nếu kết quả trả về là \texttt{""}, phương thức
+gọi (\texttt{register\_personal\_ev}) trả về lỗi \texttt{INVALID\_INPUT}
+(\texttt{"Biển\ số\ xe\ không\ được\ để\ trống."}). \\
+\textbf{Xử lý lặp/xung đột} & Gọi nhiều lần với cùng đầu vào luôn trả về
+kết quả giống hệt nhau (Idempotent). \\
+\textbf{Tác động dữ liệu} & Không ghi dữ liệu vào session/ví/Hub. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_01} (Thông điệp
+\texttt{3.1:\ Tra\ cứu\ biển\ số\ và\ tài\ khoản\ sở\ hữu}).• Code hiện
+có: Dòng 51 và 57 trong \texttt{src/core/personal\_ev.py}.• Test case:
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate}
+(\texttt{tests/test\_personal\_ev.py}), \texttt{TC-SS2-01},
+\texttt{TC-SS2-02}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-02-personalvehicle.is_owned_by}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-02} ---
+\texttt{PersonalVehicle.is\_owned\_by}}{SS2-MTH-02 --- PersonalVehicle.is\_owned\_by}}\label{ss2-mth-02-personalvehicle.is_owned_by}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-02} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalVehicle.is\_owned\_by(user\_id:\ str):\ bool} \\
+\textbf{Mục đích và bên gọi} & Kiểm tra phương tiện cá nhân có thuộc
+quyền sở hữu của tài khoản sinh viên \texttt{user\_id} đang thao tác hay
+không trước khi cho phép đặt chỗ đỗ/sạc. Bên gọi:
+\texttt{PersonalEVService.reserve\_personal\_ev\_slot()}. \\
+\textbf{Tham số} & \texttt{user\_id:\ str} --- Mã định danh người dùng
+đang thực hiện yêu cầu (ví dụ \texttt{"SV-2211234"}). \\
+\textbf{Kết quả trả về} & \texttt{bool} --- \texttt{True} nếu
+\texttt{self.owner\_id\ ==\ user\_id}, ngược lại trả về
+\texttt{False}. \\
+\textbf{Điều kiện trước} & Đối tượng \texttt{PersonalVehicle} đã tồn tại
+hợp lệ trong hệ thống. \\
+\textbf{Xử lý chính} & So sánh khớp chính xác định danh
+\texttt{self.owner\_id\ ==\ user\_id.strip()}. \\
+\textbf{Điều kiện sau} & Không làm thay đổi dữ liệu hệ thống. \\
+\textbf{Lỗi/ngoại lệ} & Khi trả về \texttt{False}, dịch vụ gọi trả về mã
+lỗi \texttt{FORBIDDEN}
+(\texttt{"Phương\ tiện\ không\ thuộc\ tài\ khoản\ đang\ đặt\ chỗ."}). \\
+\textbf{Xử lý lặp/xung đột} & Thao tác chỉ đọc, an toàn khi gọi lặp. \\
+\textbf{Tác động dữ liệu} & Không tác động dữ liệu. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_02} (Nhánh kiểm
+tra quyền sử dụng xe đã đăng ký).• Code hiện có: Dòng 94--95 trong
+\texttt{src/core/personal\_ev.py}
+(\texttt{if\ ev.get("owner\_id")\ !=\ owner\_id}).• Test case:
+\texttt{TC-SS2-04}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-03-parkingreservation.is_expired}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-03} ---
+\texttt{ParkingReservation.is\_expired}}{SS2-MTH-03 --- ParkingReservation.is\_expired}}\label{ss2-mth-03-parkingreservation.is_expired}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-03} \\
+\textbf{Lớp và chữ ký} &
+\texttt{ParkingReservation.is\_expired(sim\_now:\ datetime):\ bool} \\
+\textbf{Mục đích và bên gọi} & Kiểm tra lượt đặt chỗ đang ở trạng thái
+\texttt{RESERVED} đã chạm hoặc vượt mốc hạn chót \texttt{expires\_at}
+(\texttt{booking\_start\_time\ +\ 30\ phút}) theo đồng hồ mô phỏng hay
+chưa. Bên gọi:
+\texttt{PersonalEVService.sweep\_expired\_personal\_reservations()} và
+\texttt{PersonalEVService.check\_in\_personal\_ev()}. \\
+\textbf{Tham số} & \texttt{sim\_now:\ datetime} (Đơn vị: thời gian mô
+phỏng \texttt{UTC+7}) --- Thời điểm hiện tại của đồng hồ mô phỏng
+(\texttt{state{[}"current\_sim\_time"{]}}). \\
+\textbf{Kết quả trả về} & \texttt{bool} --- \texttt{True} nếu
+\texttt{self.status\ ==\ ParkingReservationStatus.RESERVED} và
+\texttt{sim\_now\ \textgreater{}=\ self.expires\_at}; ngược lại
+\texttt{False}. \\
+\textbf{Điều kiện trước} & \texttt{self.expires\_at} đã được thiết lập
+bằng \texttt{booking\_start\_time\ +\ timedelta(minutes=30)} lúc tạo
+đơn. \\
+\textbf{Xử lý chính} & Kiểm tra trạng thái đơn còn đang
+\texttt{RESERVED} và so sánh mốc thời gian
+\texttt{sim\_now\ \textgreater{}=\ self.expires\_at} (tại đúng mốc 30
+phút 00 giây \texttt{sim\_now\ ==\ expires\_at} đơn được tính là đã hết
+hạn). \\
+\textbf{Điều kiện sau} & Không tự sửa trạng thái; kết quả \texttt{True}
+kích hoạt luồng thu hồi chỗ đỗ và phạt no-show ở
+\texttt{PersonalEVService}. \\
+\textbf{Lỗi/ngoại lệ} & Không phát sinh ngoại lệ nếu \texttt{sim\_now}
+hợp lệ. \\
+\textbf{Xử lý lặp/xung đột} & Khi đơn đã chuyển sang \texttt{EXPIRED}
+hoặc \texttt{CHECKED\_IN}, phương thức luôn trả về \texttt{False}, ngăn
+chặn việc quét hết hạn lặp lần hai. \\
+\textbf{Tác động dữ liệu} & Chỉ đọc. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_02} (Nhánh
+\texttt{4.1:\ Đến\ booking\_start\_time\ +\ 30\ phút\ và\ chưa\ Check-in}),
+\texttt{UC\_SS2\_03}.• Code hiện có: Dòng 174--176 và 222--223 trong
+\texttt{src/core/personal\_ev.py}.• Test case:
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py}),
+\texttt{TC-SS2-06}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-04-parkingreservation.can_check_in}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-04} ---
+\texttt{ParkingReservation.can\_check\_in}}{SS2-MTH-04 --- ParkingReservation.can\_check\_in}}\label{ss2-mth-04-parkingreservation.can_check_in}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-04} \\
+\textbf{Lớp và chữ ký} &
+\texttt{ParkingReservation.can\_check\_in(sim\_now:\ datetime):\ bool} \\
+\textbf{Mục đích và bên gọi} & Xác định đơn đặt chỗ có đủ điều kiện thời
+gian và trạng thái để cho phép xe cá nhân Check-in vào cổng Hub hay
+không. Bên gọi: \texttt{PersonalEVService.check\_in\_personal\_ev()}. \\
+\textbf{Tham số} & \texttt{sim\_now:\ datetime} (Đơn vị: \texttt{UTC+7})
+--- Thời điểm sinh viên quét mã Check-in tại cổng trạm. \\
+\textbf{Kết quả trả về} & \texttt{bool} --- \texttt{True} nếu
+\texttt{self.status\ ==\ ParkingReservationStatus.RESERVED} và
+\texttt{self.booking\_start\_time\ \textless{}=\ sim\_now\ \textless{}\ self.expires\_at};
+ngược lại \texttt{False}. \\
+\textbf{Điều kiện trước} & Đơn đặt chỗ tồn tại trong hệ thống; đã chạy
+bước quét hết hạn trước khi kiểm tra. \\
+\textbf{Xử lý chính} & Kiểm tra đồng thời 3 điều kiện: (1)
+\texttt{status\ ==\ RESERVED}, (2) đã đến giờ đặt
+(\texttt{sim\_now\ \textgreater{}=\ booking\_start\_time}), và (3) chưa
+chạm hạn chót 30 phút (\texttt{sim\_now\ \textless{}\ expires\_at}). \\
+\textbf{Điều kiện sau} & Chỉ đọc; nếu trả về \texttt{False}, hệ thống từ
+chối mở cổng barie và giữ nguyên dữ liệu hiện có. \\
+\textbf{Lỗi/ngoại lệ} & Trả về \texttt{False} khi đến sớm hơn
+\texttt{booking\_start\_time} (\texttt{INVALID\_STATE}), đã quá hạn
+(\texttt{EXPIRED}), hoặc đơn đã
+\texttt{CHECKED\_IN}/\texttt{COMPLETED}. \\
+\textbf{Xử lý lặp/xung đột} & Ngăn chặn việc Check-in lặp trên cùng một
+\texttt{reservation\_id} vì sau lần Check-in đầu tiên, \texttt{status}
+đã đổi sang \texttt{CHECKED\_IN}. \\
+\textbf{Tác động dữ liệu} & Chỉ đọc. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_03} (Thông điệp
+\texttt{1.1:\ Đối\ chiếu\ QR/PIN,\ xe,\ quyền\ sử\ dụng,\ đơn\ đặt\ chỗ,\ Hub\ và\ khung\ giờ}).•
+Code hiện có: Dòng 213--225 trong \texttt{src/core/personal\_ev.py}.•
+Test case:
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement},
+\texttt{TC-SS2-05}, \texttt{TC-SS2-06}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-05-parkingsession.attach_charging_ref}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-05} ---
+\texttt{ParkingSession.attach\_charging\_ref}}{SS2-MTH-05 --- ParkingSession.attach\_charging\_ref}}\label{ss2-mth-05-parkingsession.attach_charging_ref}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-05} \\
+\textbf{Lớp và chữ ký} &
+\texttt{ParkingSession.attach\_charging\_ref(request\_id:\ str,\ session\_id:\ str\ \textbar{}\ None\ =\ None):\ None} \\
+\textbf{Mục đích và bên gọi} & Lưu mã yêu cầu sạc
+(\texttt{charging\_request\_id}) và mã phiên sạc
+(\texttt{charging\_session\_id} nếu được cấp cổng ngay) trả về từ giao
+tiếp \texttt{INT-01} (\texttt{ChargingService.request\_charging}) vào
+phiên đỗ xe \texttt{ParkingSession}. Bên gọi:
+\texttt{PersonalEVService.check\_in\_personal\_ev()}. \\
+\textbf{Tham số} & • \texttt{request\_id:\ str} --- Mã yêu cầu sạc trong
+hàng chờ của SS5.• \texttt{session\_id:\ str\ \textbar{}\ None} --- Mã
+phiên sạc thực tế nếu SS5 đã cấp cổng ngay; \texttt{None} nếu xe đang
+xếp hàng chờ (\texttt{WAITING}). \\
+\textbf{Kết quả trả về} & \texttt{None}. \\
+\textbf{Điều kiện trước} & \texttt{ParkingSession} vừa được khởi tạo khi
+Check-in hợp lệ và đơn gốc có \texttt{request\_charging\ ==\ True}. \\
+\textbf{Xử lý chính} & Gán
+\texttt{self.charging\_request\_id\ =\ request\_id} và
+\texttt{self.charging\_session\_id\ =\ session\_id}. Phân biệt rõ trạng
+thái ``đã gửi yêu cầu sạc'' (\texttt{charging\_request\_id\ !=\ None})
+với ``đã được cấp cổng sạc thực sự''
+(\texttt{charging\_session\_id\ !=\ None}). \\
+\textbf{Điều kiện sau} & Phiên đỗ giữ tham chiếu chính xác sang SS5 để
+tra cứu hóa đơn sạc (\texttt{INT-02}) lúc Check-out. \\
+\textbf{Lỗi/ngoại lệ} & \texttt{INVALID\_INPUT} nếu \texttt{request\_id}
+rỗng. \\
+\textbf{Xử lý lặp/xung đột} & Chỉ gắn tối đa 1 yêu cầu sạc đang hoạt
+động cho cùng 1 \texttt{ParkingSession}. \\
+\textbf{Tác động dữ liệu} & Cập nhật 2 trường
+\texttt{charging\_request\_id} và \texttt{charging\_session\_id} trên
+đối tượng \texttt{ParkingSession}. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_03} (Nhánh
+\texttt{3.1:\ Xác\ thực\ trụ\ và\ bắt\ đầu\ sạc\ nếu\ đã\ đăng\ ký}),
+Hợp đồng \texttt{INT-01}.• Code hiện có: Ánh xạ từ logic đánh dấu
+\texttt{res{[}"charging\_port\_allocated"{]}} tại dòng 248--253 trong
+\texttt{src/core/personal\_ev.py}.• Test case: \texttt{TC-SS2-05}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-06-parkingsession.build_parking_charge_line}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-06} ---
+\texttt{ParkingSession.build\_parking\_charge\_line}}{SS2-MTH-06 --- ParkingSession.build\_parking\_charge\_line}}\label{ss2-mth-06-parkingsession.build_parking_charge_line}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-06} \\
+\textbf{Lớp và chữ ký} &
+\texttt{ParkingSession.build\_parking\_charge\_line():\ ChargeLine} \\
+\textbf{Mục đích và bên gọi} & Tạo dòng phí đỗ xe chuẩn
+\texttt{ChargeLine} với mã \texttt{charge\_id} ổn định theo
+\texttt{session\_id} và mức giá mặc định \texttt{5.000\ VNĐ/lượt} để gửi
+sang \texttt{BillingService.settle\_invoice()} khi Check-out. Bên gọi:
+\texttt{PersonalEVService.check\_out\_personal\_ev()}. \\
+\textbf{Tham số} & Không có tham số đầu vào (sử dụng
+\texttt{self.session\_id}, \texttt{self.reservation\_id},
+\texttt{self.parking\_fee\_vnd}). \\
+\textbf{Kết quả trả về} & \texttt{ChargeLine} --- Đối tượng dòng phí
+chuẩn gồm: \texttt{charge\_id\ =\ f"CHG-PARK-\{self.reservation\_id\}"},
+\texttt{source\_id\ =\ self.reservation\_id},
+\texttt{kind\ =\ "PARKING\_FEE"}, \texttt{amount\_vnd\ =\ 5000} (đơn vị:
+\texttt{VNĐ}). \\
+\textbf{Điều kiện trước} & Phiên đỗ hợp lệ,
+\texttt{self.parking\_fee\_vnd\ ==\ 5000}
+(\texttt{PEV\_PARKING\_FEE\_PER\_VISIT\_VND}). \\
+\textbf{Xử lý chính} & Đóng gói khoản phí đỗ xe của SS2 thành cấu trúc
+\texttt{ChargeLine} theo hợp đồng tài chính mục 2.3. Giữ nguyên
+\texttt{charge\_id} cố định cho mỗi lượt đặt chỗ để nếu
+\texttt{check\_out\_personal\_ev} bị gọi lặp, \texttt{BillingService}
+nhận diện được dòng phí đã thu và không trừ tiền lần thứ hai. \\
+\textbf{Điều kiện sau} & Trả về \texttt{ChargeLine} hợp lệ với
+\texttt{amount\_vnd\ ==\ 5000\ \textgreater{}=\ 0}. \\
+\textbf{Lỗi/ngoại lệ} & Không phát sinh lỗi. \\
+\textbf{Xử lý lặp/xung đột} & Cùng một \texttt{ParkingSession} luôn sinh
+ra đúng một \texttt{charge\_id} duy nhất
+(\texttt{CHG-PARK-\textless{}reservation\_id\textgreater{}}), đảm bảo
+chống thu trùng ở tầng \texttt{BillingService}. \\
+\textbf{Tác động dữ liệu} & Chỉ tạo DTO \texttt{ChargeLine}, chưa tự trừ
+số dư ví. \\
+\textbf{Truy vết và kiểm thử} & • UC: \texttt{UC\_SS2\_04} (Thông điệp
+\texttt{2.1:\ Tính\ phí\ đỗ\ 5.000\ VNĐ/lượt...\ Lập\ một\ hóa\ đơn\ tổng\ hợp}).•
+Code hiện có: Dòng 298 trong \texttt{src/core/personal\_ev.py}
+(\texttt{parking\_fee\ =\ PEV\_PARKING\_FEE\_PER\_VISIT\_VND}).• Test
+case: \texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}), \texttt{TC-SS2-07}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{cuxe1c-phux1b0ux1a1ng-thux1ee9c-nghiux1ec7p-vux1ee5-cux1ee7a-personalevservice-uxe1nh-xux1ea1-5-huxe0m-trong-srccorepersonal_ev.py}{%
+\subsubsection{\texorpdfstring{6.2. Các phương thức nghiệp vụ của
+\texttt{PersonalEVService} (Ánh xạ 5 hàm trong
+\texttt{src/core/personal\_ev.py})}{6.2. Các phương thức nghiệp vụ của PersonalEVService (Ánh xạ 5 hàm trong src/core/personal\_ev.py)}}\label{cuxe1c-phux1b0ux1a1ng-thux1ee9c-nghiux1ec7p-vux1ee5-cux1ee7a-personalevservice-uxe1nh-xux1ea1-5-huxe0m-trong-srccorepersonal_ev.py}}
+
+\hypertarget{ss2-mth-07-personalevservice.register_personal_ev}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-07} ---
+\texttt{PersonalEVService.register\_personal\_ev}}{SS2-MTH-07 --- PersonalEVService.register\_personal\_ev}}\label{ss2-mth-07-personalevservice.register_personal_ev}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-07} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalEVService.register\_personal\_ev(owner\_id:\ str,\ owner\_name:\ str,\ plate\_number:\ str,\ vehicle\_type:\ str,\ brand:\ str,\ battery\_kwh:\ float):\ OperationResult{[}PersonalVehicle{]}} \\
+\textbf{Mục đích và bên gọi} & Thực hiện \texttt{UC\_SS2\_01}: Đăng ký
+phương tiện điện cá nhân mới của sinh viên lên hệ thống, kiểm tra tính
+hợp lệ và tính duy nhất của biển số trên toàn hệ thống. Bên gọi: Giao
+diện \texttt{personal\_ev.render} (Tab 1) do Sinh viên
+(\texttt{UserRole.STUDENT}) thực hiện. \\
+\textbf{Tham số} & • \texttt{owner\_id:\ str} --- Mã định danh sinh viên
+sở hữu (ví dụ \texttt{"SV-2211234"}).• \texttt{owner\_name:\ str} --- Họ
+tên chủ xe.• \texttt{plate\_number:\ str} --- Biển số xe đăng ký (ví dụ
+\texttt{"59-X1\ 888.88"}).• \texttt{vehicle\_type:\ str} --- Loại xe
+(\texttt{"scooter"\ \textbackslash{}\textbar{}\ "bike"\ \textbackslash{}\textbar{}\ "car"}).•
+\texttt{brand:\ str} --- Hãng/dòng xe.• \texttt{battery\_kwh:\ float}
+(Đơn vị: \texttt{kWh}) --- Dung lượng pin danh định
+(\texttt{0.5\ \textless{}=\ battery\_kwh\ \textless{}=\ 120.0}). \\
+\textbf{Kết quả trả về} &
+\texttt{OperationResult{[}PersonalVehicle{]}}:• Khi thành công:
+\texttt{ok\ =\ True}, \texttt{data\ =\ PersonalVehicle} vừa tạo,
+\texttt{error\_code\ =\ None},
+\texttt{message\ =\ "Đăng\ ký\ xe\ cá\ nhân\ thành\ công!\ Mã\ định\ danh:\ PEV-..."},
+\texttt{state\_version} tăng +1.• Khi thất bại: \texttt{ok\ =\ False},
+\texttt{data\ =\ None}, \texttt{error\_code\ =\ "INVALID\_INPUT"} hoặc
+\texttt{"CONFLICTING\_OPERATION"}, \texttt{message} nêu rõ lý do. \\
+\textbf{Điều kiện trước} & Người dùng đã xác thực phiên sinh viên hợp
+lệ; \texttt{owner\_id} không rỗng. \\
+\textbf{Xử lý chính} & 1. Gọi
+\texttt{PersonalVehicle.normalize\_plate(plate\_number)} để chuẩn hóa
+biển số; nếu rỗng thì trả về lỗi \texttt{INVALID\_INPUT}.2. Kiểm tra
+\texttt{battery\_kwh\ \textgreater{}\ 0} và \texttt{vehicle\_type} hợp
+lệ.3. Duyệt danh sách \texttt{personal\_evs} trong trạng thái phiên hiện
+tại; chuẩn hóa từng biển số đã lưu để đối chiếu với biển số mới. Nếu
+trùng, từ chối đăng ký.4. Sinh mã định danh
+\texttt{vehicle\_id\ =\ f"PEV-\{uuid4().hex{[}:6{]}.upper()\}"} (ánh xạ
+khóa \texttt{ev\_id}), lấy thời gian mô phỏng hiện tại
+\texttt{current\_sim\_time}, khởi tạo thực thể \texttt{PersonalVehicle}
+với \texttt{ownership\ =\ Ownership.PERSONAL},
+\texttt{status\ =\ "REGISTERED"}.5. Lưu vào
+\texttt{state{[}"personal\_evs"{]}} và gọi
+\texttt{bump\_state\_version(state)}. \\
+\textbf{Điều kiện sau} & • Khi thành công: Tập \texttt{personal\_evs}
+tăng thêm đúng 1 bản ghi có \texttt{ownership\ ==\ PERSONAL};
+\texttt{state\_version} tăng thêm 1; số chỗ trống tại mọi Hub và số dư
+ví không thay đổi.• Khi thất bại: Tập \texttt{personal\_evs} và
+\texttt{state\_version} giữ nguyên như trước lời gọi. \\
+\textbf{Lỗi/ngoại lệ} & • \texttt{INVALID\_INPUT}: Biển số rỗng hoặc
+dung lượng pin \texttt{\textless{}=\ 0}.•
+\texttt{CONFLICTING\_OPERATION}: Biển số xe (sau khi chuẩn hóa) đã tồn
+tại trong hệ thống (của cùng tài khoản hoặc tài khoản khác). \\
+\textbf{Xử lý lặp/xung đột} & Nếu người dùng bấm gửi form đăng ký lặp 2
+lần với cùng biển số (kể cả khác dấu cách/gạch ngang như
+\texttt{"59-X1\ 77777"} và \texttt{"59X1-77777"}), lần gọi thứ hai bị
+chặn ngay ở bước kiểm tra trùng biển số và không sinh bản ghi thứ
+hai. \\
+\textbf{Tác động dữ liệu} & Ghi thêm 1 bản ghi vào
+\texttt{st.session\_state{[}"personal\_evs"{]}}; tăng
+\texttt{st.session\_state{[}"state\_version"{]}}. Không tác động ví,
+Hub, cổng sạc hay hóa đơn. \\
+\textbf{Truy vết và kiểm thử} & • US/FR: \texttt{US-08},
+\texttt{FR-03}.• UC \& Sequence: \texttt{UC\_SS2\_01}
+(\texttt{UC\_SS2\_01\_NguyenAnhTai\_sequence.puml} --- Nhóm 2 \& Nhóm 3:
+thông điệp \texttt{3.1\ Tra\ cứu\ biển\ số},
+\texttt{3.2\ Cấp\ mã\ xe,\ lưu\ hồ\ sơ}).• Code hiện có: Hàm
+\texttt{register\_personal\_ev()} tại \texttt{src/core/personal\_ev.py}
+(dòng 40--76).• Test case:
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate}
+(\texttt{tests/test\_personal\_ev.py}), \texttt{TC-SS2-01},
+\texttt{TC-SS2-02}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-08-personalevservice.reserve_personal_ev_slot}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-08} ---
+\texttt{PersonalEVService.reserve\_personal\_ev\_slot}}{SS2-MTH-08 --- PersonalEVService.reserve\_personal\_ev\_slot}}\label{ss2-mth-08-personalevservice.reserve_personal_ev_slot}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-08} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalEVService.reserve\_personal\_ev\_slot(owner\_id:\ str,\ vehicle\_id:\ str,\ hub\_id:\ str,\ booking\_start\_time:\ datetime,\ request\_charging:\ bool\ =\ False,\ current\_soc:\ float\ =\ 50.0,\ operation\_key:\ str\ =\ ""):\ OperationResult{[}ParkingReservation{]}} \\
+\textbf{Mục đích và bên gọi} & Thực hiện \texttt{UC\_SS2\_02}: Đặt giữ
+chỗ đỗ trước (kèm tùy chọn đăng ký nhu cầu sạc) cho xe điện cá nhân tại
+Hub đích, tạm khóa cọc \texttt{50.000\ VNĐ} qua \texttt{BillingService}
+và thiết lập hạn chót nhận chỗ
+\texttt{expires\_at\ =\ booking\_start\_time\ +\ 30\ phút}. Bên gọi:
+Giao diện \texttt{personal\_ev.render} (Tab 2). \\
+\textbf{Tham số} & • \texttt{owner\_id:\ str} --- Mã sinh viên đặt chỗ.•
+\texttt{vehicle\_id:\ str} --- Mã xe cá nhân đã đăng ký
+(\texttt{PEV-XXXXXX}, ánh xạ từ \texttt{ev\_id}).•
+\texttt{hub\_id:\ str} --- Mã Hub điểm đến.•
+\texttt{booking\_start\_time:\ datetime} (Đơn vị: \texttt{UTC+7}) ---
+Thời điểm dự kiến đến trạm đã chọn.•
+\texttt{request\_charging:\ bool\ =\ False} --- Có đăng ký dịch vụ sạc
+hay không.• \texttt{current\_soc:\ float\ =\ 50.0} (Đơn vị: \texttt{\%},
+\texttt{0..100}) --- Phần trăm pin ước tính khi đến trạm.•
+\texttt{operation\_key:\ str\ =\ ""} --- Khóa chống thực thi lặp giao
+dịch đặt cọc. \\
+\textbf{Kết quả trả về} &
+\texttt{OperationResult{[}ParkingReservation{]}}:• Khi thành công:
+\texttt{ok\ =\ True}, \texttt{data\ =\ ParkingReservation} ở trạng thái
+\texttt{RESERVED} với
+\texttt{expires\_at\ =\ booking\_start\_time\ +\ 30\ phút},
+\texttt{state\_version} tăng +1.• Khi thất bại: \texttt{ok\ =\ False},
+\texttt{data\ =\ None}, \texttt{error\_code} thuộc
+\texttt{\{NOT\_FOUND,\ FORBIDDEN,\ INVALID\_INPUT,\ CONFLICTING\_OPERATION,\ NO\_CAPACITY,\ INSUFFICIENT\_FUNDS,\ DEBT\_BLOCKED\}}. \\
+\textbf{Điều kiện trước} & Xe \texttt{vehicle\_id} đã tồn tại trong
+\texttt{personal\_evs} và thuộc sở hữu của \texttt{owner\_id};
+\texttt{booking\_start\_time\ \textgreater{}=\ current\_sim\_time}; xe
+chưa có đơn nào đang ở trạng thái \texttt{RESERVED} hoặc
+\texttt{CHECKED\_IN}. \\
+\textbf{Xử lý chính} & 1. Tra cứu \texttt{vehicle\_id} trong
+\texttt{personal\_evs}; nếu không tồn tại trả \texttt{NOT\_FOUND}, nếu
+\texttt{!is\_owned\_by(owner\_id)} trả \texttt{FORBIDDEN}.2. Kiểm tra
+\texttt{booking\_start\_time\ \textgreater{}=\ sim\_now}; nếu ở quá khứ
+trả \texttt{INVALID\_INPUT}.3. Kiểm tra không có đơn
+\texttt{ParkingReservation} nào của \texttt{vehicle\_id} đang ở trạng
+thái \texttt{RESERVED} hoặc \texttt{CHECKED\_IN}; nếu có trả
+\texttt{CONFLICTING\_OPERATION}.4. Tra cứu \texttt{Hub} theo
+\texttt{hub\_id}; kiểm tra
+\texttt{hub.available\_slots\ \textgreater{}\ 0} (nếu hết chỗ trả
+\texttt{NO\_CAPACITY}). Trong prototype, đặt kèm sạc còn kiểm tra cổng
+trống và có thể trả \texttt{NO\_CAPACITY}. Trong thiết kế mục tiêu, bước
+này chỉ ghi nhu cầu sạc; yêu cầu được tạo khi check-in qua
+\texttt{INT-01}, có thể chờ trong queue, không coi đặt chỗ là đã giữ
+cổng thực sự.5. Sinh mã
+\texttt{reservation\_id\ =\ f"PRES-\{uuid4().hex{[}:6{]}.upper()\}"} và
+gọi hợp đồng
+\texttt{BillingService.hold\_deposit(owner\_id,\ reservation\_id,\ 50000,\ operation\_key)}
+(trong prototype gọi \texttt{billing.hold\_deposit}). Nếu ví đang có nợ
+(\texttt{debt\ \textgreater{}\ 0}) hoặc số dư
+\texttt{\textless{}\ 50.000\ VNĐ}, dừng ngay và trả lỗi tài chính mà
+không trừ chỗ của Hub.6. Cập nhật giữ chỗ tại Hub:
+\texttt{hub.destination\_holds\ +=\ 1},
+\texttt{hub.available\_slots\ -=\ 1} (chưa thêm xe vào
+\texttt{hub.current\_vehicles} và chưa trừ cổng sạc vật lý).7. Tính
+\texttt{expires\_at\ =\ booking\_start\_time\ +\ timedelta(minutes=30)}
+(\texttt{PEV\_ARRIVAL\_EXPIRY\_MINUTES}), lưu
+\texttt{ParkingReservation} với \texttt{status\ =\ RESERVED} và tăng
+\texttt{state\_version}. \\
+\textbf{Điều kiện sau} & • Khi thành công: Ví giảm
+\texttt{balance\ -=\ 50.000\ VNĐ}, tăng
+\texttt{held\_deposit\ +=\ 50.000\ VNĐ}; Hub đích tăng
+\texttt{destination\_holds\ +=\ 1}, giảm
+\texttt{available\_slots\ -=\ 1} (bảo toàn tổng sức chứa Hub); đơn mới
+có \texttt{expires\_at\ ==\ booking\_start\_time\ +\ 30\ phút}.• Khi
+thất bại ở bất kỳ bước kiểm tra nào: Số dư ví và số chỗ của Hub không bị
+thay đổi. \\
+\textbf{Lỗi/ngoại lệ} & • \texttt{NOT\_FOUND}: Không tìm thấy
+\texttt{vehicle\_id} hoặc \texttt{hub\_id}.• \texttt{FORBIDDEN}: Xe
+thuộc tài khoản sinh viên khác.• \texttt{INVALID\_INPUT}: Thời gian đến
+trạm không hợp lệ hoặc nằm trong quá khứ.•
+\texttt{CONFLICTING\_OPERATION}: Xe đang có lượt đặt chỗ
+\texttt{RESERVED} hoặc \texttt{CHECKED\_IN} chưa hoàn tất.•
+\texttt{NO\_CAPACITY}: Hub hết chỗ đỗ trống hoặc hết cổng sạc trống (khi
+\texttt{request\_charging\ =\ True}).• \texttt{DEBT\_BLOCKED} /
+\texttt{INSUFFICIENT\_FUNDS}: Ví đang có khoản nợ chưa thanh toán hoặc
+số dư khả dụng \texttt{\textless{}\ 50.000\ VNĐ}. \\
+\textbf{Xử lý lặp/xung đột} & Kiểm tra trùng đơn đang hoạt động theo
+\texttt{vehicle\_id} (\texttt{RESERVED} / \texttt{CHECKED\_IN}) và
+truyền \texttt{operation\_key} xuống
+\texttt{BillingService.hold\_deposit()} để ngăn khóa cọc hai lần cho
+cùng một thao tác bấm nút. \\
+\textbf{Tác động dữ liệu} & Cập nhật \texttt{wallet} (\texttt{balance},
+\texttt{held\_deposit}, \texttt{ledger}), \texttt{hub}
+(\texttt{destination\_holds}, \texttt{available\_slots}), thêm phần tử
+vào \texttt{personal\_reservations} và tăng \texttt{state\_version}. \\
+\textbf{Truy vết và kiểm thử} & • US/FR: \texttt{US-09}, \texttt{US-10},
+\texttt{US-12}, \texttt{FR-04}, \texttt{FR-05b}.• UC \& Sequence:
+\texttt{UC\_SS2\_02} (\texttt{UC\_SS2\_02\_NguyenAnhTai\_sequence.puml}
+--- Nhóm 2 \& Nhóm 3: kiểm tra vị trí, tạm giữ 50.000 VNĐ cọc, đặt hạn
+\texttt{booking\_start\_time\ +\ 30\ phút}).• Code hiện có: Hàm
+\texttt{reserve\_personal\_ev\_slot()} tại
+\texttt{src/core/personal\_ev.py} (dòng 78--164).• Test case:
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}),
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py}), \texttt{TC-SS2-03},
+\texttt{TC-SS2-04}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-09-personalevservice.check_in_personal_ev}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-09} ---
+\texttt{PersonalEVService.check\_in\_personal\_ev}}{SS2-MTH-09 --- PersonalEVService.check\_in\_personal\_ev}}\label{ss2-mth-09-personalevservice.check_in_personal_ev}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-09} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalEVService.check\_in\_personal\_ev(owner\_id:\ str,\ reservation\_id:\ str,\ operation\_key:\ str\ =\ ""):\ OperationResult{[}ParkingSession{]}} \\
+\textbf{Mục đích và bên gọi} & Thực hiện \texttt{UC\_SS2\_03}: Xác thực
+lượt đặt chỗ tại cổng vào Hub, chuyển đổi chỗ giữ trước
+(\texttt{destination\_holds}) thành sự hiện diện vật lý của xe cá nhân
+trong Hub (\texttt{current\_vehicles}), mở phiên đỗ
+\texttt{ParkingSession} và gửi yêu cầu sạc sang SS5 (\texttt{INT-01})
+nếu có đăng ký sạc. Bên gọi: Giao diện \texttt{personal\_ev.render} (Tab
+3). \\
+\textbf{Tham số} & • \texttt{owner\_id:\ str} --- Mã sinh viên thực hiện
+Check-in.• \texttt{reservation\_id:\ str} --- Mã đơn đặt chỗ cần
+Check-in (\texttt{PRES-XXXXXX}).• \texttt{operation\_key:\ str\ =\ ""}
+--- Khóa định danh thao tác chống thực thi lặp. \\
+\textbf{Kết quả trả về} & \texttt{OperationResult{[}ParkingSession{]}}:•
+Khi thành công: \texttt{ok\ =\ True}, \texttt{data\ =\ ParkingSession}
+vừa kích hoạt,
+\texttt{message\ =\ "Check-in\ thành\ công\ cho\ xe\ ...\ Barie\ đã\ mở."},
+\texttt{state\_version} tăng +1.• Khi thất bại: \texttt{ok\ =\ False},
+\texttt{data\ =\ None}, \texttt{error\_code} thuộc
+\texttt{\{NOT\_FOUND,\ FORBIDDEN,\ EXPIRED,\ INVALID\_STATE\}}. \\
+\textbf{Điều kiện trước} & Đơn \texttt{reservation\_id} tồn tại, thuộc
+\texttt{owner\_id}, đang ở trạng thái \texttt{RESERVED} và thời gian mô
+phỏng hiện tại nằm trong khoảng
+\texttt{booking\_start\_time\ \textless{}=\ sim\_now\ \textless{}\ expires\_at}. \\
+\textbf{Xử lý chính} & 1. \textbf{Quét hết hạn trước:} Gọi
+\texttt{sweep\_expired\_personal\_reservations(sim\_now)} để tự động hết
+hạn và quyết toán cọc no-show cho mọi đơn đã có
+\texttt{sim\_now\ \textgreater{}=\ expires\_at}.2. Tra cứu đơn
+\texttt{reservation\_id}; nếu không có trả \texttt{NOT\_FOUND}; nếu
+\texttt{res.owner\_id\ !=\ owner\_id} trả \texttt{FORBIDDEN}.3. Nếu
+\texttt{res.status\ ==\ EXPIRED} (hoặc
+\texttt{sim\_now\ \textgreater{}=\ res.expires\_at}), trả lỗi
+\texttt{EXPIRED} (\texttt{"Đặt\ chỗ\ đã\ quá\ hạn\ đón\ tiếp..."}).4.
+Nếu \texttt{res.status\ !=\ RESERVED} (ví dụ đã \texttt{CHECKED\_IN}
+hoặc \texttt{COMPLETED}), trả lỗi \texttt{INVALID\_STATE}.5. Nếu
+\texttt{sim\_now\ \textless{}\ res.booking\_start\_time}, trả lỗi
+\texttt{INVALID\_STATE}
+(\texttt{"Chưa\ đến\ thời\ gian\ check-in\ đã\ đặt."}).6. \textbf{Chuyển
+giữ chỗ thành hiện diện vật lý:} Tại \texttt{Hub} đích, giảm
+\texttt{hub.destination\_holds\ =\ max(0,\ hub.destination\_holds\ -\ 1)},
+giữ nguyên \texttt{hub.available\_slots} (vì đã trừ 1 lúc đặt chỗ), và
+thêm bản ghi xe cá nhân (\texttt{ownership\ =\ "PERSONAL"}) vào
+\texttt{hub.current\_vehicles}.7. \textbf{Xử lý nhu cầu sạc:} Nếu
+\texttt{res.request\_charging\ ==\ True}, trong thiết kế mục tiêu gọi
+\texttt{INT-01}:
+\texttt{ChargingService.request\_charging(owner\_id,\ vehicle\_id,\ hub\_id,\ current\_soc,\ target\_soc=100,\ reservation\_id)}
+và lưu \texttt{request\_id}/\texttt{session\_id} vào
+\texttt{ParkingSession} qua \texttt{attach\_charging\_ref()} (trong
+prototype hiện tại đang giảm trực tiếp
+\texttt{hub.charging\_ports{[}"available"{]}\ -=\ 1} nếu còn cổng trống
+và gán cờ \texttt{charging\_port\_allocated}).8. Cập nhật
+\texttt{res.status\ =\ CHECKED\_IN}, ghi
+\texttt{check\_in\_time\ =\ sim\_now} và gọi
+\texttt{bump\_state\_version(state)}. \\
+\textbf{Điều kiện sau} & • Khi thành công: Đơn chuyển sang
+\texttt{CHECKED\_IN}; \texttt{hub.destination\_holds} giảm 1 và
+\texttt{len(hub.current\_vehicles)} tăng 1 (tổng chỗ trống
+\texttt{available\_slots} không bị trừ kép); \texttt{ParkingSession}
+được tạo với \texttt{check\_in\_time\ =\ sim\_now}.• Khi thất bại do quá
+hạn (\texttt{sim\_now\ \textgreater{}=\ expires\_at}): Đơn chuyển sang
+\texttt{EXPIRED}, chỗ đỗ được hoàn lại cho Hub và cọc được quyết toán
+no-show (\texttt{10.000\ VNĐ} phạt, \texttt{40.000\ VNĐ} hoàn ví). \\
+\textbf{Lỗi/ngoại lệ} & • \texttt{NOT\_FOUND}: Không tìm thấy
+\texttt{reservation\_id} hoặc \texttt{hub\_id}.• \texttt{FORBIDDEN}: Đơn
+không thuộc người dùng đang thao tác.• \texttt{EXPIRED}: Check-in tại
+thời điểm \texttt{sim\_now\ \textgreater{}=\ expires\_at}
+(\texttt{booking\_start\_time\ +\ 30\ phút}).• \texttt{INVALID\_STATE}:
+Check-in sớm trước \texttt{booking\_start\_time} hoặc đơn đã ở trạng
+thái \texttt{CHECKED\_IN} / \texttt{COMPLETED}. \\
+\textbf{Xử lý lặp/xung đột} & Nếu bấm Check-in lần thứ hai cho cùng
+\texttt{reservation\_id}, điều kiện \texttt{res.status\ !=\ RESERVED}
+chặn ngay lập tức, không giảm \texttt{destination\_holds} hay thêm xe
+vào \texttt{current\_vehicles} lần hai. \\
+\textbf{Tác động dữ liệu} & Cập nhật \texttt{personal\_reservations}
+(\texttt{status\ =\ CHECKED\_IN}, \texttt{check\_in\_time}),
+\texttt{hubs} (\texttt{destination\_holds}, \texttt{current\_vehicles},
+\texttt{charging\_ports}), khởi tạo \texttt{ParkingSession} và tăng
+\texttt{state\_version}. \\
+\textbf{Truy vết và kiểm thử} & • US/FR: \texttt{US-11b},
+\texttt{FR-03b}.• UC \& Sequence: \texttt{UC\_SS2\_03}
+(\texttt{UC\_SS2\_03\_NguyenAnhTai\_sequence.puml} --- Nhóm 1, 2 \& 3:
+xác thực QR/đơn/khung giờ, mở cổng, đổi
+\texttt{RESERVED\ -\textgreater{}\ CHECKED\_IN}, kích hoạt sạc).• Code
+hiện có: Hàm \texttt{check\_in\_personal\_ev()} tại
+\texttt{src/core/personal\_ev.py} (dòng 198--260).• Test case:
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}),
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py}), \texttt{TC-SS2-05},
+\texttt{TC-SS2-06}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-10-personalevservice.check_out_personal_ev}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-10} ---
+\texttt{PersonalEVService.check\_out\_personal\_ev}}{SS2-MTH-10 --- PersonalEVService.check\_out\_personal\_ev}}\label{ss2-mth-10-personalevservice.check_out_personal_ev}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-10} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalEVService.check\_out\_personal\_ev(owner\_id:\ str,\ reservation\_id:\ str,\ operation\_key:\ str\ =\ ""):\ OperationResult{[}SettlementResult{]}} \\
+\textbf{Mục đích và bên gọi} & Thực hiện \texttt{UC\_SS2\_04}: Kết thúc
+phiên đỗ/sạc của xe điện cá nhân, giải phóng vị trí đỗ vật lý và cổng
+sạc tại Hub, tổng hợp phí đỗ xe (\texttt{5.000\ VNĐ/lượt}) cùng hóa đơn
+sạc từ SS5 (\texttt{INT-02}), quyết toán với tiền cọc
+\texttt{50.000\ VNĐ} qua \texttt{BillingService.settle\_invoice()} và
+xuất hóa đơn tổng hợp. Bên gọi: Giao diện \texttt{personal\_ev.render}
+(Tab 4). \\
+\textbf{Tham số} & • \texttt{owner\_id:\ str} --- Mã sinh viên thực hiện
+Check-out.• \texttt{reservation\_id:\ str} --- Mã đơn đặt chỗ đang ở
+trạng thái \texttt{CHECKED\_IN}.• \texttt{operation\_key:\ str\ =\ ""}
+--- Khóa định danh thao tác chống quyết toán lặp.\emph{(Ghi chú: Trong
+hàm prototype \texttt{core.personal\_ev.check\_out\_personal\_ev}, có
+thêm 3 tham số mô phỏng từ UI là
+\texttt{duration\_hours:\ float\ =\ 2.0},
+\texttt{kwh\_charged:\ float\ =\ 3.5},
+\texttt{overstay\_minutes:\ int\ =\ 0}; trong thiết kế mục tiêu Sub3, số
+đo điện năng và quá giờ được đọc từ
+\texttt{ChargingService.get\_bill(session\_id)} qua
+\texttt{INT-02}).} \\
+\textbf{Kết quả trả về} &
+\texttt{OperationResult{[}SettlementResult{]}}:• Khi thành công:
+\texttt{ok\ =\ True}, \texttt{data\ =\ SettlementResult} (chứa
+\texttt{invoice\_id}, danh sách \texttt{charge\_lines},
+\texttt{paid\_vnd}, \texttt{refunded\_vnd}, \texttt{debt\_vnd},
+\texttt{status}), \texttt{state\_version} tăng +1.• Khi thất bại:
+\texttt{ok\ =\ False}, \texttt{data\ =\ None}, \texttt{error\_code}
+thuộc
+\texttt{\{NOT\_FOUND,\ FORBIDDEN,\ INVALID\_STATE,\ CONFLICTING\_CHARGE\}}. \\
+\textbf{Điều kiện trước} & Đơn \texttt{reservation\_id} tồn tại, thuộc
+\texttt{owner\_id} và đang ở đúng trạng thái \texttt{CHECKED\_IN}. \\
+\textbf{Xử lý chính} & 1. Tra cứu \texttt{reservation\_id}; nếu không
+tồn tại trả \texttt{NOT\_FOUND}; nếu
+\texttt{res.status\ !=\ CHECKED\_IN} trả \texttt{INVALID\_STATE} (ngăn
+quyết toán lặp cho đơn đã \texttt{COMPLETED}).2. \textbf{Thu thập các
+dòng phí (\texttt{ChargeLine}):} • Tạo dòng phí đỗ xe từ
+\texttt{ParkingSession.build\_parking\_charge\_line()} với
+\texttt{amount\_vnd\ =\ 5.000\ VNĐ/lượt}
+(\texttt{PEV\_PARKING\_FEE\_PER\_VISIT\_VND}). • Nếu phiên đỗ có sử dụng
+dịch vụ sạc (\texttt{request\_charging\ ==\ True}): theo thiết kế mục
+tiêu gọi \texttt{INT-02}
+\texttt{ChargingService.get\_bill(charging\_session\_id)} để nhận
+\texttt{ChargingBill} chứa các dòng phí điện năng
+(\texttt{energy\_fee\_vnd}) và phí chiếm dụng quá giờ
+(\texttt{overstay\_fee\_vnd} sau 15 phút ân hạn,
+\texttt{10.000\ VNĐ/khối\ 15\ phút}) chưa thu. \emph{(Trong prototype
+hiện tại, hàm tự tính
+\texttt{energy\_fee\ =\ int(kwh\_charged\ *\ energy\_rate)} với
+\texttt{7.000\ VNĐ/kWh} giờ cao điểm \texttt{06:00–09:00},
+\texttt{16:00–19:30} hoặc \texttt{3.000\ VNĐ/kWh} giờ thấp điểm, và
+\texttt{overstay\_fee\ =\ ((max(0,\ overstay\_minutes\ -\ 15)\ +\ 14)\ //\ 15)\ *\ 10.000})}.3.
+\textbf{Quyết toán tài chính qua \texttt{BillingService}:} Gọi
+\texttt{BillingService.settle\_invoice(owner\_id,\ reservation\_id,\ charge\_lines,\ operation\_key)}
+để hoàn/đối trừ khoản cọc \texttt{50.000\ VNĐ} của đúng
+\texttt{reservation\_id}, trừ số dư ví khả dụng và nếu thiếu tiền thì
+ghi nhận khoản nợ (\texttt{debt\_vnd}) minh bạch vào ví
+(\texttt{record\_wallet\_debt}) thay vì xóa phần thiếu.4. \textbf{Giải
+phóng tài nguyên vật lý tại Hub:} Xóa bản ghi xe \texttt{vehicle\_id}
+khỏi \texttt{hub.current\_vehicles}, tăng
+\texttt{hub.available\_slots\ +=\ 1} (và trả lại
+\texttt{charging\_ports.available\ +=\ 1} nếu đã cấp cổng trong
+prototype).5. Cập nhật \texttt{res.status\ =\ COMPLETED},
+\texttt{check\_out\_time\ =\ sim\_now}, lưu \texttt{invoice} và gọi
+\texttt{bump\_state\_version(state)}. \\
+\textbf{Điều kiện sau} & • Đơn chuyển sang \texttt{COMPLETED}; xe cá
+nhân được rút khỏi \texttt{hub.current\_vehicles} và
+\texttt{hub.available\_slots} tăng thêm 1.• Khoản cọc
+\texttt{50.000\ VNĐ} được giải phóng (\texttt{held\_deposit} giảm
+\texttt{50.000\ VNĐ}); tổng phí
+(\texttt{parking\_fee\ +\ energy\_fee\ +\ overstay\_fee}) được thu từ ví
+hoặc ghi nợ phần thiếu vào \texttt{wallet{[}"debt"{]}}; sổ cái
+\texttt{wallet{[}"ledger"{]}} ghi nhận đầy đủ giao dịch. \\
+\textbf{Lỗi/ngoại lệ} & • \texttt{NOT\_FOUND}: Không tìm thấy
+\texttt{reservation\_id}.• \texttt{INVALID\_STATE}: Đơn không ở trạng
+thái \texttt{CHECKED\_IN} (chưa check-in, đã hết hạn \texttt{EXPIRED}
+hoặc đã \texttt{COMPLETED}).• \texttt{CONFLICTING\_CHARGE} /
+\texttt{CONFLICTING\_OPERATION}: Xung đột mã dòng phí hoặc khóa thao tác
+trong \texttt{BillingService}. \emph{(Lưu ý: Trường hợp ví thiếu số dư
+khi trả xe/check-out không bị coi là lỗi làm hủy thao tác rời trạm; hệ
+thống vẫn hoàn tất giải phóng chỗ đỗ và ghi nhận khoản thiếu vào
+\texttt{debt})}. \\
+\textbf{Xử lý lặp/xung đột} & Ngay sau khi Check-out thành công,
+\texttt{status} chuyển thành \texttt{COMPLETED}. Mọi lời gọi
+\texttt{check\_out\_personal\_ev} lặp lại trên cùng
+\texttt{reservation\_id} đều bị từ chối ở bước kiểm tra
+\texttt{status\ !=\ CHECKED\_IN} (và được bảo vệ thêm bởi
+\texttt{operation\_key}/\texttt{charge\_id} tại
+\texttt{BillingService}), đảm bảo không bao giờ cộng trả
+\texttt{available\_slots} hai lần hoặc trừ tiền/hoàn cọc hai lần. \\
+\textbf{Tác động dữ liệu} & Cập nhật \texttt{hubs}
+(\texttt{current\_vehicles}, \texttt{available\_slots},
+\texttt{charging\_ports}), \texttt{wallet} (\texttt{balance},
+\texttt{held\_deposit}, \texttt{debt}, \texttt{ledger}),
+\texttt{personal\_reservations} (\texttt{status\ =\ COMPLETED},
+\texttt{check\_out\_time}, \texttt{invoice}) và tăng
+\texttt{state\_version}. \\
+\textbf{Truy vết và kiểm thử} & • US/FR: \texttt{US-09}, \texttt{US-10},
+\texttt{US-11}, \texttt{US-11b}, \texttt{US-12}, \texttt{FR-03b},
+\texttt{FR-04}, \texttt{FR-05b}, \texttt{FR-15b}.• UC \& Sequence:
+\texttt{UC\_SS2\_04} (\texttt{UC\_SS2\_04\_NguyenAnhTai\_sequence.puml}
+--- Nhóm 2, 3, 4 \& 5: chốt dữ liệu sạc, lập hóa đơn tổng hợp, quyết
+toán cọc/ví, mở barie ra và giải phóng chỗ đỗ/cổng sạc một lần).• Code
+hiện có: Hàm \texttt{check\_out\_personal\_ev()} tại
+\texttt{src/core/personal\_ev.py} (dòng 262--346).• Test case:
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}), \texttt{TC-SS2-07},
+\texttt{TC-SS2-08}. \\
+\end{longtable}
+
+\hypertarget{ss2-mth-11-personalevservice.sweep_expired_personal_reservations}{%
+\paragraph{\texorpdfstring{\texttt{SS2-MTH-11} ---
+\texttt{PersonalEVService.sweep\_expired\_personal\_reservations}}{SS2-MTH-11 --- PersonalEVService.sweep\_expired\_personal\_reservations}}\label{ss2-mth-11-personalevservice.sweep_expired_personal_reservations}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Method ID} & \texttt{SS2-MTH-11} \\
+\textbf{Lớp và chữ ký} &
+\texttt{PersonalEVService.sweep\_expired\_personal\_reservations(sim\_now:\ datetime):\ OperationResult{[}list{[}str{]}{]}} \\
+\textbf{Mục đích và bên gọi} & Quét toàn bộ các đơn đặt chỗ xe cá nhân
+đang ở trạng thái \texttt{RESERVED}; nếu thời gian mô phỏng
+\texttt{sim\_now\ \textgreater{}=\ expires\_at}
+(\texttt{booking\_start\_time\ +\ 30\ phút}), tự động chuyển trạng thái
+đơn sang \texttt{EXPIRED}, thu hồi chỗ giữ trước trả về cho Hub và gọi
+\texttt{BillingService.settle\_no\_show()} để phạt \texttt{10.000\ VNĐ},
+hoàn \texttt{40.000\ VNĐ} tiền cọc. Bên gọi: Được gọi tự động ở đầu
+\texttt{check\_in\_personal\_ev()} hoặc khi đồng hồ mô phỏng tiến lên
+(\texttt{advance\_sim\_time}). \\
+\textbf{Tham số} & \texttt{sim\_now:\ datetime} (Đơn vị: \texttt{UTC+7})
+--- Thời điểm hiện tại của đồng hồ mô phỏng. \\
+\textbf{Kết quả trả về} & \texttt{OperationResult{[}list{[}str{]}{]}}
+--- Danh sách các mã \texttt{reservation\_id} vừa bị đánh dấu hết hạn
+trong đợt quét này (trong hàm prototype
+\texttt{core.personal\_ev.sweep\_expired\_personal\_reservations(state)}
+trả về \texttt{int} là số lượng đơn vừa hết hạn
+\texttt{expired\_count}). \\
+\textbf{Điều kiện trước} & Trạng thái phiên làm việc đã khởi tạo
+\texttt{personal\_reservations}, \texttt{hubs} và \texttt{wallet}. \\
+\textbf{Xử lý chính} & 1. Duyệt qua tất cả các đơn trong
+\texttt{personal\_reservations} có \texttt{status\ ==\ RESERVED}.2. Với
+mỗi đơn, kiểm tra điều kiện
+\texttt{sim\_now\ \textgreater{}=\ expires\_at}
+(\texttt{arrival\_deadline}).3. Nếu đã chạm hoặc vượt hạn: • Đổi
+\texttt{res.status\ =\ EXPIRED} và ghi
+\texttt{res.expired\_at\ =\ sim\_now}. • Tìm \texttt{Hub} theo
+\texttt{res.hub\_id}: giảm
+\texttt{hub.destination\_holds\ =\ max(0,\ hub.destination\_holds\ -\ 1)}
+và tăng \texttt{hub.available\_slots\ +=\ 1}. • Gọi hợp đồng
+\texttt{BillingService.settle\_no\_show(owner\_id,\ reservation\_id,\ operation\_key)}
+(trong prototype gọi \texttt{settle\_pev\_noshow\_penalty} tại
+\texttt{src/core/billing.py}): giải phóng \texttt{50.000\ VNĐ} tiền cọc
+đang giữ, khấu trừ phí phạt no-show \texttt{10.000\ VNĐ}, hoàn trả
+\texttt{40.000\ VNĐ} về \texttt{wallet{[}"balance"{]}} và ghi 2 bút toán
+\texttt{PENALTY\_PEV\_NOSHOW} (\texttt{-10.000}) +
+\texttt{REFUND\_PEV\_NOSHOW} (\texttt{+40.000}) vào \texttt{ledger}.4.
+Nếu có ít nhất 1 đơn hết hạn
+(\texttt{expired\_count\ \textgreater{}\ 0}), gọi
+\texttt{bump\_state\_version(state)}. \\
+\textbf{Điều kiện sau} & • Mọi đơn \texttt{RESERVED} có
+\texttt{sim\_now\ \textgreater{}=\ expires\_at} đều chuyển sang
+\texttt{EXPIRED}.• Sức chứa Hub được khôi phục nguyên vẹn
+(\texttt{destination\_holds} giảm, \texttt{available\_slots} tăng tương
+ứng).• Tiền cọc của mỗi đơn quá hạn được xử lý đúng một lần
+(\texttt{held\_deposit} giảm \texttt{50.000\ VNĐ}, \texttt{balance} tăng
+\texttt{40.000\ VNĐ}). \\
+\textbf{Lỗi/ngoại lệ} & Không phát sinh ngoại lệ làm gián đoạn luồng
+chính; nếu không có đơn nào quá hạn thì trả về danh sách rỗng
+(\texttt{expired\_count\ =\ 0}) và không tăng
+\texttt{state\_version}. \\
+\textbf{Xử lý lặp/xung đột} & Gọi
+\texttt{sweep\_expired\_personal\_reservations} nhiều lần liên tiếp tại
+cùng thời điểm \texttt{sim\_now} hoàn toàn an toàn (Idempotent): ở lần
+gọi thứ hai, các đơn quá hạn đã có \texttt{status\ ==\ EXPIRED} nên
+không bị quét lại, \texttt{sweep(state)} trả về \texttt{0}, không cộng
+trả chỗ đỗ lần hai và không phạt/hoàn tiền cọc lần hai. \\
+\textbf{Tác động dữ liệu} & Cập nhật \texttt{personal\_reservations}
+(\texttt{status}, \texttt{expired\_at}), \texttt{hubs}
+(\texttt{destination\_holds}, \texttt{available\_slots}),
+\texttt{wallet} (\texttt{held\_deposit}, \texttt{balance},
+\texttt{ledger}) và \texttt{state\_version}. \\
+\textbf{Truy vết và kiểm thử} & • US/FR: \texttt{US-09},
+\texttt{US-11b}, \texttt{FR-03b}, \texttt{FR-04}.• UC \& Sequence:
+\texttt{UC\_SS2\_02} (Nhánh
+\texttt{4.1:\ Đến\ booking\_start\_time\ +\ 30\ phút\ và\ chưa\ Check-in}),
+\texttt{UC\_SS2\_03}.• Code hiện có: Hàm
+\texttt{sweep\_expired\_personal\_reservations()} tại
+\texttt{src/core/personal\_ev.py} (dòng 166--196) và
+\texttt{settle\_pev\_noshow\_penalty()} tại \texttt{src/core/billing.py}
+(dòng 269--309).• Test case:
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py}),
+\texttt{TC-SS2-06}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{muxf4-tux1ea3-cuxe1c-huxe0m-tiux1ec7n-uxedchui-ux111uxe3-triux1ec3n-khai-vuxe0-giao-tiux1ebfp-hux1ee3p-ux111ux1ed3ng-duxf9ng-chung-truxean-sux1a1-ux111ux1ed3}{%
+\subsubsection{6.3. Mô tả các hàm tiện ích/UI đã triển khai và Giao tiếp
+hợp đồng dùng chung trên sơ
+đồ}\label{muxf4-tux1ea3-cuxe1c-huxe0m-tiux1ec7n-uxedchui-ux111uxe3-triux1ec3n-khai-vuxe0-giao-tiux1ebfp-hux1ee3p-ux111ux1ed3ng-duxf9ng-chung-truxean-sux1a1-ux111ux1ed3}}
+
+Để đảm bảo mọi phương thức xuất hiện trên các khối
+\texttt{\textless{}\textless{}implemented\ UI\textgreater{}\textgreater{}},
+\texttt{\textless{}\textless{}implemented\ module\textgreater{}\textgreater{}}
+và
+\texttt{\textless{}\textless{}shared\ contract\textgreater{}\textgreater{}}
+trong Class Diagram đều có mô tả đối chiếu rõ ràng:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Method ID / Khối
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Chữ ký phương thức trên sơ đồ
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trách nhiệm, Đầu vào/Đầu ra \& Quy tắc xử lý trong SS2
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\texttt{SS2-IMP-01}} (\texttt{personal\_ev.render}) &
+\texttt{\_init\_pev\_state():\ None} & Khởi tạo an toàn các khóa
+\texttt{personal\_evs}, \texttt{personal\_reservations} và
+\texttt{current\_user} trong \texttt{st.session\_state} nếu chưa tồn tại
+trước khi render UI SS2 (\texttt{src/components/personal\_ev.py}, dòng
+33--43). \\
+\textbf{\texttt{SS2-IMP-02}} (\texttt{personal\_ev.render}) &
+\texttt{render():\ None} & Kết xuất giao diện 4 tab của phân hệ SS2
+(\texttt{Đăng\ ký\ xe\ mới}, \texttt{Đặt\ chỗ\ \&\ Sạc},
+\texttt{Check-in\ trạm}, \texttt{Check-out\ \&\ Quyết\ toán}), hiển thị
+thẻ metric ví/chính sách và bảng tổng kết xe cá nhân
+(\texttt{src/components/personal\_ev.py}, dòng 45--218). \\
+\textbf{\texttt{SS2-IMP-03}} (\texttt{core.personal\_ev}) &
+\texttt{parse\_time(t\_str:\ str):\ datetime} & Chuyển đổi chuỗi thời
+gian mô phỏng định dạng \texttt{"\%Y-\%m-\%d\ \%H:\%M:\%S"} sang đối
+tượng \texttt{datetime} để tính hạn 30 phút và so sánh mốc check-in
+(\texttt{src/core/personal\_ev.py}, dòng 31--35). \\
+\textbf{\texttt{SS2-IMP-04}} (\texttt{core.personal\_ev}) &
+\texttt{format\_time(dt:\ datetime):\ str} & Định dạng đối tượng
+\texttt{datetime} về chuỗi chuẩn \texttt{"\%Y-\%m-\%d\ \%H:\%M:\%S"} để
+lưu vào \texttt{st.session\_state} (\texttt{src/core/personal\_ev.py},
+dòng 37--38). \\
+\textbf{Hợp đồng TV1} (\texttt{BillingService}) &
+\texttt{hold\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ amount\_vnd:\ int,\ operation\_key:\ str):\ OperationResult{[}DepositResult{]}}
+& \textbf{Chủ sở hữu: TV1.} SS2 gọi khi đặt chỗ (\texttt{UC\_SS2\_02})
+với \texttt{amount\_vnd\ =\ 50000}. Khóa cọc từ số dư khả dụng; từ chối
+nếu ví đang có nợ hoặc thiếu tiền; chống giữ cọc lặp theo
+\texttt{operation\_key}. \\
+\textbf{Hợp đồng TV1} (\texttt{BillingService}) &
+\texttt{release\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str):\ OperationResult{[}DepositResult{]}}
+& \textbf{Chủ sở hữu: TV1.} Hoàn trả 100\% khoản cọc
+\texttt{50.000\ VNĐ} của đúng \texttt{reference\_id} khi hủy hợp lệ
+trước hạn. \\
+\textbf{Hợp đồng TV1} (\texttt{BillingService}) &
+\texttt{settle\_no\_show(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str):\ OperationResult{[}SettlementResult{]}}
+& \textbf{Chủ sở hữu: TV1.} SS2 gọi trong
+\texttt{sweep\_expired\_personal\_reservations} khi
+\texttt{sim\_now\ \textgreater{}=\ expires\_at}: giải phóng
+\texttt{50.000\ VNĐ} cọc, thu phạt \texttt{10.000\ VNĐ}, hoàn
+\texttt{40.000\ VNĐ} một lần duy nhất. \\
+\textbf{Hợp đồng TV1} (\texttt{BillingService}) &
+\texttt{settle\_invoice(owner\_id:\ str,\ reference\_id:\ str,\ charge\_lines:\ list{[}ChargeLine{]},\ operation\_key:\ str):\ OperationResult{[}SettlementResult{]}}
+& \textbf{Chủ sở hữu: TV1.} SS2 gọi khi Check-out
+(\texttt{UC\_SS2\_04}): truyền danh sách \texttt{ChargeLine} (phí đỗ
+\texttt{5.000\ VNĐ} + phí điện/quá giờ từ \texttt{ChargingBill}), đối
+trừ cọc và ghi nợ nếu thiếu tiền. \\
+\textbf{Hợp đồng TV5 (\texttt{INT-01})} (\texttt{ChargingService}) &
+\texttt{request\_charging(owner\_id:\ str,\ vehicle\_id:\ str,\ hub\_id:\ str,\ current\_soc:\ float,\ target\_soc:\ float\ =\ 100.0,\ reservation\_id:\ str\ \textbackslash{}\textbar{}\ None\ =\ None):\ OperationResult{[}ChargingRequestResult{]}}
+& \textbf{Chủ sở hữu: TV5.} SS2 gọi sau khi xe cá nhân Check-in hợp lệ
+(\texttt{UC\_SS2\_03}) và có \texttt{request\_charging\ =\ True}. SS5
+chịu trách nhiệm xếp hàng chờ ưu tiên, cấp cổng và quản lý công suất. \\
+\textbf{Hợp đồng TV5 (\texttt{INT-02})} (\texttt{ChargingService}) &
+\texttt{get\_bill(session\_id:\ str):\ OperationResult{[}ChargingBill{]}}
+& \textbf{Chủ sở hữu: TV5.} SS2 gọi khi Check-out (\texttt{UC\_SS2\_04})
+để đọc điện năng tiêu thụ (\texttt{energy\_delivered\_kwh}),
+\texttt{energy\_fee\_vnd}, \texttt{overstay\_fee\_vnd} và các
+\texttt{ChargeLine} từ SS5 mà không tự tính lại bằng công thức riêng. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{truy-vux1ebft-sub1-sub2-sub3-revision-tuxedch-hux1ee3p}{%
+\subsection{7. Truy vết Sub1-Sub2-Sub3 (revision tích
+hợp)}\label{truy-vux1ebft-sub1-sub2-sub3-revision-tuxedch-hux1ee3p}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss2_01---ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}{%
+\subsection{UC\_SS2\_01 - Đăng ký xe EV cá nhân lên hệ
+thống}\label{uc_ss2_01---ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-08, FR-03.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_01_NguyenAnhTai_sequence.puml}{UC\_SS2\_01\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_01_NguyenAnhTai_activity.puml}{UC\_SS2\_01\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{PersonalEVService.register\_personal\_ev},
+  \texttt{PersonalVehicle.normalize\_plate}. Class diagram SS2, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_register\_personal\_ev\_success\_and\_duplicate}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_02---ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{UC\_SS2\_02 - Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá
+nhân}\label{uc_ss2_02---ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-09, US-10, FR-04, FR-05b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_02_NguyenAnhTai_sequence.puml}{UC\_SS2\_02\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_02_NguyenAnhTai_activity.puml}{UC\_SS2\_02\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{PersonalEVService.reserve\_personal\_ev\_slot},
+  \texttt{PersonalEVService.sweep\_expired\_personal\_reservations}.
+  Class diagram SS2, catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_future\_arrival\_and\_exact\_expiry},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_invalid\_reservation\_has\_no\_financial\_or\_capacity\_effect}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_03---check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}{%
+\subsection{UC\_SS2\_03 - Check-in xe EV cá nhân tại cổng Hub (QR/Biển
+số)}\label{uc_ss2_03---check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-11b, US-10, FR-03b, FR-04.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_03_NguyenAnhTai_sequence.puml}{UC\_SS2\_03\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_03_NguyenAnhTai_activity.puml}{UC\_SS2\_03\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{PersonalEVService.check\_in\_personal\_ev},
+  \texttt{ParkingSession.attach\_charging\_ref}. Class diagram SS2,
+  catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_reservation\_30\_minutes.py::test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_04---check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{UC\_SS2\_04 - Check-out và thanh toán tổng hợp dịch vụ xe EV
+cá
+nhân}\label{uc_ss2_04---check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-09, US-10, US-11, US-11b, FR-03b, FR-05b, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_04_NguyenAnhTai_sequence.puml}{UC\_SS2\_04\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_04_NguyenAnhTai_activity.puml}{UC\_SS2\_04\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{PersonalEVService.check\_out\_personal\_ev},
+  \texttt{BillingService.settle\_invoice}. Class diagram SS2, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_charging\_is\_billed\_once\_on\_consolidated\_checkout}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{test-case-bonus}{%
+\subsection{8. Test case bonus}\label{test-case-bonus}}
+
+\href{test_cases.md}{Tài liệu chi tiết bộ Test Case SS2}
+
+Bộ kiểm thử của phân hệ SS2 bao gồm \textbf{8 ca kiểm thử chuẩn hóa}
+(\texttt{TC-SS2-01} → \texttt{TC-SS2-08}), đảm bảo mỗi Use Case có ít
+nhất \textbf{1 ca luồng chính} và \textbf{1 ca lỗi/ngoại lệ/biên} (đặc
+biệt là biên 29 phút 59 giây vs 30 phút 00 giây, xử lý nợ và chống quyết
+toán lặp):
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Test ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+UC \& Method ID
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kịch bản kiểm thử \& Dữ liệu vào chính
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kết quả mong đợi (Expected Result)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Đối chiếu Test tự động hiện có
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{\texttt{TC-SS2-01}} &
+\texttt{UC\_SS2\_01}\texttt{SS2-MTH-07}\texttt{SS2-MTH-01} &
+\textbf{Đăng ký xe EV cá nhân hợp lệ (Luồng
+chính):}\texttt{owner\_id="SV-2211234"},
+\texttt{plate\_number="59-X1\ 77777"}, \texttt{ev\_type="scooter"},
+\texttt{brand="VinFast\ Klara"}, \texttt{battery\_kwh=3.5}. & Trả về
+\texttt{ok=True}; tạo bản ghi \texttt{PEV-...} trong
+\texttt{personal\_evs} với \texttt{plate="59-X1\ 77777"},
+\texttt{ownership="PERSONAL"}, \texttt{status="REGISTERED"},
+\texttt{state\_version} tăng +1. &
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate}
+(\texttt{tests/test\_personal\_ev.py}) & \textbf{PASS} \emph{(Đã chạy
+pytest)} \\
+\textbf{\texttt{TC-SS2-02}} &
+\texttt{UC\_SS2\_01}\texttt{SS2-MTH-07}\texttt{SS2-MTH-01} & \textbf{Từ
+chối đăng ký trùng biển số khác định dạng (Luồng lỗi):}Đã có biển số
+\texttt{"59-X1\ 77777"}, đăng ký tiếp xe mới với
+\texttt{plate\_number="59X1-77777"}. & \texttt{normalize\_plate} quy về
+\texttt{"59X177777"}; trả về \texttt{ok=False}, thông báo
+\texttt{"Biển\ số\ xe\ \textquotesingle{}59X1-77777\textquotesingle{}\ đã\ được\ đăng\ ký\ trong\ hệ\ thống"},
+không tạo bản ghi trùng. &
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate}
+(\texttt{tests/test\_personal\_ev.py}) & \textbf{PASS} \emph{(Đã chạy
+pytest)} \\
+\textbf{\texttt{TC-SS2-03}} & \texttt{UC\_SS2\_02}\texttt{SS2-MTH-08} &
+\textbf{Đặt trước chỗ đỗ + sạc hợp lệ \& khóa cọc 50.000 VNĐ (Luồng
+chính):}Ví có \texttt{150.000\ VNĐ}, đặt lúc \texttt{08:00:00}
+(\texttt{booking\_start\_time="2026-10-21\ 08:00:00"}),
+\texttt{request\_charging=True}, \texttt{current\_soc=30.0}. & Trả về
+\texttt{ok=True}; \texttt{hub.destination\_holds} tăng +1,
+\texttt{hub.available\_slots} giảm -1; ví còn \texttt{balance=100.000},
+\texttt{held\_deposit=50.000};
+\texttt{arrival\_deadline="2026-10-21\ 08:30:00"}. &
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}) & \textbf{PASS} \emph{(Đã chạy
+pytest)} \\
+\textbf{\texttt{TC-SS2-04}} &
+\texttt{UC\_SS2\_02}\texttt{SS2-MTH-08}\texttt{SS2-MTH-02} & \textbf{Từ
+chối đặt chỗ khi xe đang có đơn hoạt động hoặc ví có nợ/Hub hết chỗ
+(Luồng lỗi):}Gọi \texttt{reserve\_personal\_ev\_slot} lần 2 trên cùng
+\texttt{ev\_id} đang \texttt{RESERVED} (hoặc khi
+\texttt{available\_slots=0} / \texttt{wallet.debt\ \textgreater{}\ 0}).
+& Trả về \texttt{ok=False}; giữ nguyên \texttt{available\_slots},
+\texttt{destination\_holds} và \texttt{wallet.held\_deposit} (không khóa
+cọc thêm lần hai). & Thiết kế kiểm thử mở rộng cho \texttt{SS2-MTH-08} &
+\textbf{DESIGNED} \\
+\textbf{\texttt{TC-SS2-05}} &
+\texttt{UC\_SS2\_03}\texttt{SS2-MTH-09}\texttt{SS2-MTH-04} &
+\textbf{Check-in hợp lệ ngay sát hạn 29 phút 59 giây (Luồng chính \&
+Biên):}\texttt{booking\_start\_time="08:00:00"}, thực hiện
+\texttt{check\_in\_personal\_ev} tại
+\texttt{current\_sim\_time="2026-10-21\ 08:29:59"}. & Đơn chưa hết hạn
+(\texttt{sweep=0}); \texttt{check\_in\_personal\_ev} trả về
+\texttt{ok=True}; \texttt{status="CHECKED\_IN"};
+\texttt{destination\_holds} giảm -1, \texttt{available\_slots} giữ
+nguyên (không trừ kép), xe vào \texttt{hub.current\_vehicles}. &
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py},
+\texttt{seconds=1799}) & \textbf{PASS} \emph{(Đã chạy pytest)} \\
+\textbf{\texttt{TC-SS2-06}} &
+\texttt{UC\_SS2\_02}\texttt{UC\_SS2\_03}\texttt{SS2-MTH-11}\texttt{SS2-MTH-03}
+& \textbf{Quá hạn tại đúng mốc 30 phút 00 giây, phạt no-show \& chống
+sweep/check-in lặp (Biên \& Ngoại
+lệ):}\texttt{booking\_start\_time="08:00:00"}, tiến đồng hồ tới
+\texttt{"2026-10-21\ 08:30:00"}, gọi \texttt{sweep} 2 lần và gọi
+\texttt{check\_in\_personal\_ev}. & Lần \texttt{sweep} 1 trả về
+\texttt{1}: \texttt{status="EXPIRED"}, trả lại
+\texttt{available\_slots\ +=\ 1}, \texttt{destination\_holds\ =\ 0},
+phạt \texttt{10.000}, hoàn \texttt{40.000} (\texttt{balance=140.000},
+\texttt{held\_deposit=0}). Lần \texttt{sweep} 2 trả về \texttt{0},
+\texttt{check\_in} trả về \texttt{False}, ledger không ghi trùng. &
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{tests/test\_reservation\_30\_minutes.py},
+\texttt{seconds=1800}) & \textbf{PASS} \emph{(Đã chạy pytest)} \\
+\textbf{\texttt{TC-SS2-07}} &
+\texttt{UC\_SS2\_04}\texttt{SS2-MTH-10}\texttt{SS2-MTH-06} &
+\textbf{Check-out có sạc giờ cao điểm + quá giờ 20 phút khi ví đủ số dư
+(Luồng chính):}Check-out lúc \texttt{08:00:00} (cao điểm
+\texttt{7.000đ/kWh}), \texttt{duration\_hours=2.0},
+\texttt{kwh\_charged=4.0}, \texttt{overstay\_minutes=20} (vượt ân hạn
+15p = 5p = 1 block \texttt{10.000đ}). & Hoàn cọc \texttt{50.000đ}; tính
+đúng \texttt{parking\_fee=5.000}, \texttt{energy\_fee=28.000},
+\texttt{overstay\_fee=10.000}, \texttt{total\_amount=43.000\ VNĐ},
+\texttt{debt\_incurred=0}; giải phóng chỗ đỗ
+\texttt{available\_slots\ +=\ 1}, \texttt{status="COMPLETED"}. &
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle}
+(\texttt{tests/test\_personal\_ev.py}) & \textbf{PASS} \emph{(Đã chạy
+pytest)} \\
+\textbf{\texttt{TC-SS2-08}} & \texttt{UC\_SS2\_04}\texttt{SS2-MTH-10} &
+\textbf{Check-out khi số dư ví không đủ (ghi nhận nợ) \& gọi Check-out
+lặp lần hai (Luồng ngoại lệ):}Tổng phí vượt số dư khả dụng của ví; sau
+khi Check-out xong gọi tiếp \texttt{check\_out\_personal\_ev} lần 2. &
+Lần 1: Trừ hết số dư khả dụng về \texttt{0}, ghi phần thiếu vào
+\texttt{wallet{[}"debt"{]}} (\texttt{record\_wallet\_debt}), vẫn cho xe
+rời trạm và trả chỗ đỗ. Lần 2: Từ chối vì \texttt{status\ ==\ COMPLETED}
+(\texttt{!=\ CHECKED\_IN}), không cộng dư chỗ đỗ hay trừ tiền lần hai. &
+Thiết kế kiểm thử mở rộng cho \texttt{SS2-MTH-10} & \textbf{DESIGNED} \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{giux1edbi-hux1ea1n-vuxe0-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf}{%
+\subsection{9. Giới hạn và quyết định thiết
+kế}\label{giux1edbi-hux1ea1n-vuxe0-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf}}
+
+\hypertarget{cuxe1c-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf-ux111uxe3-uxe1p-dux1ee5ng-cho-phuxe2n-hux1ec7-ss2}{%
+\subsubsection{9.1. Các quyết định thiết kế đã áp dụng cho phân hệ
+SS2}\label{cuxe1c-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf-ux111uxe3-uxe1p-dux1ee5ng-cho-phuxe2n-hux1ec7-ss2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Tách biệt thực thể \texttt{ParkingReservation} và
+  \texttt{ParkingSession}:} Trong prototype, thông tin đặt trước và
+  thông tin đỗ thực tế đang nằm chung trong một dictionary thuộc
+  \texttt{st.session\_state{[}"personal\_reservations"{]}}. Thiết kế
+  Sub3 tách thành 2 lớp \texttt{ParkingReservation} (quản lý giữ chỗ
+  trước và hạn 30 phút) và \texttt{ParkingSession} (quản lý phiên đỗ vật
+  lý từ Check-in đến Check-out và tham chiếu phiên sạc SS5) để làm rõ
+  trách nhiệm vòng đời dữ liệu.
+\item
+  \textbf{Chuẩn hóa định danh phương tiện (\texttt{ev\_id} ↔
+  \texttt{vehicle\_id}) và trạng thái đơn
+  (\texttt{ParkingReservationStatus}):} Dùng \texttt{vehicle\_id} thống
+  nhất trên toàn bộ giao tiếp liên phân hệ với TV1/TV3/TV5 (tầng adapter
+  ánh xạ từ khóa \texttt{ev\_id} trong code hiện tại mà không cần phá vỡ
+  các bài test cũ). Dùng tập trạng thái riêng
+  \texttt{RESERVED\ /\ CHECKED\_IN\ /\ COMPLETED\ /\ EXPIRED} cho
+  \texttt{ParkingReservation} để không nhầm với trạng thái vật lý của xe
+  (\texttt{VehicleStatus}).
+\item
+  \textbf{Bảo toàn tuyệt đối phương trình sức chứa Hub
+  (\texttt{Hub\ Capacity\ Invariant}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Khi đặt chỗ (\texttt{UC\_SS2\_02}): tăng
+    \texttt{destination\_holds\ +=\ 1} và giảm
+    \texttt{available\_slots\ -=\ 1}.
+  \item
+    Khi Check-in (\texttt{UC\_SS2\_03}): giảm
+    \texttt{destination\_holds\ -=\ 1} và thêm xe vào
+    \texttt{current\_vehicles} (\texttt{present\_vehicles\ +=\ 1}),
+    \textbf{không giảm \texttt{available\_slots} lần thứ hai}.
+  \item
+    Khi Check-out (\texttt{UC\_SS2\_04}): xóa xe khỏi
+    \texttt{current\_vehicles} (\texttt{present\_vehicles\ -=\ 1}) và
+    tăng \texttt{available\_slots\ +=\ 1}.
+  \item
+    Nhờ đó tổng
+    \texttt{available\_slots\ +\ present\_vehicles\ +\ destination\_holds\ +\ background\_occupied\ ==\ total\_slots}
+    luôn được giữ đúng tại mọi bước.
+  \end{itemize}
+\item
+  \textbf{Mốc tính hạn 30 phút riêng của SS2:} Khác với SS1 (tính 30
+  phút từ thời điểm bấm tạo booking \texttt{created\_at}), SS2 cho phép
+  sinh viên đặt lịch đến trạm trước nên hạn nhận chỗ được tính bằng
+  \texttt{expires\_at\ =\ booking\_start\_time\ +\ 30\ phút}. Tại đúng
+  mốc \texttt{sim\_now\ \textgreater{}=\ expires\_at}, đơn chuyển sang
+  \texttt{EXPIRED} và quyết toán cọc no-show (\texttt{50.000\ VNĐ} cọc →
+  phạt \texttt{10.000\ VNĐ}, hoàn \texttt{40.000\ VNĐ}).
+\end{enumerate}
+
+\hypertarget{cuxe1c-giux1edbi-hux1ea1n-vuxe0-ux111iux1ec3m-chuxeanh-lux1ec7ch-cuxf4ng-khai-trong-thiux1ebft-kux1ebf-ss2}{%
+\subsubsection{9.2. Các giới hạn và điểm chênh lệch công khai trong
+thiết kế
+SS2}\label{cuxe1c-giux1edbi-hux1ea1n-vuxe0-ux111iux1ec3m-chuxeanh-lux1ec7ch-cuxf4ng-khai-trong-thiux1ebft-kux1ebf-ss2}}
+
+Theo đúng yêu cầu tại Mục 5.2 và Mục 7 của Hướng dẫn, phân hệ SS2 công
+khai rõ 3 điểm giới hạn/chênh lệch giữa prototype hiện tại và đặc tả
+SRS/thiết kế mục tiêu:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Chênh lệch biểu phí đỗ xe cá nhân (\texttt{5.000\ VNĐ/lượt} vs
+  Tính theo giờ trong SRS):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Hiện trạng prototype:} Hằng số
+    \texttt{PEV\_PARKING\_FEE\_PER\_VISIT\_VND\ =\ 5\_000} trong
+    \texttt{src/core/policies.py} và hàm
+    \texttt{check\_out\_personal\_ev} trong
+    \texttt{src/core/personal\_ev.py} đang áp dụng mức phí cố định
+    \textbf{5.000 VNĐ/lượt} bất kể số giờ đỗ (\texttt{duration\_hours}).
+  \item
+    \textbf{So với SRS:} Yêu cầu gốc trong SRS quy định phí đỗ xe cá
+    nhân tính theo thời gian đỗ (theo giờ).
+  \item
+    \textbf{Quyết định trong Sub3:} Giữ nguyên mức mặc định
+    \texttt{5.000\ VNĐ/lượt} để đồng bộ với code và bộ kiểm thử hiện
+    hành; công khai rõ đây là điểm chênh lệch còn tồn tại giữa prototype
+    và SRS (khi mở rộng có thể tách giao diện chiến lược
+    \texttt{ParkingFeePolicy} để tính theo \texttt{duration\_hours} mà
+    không sửa chữ ký của
+    \texttt{PersonalEVService.check\_out\_personal\_ev}).
+  \end{itemize}
+\item
+  \textbf{Tích hợp phiên sạc thực tế giữa SS2 và SS5 (\texttt{INT-01} \&
+  \texttt{INT-02}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Hiện trạng prototype:} Khi xe cá nhân Check-in có nhu cầu
+    sạc, \texttt{src/core/personal\_ev.py} mới chỉ giảm trực tiếp biến
+    đếm \texttt{hub{[}"charging\_ports"{]}{[}"available"{]}\ -=\ 1} chứ
+    chưa tự động gọi \texttt{SmartChargingScheduler.add\_request()} bên
+    \texttt{src/core/scheduler.py} (SS5); khi Check-out, người dùng nhập
+    \texttt{kwh\_charged} và \texttt{overstay\_minutes} giả lập trên UI
+    để hàm \texttt{check\_out\_personal\_ev} tự tính tiền điện và phí
+    quá giờ.
+  \item
+    \textbf{Thiết kế mục tiêu Sub3:} Chuẩn hóa thông qua hợp đồng
+    \texttt{INT-01} (\texttt{ChargingService.request\_charging}) lúc
+    Check-in và \texttt{INT-02} (\texttt{ChargingService.get\_bill}) lúc
+    Check-out để SS5 độc quyền quản lý hàng chờ, cấp cổng và tính phí
+    điện/quá giờ.
+  \end{itemize}
+\item
+  \textbf{Hành trình nhân viên vận hành xác nhận thanh toán
+  (\texttt{US-12}):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Trong prototype hiện tại, thao tác quyết toán và mở barie lúc
+    Check-out (\texttt{UC\_SS2\_04}) được thực hiện trực tiếp trên một
+    nút bấm ở Tab 4; luồng nhân viên vận hành (\texttt{OPERATOR}) xác
+    nhận thanh toán ngoại tuyến/đối soát thủ công khi cổng hoặc giao
+    dịch gặp sự cố đã được mô hình hóa trên Sequence/Activity diagram
+    nhưng chưa tách thành màn hình xác nhận riêng cho vai trò
+    \texttt{OPERATOR} trong prototype.
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{vux1ea5n-ux111ux1ec1-ux111uxe3-tux1ef1-xux1eed-luxfd-cuxf2n-mux1edf}{%
+\subsubsection{9.3. Vấn đề đã tự xử lý / còn
+mở}\label{vux1ea5n-ux111ux1ec1-ux111uxe3-tux1ef1-xux1eed-luxfd-cuxf2n-mux1edf}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Vấn đề Blocker:} Không có.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tux1ef1-kiux1ec3m-tra-vuxe0-khai-buxe1o-ai}{%
+\subsection{10. Tự kiểm tra và khai báo
+AI}\label{tux1ef1-kiux1ec3m-tra-vuxe0-khai-buxe1o-ai}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Lịch sử Prompt Submission 3:}
+  \href{../../../prompt-history/TV2_NguyenAnhTai/prompt_history_NguyenAnhTai_sub3.txt}{prompt\_history\_NguyenAnhTai\_sub3.txt}
+\end{itemize}
+
+\textbf{Xác nhận tự kiểm tra:} ĐÃ TỰ KIỂM TRA (\texttt{SELF\_CHECKED}
+--- Ngày 31/10/2026). Tác giả (Nguyễn Anh Tài --- 2413035) đã đối chiếu
+toàn bộ 4 Use Case của SS2, sơ đồ lớp \texttt{class\_diagram.puml} /
+\texttt{class\_diagram.svg} / \texttt{class\_diagram.png}, mô tả lớp, mô
+tả phương thức, bảng truy vết và kết quả chạy kiểm thử tự động với mã
+nguồn thực tế của dự án.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{bux1ed9-file-revision-tuxedch-hux1ee3p}{%
+\subsection{11. Bộ file revision tích
+hợp}\label{bux1ed9-file-revision-tuxedch-hux1ee3p}}
+
+PDF chuẩn được build vào output/submission\_3/ từ nguồn
+Markdown/PlantUML cùng revision, kèm catalog, truy vết, test,
+self-check, AI và kiến trúc chung. Chủ sở hữu cần mở lại, xác nhận và
+nộp theo quy định LMS đã kiểm chứng.
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}{%
+\subsection{Hiệu chỉnh tích hợp
+06/11/2026}\label{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}}
+
+PersonalVehicle kế thừa Vehicle riêng, liên kết User qua owner\_id; bỏ
+lớp gộp User/Vehicle. Hub trên sơ đồ là projection của TV3. Chữ ký
+service có owner\_id/key là đề xuất; hàm core hiện check-in/out chỉ nhận
+reservation\_id, chưa có authorization thật. Báo cáo SRS và ID truy vết
+theo traceability.md revision tích hợp. Bộ PDF bàn giao cũ đã thay bằng
+bản build từ nguồn đã đồng bộ.
+
+\hypertarget{class-diagram-revision-tuxedch-hux1ee3p}{%
+\subsection{Class diagram revision tích
+hợp}\label{class-diagram-revision-tuxedch-hux1ee3p}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS2/class_diagram.png}
+\caption{Class diagram SS2}
+\end{figure}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss2---revision-06112026}{%
+\section{Danh mục mọi phương thức SS2 - revision
+06/11/2026}\label{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss2---revision-06112026}}
+
+Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn giao; kiểu
+dữ liệu/đơn vị và class descriptions đọc cùng REPORT\_SUB3.md. Không suy
+ra service đề xuất đã tồn tại từ test của hàm core.
+
+\hypertarget{personalvehicle.normalize_plate}{%
+\subsection{\texorpdfstring{\texttt{PersonalVehicle.normalize\_plate}}{PersonalVehicle.normalize\_plate}}\label{personalvehicle.normalize_plate}}
+
+\textbf{Chữ ký:}
+\texttt{normalize\_plate(raw\_plate:\ str)\ -\textgreater{}\ str}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Thuần đọc: nhận
+raw\_plate không rỗng, bỏ dấu cách/dấu gạch ngang và viết hoa để kiểm
+tra trùng. Trả chuỗi chuẩn hóa; không đăng ký thêm xe hoặc đổi số chỗ.
+Lớp đề xuất ánh xạ đoạn chuẩn hóa trong register\_personal\_ev, không có
+method class thực tế.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalvehicle.is_owned_by}{%
+\subsection{\texorpdfstring{\texttt{PersonalVehicle.is\_owned\_by}}{PersonalVehicle.is\_owned\_by}}\label{personalvehicle.is_owned_by}}
+
+\textbf{Chữ ký:}
+\texttt{is\_owned\_by(user\_id:\ str)\ -\textgreater{}\ bool}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} So sánh user\_id
+với owner\_id của xe; trả bool, không đổi dữ liệu. Caller phải kiểm tra
+quyền trước đặt chỗ/check-in/out, không coi bool này là xác thực tài
+khoản thật.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{parkingreservation.is_expired}{%
+\subsection{\texorpdfstring{\texttt{ParkingReservation.is\_expired}}{ParkingReservation.is\_expired}}\label{parkingreservation.is_expired}}
+
+\textbf{Chữ ký:}
+\texttt{is\_expired(sim\_now:\ datetime)\ -\textgreater{}\ bool}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Trả
+status=RESERVED và sim\_now\textgreater=expires\_at; chỉ đọc và không tự
+phạt. Hạn là booking\_start\_time+30 phút, tại đúng hạn là hết hạn.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{parkingreservation.can_check_in}{%
+\subsection{\texorpdfstring{\texttt{ParkingReservation.can\_check\_in}}{ParkingReservation.can\_check\_in}}\label{parkingreservation.can_check_in}}
+
+\textbf{Chữ ký:}
+\texttt{can\_check\_in(sim\_now:\ datetime)\ -\textgreater{}\ bool}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Trả True khi
+RESERVED và booking\_start\_time\textless=sim\_now\textless expires\_at.
+Đến sớm/trạng thái khác/đúng hạn đều False; không tự thay đổi ví/chỗ đỗ.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{parkingsession.attach_charging_ref}{%
+\subsection{\texorpdfstring{\texttt{ParkingSession.attach\_charging\_ref}}{ParkingSession.attach\_charging\_ref}}\label{parkingsession.attach_charging_ref}}
+
+\textbf{Chữ ký:}
+\texttt{attach\_charging\_ref(request\_id:\ str,\ session\_id:\ str\ \textbar{}\ None\ =\ None)\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ sau check-in
+hợp lệ. Ghi request\_id, session\_id tùy chọn; không gán request đang
+chờ thành đang sạc. Cùng tham chiếu lặp không tạo request khác; tham
+chiếu xung đột phải INVALID\_STATE/CONFLICTING\_OPERATION.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{parkingsession.build_parking_charge_line}{%
+\subsection{\texorpdfstring{\texttt{ParkingSession.build\_parking\_charge\_line}}{ParkingSession.build\_parking\_charge\_line}}\label{parkingsession.build_parking_charge_line}}
+
+\textbf{Chữ ký:}
+\texttt{build\_parking\_charge\_line()\ -\textgreater{}\ ChargeLine}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Trả ChargeLine có
+charge\_id ổn định theo parking session, kind PARKING và
+amount\_vnd=5.000 VNĐ/lượt của prototype; không trừ ví. SRS theo giờ là
+chênh lệch chưa giải quyết, không suy ra đã có hourly policy.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevservice.register_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVService.register\_personal\_ev}}{PersonalEVService.register\_personal\_ev}}\label{personalevservice.register_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{register\_personal\_ev(owner\_id:\ str,\ owner\_name:\ str,\ plate\_number:\ str,\ vehicle\_type:\ str,\ brand:\ str,\ battery\_kwh:\ float)\ -\textgreater{}\ OperationResult{[}PersonalVehicle{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Kiểm tra
+owner/biển số/loại xe/dung lượng pin hợp lệ; chuẩn hóa biển số, từ chối
+trùng, thêm hồ sơ ownership PERSONAL, tăng version. Không đổi Hub/slot.
+Service thiết kế trả OperationResult, core trả tuple(ok,record,msg),
+ev\_id ánh xạ vehicle\_id. Mô tả chi tiết và giới hạn UI/prototype xem
+mục6 báo cáo.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevservice.reserve_personal_ev_slot}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVService.reserve\_personal\_ev\_slot}}{PersonalEVService.reserve\_personal\_ev\_slot}}\label{personalevservice.reserve_personal_ev_slot}}
+
+\textbf{Chữ ký:}
+\texttt{reserve\_personal\_ev\_slot(owner\_id:\ str,\ vehicle\_id:\ str,\ hub\_id:\ str,\ booking\_start\_time:\ datetime,\ request\_charging:\ bool\ =\ False,\ current\_soc:\ float\ =\ 50.0,\ operation\_key:\ str\ =\ "")\ -\textgreater{}\ OperationResult{[}ParkingReservation{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Xác nhận xe thuộc
+owner và chưa có lượt hoạt động, Hub còn chỗ, booking\_start\_time không
+trước sim\_now, SoC hợp lệ. Khóa cọc50.000, giảm available\_slots và
+tăng destination\_holds đúng một lần; deadline=start+30 phút. Thiếu
+tiền/nợ/Hub đầy/đầu vào sai giữ nguyên. Service thiết kế thêm
+operation\_key để chống lặp; core chưa có key. Trả reservation trong
+OperationResult hoặc tuple prototype.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevservice.check_in_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVService.check\_in\_personal\_ev}}{PersonalEVService.check\_in\_personal\_ev}}\label{personalevservice.check_in_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{check\_in\_personal\_ev(owner\_id:\ str,\ reservation\_id:\ str,\ operation\_key:\ str\ =\ "")\ -\textgreater{}\ OperationResult{[}ParkingSession{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Quét hết hạn, yêu
+cầu RESERVED và start\textless=now\textless deadline. Chuyển
+destination\_holds sang hiện diện PERSONAL mà không giảm available lần
+hai, ghi CHECKED\_IN/check\_in\_time. Service gọi INT-01 nếu
+request\_charging, không tự cấp trùng. Core hiện giảm số cổng nếu có và
+có thể gán xe CHARGING khi chưa được cấp; phải nêu là giới hạn. Không
+thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID\_STATE, quá hạn
+EXPIRED.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevservice.check_out_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVService.check\_out\_personal\_ev}}{PersonalEVService.check\_out\_personal\_ev}}\label{personalevservice.check_out_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{check\_out\_personal\_ev(owner\_id:\ str,\ reservation\_id:\ str,\ operation\_key:\ str\ =\ "")\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ CHECKED\_IN.
+Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService
+bằng charge\_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice.
+Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng
+đời. Core nhận duration\_hours/kwh/overstay từ mô phỏng và tự tính phí
+tại giờ checkout; chưa đo telemetry/thời gian biểu giá tích phân.
+Owner/key trong service chưa có ở core.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevservice.sweep_expired_personal_reservations}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVService.sweep\_expired\_personal\_reservations}}{PersonalEVService.sweep\_expired\_personal\_reservations}}\label{personalevservice.sweep_expired_personal_reservations}}
+
+\textbf{Chữ ký:}
+\texttt{sweep\_expired\_personal\_reservations(sim\_now:\ datetime)\ -\textgreater{}\ OperationResult{[}list{[}str{]}{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Duyệt RESERVED khi
+sim\_now\textgreater=arrival\_deadline, chuyển EXPIRED, giảm hold/tăng
+available, phạt10.000 hoàn40.000 một lần. Không chạm CHECKED\_IN; lặp
+không phạt lại. Service trả danh sách ID trong OperationResult, hàm core
+nhận state và trả số lượng int.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{ss2ui._init_pev_state}{%
+\subsection{\texorpdfstring{\texttt{SS2UI.\_init\_pev\_state}}{SS2UI.\_init\_pev\_state}}\label{ss2ui._init_pev_state}}
+
+\textbf{Chữ ký:} \texttt{\_init\_pev\_state()\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm UI hiện có;
+tạo các danh sách xe/đơn cá nhân chưa có trong session bằng mặc định.
+Không ghi đè danh sách đã tồn tại hoặc reset ví. Không tham số/trả None;
+gọi lặp chỉ khởi tạo thiếu.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{ss2ui.render}{%
+\subsection{\texorpdfstring{\texttt{SS2UI.render}}{SS2UI.render}}\label{ss2ui.render}}
+
+\textbf{Chữ ký:} \texttt{render()\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm UI hiện có:
+hiển thị form đăng ký/đặt/check-in/out, gọi core theo thao tác Streamlit
+và rerun. Đọc/ghi session qua core, hiển thị tuple lỗi; không thay thế
+kiểm tra quyền phía service hoặc QR/barie thật. Không có giá trị trả về,
+render lặp không tự thu tiền nếu không có thao tác.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.parse_time}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.parse\_time}}{PersonalEVModule.parse\_time}}\label{personalevmodule.parse_time}}
+
+\textbf{Chữ ký:}
+\texttt{parse\_time(t\_str:\ str)\ -\textgreater{}\ datetime}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Adapter thuần đọc:
+nhận chuỗi thời gian YYYY-MM-DD HH:MM:SS; parse thành datetime naive.
+Theo quy ước tài liệu UTC+7 của đồng hồ mô phỏng, không tự chuyển
+timezone. Chuỗi lỗi: code fallback datetime.now, là giới hạn cần
+validation tại service trước khi tính hạn/phí.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.format_time}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.format\_time}}{PersonalEVModule.format\_time}}\label{personalevmodule.format_time}}
+
+\textbf{Chữ ký:}
+\texttt{format\_time(dt:\ datetime)\ -\textgreater{}\ str}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Adapter thuần đọc:
+datetime vào -\textgreater{} chuỗi YYYY-MM-DD HH:MM:SS, không ghi
+session. Đầu vào datetime hợp lệ; không kèm timezone offset trong chuỗi
+hiện tại.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.register_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.register\_personal\_ev}}{PersonalEVModule.register\_personal\_ev}}\label{personalevmodule.register_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{register\_personal\_ev(state:\ dict,\ owner\_id:\ str,\ owner\_name:\ str,\ plate\_number:\ str,\ ev\_type:\ str,\ brand:\ str,\ battery\_kwh:\ float)\ -\textgreater{}\ tuple{[}bool,\ dict\ \textbar{}\ None,\ str{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Kiểm tra
+owner/biển số/loại xe/dung lượng pin hợp lệ; chuẩn hóa biển số, từ chối
+trùng, thêm hồ sơ ownership PERSONAL, tăng version. Không đổi Hub/slot.
+Service thiết kế trả OperationResult, core trả tuple(ok,record,msg),
+ev\_id ánh xạ vehicle\_id. Mô tả chi tiết và giới hạn UI/prototype xem
+mục6 báo cáo.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.reserve_personal_ev_slot}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.reserve\_personal\_ev\_slot}}{PersonalEVModule.reserve\_personal\_ev\_slot}}\label{personalevmodule.reserve_personal_ev_slot}}
+
+\textbf{Chữ ký:}
+\texttt{reserve\_personal\_ev\_slot(state:\ dict,\ owner\_id:\ str,\ ev\_id:\ str,\ hub\_id:\ str,\ request\_charging:\ bool\ =\ False,\ current\_soc:\ float\ =\ 50.0,\ booking\_start\_time:\ str\ \textbar{}\ None\ =\ None)\ -\textgreater{}\ tuple{[}bool,\ dict\ \textbar{}\ None,\ str{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Xác nhận xe thuộc
+owner và chưa có lượt hoạt động, Hub còn chỗ, booking\_start\_time không
+trước sim\_now, SoC hợp lệ. Khóa cọc50.000, giảm available\_slots và
+tăng destination\_holds đúng một lần; deadline=start+30 phút. Thiếu
+tiền/nợ/Hub đầy/đầu vào sai giữ nguyên. Service thiết kế thêm
+operation\_key để chống lặp; core chưa có key. Trả reservation trong
+OperationResult hoặc tuple prototype.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.sweep_expired_personal_reservations}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.sweep\_expired\_personal\_reservations}}{PersonalEVModule.sweep\_expired\_personal\_reservations}}\label{personalevmodule.sweep_expired_personal_reservations}}
+
+\textbf{Chữ ký:}
+\texttt{sweep\_expired\_personal\_reservations(state:\ dict)\ -\textgreater{}\ int}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Duyệt RESERVED khi
+sim\_now\textgreater=arrival\_deadline, chuyển EXPIRED, giảm hold/tăng
+available, phạt10.000 hoàn40.000 một lần. Không chạm CHECKED\_IN; lặp
+không phạt lại. Service trả danh sách ID trong OperationResult, hàm core
+nhận state và trả số lượng int.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.check_in_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.check\_in\_personal\_ev}}{PersonalEVModule.check\_in\_personal\_ev}}\label{personalevmodule.check_in_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{check\_in\_personal\_ev(state:\ dict,\ reservation\_id:\ str)\ -\textgreater{}\ tuple{[}bool,\ str{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Quét hết hạn, yêu
+cầu RESERVED và start\textless=now\textless deadline. Chuyển
+destination\_holds sang hiện diện PERSONAL mà không giảm available lần
+hai, ghi CHECKED\_IN/check\_in\_time. Service gọi INT-01 nếu
+request\_charging, không tự cấp trùng. Core hiện giảm số cổng nếu có và
+có thể gán xe CHARGING khi chưa được cấp; phải nêu là giới hạn. Không
+thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID\_STATE, quá hạn
+EXPIRED.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{personalevmodule.check_out_personal_ev}{%
+\subsection{\texorpdfstring{\texttt{PersonalEVModule.check\_out\_personal\_ev}}{PersonalEVModule.check\_out\_personal\_ev}}\label{personalevmodule.check_out_personal_ev}}
+
+\textbf{Chữ ký:}
+\texttt{check\_out\_personal\_ev(state:\ dict,\ reservation\_id:\ str,\ duration\_hours:\ float\ =\ 2.0,\ kwh\_charged:\ float\ =\ 3.5,\ overstay\_minutes:\ int\ =\ 0)\ -\textgreater{}\ tuple{[}bool,\ dict\ \textbar{}\ None,\ str{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ CHECKED\_IN.
+Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService
+bằng charge\_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice.
+Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng
+đời. Core nhận duration\_hours/kwh/overstay từ mô phỏng và tự tính phí
+tại giờ checkout; chưa đo telemetry/thời gian biểu giá tích phân.
+Owner/key trong service chưa có ở core.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingservice.hold_deposit}{%
+\subsection{\texorpdfstring{\texttt{BillingService.hold\_deposit}}{BillingService.hold\_deposit}}\label{billingservice.hold_deposit}}
+
+\textbf{Chữ ký:}
+\texttt{hold\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ amount\_vnd:\ int,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DepositResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đúng
+owner/reference, amount\_vnd \textgreater=0, ví không nợ và đủ số dư.
+Chuyển từ khả dụng sang held theo reference; ghi ledger với cùng
+operation\_key. Lặp cùng nội dung không khóa thêm;
+CONFLICTING\_OPERATION nếu key khác payload,
+INSUFFICIENT\_FUNDS/DEBT\_BLOCKED nếu không đủ điều kiện. Prototype giữ
+tổng cọc, chưa có sổ cọc theo reference.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingservice.release_deposit}{%
+\subsection{\texorpdfstring{\texttt{BillingService.release\_deposit}}{BillingService.release\_deposit}}\label{billingservice.release_deposit}}
+
+\textbf{Chữ ký:}
+\texttt{release\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DepositResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ hoàn phần cọc
+chưa quyết toán của đúng reference, không lấy cọc booking khác. Tăng khả
+dụng, giảm held, ghi ledger; lặp trả kết quả cũ.
+NOT\_FOUND/FORBIDDEN/CONFLICTING\_OPERATION giữ nguyên dữ liệu.
+Prototype hàm thấp cấp chỉ bảo vệ tổng held, caller chịu kiểm tra vòng
+đời.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingservice.settle_no_show}{%
+\subsection{\texorpdfstring{\texttt{BillingService.settle\_no\_show}}{BillingService.settle\_no\_show}}\label{billingservice.settle_no_show}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_no\_show(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Caller đã xác nhận
+EXPIRED. Với cọc 50.000 VNĐ, phạt 10.000 và hoàn 40.000; đóng cọc
+reference, ghi dòng tiền đúng một lần. Key/payload mâu thuẫn trả
+CONFLICTING\_OPERATION; không áp dụng cho lượt IN\_USE hoặc cọc đã quyết
+toán.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingservice.settle_invoice}{%
+\subsection{\texorpdfstring{\texttt{BillingService.settle\_invoice}}{BillingService.settle\_invoice}}\label{billingservice.settle_invoice}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_invoice(owner\_id:\ str,\ reference\_id:\ str,\ charge\_lines:\ list{[}ChargeLine{]},\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ thu charge\_id
+chưa thu, cùng ID khác tiền trả CONFLICTING\_CHARGE. Đối trừ/hoàn cọc
+đúng reference rồi trừ số dư tối đa phần có thể thu và ghi nợ phần
+thiếu; paid/refunded/debt lấy từ ledger. Gọi lặp cùng key trả kết quả
+cũ, không thu lại phí SS5 ở SS2. Prototype có nhiều hàm thu trực tiếp,
+chưa có BillingService hay dedup charge\_id. Thiết kế phải stage tất cả
+thay đổi trước commit.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingservice.request_charging}{%
+\subsection{\texorpdfstring{\texttt{ChargingService.request\_charging}}{ChargingService.request\_charging}}\label{chargingservice.request_charging}}
+
+\textbf{Chữ ký:}
+\texttt{request\_charging(owner\_id:\ str,\ vehicle\_id:\ str,\ hub\_id:\ str,\ current\_soc:\ float,\ target\_soc:\ float\ =\ 100.0,\ reservation\_id:\ str\ \textbar{}\ None\ =\ None)\ -\textgreater{}\ OperationResult{[}ChargingRequestResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-01 (thiết kế
+TV5). Xe/owner/Hub hợp lệ, check-in đã thành công, SoC0--100 và
+target\textgreater=current. Tạo request có ID ổn định, chưa có
+session/cổng khi còn chờ; thêm queue, cấp theo power/cổng thực khi có
+khả năng. Không cấp trùng cùng lượt/xe;
+NOT\_FOUND/FORBIDDEN/INVALID\_STATE/INVALID\_INPUT không commit.
+Prototype SS2 giảm cổng tổng hợp trực tiếp, chưa gọi service này.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingservice.get_bill}{%
+\subsection{\texorpdfstring{\texttt{ChargingService.get\_bill}}{ChargingService.get\_bill}}\label{chargingservice.get_bill}}
+
+\textbf{Chữ ký:}
+\texttt{get\_bill(session\_id:\ str)\ -\textgreater{}\ OperationResult{[}ChargingBill{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-02 (thiết kế
+TV5). Tìm session\_id và đối soát energy\_delivered\_kwh, giá/phí,
+charge\_id và khoản đã thu từ ledger. Trả ChargingBill chỉ đọc; gọi lặp
+không trừ ví hoặc tăng phí giả. Phiên không có trả NOT\_FOUND. SS2 lấy
+dòng phí còn phải thu, không tính lại giá điện/quá giờ độc lập.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss2---revision-06112026}{%
+\section{Truy vết SS2 - revision
+06/11/2026}\label{truy-vux1ebft-ss2---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss2_01---ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}{%
+\subsection{UC\_SS2\_01 - Đăng ký xe EV cá nhân lên hệ
+thống}\label{uc_ss2_01---ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-08, FR-03.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_01_NguyenAnhTai_sequence.puml}{UC\_SS2\_01\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_01_NguyenAnhTai_activity.puml}{UC\_SS2\_01\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{PersonalEVService.register\_personal\_ev},
+  \texttt{PersonalVehicle.normalize\_plate}. Class diagram SS2, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_register\_personal\_ev\_success\_and\_duplicate}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_02---ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{UC\_SS2\_02 - Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá
+nhân}\label{uc_ss2_02---ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-09, US-10, FR-04, FR-05b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_02_NguyenAnhTai_sequence.puml}{UC\_SS2\_02\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_02_NguyenAnhTai_activity.puml}{UC\_SS2\_02\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{PersonalEVService.reserve\_personal\_ev\_slot},
+  \texttt{PersonalEVService.sweep\_expired\_personal\_reservations}.
+  Class diagram SS2, catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_future\_arrival\_and\_exact\_expiry},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_invalid\_reservation\_has\_no\_financial\_or\_capacity\_effect}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_03---check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}{%
+\subsection{UC\_SS2\_03 - Check-in xe EV cá nhân tại cổng Hub (QR/Biển
+số)}\label{uc_ss2_03---check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-11b, US-10, FR-03b, FR-04.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_03_NguyenAnhTai_sequence.puml}{UC\_SS2\_03\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_03_NguyenAnhTai_activity.puml}{UC\_SS2\_03\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{PersonalEVService.check\_in\_personal\_ev},
+  \texttt{ParkingSession.attach\_charging\_ref}. Class diagram SS2,
+  catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_reservation\_30\_minutes.py::test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss2_04---check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{UC\_SS2\_04 - Check-out và thanh toán tổng hợp dịch vụ xe EV
+cá
+nhân}\label{uc_ss2_04---check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-09, US-10, US-11, US-11b, FR-03b, FR-05b, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Usecase\%20scenario/UC_SS2_NguyenAnhTai.md}{UC\_SS2\_NguyenAnhTai.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Sequence\%20diagrams/UC_SS2_04_NguyenAnhTai_sequence.puml}{UC\_SS2\_04\_NguyenAnhTai\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS2/Activity\%20diagrams/UC_SS2_04_NguyenAnhTai_activity.puml}{UC\_SS2\_04\_NguyenAnhTai\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{PersonalEVService.check\_out\_personal\_ev},
+  \texttt{BillingService.settle\_invoice}. Class diagram SS2, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_personal\_ev.py::test\_reserve\_and\_checkin\_checkout\_lifecycle},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_personal\_charging\_is\_billed\_once\_on\_consolidated\_checkout}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-case-bonus-nguyux1ec5n-anh-tuxe0i-ss2}{%
+\section{Test case bonus --- Nguyễn Anh Tài ---
+SS2}\label{test-case-bonus-nguyux1ec5n-anh-tuxe0i-ss2}}
+
+\textbf{MSSV:} 2413035\\
+\textbf{Phân hệ:} SS2 --- Xe cá nhân, chỗ đỗ và check-in/out\\
+\textbf{Trạng thái:} Đã thiết kế đủ 8 ca kiểm thử (\texttt{TC-SS2-01} →
+\texttt{TC-SS2-08}) bao phủ 4 Use Case của SS2 (mỗi UC có ít nhất 1 ca
+luồng chính và 1 ca lỗi/ngoại lệ/biên). Các ca đã có trong
+\texttt{tests/test\_personal\_ev.py} và
+\texttt{tests/test\_reservation\_30\_minutes.py} ghi nhận kết quả thực
+tế; các ca mới thiết kế mở rộng ghi trạng thái \texttt{DESIGNED}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uc_ss2_01-ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}{%
+\subsection{\texorpdfstring{1. \texttt{UC\_SS2\_01} --- Đăng ký xe EV cá
+nhân lên hệ
+thống}{1. UC\_SS2\_01 --- Đăng ký xe EV cá nhân lên hệ thống}}\label{uc_ss2_01-ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-luxean-hux1ec7-thux1ed1ng}}
+
+\hypertarget{tc-ss2-01-ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-hux1ee3p-lux1ec7-luux1ed3ng-chuxednh}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-01} --- Đăng ký xe EV cá
+nhân hợp lệ (Luồng
+chính)}{TC-SS2-01 --- Đăng ký xe EV cá nhân hợp lệ (Luồng chính)}}\label{tc-ss2-01-ux111ux103ng-kuxfd-xe-ev-cuxe1-nhuxe2n-hux1ee3p-lux1ec7-luux1ed3ng-chuxednh}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-01} /
+\texttt{UC\_SS2\_01} / \texttt{SS2-MTH-07}
+(\texttt{PersonalEVService.register\_personal\_ev}), \texttt{SS2-MTH-01}
+(\texttt{PersonalVehicle.normalize\_plate}) \\
+\textbf{Tiền điều kiện} & Trạng thái phiên khởi tạo từ
+\texttt{get\_initial\_session\_state()},
+\texttt{current\_sim\_time\ =\ "2026-10-21\ 08:00:00"}, biển số
+\texttt{"59-X1\ 77777"} chưa tồn tại trong
+\texttt{state{[}"personal\_evs"{]}}. \\
+\textbf{Dữ liệu vào} & \texttt{owner\_id\ =\ "SV-2211234"},
+\texttt{owner\_name\ =\ "Nguyễn\ Văn\ A"},
+\texttt{plate\_number\ =\ "59-X1\ 77777"},
+\texttt{ev\_type\ =\ "scooter"}, \texttt{brand\ =\ "VinFast\ Klara"},
+\texttt{battery\_kwh\ =\ 3.5} (\texttt{kWh}). \\
+\textbf{Các bước} & 1. Khởi tạo \texttt{clean\_state}.2. Gọi
+\texttt{register\_personal\_ev(state=clean\_state,\ owner\_id="SV-2211234",\ owner\_name="Nguyễn\ Văn\ A",\ plate\_number="59-X1\ 77777",\ ev\_type="scooter",\ brand="VinFast\ Klara",\ battery\_kwh=3.5)}.3.
+Kiểm tra giá trị trả về và danh sách
+\texttt{clean\_state{[}"personal\_evs"{]}}. \\
+\textbf{Kết quả mong đợi} & • Trả về \texttt{ok\ ==\ True},
+\texttt{ev{[}"plate"{]}\ ==\ "59-X1\ 77777"},
+\texttt{ev{[}"ownership"{]}\ ==\ "PERSONAL"},
+\texttt{ev{[}"status"{]}\ ==\ "REGISTERED"},
+\texttt{ev{[}"battery\_kwh"{]}\ ==\ 3.5}.• \texttt{state\_version} tăng
+thêm 1; số chỗ của các Hub không bị ảnh hưởng. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate} trong
+\texttt{tests/test\_personal\_ev.py} (dòng 21--34). \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_personal\_ev.py}. \\
+\end{longtable}
+
+\hypertarget{tc-ss2-02-tux1eeb-chux1ed1i-ux111ux103ng-kuxfd-xe-cuxe1-nhuxe2n-truxf9ng-biux1ec3n-sux1ed1-khuxe1c-ux111ux1ecbnh-dux1ea1ng-luux1ed3ng-lux1ed7i}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-02} --- Từ chối đăng ký xe
+cá nhân trùng biển số khác định dạng (Luồng
+lỗi)}{TC-SS2-02 --- Từ chối đăng ký xe cá nhân trùng biển số khác định dạng (Luồng lỗi)}}\label{tc-ss2-02-tux1eeb-chux1ed1i-ux111ux103ng-kuxfd-xe-cuxe1-nhuxe2n-truxf9ng-biux1ec3n-sux1ed1-khuxe1c-ux111ux1ecbnh-dux1ea1ng-luux1ed3ng-lux1ed7i}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-02} /
+\texttt{UC\_SS2\_01} / \texttt{SS2-MTH-07}
+(\texttt{PersonalEVService.register\_personal\_ev}), \texttt{SS2-MTH-01}
+(\texttt{PersonalVehicle.normalize\_plate}) \\
+\textbf{Tiền điều kiện} & Trong \texttt{state{[}"personal\_evs"{]}} đã
+có xe mang biển số \texttt{"59-X1\ 77777"} (chuẩn hóa thành
+\texttt{"59X177777"}). \\
+\textbf{Dữ liệu vào} & \texttt{owner\_id\ =\ "SV-9999999"},
+\texttt{owner\_name\ =\ "Trần\ Văn\ B"},
+\texttt{plate\_number\ =\ "59X1-77777"} (khác vị trí dấu gạch ngang và
+khoảng trắng), \texttt{ev\_type\ =\ "scooter"},
+\texttt{brand\ =\ "VinFast"}, \texttt{battery\_kwh\ =\ 3.0}
+(\texttt{kWh}). \\
+\textbf{Các bước} & 1. Sau khi đăng ký biển số \texttt{"59-X1\ 77777"},
+gọi tiếp \texttt{register\_personal\_ev} với
+\texttt{plate\_number\ =\ "59X1-77777"}.2. Kiểm tra cờ kết quả
+\texttt{ok2}, thông báo \texttt{msg2} và số lượng phần tử trong
+\texttt{state{[}"personal\_evs"{]}}. \\
+\textbf{Kết quả mong đợi} & • \texttt{normalize\_plate("59X1-77777")}
+trả về \texttt{"59X177777"} trùng với hồ sơ đã có.• Trả về
+\texttt{ok2\ ==\ False}, \texttt{ev2\ is\ None}, thông báo chứa chuỗi
+\texttt{"đã\ được\ đăng\ ký"}.• Không thêm bản ghi trùng vào
+\texttt{personal\_evs}. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_register\_personal\_ev\_success\_and\_duplicate} trong
+\texttt{tests/test\_personal\_ev.py} (dòng 36--47). \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_personal\_ev.py}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uc_ss2_02-ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{\texorpdfstring{2. \texttt{UC\_SS2\_02} --- Đặt trước chỗ đỗ
+và nhu cầu sạc xe EV cá
+nhân}{2. UC\_SS2\_02 --- Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá nhân}}\label{uc_ss2_02-ux111ux1eb7t-trux1b0ux1edbc-chux1ed7-ux111ux1ed7-vuxe0-nhu-cux1ea7u-sux1ea1c-xe-ev-cuxe1-nhuxe2n}}
+
+\hypertarget{tc-ss2-03-ux111ux1eb7t-chux1ed7-ux111ux1ed7-kuxe8m-nhu-cux1ea7u-sux1ea1c-hux1ee3p-lux1ec7-vuxe0-khuxf3a-cux1ecdc-50.000-vnux111-luux1ed3ng-chuxednh}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-03} --- Đặt chỗ đỗ kèm nhu
+cầu sạc hợp lệ và khóa cọc 50.000 VNĐ (Luồng
+chính)}{TC-SS2-03 --- Đặt chỗ đỗ kèm nhu cầu sạc hợp lệ và khóa cọc 50.000 VNĐ (Luồng chính)}}\label{tc-ss2-03-ux111ux1eb7t-chux1ed7-ux111ux1ed7-kuxe8m-nhu-cux1ea7u-sux1ea1c-hux1ee3p-lux1ec7-vuxe0-khuxf3a-cux1ecdc-50.000-vnux111-luux1ed3ng-chuxednh}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-03} /
+\texttt{UC\_SS2\_02} / \texttt{SS2-MTH-08}
+(\texttt{PersonalEVService.reserve\_personal\_ev\_slot}) \\
+\textbf{Tiền điều kiện} & Xe \texttt{ev\_id} đã đăng ký thuộc
+\texttt{"SV-2211234"};
+\texttt{current\_sim\_time\ =\ "2026-10-21\ 08:00:00"}; ví sinh viên có
+\texttt{balance\ =\ 150.000\ VNĐ}, \texttt{held\_deposit\ =\ 0\ VNĐ},
+\texttt{debt\ =\ 0\ VNĐ}; Hub đích còn chỗ trống
+(\texttt{available\_slots\ \textgreater{}\ 0}) và cổng sạc trống
+(\texttt{charging\_ports.available\ \textgreater{}\ 0}). \\
+\textbf{Dữ liệu vào} & \texttt{owner\_id\ =\ "SV-2211234"},
+\texttt{ev\_id\ =\ ev{[}"ev\_id"{]}},
+\texttt{hub\_id\ =\ hub{[}"hub\_id"{]}},
+\texttt{request\_charging\ =\ True}, \texttt{current\_soc\ =\ 30.0}
+(\texttt{\%}),
+\texttt{booking\_start\_time\ =\ "2026-10-21\ 08:00:00"}. \\
+\textbf{Các bước} & 1. Gọi \texttt{reserve\_personal\_ev\_slot(...)}.2.
+Đối chiếu \texttt{hub{[}"destination\_holds"{]}},
+\texttt{hub{[}"available\_slots"{]}}, \texttt{wallet{[}"balance"{]}},
+\texttt{wallet{[}"held\_deposit"{]}} và
+\texttt{res{[}"arrival\_deadline"{]}}. \\
+\textbf{Kết quả mong đợi} & • Trả về \texttt{ok\_res\ ==\ True},
+\texttt{res{[}"status"{]}\ ==\ "RESERVED"}.•
+\texttt{hub{[}"destination\_holds"{]}\ ==\ initial\_holds\ +\ 1},
+\texttt{hub{[}"available\_slots"{]}\ ==\ initial\_avail\ -\ 1}.•
+\texttt{wallet{[}"balance"{]}\ ==\ 100.000\ VNĐ},
+\texttt{wallet{[}"held\_deposit"{]}\ ==\ 50.000\ VNĐ}.• Hạn check-in
+đúng 30 phút từ giờ đến đã chọn:
+\texttt{res{[}"arrival\_deadline"{]}\ ==\ "2026-10-21\ 08:30:00"}. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle} trong
+\texttt{tests/test\_personal\_ev.py} (dòng 63--76). \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_personal\_ev.py}. \\
+\end{longtable}
+
+\hypertarget{tc-ss2-04-tux1eeb-chux1ed1i-ux111ux1eb7t-chux1ed7-khi-xe-ux111ang-cuxf3-ux111ux1a1n-houx1ea1t-ux111ux1ed9ng-hub-hux1ebft-chux1ed7-houx1eb7c-vuxed-ux111ang-cuxf3-nux1ee3-luux1ed3ng-lux1ed7i}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-04} --- Từ chối đặt chỗ
+khi xe đang có đơn hoạt động, Hub hết chỗ hoặc ví đang có nợ (Luồng
+lỗi)}{TC-SS2-04 --- Từ chối đặt chỗ khi xe đang có đơn hoạt động, Hub hết chỗ hoặc ví đang có nợ (Luồng lỗi)}}\label{tc-ss2-04-tux1eeb-chux1ed1i-ux111ux1eb7t-chux1ed7-khi-xe-ux111ang-cuxf3-ux111ux1a1n-houx1ea1t-ux111ux1ed9ng-hub-hux1ebft-chux1ed7-houx1eb7c-vuxed-ux111ang-cuxf3-nux1ee3-luux1ed3ng-lux1ed7i}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-04} /
+\texttt{UC\_SS2\_02} / \texttt{SS2-MTH-08}
+(\texttt{PersonalEVService.reserve\_personal\_ev\_slot}),
+\texttt{SS2-MTH-02} (\texttt{PersonalVehicle.is\_owned\_by}) \\
+\textbf{Tiền điều kiện} & Xe \texttt{ev\_id} đang có 1 đơn ở trạng thái
+\texttt{RESERVED} (hoặc đặt vào Hub có \texttt{available\_slots\ =\ 0},
+hoặc ví có \texttt{debt\ =\ 20.000\ VNĐ}). \\
+\textbf{Dữ liệu vào} & Gọi \texttt{reserve\_personal\_ev\_slot} lần thứ
+2 cho cùng \texttt{ev\_id} khi đơn thứ nhất chưa hoàn tất. \\
+\textbf{Các bước} & 1. Tạo đơn đặt chỗ thứ nhất thành công cho
+\texttt{ev\_id}.2. Gọi tiếp \texttt{reserve\_personal\_ev\_slot} lần thứ
+hai cho cùng \texttt{ev\_id}.3. Kiểm tra số dư ví,
+\texttt{held\_deposit} và \texttt{available\_slots} của Hub. \\
+\textbf{Kết quả mong đợi} & • Trả về \texttt{ok\ ==\ False},
+\texttt{res\ is\ None}, thông báo
+\texttt{"Phương\ tiện\ ...\ đang\ có\ lượt\ đặt\ chỗ\ ...\ chưa\ hoàn\ tất."}
+(mã lỗi thiết kế \texttt{CONFLICTING\_OPERATION}).• Không khóa thêm
+\texttt{50.000\ VNĐ} tiền cọc lần hai; không giảm thêm
+\texttt{available\_slots} của Hub. \\
+\textbf{Kết quả thực tế} & CHƯA CHẠY RIÊNG (Đã có nhánh kiểm tra tại
+dòng 106--111 trong \texttt{src/core/personal\_ev.py}). \\
+\textbf{Trạng thái} & \texttt{DESIGNED} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+thiết kế ngày 30/10/2026. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uc_ss2_03-check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}{%
+\subsection{\texorpdfstring{3. \texttt{UC\_SS2\_03} --- Check-in xe EV
+cá nhân tại cổng Hub (QR/Biển
+số)}{3. UC\_SS2\_03 --- Check-in xe EV cá nhân tại cổng Hub (QR/Biển số)}}\label{uc_ss2_03-check-in-xe-ev-cuxe1-nhuxe2n-tux1ea1i-cux1ed5ng-hub-qrbiux1ec3n-sux1ed1}}
+
+\hypertarget{tc-ss2-05-check-in-hux1ee3p-lux1ec7-ux1edf-mux1ed1c-29-phuxfat-59-giuxe2y-vuxe0-bux1ea3o-touxe0n-sux1ee9c-chux1ee9a-hub-luux1ed3ng-chuxednh-biuxean}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-05} --- Check-in hợp lệ ở
+mốc 29 phút 59 giây và bảo toàn sức chứa Hub (Luồng chính \&
+Biên)}{TC-SS2-05 --- Check-in hợp lệ ở mốc 29 phút 59 giây và bảo toàn sức chứa Hub (Luồng chính \& Biên)}}\label{tc-ss2-05-check-in-hux1ee3p-lux1ec7-ux1edf-mux1ed1c-29-phuxfat-59-giuxe2y-vuxe0-bux1ea3o-touxe0n-sux1ee9c-chux1ee9a-hub-luux1ed3ng-chuxednh-biuxean}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-05} /
+\texttt{UC\_SS2\_03} / \texttt{SS2-MTH-09}
+(\texttt{PersonalEVService.check\_in\_personal\_ev}),
+\texttt{SS2-MTH-04} (\texttt{ParkingReservation.can\_check\_in}) \\
+\textbf{Tiền điều kiện} & Đơn \texttt{reservation\_id} được đặt với
+\texttt{booking\_start\_time\ =\ "2026-10-21\ 08:00:00"},
+\texttt{arrival\_deadline\ =\ "2026-10-21\ 08:30:00"},
+\texttt{status\ =\ "RESERVED"}, \texttt{destination\_holds\ =\ 1},
+\texttt{held\_deposit\ =\ 50.000\ VNĐ}. \\
+\textbf{Dữ liệu vào} & Đồng hồ mô phỏng tại
+\texttt{current\_sim\_time\ =\ "2026-10-21\ 08:29:59"}
+(\texttt{seconds\ =\ 30\ *\ 60\ -\ 1\ =\ 1799}); gọi
+\texttt{check\_in\_personal\_ev(state,\ reservation\_id)}. \\
+\textbf{Các bước} & 1. Đặt
+\texttt{state{[}"current\_sim\_time"{]}\ =\ "2026-10-21\ 08:29:59"}.2.
+Gọi \texttt{sweep\_expired\_personal\_reservations(state)} và
+\texttt{check\_in\_personal\_ev(state,\ reservation\_id)}.3. Kiểm tra
+\texttt{res{[}"status"{]}}, \texttt{hub{[}"destination\_holds"{]}},
+\texttt{hub{[}"available\_slots"{]}},
+\texttt{hub{[}"current\_vehicles"{]}} và
+\texttt{validate\_state\_invariants(state)}. \\
+\textbf{Kết quả mong đợi} & • Tại \texttt{08:29:59}, \texttt{sweep} trả
+về \texttt{0} (chưa hết hạn).• \texttt{check\_in\_personal\_ev} trả về
+\texttt{ok\ ==\ True}; \texttt{res{[}"status"{]}\ ==\ "CHECKED\_IN"}.•
+\texttt{hub{[}"destination\_holds"{]}} giảm về \texttt{0},
+\texttt{hub{[}"available\_slots"{]}} giữ nguyên (không bị trừ lần thứ
+hai), xe xuất hiện trong \texttt{hub{[}"current\_vehicles"{]}} với
+\texttt{ownership\ ==\ "PERSONAL"}.•
+\texttt{validate\_state\_invariants(state)\ ==\ {[}{]}}. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{service="personal"}, \texttt{seconds=1799}) trong
+\texttt{tests/test\_reservation\_30\_minutes.py} và
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle} trong
+\texttt{tests/test\_personal\_ev.py}. \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_reservation\_30\_minutes.py}. \\
+\end{longtable}
+
+\hypertarget{tc-ss2-06-quuxe1-hux1ea1n-tux1ea1i-ux111uxfang-30-phuxfat-00-giuxe2y-phux1ea1t-no-show-10.000-vnux111-vuxe0-tux1eeb-chux1ed1i-check-in-chux1ed1ng-sweep-lux1eb7p-biuxean-ngoux1ea1i-lux1ec7}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-06} --- Quá hạn tại đúng
+30 phút 00 giây, phạt no-show 10.000 VNĐ và từ chối Check-in / chống
+sweep lặp (Biên \& Ngoại
+lệ)}{TC-SS2-06 --- Quá hạn tại đúng 30 phút 00 giây, phạt no-show 10.000 VNĐ và từ chối Check-in / chống sweep lặp (Biên \& Ngoại lệ)}}\label{tc-ss2-06-quuxe1-hux1ea1n-tux1ea1i-ux111uxfang-30-phuxfat-00-giuxe2y-phux1ea1t-no-show-10.000-vnux111-vuxe0-tux1eeb-chux1ed1i-check-in-chux1ed1ng-sweep-lux1eb7p-biuxean-ngoux1ea1i-lux1ec7}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-06} /
+\texttt{UC\_SS2\_02}, \texttt{UC\_SS2\_03} / \texttt{SS2-MTH-11}
+(\texttt{sweep\_expired\_personal\_reservations}), \texttt{SS2-MTH-03}
+(\texttt{is\_expired}), \texttt{SS2-MTH-09}
+(\texttt{check\_in\_personal\_ev}) \\
+\textbf{Tiền điều kiện} & Đơn \texttt{reservation\_id} có
+\texttt{booking\_start\_time\ =\ "2026-10-21\ 08:00:00"},
+\texttt{arrival\_deadline\ =\ "2026-10-21\ 08:30:00"},
+\texttt{status\ =\ "RESERVED"}, ví đã khóa cọc \texttt{50.000\ VNĐ}
+(\texttt{balance\ =\ 100.000\ VNĐ},
+\texttt{held\_deposit\ =\ 50.000\ VNĐ}). \\
+\textbf{Dữ liệu vào} & Đồng hồ mô phỏng chạm đúng mốc hạn chót
+\texttt{current\_sim\_time\ =\ "2026-10-21\ 08:30:00"}
+(\texttt{seconds\ =\ 30\ *\ 60\ =\ 1800}). \\
+\textbf{Các bước} & 1. Đặt
+\texttt{state{[}"current\_sim\_time"{]}\ =\ "2026-10-21\ 08:30:00"}.2.
+Gọi \texttt{sweep\_expired\_personal\_reservations(state)} lần 1.3. Gọi
+\texttt{sweep\_expired\_personal\_reservations(state)} lần 2 và gọi
+\texttt{check\_in\_personal\_ev(state,\ reservation\_id)}.4. Kiểm tra
+trạng thái đơn, số chỗ trống của Hub, số dư ví và nhật ký
+\texttt{wallet{[}"ledger"{]}}. \\
+\textbf{Kết quả mong đợi} & • Lần \texttt{sweep} 1 trả về \texttt{1}:
+\texttt{res{[}"status"{]}\ ==\ "EXPIRED"},
+\texttt{destination\_holds\ ==\ 0}, \texttt{available\_slots} tăng lại
++1; ví giải phóng cọc \texttt{held\_deposit\ ==\ 0}, phạt
+\texttt{10.000\ VNĐ}, hoàn \texttt{40.000\ VNĐ}
+(\texttt{balance\ ==\ 140.000\ VNĐ}).• Lần \texttt{sweep} 2 trả về
+\texttt{0}; gọi \texttt{check\_in\_personal\_ev} trả về \texttt{False};
+\texttt{wallet{[}"ledger"{]}} không phát sinh giao dịch trùng lặp;
+\texttt{validate\_state\_invariants(state)\ ==\ {[}{]}}. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}
+(\texttt{service="personal"}, \texttt{seconds=1800} và
+\texttt{seconds=1801}) trong
+\texttt{tests/test\_reservation\_30\_minutes.py}. \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_reservation\_30\_minutes.py}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{uc_ss2_04-check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}{%
+\subsection{\texorpdfstring{4. \texttt{UC\_SS2\_04} --- Check-out và
+thanh toán tổng hợp dịch vụ xe EV cá
+nhân}{4. UC\_SS2\_04 --- Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân}}\label{uc_ss2_04-check-out-vuxe0-thanh-touxe1n-tux1ed5ng-hux1ee3p-dux1ecbch-vux1ee5-xe-ev-cuxe1-nhuxe2n}}
+
+\hypertarget{tc-ss2-07-check-out-cuxf3-sux1ea1c-giux1edd-cao-ux111iux1ec3m-quuxe1-giux1edd-20-phuxfat-vuxe0-houxe0n-trux1ea3-chux1ed7-ux111ux1ed7-luux1ed3ng-chuxednh}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-07} --- Check-out có sạc
+giờ cao điểm + quá giờ 20 phút và hoàn trả chỗ đỗ (Luồng
+chính)}{TC-SS2-07 --- Check-out có sạc giờ cao điểm + quá giờ 20 phút và hoàn trả chỗ đỗ (Luồng chính)}}\label{tc-ss2-07-check-out-cuxf3-sux1ea1c-giux1edd-cao-ux111iux1ec3m-quuxe1-giux1edd-20-phuxfat-vuxe0-houxe0n-trux1ea3-chux1ed7-ux111ux1ed7-luux1ed3ng-chuxednh}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-07} /
+\texttt{UC\_SS2\_04} / \texttt{SS2-MTH-10}
+(\texttt{PersonalEVService.check\_out\_personal\_ev}),
+\texttt{SS2-MTH-06}
+(\texttt{ParkingSession.build\_parking\_charge\_line}) \\
+\textbf{Tiền điều kiện} & Đơn \texttt{reservation\_id} đã
+\texttt{CHECKED\_IN} tại
+\texttt{current\_sim\_time\ =\ "2026-10-21\ 08:00:00"} (khung giờ cao
+điểm \texttt{06:00–09:00}, đơn giá \texttt{7.000\ VNĐ/kWh}),
+\texttt{request\_charging\ =\ True}, ví có
+\texttt{balance\ =\ 100.000\ VNĐ},
+\texttt{held\_deposit\ =\ 50.000\ VNĐ}. \\
+\textbf{Dữ liệu vào} &
+\texttt{reservation\_id\ =\ res{[}"reservation\_id"{]}},
+\texttt{duration\_hours\ =\ 2.0} (\texttt{giờ}),
+\texttt{kwh\_charged\ =\ 4.0} (\texttt{kWh}),
+\texttt{overstay\_minutes\ =\ 20} (\texttt{phút} --- vượt 15 phút ân hạn
+là 5 phút = 1 khối 15 phút). \\
+\textbf{Các bước} & 1. Gọi
+\texttt{check\_out\_personal\_ev(state=clean\_state,\ reservation\_id=res{[}"reservation\_id"{]},\ duration\_hours=2.0,\ kwh\_charged=4.0,\ overstay\_minutes=20)}.2.
+Kiểm tra hóa đơn \texttt{inv}, số dư ví và số chỗ trống của Hub sau
+Check-out. \\
+\textbf{Kết quả mong đợi} & • Trả về \texttt{ok\_out\ ==\ True};
+\texttt{res{[}"status"{]}\ ==\ "COMPLETED"}.• Hóa đơn \texttt{inv}:
+\texttt{parking\_fee\ ==\ 5.000\ VNĐ},
+\texttt{is\_peak\_tariff\ ==\ True},
+\texttt{energy\_fee\ ==\ 28.000\ VNĐ} (\texttt{4.0\ *\ 7.000}),
+\texttt{overstay\_fee\ ==\ 10.000\ VNĐ} (\texttt{1\ khối\ *\ 10.000}),
+\texttt{total\_amount\ ==\ 43.000\ VNĐ},
+\texttt{debt\_incurred\ ==\ 0\ VNĐ}.• Giải phóng cọc
+\texttt{50.000\ VNĐ} và trừ \texttt{43.000\ VNĐ}
+(\texttt{wallet{[}"balance"{]}\ ==\ 107.000\ VNĐ},
+\texttt{wallet{[}"held\_deposit"{]}\ ==\ 0}).• Xe được rút khỏi
+\texttt{hub{[}"current\_vehicles"{]}},
+\texttt{hub{[}"available\_slots"{]}\ ==\ initial\_avail}. \\
+\textbf{Kết quả thực tế} & Khớp hoàn toàn với kiểm thử tự động
+\texttt{test\_reserve\_and\_checkin\_checkout\_lifecycle} trong
+\texttt{tests/test\_personal\_ev.py} (dòng 88--103). \\
+\textbf{Trạng thái} & \texttt{PASS} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+đối chiếu bộ test \texttt{tests/test\_personal\_ev.py}. \\
+\end{longtable}
+
+\hypertarget{tc-ss2-08-check-out-khi-vuxed-thiux1ebfu-sux1ed1-dux1b0-ghi-nhux1eadn-nux1ee3-minh-bux1ea1ch-vuxe0-chux1ed1ng-gux1ecdi-check-out-lux1eb7p-luux1ed3ng-ngoux1ea1i-lux1ec7}{%
+\subsubsection{\texorpdfstring{\texttt{TC-SS2-08} --- Check-out khi ví
+thiếu số dư (ghi nhận nợ minh bạch) và chống gọi Check-out lặp (Luồng
+ngoại
+lệ)}{TC-SS2-08 --- Check-out khi ví thiếu số dư (ghi nhận nợ minh bạch) và chống gọi Check-out lặp (Luồng ngoại lệ)}}\label{tc-ss2-08-check-out-khi-vuxed-thiux1ebfu-sux1ed1-dux1b0-ghi-nhux1eadn-nux1ee3-minh-bux1ea1ch-vuxe0-chux1ed1ng-gux1ecdi-check-out-lux1eb7p-luux1ed3ng-ngoux1ea1i-lux1ec7}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trường
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung chi tiết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Test ID / UC / Method ID} & \texttt{TC-SS2-08} /
+\texttt{UC\_SS2\_04} / \texttt{SS2-MTH-10}
+(\texttt{PersonalEVService.check\_out\_personal\_ev}) \\
+\textbf{Tiền điều kiện} & Đơn \texttt{reservation\_id} đang ở trạng thái
+\texttt{CHECKED\_IN}; trước khi Check-out, số dư khả dụng của ví sau khi
+hoàn cọc nhỏ hơn tổng phí hóa đơn (ví dụ tổng số dư khả dụng sau hoàn
+cọc là \texttt{30.000\ VNĐ}, trong khi
+\texttt{total\_amount\ =\ 43.000\ VNĐ}). \\
+\textbf{Dữ liệu vào} & Gọi \texttt{check\_out\_personal\_ev} lần 1 với
+\texttt{total\_amount\ =\ 43.000\ VNĐ} khi ví chỉ có
+\texttt{30.000\ VNĐ}; sau đó gọi lại \texttt{check\_out\_personal\_ev}
+lần 2 trên cùng \texttt{reservation\_id}. \\
+\textbf{Các bước} & 1. Thiết lập số dư khả dụng của ví sao cho sau khi
+giải phóng cọc đạt \texttt{30.000\ VNĐ}.2. Gọi
+\texttt{check\_out\_personal\_ev} lần 1
+(\texttt{total\_amount\ =\ 43.000\ VNĐ}).3. Kiểm tra
+\texttt{wallet{[}"balance"{]}}, \texttt{wallet{[}"debt"{]}},
+\texttt{inv{[}"debt\_incurred"{]}} và
+\texttt{hub{[}"available\_slots"{]}}.4. Gọi tiếp
+\texttt{check\_out\_personal\_ev} lần 2 trên cùng
+\texttt{reservation\_id}. \\
+\textbf{Kết quả mong đợi} & • Lần 1: Trả về \texttt{ok\ ==\ True};
+\texttt{inv{[}"deducted\_from\_wallet"{]}\ ==\ 30.000\ VNĐ},
+\texttt{inv{[}"debt\_incurred"{]}\ ==\ 13.000\ VNĐ};
+\texttt{wallet{[}"balance"{]}\ ==\ 0},
+\texttt{wallet{[}"debt"{]}\ ==\ 13.000\ VNĐ}; xe vẫn được giải phóng
+khỏi Hub (\texttt{available\_slots} tăng +1) và
+\texttt{res{[}"status"{]}\ ==\ "COMPLETED"}.• Lần 2: Trả về
+\texttt{ok\ ==\ False} do \texttt{res{[}"status"{]}\ !=\ "CHECKED\_IN"};
+không cộng thêm \texttt{available\_slots} và không ghi nợ lặp lần
+hai. \\
+\textbf{Kết quả thực tế} & CHƯA CHẠY RIÊNG (Đã triển khai tại dòng
+275--276 và 311--321 trong \texttt{src/core/personal\_ev.py}). \\
+\textbf{Trạng thái} & \texttt{DESIGNED} \\
+\textbf{Người / ngày kiểm tra} & Nguyễn Anh Tài (\texttt{2413035}) ---
+thiết kế ngày 30/10/2026. \\
+\end{longtable}
+
+\hypertarget{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}{%
+\subsection{Đối chiếu thực thi
+06/11/2026}\label{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}}
+
+Bộ49 test hiện có đã chạy PASS (log baseline chung). Các tên test dẫn
+trong traceability.md được đối chiếu với nguồn. Nhãn PASS của bản bàn
+giao chỉ có hiệu lực trong phạm vi các assert thực sự có trong test đó;
+các điều kiện mở rộng/operation\_key/service đề xuất vẫn DESIGNED. Không
+dùng test của core để xác nhận service chưa tồn tại.
+
+Test đăng ký hiện tại có kiểm tra duplicate khác dấu gạch/khoảng trắng
+(59-X1 77777 và 59X1-77777); đã đối chiếu đúng nguồn, không cần suy rộng
+ngoài các assert có sẵn.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

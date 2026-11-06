@@ -1,0 +1,628 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS4 - Đặng Hoàng Quý Nhân},
+    pdfauthor={Nhóm BEE BRAVE - Đặng Hoàng Quý Nhân}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS4 -- Đặng Hoàng Quý Nhân}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS4 -- Đặng Hoàng Quý Nhân}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS4: Điều phối \& Xử lý Sự cố (Dispatch \& Incident Handling)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Đặng Hoàng Quý Nhân\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2412401\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{submission-3---ux111ux1eb7ng-houxe0ng-quuxfd-nhuxe2n---ss4}{%
+\section{Submission 3 - Đặng Hoàng Quý Nhân -
+SS4}\label{submission-3---ux111ux1eb7ng-houxe0ng-quuxfd-nhuxe2n---ss4}}
+
+\textbf{MSSV:} 2412401. \textbf{Revision:} 06/11/2026. \textbf{Trạng
+thái:} bản tích hợp kỹ thuật, cần chủ sở hữu đọc và xác nhận trước nộp.
+
+Nội dung được bổ sung/chỉnh trong đợt tổng hợp theo yêu cầu trưởng nhóm,
+có AI hỗ trợ; không ghi nhận thay tác giả rằng họ đã tự làm hoặc tự xác
+nhận. Nguồn bàn giao cũ giữ trong lịch sử Git.
+
+\hypertarget{phux1ea1m-vi}{%
+\subsection{1. Phạm vi}\label{phux1ea1m-vi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{UC\_SS4\_01}: Lập lệnh điều chuyển phương tiện cân bằng phụ
+  tải.
+\item
+  \texttt{UC\_SS4\_02}: Báo cáo, tiếp nhận xử lý và khắc phục sự cố
+  phương tiện.
+\end{itemize}
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{class-diagram-ss4}{%
+\subsection{2. Class diagram SS4}\label{class-diagram-ss4}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS4/class_diagram.png}
+\caption{Class diagram SS4}
+\end{figure}
+
+Mô hình OOP là thiết kế đề xuất, trừ HubEventSimulator thực sự tồn tại ở
+SS6. Service trong sơ đồ là giao tiếp nội bộ, không phải server độc lập.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}{%
+\subsection{3. Mô tả lớp, thuộc tính và ràng
+buộc}\label{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}}
+
+\hypertarget{dispatchorder}{%
+\subsubsection{\texorpdfstring{\texttt{DispatchOrder}}{DispatchOrder}}\label{dispatchorder}}
+
+Lệnh gom xe dùng chung, CREATED/IN\_TRANSIT/COMPLETED theo thiết kế;
+prototype tạo thẳng IN\_TRANSIT. Hai Hub khác nhau, danh sách xe không
+trùng.
+
+Thuộc tính và kiểu: \texttt{dispatch\_id:\ str},
+\texttt{vehicle\_ids:\ list{[}str{]}}, \texttt{source\_hub\_id:\ str},
+\texttt{destination\_hub\_id:\ str}, \texttt{created\_by:\ str},
+\texttt{created\_at:\ datetime},
+\texttt{completed\_at:\ Optional{[}datetime{]}}, \texttt{status:\ str}.
+
+\hypertarget{vehicleincident}{%
+\subsubsection{\texorpdfstring{\texttt{VehicleIncident}}{VehicleIncident}}\label{vehicleincident}}
+
+Sự cố phương tiện REPORTED/ACKNOWLEDGED/RESOLVED, ghi người xử lý và
+thời điểm. previous\_status là bổ sung thiết kế cho khôi phục an toàn.
+
+Thuộc tính và kiểu: \texttt{incident\_id:\ str},
+\texttt{vehicle\_id:\ str}, \texttt{hub\_id:\ str},
+\texttt{reported\_by:\ str}, \texttt{assigned\_to:\ Optional{[}str{]}},
+\texttt{description:\ str}, \texttt{severity:\ str},
+\texttt{reported\_at:\ datetime},
+\texttt{resolved\_at:\ Optional{[}datetime{]}},
+\texttt{previous\_status:\ VehicleStatus}, \texttt{status:\ str}.
+
+\hypertarget{dispatchservice}{%
+\subsubsection{\texorpdfstring{\texttt{DispatchService}}{DispatchService}}\label{dispatchservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{incidentservice}{%
+\subsubsection{\texorpdfstring{\texttt{IncidentService}}{IncidentService}}\label{incidentservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}{%
+\subsection{4. Mô tả mọi phương
+thức}\label{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}}
+
+Xem \url{method_catalog.md}, được nhúng đầy đủ trong PDF. Danh mục có
+chữ ký, đầu vào/đầu ra, điều kiện, tác động, lỗi và quy tắc gọi lặp cho
+từng phương thức được vẽ.
+
+\hypertarget{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}{%
+\subsection{5. Ánh xạ và giới
+hạn}\label{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}}
+
+Logic đang nằm trong components/dispatch\_incident.render, không có
+DispatchService/IncidentService. Prototype có thêm thao tác sự cố cổng
+tổng hợp; bản thiết kế VehicleIncident chỉ sở hữu xe, ảnh hưởng cổng
+phải qua SS5/SS7. Prototype khi resolve đưa xe về AVAILABLE trực tiếp;
+thiết kế bổ sung previous\_status và kiểm tra booking/charging. Chưa có
+thao tác hủy lệnh, cơ chế phân quyền phía server hay transaction đồng
+thời nhiều người dùng.
+
+\hypertarget{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}{%
+\subsection{6. Chính sách và ranh giới thiết
+kế}\label{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}}
+
+Giữ xe SS1 30 phút từ tạo; hạn SS2 30 phút từ giờ đến. Cọc 50.000,
+no-show phạt10.000/hoàn40.000 VNĐ. Reroute thêm15 phút miễn phí tối đa
+một lần, không đổi TTL. Sạc grace15 phút, phí10.000/khối15 phút bắt đầu
+sau grace; công suất mặc định150 kW/Hub và11 kW/cổng, cấu hình từng test
+có thể khác. Phí đỗ prototype5.000 VNĐ/lượt khác SRS tính theo giờ, phải
+ghi chênh lệch. Ownership PERSONAL/SHARED và binding nguồn lực không
+được trộn.
+
+NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu năng là mục
+tiêu thiết kế. Prototype per-session không chứng minh tính nhất quán
+toàn mạng giữa nhiều phiên; thiết kế tương lai cần shared
+storage/transaction/version và authorization thật. Đề không bắt buộc
+thêm database cho Sub3.
+
+\hypertarget{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}{%
+\subsection{7. Truy vết, test, đóng góp và
+AI}\label{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss4---revision-06112026}{%
+\section{Danh mục phương thức SS4 - revision
+06/11/2026}\label{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss4---revision-06112026}}
+
+Mọi kiểu/đơn vị như class diagram. \texttt{OperationResult} là hợp đồng
+đề xuất; các tuple/dict hiện có được nêu ở ánh xạ. UC chi tiết và test
+được liên kết trong traceability.md.
+
+\hypertarget{ss4-mth-01-dispatchservice.create_order}{%
+\subsection{\texorpdfstring{SS4-MTH-01:
+\texttt{DispatchService.create\_order}}{SS4-MTH-01: DispatchService.create\_order}}\label{ss4-mth-01-dispatchservice.create_order}}
+
+\textbf{Chữ ký:}
+\texttt{create\_order(actor\_id:\ str,\ source\_hub\_id:\ str,\ destination\_hub\_id:\ str,\ vehicle\_ids:\ list{[}str{]},\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DispatchOrder{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Operator có quyền, Hub
+nguồn khác đích, danh sách xe duy nhất không rỗng; mọi xe
+SHARED/AVAILABLE và không bị booking/charging giữ. Kiểm tra đủ chỗ đích,
+tạo hold đích, đưa xe DISPATCHED ra khỏi nguồn và tăng chỗ nguồn trong
+một commit. Ghi người tạo/thời gian/ID lệnh. Key lặp cùng nội dung trả
+lệnh cũ; FORBIDDEN/INVALID\_STATE/NO\_CAPACITY/CONFLICTING\_OPERATION
+không commit. Prototype logic nằm trong UI, chưa có service/key.
+
+\textbf{Ánh xạ:} \texttt{src/components/dispatch\_incident.py:render}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss4-mth-02-dispatchservice.complete_order}{%
+\subsection{\texorpdfstring{SS4-MTH-02:
+\texttt{DispatchService.complete\_order}}{SS4-MTH-02: DispatchService.complete\_order}}\label{ss4-mth-02-dispatchservice.complete_order}}
+
+\textbf{Chữ ký:}
+\texttt{complete\_order(actor\_id:\ str,\ dispatch\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DispatchOrder{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Chỉ hoàn tất lệnh
+IN\_TRANSIT, kiểm tra Hub đích và phần giữ chỗ của lệnh còn hợp lệ tại
+thời điểm nhận. Chuyển hold thành hiện diện xe, trạng thái xe AVAILABLE,
+lệnh COMPLETED, ghi completed\_at và tăng version. Không giảm
+available\_slots lần hai khi chuyển hold. Hoàn tất lặp trả kết quả đã
+ghi; không nhân đôi xe; NO\_CAPACITY/INVALID\_STATE không cập nhật một
+phần.
+
+\textbf{Ánh xạ:} \texttt{src/components/dispatch\_incident.py:render}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss4-mth-03-incidentservice.report_vehicle_incident}{%
+\subsection{\texorpdfstring{SS4-MTH-03:
+\texttt{IncidentService.report\_vehicle\_incident}}{SS4-MTH-03: IncidentService.report\_vehicle\_incident}}\label{ss4-mth-03-incidentservice.report_vehicle_incident}}
+
+\textbf{Chữ ký:}
+\texttt{report\_vehicle\_incident(actor\_id:\ str,\ vehicle\_id:\ str,\ description:\ str,\ severity:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}VehicleIncident{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Người báo có quyền; xe tồn
+tại, mô tả không rỗng và chưa có incident mở cho cùng sự kiện. Lưu
+previous\_status, REPORTED và sim timestamp; cách ly xe INCIDENT. Nếu xe
+đang gắn booking/charging thì phải điều phối chủ service trước khi đổi
+trạng thái, không tự xóa ràng buộc. Lặp key không tạo sự cố trùng. Sự cố
+cổng/điện là SS7/SS5, không dùng VehicleIncident thay thế.
+
+\textbf{Ánh xạ:} \texttt{src/components/dispatch\_incident.py:render}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss4-mth-04-incidentservice.acknowledge}{%
+\subsection{\texorpdfstring{SS4-MTH-04:
+\texttt{IncidentService.acknowledge}}{SS4-MTH-04: IncidentService.acknowledge}}\label{ss4-mth-04-incidentservice.acknowledge}}
+
+\textbf{Chữ ký:}
+\texttt{acknowledge(actor\_id:\ str,\ incident\_id:\ str)\ -\textgreater{}\ OperationResult{[}VehicleIncident{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Technician tiếp nhận
+incident REPORTED, ghi assigned\_to và chuyển ACKNOWLEDGED. Không thay
+ví/chỗ đỗ/cổng. Đã ACKNOWLEDGED trả dữ liệu cũ; đã RESOLVED trả
+INVALID\_STATE, không mở lại. NOT\_FOUND/FORBIDDEN không cập nhật.
+
+\textbf{Ánh xạ:} \texttt{src/components/dispatch\_incident.py:render}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss4-mth-05-incidentservice.resolve}{%
+\subsection{\texorpdfstring{SS4-MTH-05:
+\texttt{IncidentService.resolve}}{SS4-MTH-05: IncidentService.resolve}}\label{ss4-mth-05-incidentservice.resolve}}
+
+\textbf{Chữ ký:}
+\texttt{resolve(actor\_id:\ str,\ incident\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}VehicleIncident{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Technician chỉ resolve
+incident ACKNOWLEDGED sau sửa chữa; kiểm tra binding booking/charging
+trước phục hồi. Ghi resolved\_at theo mô phỏng, RESOLVED và trả xe về
+trạng thái hợp lệ; chỉ AVAILABLE nếu không còn binding. Không tăng
+chỗ/cổng vì sửa xe. Lặp key không phục hồi hai lần. Prototype hiện phục
+hồi xe về AVAILABLE trực tiếp, chưa bảo vệ đầy đủ
+previous\_status/binding.
+
+\textbf{Ánh xạ:} \texttt{src/components/dispatch\_incident.py:render}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss4---revision-06112026}{%
+\section{Truy vết SS4 - revision
+06/11/2026}\label{truy-vux1ebft-ss4---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss4_01---lux1eadp-lux1ec7nh-ux111iux1ec1u-chuyux1ec3n-phux1b0ux1a1ng-tiux1ec7n-cuxe2n-bux1eb1ng-phux1ee5-tux1ea3i}{%
+\subsection{UC\_SS4\_01 - Lập lệnh điều chuyển phương tiện cân bằng phụ
+tải}\label{uc_ss4_01---lux1eadp-lux1ec7nh-ux111iux1ec1u-chuyux1ec3n-phux1b0ux1a1ng-tiux1ec7n-cuxe2n-bux1eb1ng-phux1ee5-tux1ea3i}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-15, FR-07.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Usecase\%20scenario/UC_SS4_DangHoangQuyNhan.md}{UC\_SS4\_DangHoangQuyNhan.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Sequence\%20diagrams/UC_SS4_01_sequence.puml}{UC\_SS4\_01\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Activity\%20diagrams/UC_SS4_01_activity.puml}{UC\_SS4\_01\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{DispatchService.create\_order},
+  \texttt{DispatchService.complete\_order}. Class diagram SS4, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_dispatch\_ui\_moves\_vehicle\_and\_conserves\_capacity}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss4_02---buxe1o-cuxe1o-tiux1ebfp-nhux1eadn-xux1eed-luxfd-vuxe0-khux1eafc-phux1ee5c-sux1ef1-cux1ed1-phux1b0ux1a1ng-tiux1ec7n}{%
+\subsection{UC\_SS4\_02 - Báo cáo, tiếp nhận xử lý và khắc phục sự cố
+phương
+tiện}\label{uc_ss4_02---buxe1o-cuxe1o-tiux1ebfp-nhux1eadn-xux1eed-luxfd-vuxe0-khux1eafc-phux1ee5c-sux1ef1-cux1ed1-phux1b0ux1a1ng-tiux1ec7n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-16, US-17, FR-08.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Usecase\%20scenario/UC_SS4_DangHoangQuyNhan.md}{UC\_SS4\_DangHoangQuyNhan.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Sequence\%20diagrams/UC_SS4_02_sequence.puml}{UC\_SS4\_02\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS4/Activity\%20diagrams/UC_SS4_02_activity.puml}{UC\_SS4\_02\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{IncidentService.report\_vehicle\_incident},
+  \texttt{IncidentService.acknowledge},
+  \texttt{IncidentService.resolve}. Class diagram SS4, catalog cùng thư
+  mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_incident\_ui\_report\_acknowledge\_resolve\_and\_history}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-cases-ss4---revision-06112026}{%
+\section{Test cases SS4 - revision
+06/11/2026}\label{test-cases-ss4---revision-06112026}}
+
+Các test prototype hiện có đã chạy trong bộ49 test baseline; log chung ở
+docs/audit/submission\_3/review\_20261106/pytest-baseline.txt. Không có
+class service đề xuất đang chạy; không ghi PASS thay cho contract test.
+
+\hypertarget{uc_ss4_01}{%
+\subsection{UC\_SS4\_01}\label{uc_ss4_01}}
+
+\begin{itemize}
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_dispatch\_ui\_moves\_vehicle\_and\_conserves\_capacity};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP. \#\# UC\_SS4\_02
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_incident\_ui\_report\_acknowledge\_resolve\_and\_history};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\end{itemize}
+
+\hypertarget{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}{%
+\subsection{Các ca thiết kế chưa thực thi
+(DESIGNED)}\label{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}}
+
+\hypertarget{ss4-d01---hub-ux111uxedch-thay-ux111ux1ed5i-trux1b0ux1edbc-nhux1eadn}{%
+\subsubsection{SS4-D01 - Hub đích thay đổi trước
+nhận}\label{ss4-d01---hub-ux111uxedch-thay-ux111ux1ed5i-trux1b0ux1edbc-nhux1eadn}}
+
+\textbf{Đầu vào/thao tác:} lệnh giữ2 chỗ nhưng hold bị mất/Hub không còn
+hợp lệ.
+
+\textbf{Mong đợi:} Reject/giữ nguyên lệnh và xe, không commit một phần.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss4-d02---resolve-xe-cuxf2n-binding}{%
+\subsubsection{SS4-D02 - Resolve xe còn
+binding}\label{ss4-d02---resolve-xe-cuxf2n-binding}}
+
+\textbf{Đầu vào/thao tác:} xe INCIDENT đang có charging/booking binding.
+
+\textbf{Mong đợi:} Không đưa AVAILABLE cho đến khi binding được xử lý;
+ghi lịch sử người/giờ.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss4-d03---tux1ea1ohouxe0n-tux1ea5t-lux1ec7nh-lux1eb7p}{%
+\subsubsection{SS4-D03 - Tạo/hoàn tất lệnh
+lặp}\label{ss4-d03---tux1ea1ohouxe0n-tux1ea5t-lux1ec7nh-lux1eb7p}}
+
+\textbf{Đầu vào/thao tác:} cùng operation\_key cho create hoặc complete
+gọi2 lần.
+
+\textbf{Mong đợi:} Một lệnh, một bản xe tại Hub đích, không thay count
+lần hai.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

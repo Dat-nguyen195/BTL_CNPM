@@ -27,7 +27,7 @@ from reportlab.platypus import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'output/submission_3'
+OUT = ROOT / 'docs/report/submission_3'
 TMP = ROOT / 'tmp/submission_3_build'
 FONT_ROOT = Path('/usr/share/fonts/truetype/dejavu')
 for name, filename in [('Body','DejaVuSans.ttf'),('Body-Bold','DejaVuSans-Bold.ttf'),('Body-Italic','DejaVuSans-Oblique.ttf'),('Body-BoldItalic','DejaVuSans-BoldOblique.ttf'),('Mono','DejaVuSansMono.ttf')]:
@@ -79,7 +79,7 @@ def page_footer(canvas, doc):
     canvas.drawRightString(width-35,20,str(doc.page))
 
 
-def figure(src, caption, base):
+def figure(src, caption, base, include_class_details=True):
     path=(base/src).resolve()
     if not path.is_file(): raise FileNotFoundError(path)
     if path in SEEN_FIGURES:
@@ -96,7 +96,7 @@ def figure(src, caption, base):
     # Relations remain on the full overview; prose/catalog supplies every detail.
     details=0
     svg=path.with_suffix('.svg')
-    if scale<0.58 and path.name=='class_diagram.png' and svg.is_file():
+    if include_class_details and scale<0.58 and path.name=='class_diagram.png' and svg.is_file():
         tree=ET.parse(svg)
         for group in tree.iter():
             if group.get('class')!='entity':continue
@@ -118,7 +118,7 @@ def figure(src, caption, base):
     return result
 
 
-def markdown(path, include_figures=True):
+def markdown(path, include_figures=True, include_class_details=True):
     source=path.read_text()
     source=re.sub(r'^<div class="cover">.*?</div>\s*','',source,flags=re.S)
     source=re.sub(r'<img\s+src="([^"]+)"[^>]*alt="([^"]*)"[^>]*>',r'![\2](\1)',source)
@@ -134,7 +134,7 @@ def markdown(path, include_figures=True):
             nexttoken=tokens[i+1]
             images=[x for x in nexttoken.children or [] if x.type=='image']
             if images and include_figures:
-                for img in images:out+=figure(img.attrGet('src'),img.content,path.parent)
+                for img in images:out+=figure(img.attrGet('src'),img.content,path.parent,include_class_details=include_class_details)
             elif not images:
                 prefix=('• ' if listlevel else '')
                 out.append(Paragraph(prefix+inline(nexttoken),styles['Text']))
@@ -179,11 +179,11 @@ def build():
             PageTemplate(id='Portrait',pagesize=A4,frames=[Frame(40,45,A4[0]-80,A4[1]-85,id='body',leftPadding=0,rightPadding=0,topPadding=0,bottomPadding=0)],onPage=page_footer),
             PageTemplate(id='Diagram',pagesize=landscape(A4),frames=[Frame(38,45,landscape(A4)[0]-76,landscape(A4)[1]-85,id='diagram',leftPadding=0,rightPadding=0,topPadding=0,bottomPadding=0)],onPage=page_footer)])
         story=[Spacer(1,100),Paragraph('SUBMISSION 3',styles['Cover']),Paragraph('SMART E-MOBILITY HUB',styles['Cover']),Paragraph(f'SS{n} - {html.escape(name)}',styles['Center']),Paragraph('MSSV: '+mssv,styles['Center']),Paragraph('CO3001 - HK261 | BEE BRAVE - Nhóm 7',styles['Center']),Spacer(1,45),Paragraph('Revision tích hợp: 06/11/2026',styles['Center']),Paragraph('Bản kỹ thuật để tác giả đọc và xác nhận trước nộp LMS',styles['Center']),PageBreak()]
-        for filename in ['REPORT_SUB3.md','method_catalog.md','traceability.md','test_cases.md','self_check.md','ai_usage.md']:
+        for filename in ['REPORT_SUB3.md','method_catalog.md','traceability.md','test_cases.md']:
             if filename!='REPORT_SUB3.md':story += [PageBreak(),Paragraph('PHỤ LỤC: '+filename,styles['H1'])]
-            story+=markdown(member/filename)
+            story+=markdown(member/filename,include_class_details=(slug!='NguyenThanhDat'))
         story += [PageBreak(),Paragraph('PHỤ LỤC KIẾN TRÚC HỆ THỐNG',styles['H1'])]
-        story += markdown(ROOT/'docs/report/submission_3/shared/architecture.md')
+        story += markdown(ROOT/'docs/report/submission_3/shared/architecture.md',include_class_details=(slug!='NguyenThanhDat'))
         normalized=[]
         pending_break=False
         pending_template=None

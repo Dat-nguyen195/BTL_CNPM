@@ -1,0 +1,885 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS1 - Nguyễn Thành Đạt},
+    pdfauthor={Nhóm BEE BRAVE - Nguyễn Thành Đạt}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS1 -- Nguyễn Thành Đạt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS1 -- Nguyễn Thành Đạt}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS1: Đặt \& Quản lý Xe dùng chung (Shared E-Vehicle)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Nguyễn Thành Đạt\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2410709\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{submission-3---nguyux1ec5n-thuxe0nh-ux111ux1ea1t---ss1}{%
+\section{Submission 3 - Nguyễn Thành Đạt -
+SS1}\label{submission-3---nguyux1ec5n-thuxe0nh-ux111ux1ea1t---ss1}}
+
+\textbf{MSSV:} 2410709. \textbf{Revision:} 06/11/2026. \textbf{Trạng
+thái:} bản tích hợp kỹ thuật, cần chủ sở hữu đọc và xác nhận trước nộp.
+
+Nội dung được bổ sung/chỉnh trong đợt tổng hợp theo yêu cầu trưởng nhóm,
+có AI hỗ trợ; không ghi nhận thay tác giả rằng họ đã tự làm hoặc tự xác
+nhận. Nguồn bàn giao cũ giữ trong lịch sử Git.
+
+\hypertarget{phux1ea1m-vi}{%
+\subsection{1. Phạm vi}\label{phux1ea1m-vi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{UC\_SS1\_01}: Tra cứu, Đặt xe \& Nhận xe qua QR/PIN.
+\item
+  \texttt{UC\_SS1\_02}: Trả xe, Cập nhật vị trí \& Quyết toán ví điện
+  tử.
+\item
+  \texttt{UC\_SS1\_03}: Hủy đặt chỗ \& Hoàn cọc / Phạt quá giờ.
+\end{itemize}
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{class-diagram-ss1}{%
+\subsection{2. Class diagram SS1}\label{class-diagram-ss1}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS1/class_diagram.png}
+\caption{Class diagram SS1}
+\end{figure}
+
+Mô hình OOP là thiết kế đề xuất, trừ HubEventSimulator thực sự tồn tại ở
+SS6. Service trong sơ đồ là giao tiếp nội bộ, không phải server độc lập.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}{%
+\subsection{3. Mô tả lớp, thuộc tính và ràng
+buộc}\label{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}}
+
+\hypertarget{user}{%
+\subsubsection{\texorpdfstring{\texttt{User}}{User}}\label{user}}
+
+Định danh và vai trò thiết kế; prototype chọn người dùng mô phỏng, chưa
+xác thực SSO thật.
+
+Thuộc tính và kiểu: \texttt{user\_id:\ str}, \texttt{role:\ UserRole}.
+
+\hypertarget{vehicle}{%
+\subsubsection{\texorpdfstring{\texttt{Vehicle}}{Vehicle}}\label{vehicle}}
+
+Định danh, ownership, Hub, SoC 0--100 và trạng thái dùng chung. Không
+cho xe PERSONAL được thuê/điều chuyển như SHARED.
+
+Thuộc tính và kiểu: \texttt{vehicle\_id:\ str},
+\texttt{ownership:\ Ownership}, \texttt{hub\_id:\ str},
+\texttt{battery\_soc:\ float}, \texttt{status:\ VehicleStatus}.
+
+\hypertarget{sharedvehicle}{%
+\subsubsection{\texorpdfstring{\texttt{SharedVehicle}}{SharedVehicle}}\label{sharedvehicle}}
+
+Chuyên biệt Vehicle với ownership SHARED; xe RESERVED/IN\_USE/INCIDENT
+không được tái phân bổ trái vòng đời.
+
+Thuộc tính và kiểu: \texttt{ownership:\ Ownership\ =\ SHARED}.
+
+\hypertarget{booking}{%
+\subsubsection{\texorpdfstring{\texttt{Booking}}{Booking}}\label{booking}}
+
+Vòng đời RESERVED/IN\_USE/COMPLETED/CANCELLED/EXPIRED; nguồn bắt buộc,
+đích dự kiến 0..1, khi trả ghi Hub thực tế. Hết hạn chỉ áp dụng khi chưa
+nhận.
+
+Thuộc tính và kiểu: \texttt{booking\_id:\ str},
+\texttt{student\_id:\ str}, \texttt{vehicle\_id:\ str},
+\texttt{hub\_id:\ str},
+\texttt{destination\_hub\_id:\ Optional{[}str{]}},
+\texttt{created\_at:\ datetime}, \texttt{expires\_at:\ datetime},
+\texttt{pickup\_time:\ Optional{[}datetime{]}},
+\texttt{return\_time:\ Optional{[}datetime{]}},
+\texttt{extra\_free\_minutes:\ int}, \texttt{status:\ BookingStatus}.
+
+\hypertarget{wallet}{%
+\subsubsection{\texorpdfstring{\texttt{Wallet}}{Wallet}}\label{wallet}}
+
+Số dư khả dụng, held và nợ không âm, VNĐ nguyên. Held không là doanh
+thu. Thiết kế sở hữu bởi User, prototype hiện một ví trong session.
+
+Thuộc tính và kiểu: \texttt{owner\_id:\ str},
+\texttt{balance\_vnd:\ int}, \texttt{held\_deposit\_vnd:\ int},
+\texttt{debt\_vnd:\ int}.
+
+\hypertarget{transaction}{%
+\subsubsection{\texorpdfstring{\texttt{Transaction}}{Transaction}}\label{transaction}}
+
+Bản ghi bất biến về thao tác tài chính, ID ổn định; chống thu lại bằng
+reference/charge/key ở thiết kế.
+
+Thuộc tính và kiểu: \texttt{tx\_id:\ str}, \texttt{reference\_id:\ str},
+\texttt{charge\_id:\ Optional{[}str{]}}, \texttt{amount\_vnd:\ int},
+\texttt{kind:\ str}, \texttt{created\_at:\ datetime}.
+
+\hypertarget{invoice}{%
+\subsubsection{\texorpdfstring{\texttt{Invoice}}{Invoice}}\label{invoice}}
+
+Hóa đơn gắn reference, dòng phí không âm, tách số đã thu và nợ; không tự
+có số km khi chưa có nguồn đo.
+
+Thuộc tính và kiểu: \texttt{invoice\_id:\ str},
+\texttt{reference\_id:\ str},
+\texttt{charge\_lines:\ list{[}ChargeLine{]}}, \texttt{paid\_vnd:\ int},
+\texttt{debt\_vnd:\ int}.
+
+\hypertarget{chargeline}{%
+\subsubsection{\texorpdfstring{\texttt{ChargeLine}}{ChargeLine}}\label{chargeline}}
+
+Giá trị khoản phí; cùng charge\_id cùng nghĩa và số tiền. Không tạo ID
+mới để thu lại cùng khoản.
+
+Thuộc tính và kiểu: \texttt{charge\_id:\ str},
+\texttt{source\_id:\ str}, \texttt{kind:\ str},
+\texttt{amount\_vnd:\ int}.
+
+\hypertarget{depositresult}{%
+\subsubsection{\texorpdfstring{\texttt{DepositResult}}{DepositResult}}\label{depositresult}}
+
+Kết quả giữ/hoàn cọc theo reference, trạng thái xử lý idempotent.
+
+Thuộc tính và kiểu: \texttt{reference\_id:\ str},
+\texttt{held\_vnd:\ int}, \texttt{released\_vnd:\ int},
+\texttt{status:\ str}.
+
+\hypertarget{settlementresult}{%
+\subsubsection{\texorpdfstring{\texttt{SettlementResult}}{SettlementResult}}\label{settlementresult}}
+
+Kết quả quyết toán từ ledger, bao gồm paid/refunded/debt và dòng phí;
+khoản nợ là kết quả nghiệp vụ có kiểm soát.
+
+Thuộc tính và kiểu: \texttt{invoice\_id:\ str},
+\texttt{charge\_lines:\ list{[}ChargeLine{]}}, \texttt{paid\_vnd:\ int},
+\texttt{refunded\_vnd:\ int}, \texttt{debt\_vnd:\ int},
+\texttt{status:\ str}.
+
+\hypertarget{operationresultt}{%
+\subsubsection{\texorpdfstring{\texttt{OperationResult\textless{}T\textgreater{}}}{OperationResult\textless T\textgreater{}}}\label{operationresultt}}
+
+Kiểu kết quả chung do TV1 sở hữu;
+ok/data/error\_code/message/state\_version, lỗi không để commit dở dang.
+
+Thuộc tính và kiểu: \texttt{ok:\ bool}, \texttt{data:\ Optional{[}T{]}},
+\texttt{error\_code:\ Optional{[}str{]}}, \texttt{message:\ str},
+\texttt{state\_version:\ int}.
+
+\hypertarget{bookingservice}{%
+\subsubsection{\texorpdfstring{\texttt{BookingService}}{BookingService}}\label{bookingservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{billingservice}{%
+\subsubsection{\texorpdfstring{\texttt{BillingService}}{BillingService}}\label{billingservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}{%
+\subsection{4. Mô tả mọi phương
+thức}\label{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}}
+
+Xem \url{method_catalog.md}, được nhúng đầy đủ trong PDF. Danh mục có
+chữ ký, đầu vào/đầu ra, điều kiện, tác động, lỗi và quy tắc gọi lặp cho
+từng phương thức được vẽ.
+
+\hypertarget{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}{%
+\subsection{5. Ánh xạ và giới
+hạn}\label{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}}
+
+Các hàm hiện tại nằm trong core.booking/core.billing, model chủ yếu là
+dictionary; chưa có sổ cọc theo reference/operation\_key hoặc dedup
+charge\_id dùng chung. UI lọc ownership nhưng
+core.create\_shared\_booking chưa chặn PERSONAL. PIN trong core là 4 chữ
+số, chưa mở khóa IoT. US-06 thiếu nguồn quãng đường; trả xe thiếu tiền
+ghi nợ. INT-07 là mục tiêu kiểm tra version và ưu đãi một lần, không
+nhận là đã hoàn tất.
+
+\hypertarget{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}{%
+\subsection{6. Chính sách và ranh giới thiết
+kế}\label{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}}
+
+Giữ xe SS1 30 phút từ tạo; hạn SS2 30 phút từ giờ đến. Cọc 50.000,
+no-show phạt10.000/hoàn40.000 VNĐ. Reroute thêm15 phút miễn phí tối đa
+một lần, không đổi TTL. Sạc grace15 phút, phí10.000/khối15 phút bắt đầu
+sau grace; công suất mặc định150 kW/Hub và11 kW/cổng, cấu hình từng test
+có thể khác. Phí đỗ prototype5.000 VNĐ/lượt khác SRS tính theo giờ, phải
+ghi chênh lệch. Ownership PERSONAL/SHARED và binding nguồn lực không
+được trộn.
+
+NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu năng là mục
+tiêu thiết kế. Prototype per-session không chứng minh tính nhất quán
+toàn mạng giữa nhiều phiên; thiết kế tương lai cần shared
+storage/transaction/version và authorization thật. Đề không bắt buộc
+thêm database cho Sub3.
+
+\hypertarget{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}{%
+\subsection{7. Truy vết, test, đóng góp và
+AI}\label{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss1---revision-06112026}{%
+\section{Danh mục phương thức SS1 - revision
+06/11/2026}\label{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss1---revision-06112026}}
+
+Mọi kiểu/đơn vị như class diagram. \texttt{OperationResult} là hợp đồng
+đề xuất; các tuple/dict hiện có được nêu ở ánh xạ. UC chi tiết và test
+được liên kết trong traceability.md.
+
+\hypertarget{ss1-mth-01-bookingservice.create_booking}{%
+\subsection{\texorpdfstring{SS1-MTH-01:
+\texttt{BookingService.create\_booking}}{SS1-MTH-01: BookingService.create\_booking}}\label{ss1-mth-01-bookingservice.create_booking}}
+
+\textbf{Chữ ký:}
+\texttt{create\_booking(student\_id:\ str,\ hub\_id:\ str,\ vehicle\_id:\ str,\ destination\_hub\_id:\ Optional{[}str{]}\ =\ None,\ voucher\_code:\ Optional{[}str{]}\ =\ None)\ -\textgreater{}\ OperationResult{[}Booking{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Sinh viên chưa có lượt
+RESERVED/IN\_USE; xe SHARED, AVAILABLE và SoC \textgreater=20\%; Hub
+đích nếu chọn phải còn chỗ. Quét hết hạn trước, giữ cọc 50.000 VNĐ qua
+BillingService, giữ xe và chỗ đích, tạo expires\_at=created\_at+30 phút.
+Không đổi trạng thái khi kiểm tra thất bại;
+NOT\_FOUND/INVALID\_STATE/NO\_CAPACITY/INSUFFICIENT\_FUNDS/DEBT\_BLOCKED.
+Prototype chưa kiểm tra ownership tại core; UI có lọc. Thiết kế bắt buộc
+kiểm tra ở service.
+
+\textbf{Ánh xạ:} \texttt{src/core/booking.py:create\_shared\_booking}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss1-mth-02-bookingservice.pickup}{%
+\subsection{\texorpdfstring{SS1-MTH-02:
+\texttt{BookingService.pickup}}{SS1-MTH-02: BookingService.pickup}}\label{ss1-mth-02-bookingservice.pickup}}
+
+\textbf{Chữ ký:}
+\texttt{pickup(booking\_id:\ str,\ pin:\ str)\ -\textgreater{}\ OperationResult{[}Booking{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Yêu cầu đúng chủ booking
+(thiết kế), PIN và trạng thái RESERVED. Khi now \textgreater=
+expires\_at phải xử lý no-show trước khi xét nhận xe. Nhận trong hạn
+chuyển IN\_USE, ghi pickup\_time, giải phóng chỗ nguồn; giữ chỗ đích còn
+hiệu lực. PIN sai trả FORBIDDEN, hết hạn EXPIRED, gọi lại
+INVALID\_STATE; không trừ thêm cọc. Prototype dùng PIN 4 chữ số, QR/khóa
+vật lý là mô phỏng.
+
+\textbf{Ánh xạ:} \texttt{src/core/booking.py:pickup\_shared\_vehicle}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss1-mth-03-bookingservice.cancel}{%
+\subsection{\texorpdfstring{SS1-MTH-03:
+\texttt{BookingService.cancel}}{SS1-MTH-03: BookingService.cancel}}\label{ss1-mth-03-bookingservice.cancel}}
+
+\textbf{Chữ ký:}
+\texttt{cancel(booking\_id:\ str)\ -\textgreater{}\ OperationResult{[}Booking{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Chỉ chủ booking RESERVED
+trong hạn được hủy. Hoàn đúng cọc reference 50.000 VNĐ một lần, giải
+phóng xe/giữ chỗ đích, chuyển CANCELLED. Nếu tới hạn, xử lý EXPIRED và
+no-show thay vì hoàn toàn phần cọc. Gọi lại không hoàn thêm.
+NOT\_FOUND/INVALID\_STATE/EXPIRED.
+
+\textbf{Ánh xạ:} \texttt{src/core/booking.py:cancel\_shared\_booking}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss1-mth-04-bookingservice.return_vehicle}{%
+\subsection{\texorpdfstring{SS1-MTH-04:
+\texttt{BookingService.return\_vehicle}}{SS1-MTH-04: BookingService.return\_vehicle}}\label{ss1-mth-04-bookingservice.return_vehicle}}
+
+\textbf{Chữ ký:}
+\texttt{return\_vehicle(booking\_id:\ str,\ return\_hub\_id:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Booking IN\_USE, xe có
+trong active trip, Hub trả tồn tại và có chỗ hoặc giữ chỗ của lượt đó.
+Chốt thời lượng từ pickup\_time, miễn phí 30 phút + ưu đãi reroute nếu
+có; 1.000 VNĐ/phút sau miễn phí, voucher hợp lệ giảm 5.000 VNĐ và tổng
+không âm. Chuyển giữ chỗ cũ sang hiện diện Hub trả, COMPLETED, quyết
+toán/ghi nợ nếu thiếu. Gọi lại không thu thêm;
+NOT\_FOUND/INVALID\_STATE/NO\_CAPACITY. Không tự bịa số km.
+
+\textbf{Ánh xạ:} \texttt{src/core/booking.py:return\_shared\_vehicle}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss1-mth-05-bookingservice.expire_reservations}{%
+\subsection{\texorpdfstring{SS1-MTH-05:
+\texttt{BookingService.expire\_reservations}}{SS1-MTH-05: BookingService.expire\_reservations}}\label{ss1-mth-05-bookingservice.expire_reservations}}
+
+\textbf{Chữ ký:}
+\texttt{expire\_reservations(sim\_now:\ datetime)\ -\textgreater{}\ OperationResult{[}list{[}str{]}{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Duyệt booking RESERVED và
+sim\_now \textgreater= expires\_at. Chuyển EXPIRED, trả xe AVAILABLE và
+giải phóng hold đích, settle\_no\_show phạt 10.000 và hoàn 40.000 VNĐ.
+Trả danh sách booking vừa hết hạn; sweep lặp trả danh sách rỗng, không
+tác động IN\_USE. Đồng hồ service phải là đồng hồ mô phỏng.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/booking.py:process\_expired\_bookings}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss1-mth-06-bookingservice.accept_rerouting}{%
+\subsection{\texorpdfstring{SS1-MTH-06:
+\texttt{BookingService.accept\_rerouting}}{SS1-MTH-06: BookingService.accept\_rerouting}}\label{ss1-mth-06-bookingservice.accept_rerouting}}
+
+\textbf{Chữ ký:}
+\texttt{accept\_rerouting(booking\_id:\ str,\ new\_hub\_id:\ str,\ expected\_version:\ int,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}Booking{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} INT-07, chỉ sau xác nhận
+của người dùng. Kiểm tra chủ booking, RESERVED/IN\_USE, version và
+capacity Hub mới. Chuyển hold cũ/mới trong một commit, ưu đãi thêm 15
+phút miễn phí tối đa một lần; không kéo TTL giữ xe. Cùng key/cùng dữ
+liệu trả kết quả cũ, key khác dữ liệu CONFLICTING\_OPERATION;
+STALE\_STATE/NO\_CAPACITY không commit. Prototype chưa có
+expected\_version/operation\_key và vẫn có thể cộng ưu đãi khi đổi sang
+Hub khác nhiều lần; đây là hợp đồng đề xuất.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/booking.py:apply\_rerouting\_to\_booking}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss1-mth-07-billingservice.hold_deposit}{%
+\subsection{\texorpdfstring{SS1-MTH-07:
+\texttt{BillingService.hold\_deposit}}{SS1-MTH-07: BillingService.hold\_deposit}}\label{ss1-mth-07-billingservice.hold_deposit}}
+
+\textbf{Chữ ký:}
+\texttt{hold\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ amount\_vnd:\ int,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DepositResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Đúng owner/reference,
+amount\_vnd \textgreater=0, ví không nợ và đủ số dư. Chuyển từ khả dụng
+sang held theo reference; ghi ledger với cùng operation\_key. Lặp cùng
+nội dung không khóa thêm; CONFLICTING\_OPERATION nếu key khác payload,
+INSUFFICIENT\_FUNDS/DEBT\_BLOCKED nếu không đủ điều kiện. Prototype giữ
+tổng cọc, chưa có sổ cọc theo reference.
+
+\textbf{Ánh xạ:} \texttt{src/core/billing.py:hold\_deposit}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss1-mth-08-billingservice.release_deposit}{%
+\subsection{\texorpdfstring{SS1-MTH-08:
+\texttt{BillingService.release\_deposit}}{SS1-MTH-08: BillingService.release\_deposit}}\label{ss1-mth-08-billingservice.release_deposit}}
+
+\textbf{Chữ ký:}
+\texttt{release\_deposit(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}DepositResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Chỉ hoàn phần cọc chưa
+quyết toán của đúng reference, không lấy cọc booking khác. Tăng khả
+dụng, giảm held, ghi ledger; lặp trả kết quả cũ.
+NOT\_FOUND/FORBIDDEN/CONFLICTING\_OPERATION giữ nguyên dữ liệu.
+Prototype hàm thấp cấp chỉ bảo vệ tổng held, caller chịu kiểm tra vòng
+đời.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/billing.py:release\_held\_deposit\_full}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss1-mth-09-billingservice.settle_no_show}{%
+\subsection{\texorpdfstring{SS1-MTH-09:
+\texttt{BillingService.settle\_no\_show}}{SS1-MTH-09: BillingService.settle\_no\_show}}\label{ss1-mth-09-billingservice.settle_no_show}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_no\_show(owner\_id:\ str,\ reference\_id:\ str,\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Caller đã xác nhận EXPIRED.
+Với cọc 50.000 VNĐ, phạt 10.000 và hoàn 40.000; đóng cọc reference, ghi
+dòng tiền đúng một lần. Key/payload mâu thuẫn trả
+CONFLICTING\_OPERATION; không áp dụng cho lượt IN\_USE hoặc cọc đã quyết
+toán.
+
+\textbf{Ánh xạ:} \texttt{src/core/billing.py:settle\_noshow\_penalty},
+\texttt{src/core/billing.py:settle\_pev\_noshow\_penalty}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss1-mth-10-billingservice.settle_invoice}{%
+\subsection{\texorpdfstring{SS1-MTH-10:
+\texttt{BillingService.settle\_invoice}}{SS1-MTH-10: BillingService.settle\_invoice}}\label{ss1-mth-10-billingservice.settle_invoice}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_invoice(owner\_id:\ str,\ reference\_id:\ str,\ charge\_lines:\ list{[}ChargeLine{]},\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Chỉ thu charge\_id chưa
+thu, cùng ID khác tiền trả CONFLICTING\_CHARGE. Đối trừ/hoàn cọc đúng
+reference rồi trừ số dư tối đa phần có thể thu và ghi nợ phần thiếu;
+paid/refunded/debt lấy từ ledger. Gọi lặp cùng key trả kết quả cũ, không
+thu lại phí SS5 ở SS2. Prototype có nhiều hàm thu trực tiếp, chưa có
+BillingService hay dedup charge\_id. Thiết kế phải stage tất cả thay đổi
+trước commit.
+
+\textbf{Ánh xạ:} \texttt{src/core/billing.py:settle\_shared\_rental},
+\texttt{src/core/personal\_ev.py:check\_out\_personal\_ev},
+\texttt{src/core/billing.py:settle\_overstay\_charging}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss1---revision-06112026}{%
+\section{Truy vết SS1 - revision
+06/11/2026}\label{truy-vux1ebft-ss1---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss1_01---tra-cux1ee9u-ux111ux1eb7t-xe-nhux1eadn-xe-qua-qrpin}{%
+\subsection{UC\_SS1\_01 - Tra cứu, Đặt xe \& Nhận xe qua
+QR/PIN}\label{uc_ss1_01---tra-cux1ee9u-ux111ux1eb7t-xe-nhux1eadn-xe-qua-qrpin}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-01, US-02, US-03, US-03b, US-04, FR-01, FR-01b,
+  FR-01c.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Usecase\%20scenario/UC_SS1_NguyenThanhDat.md}{UC\_SS1\_NguyenThanhDat.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Sequence\%20diagrams/UC_SS1_01_NguyenThanhDat_sequence.puml}{UC\_SS1\_01\_NguyenThanhDat\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Activity\%20diagrams/UC_SS1_01_NguyenThanhDat_activity.puml}{UC\_SS1\_01\_NguyenThanhDat\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{BookingService.create\_booking},
+  \texttt{BookingService.pickup}. Class diagram SS1, catalog cùng thư
+  mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_booking\_pickup\_return\_capacity\_conservation},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_student\_ui\_filters\_available\_vehicles\_and\_books\_voucher}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss1_02---trux1ea3-xe-cux1eadp-nhux1eadt-vux1ecb-truxed-quyux1ebft-touxe1n-vuxed-ux111iux1ec7n-tux1eed}{%
+\subsection{UC\_SS1\_02 - Trả xe, Cập nhật vị trí \& Quyết toán ví điện
+tử}\label{uc_ss1_02---trux1ea3-xe-cux1eadp-nhux1eadt-vux1ecb-truxed-quyux1ebft-touxe1n-vuxed-ux111iux1ec7n-tux1eed}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-05b, US-06, FR-01c, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Usecase\%20scenario/UC_SS1_NguyenThanhDat.md}{UC\_SS1\_NguyenThanhDat.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Sequence\%20diagrams/UC_SS1_02_NguyenThanhDat_sequence.puml}{UC\_SS1\_02\_NguyenThanhDat\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Activity\%20diagrams/UC_SS1_02_NguyenThanhDat_activity.puml}{UC\_SS1\_02\_NguyenThanhDat\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{BookingService.return\_vehicle},
+  \texttt{BillingService.settle\_invoice}. Class diagram SS1, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_booking\_pickup\_return\_capacity\_conservation},
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_no\_silent\_debt\_loss},
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r08\_alternate\_hub\_return\_releases\_destination\_hold}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss1_03---hux1ee7y-ux111ux1eb7t-chux1ed7-houxe0n-cux1ecdc-phux1ea1t-quuxe1-giux1edd}{%
+\subsection{UC\_SS1\_03 - Hủy đặt chỗ \& Hoàn cọc / Phạt quá
+giờ}\label{uc_ss1_03---hux1ee7y-ux111ux1eb7t-chux1ed7-houxe0n-cux1ecdc-phux1ea1t-quuxe1-giux1edd}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-05, FR-02.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Usecase\%20scenario/UC_SS1_NguyenThanhDat.md}{UC\_SS1\_NguyenThanhDat.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Sequence\%20diagrams/UC_SS1_03_NguyenThanhDat_sequence.puml}{UC\_SS1\_03\_NguyenThanhDat\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS1/Activity\%20diagrams/UC_SS1_03_NguyenThanhDat_activity.puml}{UC\_SS1\_03\_NguyenThanhDat\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{BookingService.cancel},
+  \texttt{BookingService.expire\_reservations},
+  \texttt{BillingService.release\_deposit},
+  \texttt{BillingService.settle\_no\_show}. Class diagram SS1, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_noshow\_expiry\_and\_penalty},
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_early\_cancellation\_full\_refund},
+  \texttt{tests/test\_reservation\_30\_minutes.py::test\_reservation\_30\_minute\_boundary\_and\_single\_settlement}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-cases-ss1---revision-06112026}{%
+\section{Test cases SS1 - revision
+06/11/2026}\label{test-cases-ss1---revision-06112026}}
+
+Các test prototype hiện có đã chạy trong bộ49 test baseline; log chung ở
+docs/audit/submission\_3/review\_20261106/pytest-baseline.txt. Không có
+class service đề xuất đang chạy; không ghi PASS thay cho contract test.
+
+\hypertarget{uc_ss1_01}{%
+\subsection{UC\_SS1\_01}\label{uc_ss1_01}}
+
+\begin{itemize}
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_booking\_pickup\_return\_capacity\_conservation};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_student\_ui\_filters\_available\_vehicles\_and\_books\_voucher};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP. \#\# UC\_SS1\_02
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_booking\_pickup\_return\_capacity\_conservation};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_no\_silent\_debt\_loss};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r08\_alternate\_hub\_return\_releases\_destination\_hold};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP. \#\# UC\_SS1\_03
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_noshow\_expiry\_and\_penalty};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_early\_cancellation\_full\_refund};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_reservation\_30\_minutes.py::test\_reservation\_30\_minute\_boundary\_and\_single\_settlement};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\end{itemize}
+
+\hypertarget{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}{%
+\subsection{Các ca thiết kế chưa thực thi
+(DESIGNED)}\label{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}}
+
+\hypertarget{ss1-d01---lux1eb7p-settle_invoice-cuxf9ng-charge_id}{%
+\subsubsection{SS1-D01 - Lặp settle\_invoice cùng
+charge\_id}\label{ss1-d01---lux1eb7p-settle_invoice-cuxf9ng-charge_id}}
+
+\textbf{Đầu vào/thao tác:} reference A đã có charge\_id C đã thu10.000;
+gọi cùng key rồi đổi key nhưng cùng C.
+
+\textbf{Mong đợi:} Trả kết quả cũ, không trừ lần hai; C đổi amount phải
+CONFLICTING\_CHARGE, ví không đổi.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss1-d02---authorization-vuxe0-ownership-ux1edf-service}{%
+\subsubsection{SS1-D02 - Authorization và ownership ở
+service}\label{ss1-d02---authorization-vuxe0-ownership-ux1edf-service}}
+
+\textbf{Đầu vào/thao tác:} xe PERSONAL/owner khác; gọi create\_booking
+trực tiếp.
+
+\textbf{Mong đợi:} Từ chối FORBIDDEN/INVALID\_STATE, không giữ cọc/chỗ;
+core hiện chưa chặn ownership đầy đủ.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss1-d03---reroute-nhiux1ec1u-hub}{%
+\subsubsection{SS1-D03 - Reroute nhiều
+Hub}\label{ss1-d03---reroute-nhiux1ec1u-hub}}
+
+\textbf{Đầu vào/thao tác:} booking đổi Hub B rồi C bằng hai key.
+
+\textbf{Mong đợi:} Ưu đãi tổng15 phút, không cộng30; TTL không đổi.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

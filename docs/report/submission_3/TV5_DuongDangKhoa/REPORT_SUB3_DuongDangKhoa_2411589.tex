@@ -1,0 +1,2106 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS5 - Dương Đăng Khoa},
+    pdfauthor={Nhóm BEE BRAVE - Dương Đăng Khoa}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS5 -- Dương Đăng Khoa}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS5 -- Dương Đăng Khoa}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS5: Lập lịch Sạc Thông minh (Smart Charging Scheduler)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Dương Đăng Khoa\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2411589\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{submission-3-dux1b0ux1a1ng-ux111ux103ng-khoa-ss5}{%
+\section{Submission 3 --- Dương Đăng Khoa ---
+SS5}\label{submission-3-dux1b0ux1a1ng-ux111ux103ng-khoa-ss5}}
+
+\begin{quote}
+\textbf{Revision tích hợp06/11/2026:} có chỉnh sửa với Codex hỗ trợ; chủ
+sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được
+dùng khi khác nhận định của bản bàn giao trước.
+\end{quote}
+
+\textbf{MSSV:} 2411589\\
+\textbf{Phân hệ:} SS5 --- Lập lịch, phiên sạc và phí quá giờ\\
+\textbf{Trạng thái:} DRAFT --- ĐÃ HOÀN THIỆN NỘI DUNG, CHỜ KIỂM TRA KẾT
+QUẢ TEST VÀ XUẤT PDF\\
+\textbf{Khoảng thực hiện:} 21/10/2026--30/10/2026
+
+\href{../../../../GUIDANCE_FOR_SUB_3.md}{Hướng dẫn và phân công} ·
+\href{../shared/shared_contracts.md}{Quyết định dùng chung}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}{%
+\subsection{1. Phạm vi và đóng
+góp}\label{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}}
+
+Phân hệ SS5 phụ trách lập lịch sạc, quản lý phiên sạc và xử lý phí quá
+giờ tại các hub sạc.
+
+Các use case thuộc phạm vi cá nhân:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UC\_SS5\_01} --- Lập lịch sạc tự động theo điểm ưu tiên và
+  giới hạn công suất lưới.
+\item
+  \textbf{UC\_SS5\_02} --- Giám sát hàng chờ sạc, hoàn thành phiên sạc,
+  thời gian ân hạn và phí quá giờ.
+\end{itemize}
+
+\textbf{Đóng góp thực tế của cá nhân:}
+
+\begin{itemize}
+\tightlist
+\item
+  Xây dựng và hoàn thiện thuật toán tính điểm ưu tiên cho yêu cầu sạc.
+\item
+  Xây dựng cơ chế xếp hàng và cấp cổng sạc theo thứ tự ưu tiên.
+\item
+  Xử lý giới hạn tổng công suất sạc của hub.
+\item
+  Xây dựng mô hình phiên sạc và mô phỏng tiến trình sạc.
+\item
+  Xử lý thông báo khi SoC đạt ngưỡng 90\% và khi sạc hoàn thành.
+\item
+  Xử lý thời gian ân hạn và phí quá giờ.
+\item
+  Xây dựng class diagram SS5 và mô tả trách nhiệm, thuộc tính, phương
+  thức.
+\item
+  Xây dựng nội dung truy vết, test case và tự kiểm tra phân hệ.
+\item
+  Đối chiếu thiết kế SS5 với các giao tiếp dùng chung của nhóm.
+\end{itemize}
+
+Phân hệ SS5 được xây dựng theo hướng mô phỏng trong ứng dụng
+Python/Streamlit. Các giao tiếp ChargingService và một số kiểu dữ liệu
+dùng chung được mô tả theo hợp đồng kiến trúc; cần phân biệt rõ phần đã
+triển khai trong mã nguồn với phần thiết kế đề xuất.
+
+\hypertarget{deployment-view}{%
+\subsection{2. Deployment view}\label{deployment-view}}
+
+\href{../../../diagrams/submission_3/shared/deployment.puml}{Nguồn sơ đồ
+triển khai chung}
+
+\hypertarget{vux1ecb-truxed-phuxe2n-hux1ec7-ss5}{%
+\subsubsection{Vị trí phân hệ
+SS5}\label{vux1ecb-truxed-phuxe2n-hux1ec7-ss5}}
+
+SS5 nằm trong ứng dụng Smart E-Mobility Hub, được triển khai cùng ứng
+dụng Python/Streamlit. Phân hệ không phải một microservice độc lập và
+không có tiến trình triển khai riêng.
+
+\hypertarget{thiux1ebft-bux1ecbtiux1ebfn-truxecnh-dux1eef-liux1ec7u-vuxe0-giao-tiux1ebfp}{%
+\subsubsection{Thiết bị/tiến trình, dữ liệu và giao
+tiếp}\label{thiux1ebft-bux1ecbtiux1ebfn-truxecnh-dux1eef-liux1ec7u-vuxe0-giao-tiux1ebfp}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Presentation:} giao diện Streamlit trong
+  \texttt{src/components/smart\_charging.py}.
+\item
+  \textbf{Application/Core:} thuật toán lập lịch, hàng chờ, phiên sạc và
+  xử lý phí.
+\item
+  \textbf{State:} dữ liệu mô phỏng được lưu trong
+  \texttt{st.session\_state}.
+\item
+  \textbf{Giao tiếp nội bộ:} các module Python gọi trực tiếp nhau trong
+  cùng ứng dụng.
+\item
+  \textbf{Giao tiếp với SS2:} theo hợp đồng ChargingService để yêu cầu
+  sạc và truy vấn hóa đơn.
+\item
+  \textbf{Giao tiếp với SS7:} theo hợp đồng xử lý sự cố cổng sạc.
+\item
+  \textbf{Giao tiếp với TV1:} theo hợp đồng BillingService để chuyển các
+  khoản phí cần thanh toán.
+\end{itemize}
+
+\hypertarget{muxf4-phux1ecfng-vuxe0-giux1edbi-hux1ea1n-hiux1ec7n-tux1ea1i}{%
+\subsubsection{Mô phỏng và giới hạn hiện
+tại}\label{muxf4-phux1ecfng-vuxe0-giux1edbi-hux1ea1n-hiux1ec7n-tux1ea1i}}
+
+Ứng dụng hiện mô phỏng quá trình sạc, cập nhật SoC, trạng thái cổng và
+phiên sạc. Không khẳng định hệ thống đang kết nối trực tiếp với thiết bị
+IoT, trạm sạc vật lý hoặc hệ thống thanh toán thực tế.
+
+Các dữ liệu mô phỏng được lưu trong session state của Streamlit. Vì vậy,
+không mô tả dữ liệu SS5 hiện tại là dữ liệu được lưu bền vững trong cơ
+sở dữ liệu.
+
+\hypertarget{developmentimplementation-view}{%
+\subsection{3. Development/Implementation
+view}\label{developmentimplementation-view}}
+
+\href{../../../diagrams/submission_3/shared/implementation.puml}{Nguồn
+sơ đồ module chung}
+
+\hypertarget{module-giao-diux1ec7n-hiux1ec7n-tux1ea1i}{%
+\subsubsection{Module giao diện hiện
+tại}\label{module-giao-diux1ec7n-hiux1ec7n-tux1ea1i}}
+
+\texttt{src/components/smart\_charging.py}
+
+Module này chịu trách nhiệm khởi tạo và hiển thị giao diện quản lý sạc,
+hàng chờ, phiên sạc và quá giờ.
+
+\hypertarget{coreserviceadapter-vuxe0-phux1ee5-thuux1ed9c}{%
+\subsubsection{Core/service/adapter và phụ
+thuộc}\label{coreserviceadapter-vuxe0-phux1ee5-thuux1ed9c}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Module
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trách nhiệm
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{src/core/scheduler.py} & Định nghĩa yêu cầu sạc, phiên sạc và
+thuật toán lập lịch \\
+\texttt{src/core/policies.py} & Cung cấp chính sách công suất, phí quá
+giờ và đơn giá điện \\
+\texttt{src/core/billing.py} & Cung cấp các hàm xử lý giao dịch và
+phí \\
+\texttt{src/core/state.py} & Cung cấp cơ chế cập nhật phiên bản state \\
+\texttt{src/components/smart\_charging.py} & Kết nối giao diện với các
+chức năng SS5 \\
+\end{longtable}
+
+\hypertarget{uxe1nh-xux1ea1-code-hiux1ec7n-tux1ea1i-thiux1ebft-kux1ebf-ux111ux1ec1-xuux1ea5t}{%
+\subsubsection{Ánh xạ code hiện tại / thiết kế đề
+xuất}\label{uxe1nh-xux1ea1-code-hiux1ec7n-tux1ea1i-thiux1ebft-kux1ebf-ux111ux1ec1-xuux1ea5t}}
+
+\textbf{Đã triển khai trong mã nguồn:}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ChargingRequest}
+\item
+  \texttt{ChargingSession}
+\item
+  \texttt{SmartChargingScheduler}
+\item
+  Các hàm xử lý phí trong \texttt{billing.py}
+\item
+  Giao diện quản lý sạc trong \texttt{smart\_charging.py}
+\end{itemize}
+
+\textbf{Thiết kế theo hợp đồng kiến trúc, chưa được khẳng định là đã
+triển khai:}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ChargingService}
+\item
+  \texttt{ChargingRequestResult}
+\item
+  \texttt{ChargingPort}
+\item
+  \texttt{ChargingBill}
+\item
+  \texttt{PortFailureResult}
+\item
+  \texttt{BillingService} của TV1
+\end{itemize}
+
+Trong code hiện tại, giao diện SS5 gọi trực tiếp hàm
+\texttt{settle\_overstay\_charging()} từ module billing. Đây là điểm cần
+phân biệt với kiến trúc mục tiêu, trong đó SS5 tính phí và chuyển các
+khoản phí sang BillingService của TV1 để xử lý thanh toán.
+
+\hypertarget{class-diagram-cuxe1-nhuxe2n}{%
+\subsection{4. Class diagram cá
+nhân}\label{class-diagram-cuxe1-nhuxe2n}}
+
+\href{../../../diagrams/submission_3/SS5/class_diagram.puml}{Nguồn class
+diagram SS5}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS5/class_diagram.png}
+\caption{Class diagram SS5}
+\end{figure}
+
+Class diagram SS5 thể hiện các lớp và kiểu dữ liệu chính của phân hệ:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ChargingRequest}
+\item
+  \texttt{ChargingRequestResult}
+\item
+  \texttt{ChargingSession}
+\item
+  \texttt{ChargingPort}
+\item
+  \texttt{ChargingBill}
+\item
+  \texttt{PortFailureResult}
+\item
+  \texttt{ChargingService}
+\item
+  \texttt{SmartChargingScheduler}
+\end{itemize}
+
+Các lớp dùng chung hoặc thuộc phân hệ khác được tham chiếu theo đúng chủ
+sở hữu, không tạo bản sao định nghĩa.
+
+\hypertarget{phuxe2n-biux1ec7t-mux1ee9c-triux1ec3n-khai}{%
+\subsubsection{Phân biệt mức triển
+khai}\label{phuxe2n-biux1ec7t-mux1ee9c-triux1ec3n-khai}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Lớp & Mức triển khai \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{ChargingRequest} & Đã triển khai \\
+\texttt{ChargingSession} & Đã triển khai \\
+\texttt{SmartChargingScheduler} & Đã triển khai \\
+\texttt{ChargingRequestResult} & Kiểu dữ liệu theo hợp đồng, đề xuất \\
+\texttt{ChargingPort} & Kiểu dữ liệu theo hợp đồng, đề xuất \\
+\texttt{ChargingBill} & Kiểu dữ liệu theo hợp đồng, đề xuất \\
+\texttt{PortFailureResult} & Kiểu dữ liệu theo hợp đồng, đề xuất \\
+\texttt{ChargingService} & Service theo hợp đồng, đề xuất \\
+\end{longtable}
+
+Trong mã hiện tại, cổng sạc được biểu diễn bằng các ID và dữ liệu trạng
+thái, chưa có lớp \texttt{ChargingPort} độc lập.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp}{%
+\subsection{5. Mô tả lớp}\label{muxf4-tux1ea3-lux1edbp}}
+
+\hypertarget{chargingrequest}{%
+\subsubsection{5.1. ChargingRequest}\label{chargingrequest}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} biểu diễn yêu cầu sạc đang chờ cấp cổng.
+\item
+  \textbf{Mức triển khai:} đã triển khai.
+\item
+  \textbf{Thuộc tính:} \texttt{vehicle\_id}, \texttt{hub\_id},
+  \texttt{battery\_soc}, \texttt{has\_student\_booking},
+  \texttt{requested\_at}, \texttt{priority\_score}, \texttt{ownership},
+  \texttt{owner\_id}, \texttt{target\_soc}, \texttt{port\_kw}.
+\item
+  \textbf{Quan hệ:} được \texttt{SmartChargingScheduler} tiếp nhận và
+  sắp xếp.
+\item
+  \textbf{Invariant:} SoC nằm trong phạm vi 0--100; yêu cầu phải có
+  thông tin hub và vehicle hợp lệ.
+\item
+  \textbf{Phương thức:} \texttt{\_\_post\_init\_\_()},
+  \texttt{\_\_repr\_\_()}.
+\end{itemize}
+
+\hypertarget{chargingrequestresult}{%
+\subsubsection{5.2. ChargingRequestResult}\label{chargingrequestresult}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} trả kết quả tiếp nhận yêu cầu sạc cho bên gọi.
+\item
+  \textbf{Mức triển khai:} đề xuất theo hợp đồng.
+\item
+  \textbf{Thuộc tính:} \texttt{request\_id}, \texttt{vehicle\_id},
+  \texttt{hub\_id}, \texttt{status}, \texttt{session\_id}.
+\item
+  \textbf{Quan hệ:} kết quả của
+  \texttt{ChargingService.request\_charging()}.
+\item
+  \textbf{Invariant:} yêu cầu đang chờ chưa có phiên sạc thì
+  \texttt{session\_id} không được gán.
+\end{itemize}
+
+\hypertarget{chargingsession}{%
+\subsubsection{5.3. ChargingSession}\label{chargingsession}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} lưu trạng thái và dữ liệu của phiên sạc.
+\item
+  \textbf{Mức triển khai:} đã triển khai.
+\item
+  \textbf{Thuộc tính:} \texttt{session\_id}, \texttt{vehicle\_id},
+  \texttt{hub\_id}, \texttt{port\_id}, \texttt{port\_kw},
+  \texttt{current\_soc}, \texttt{target\_soc}, \texttt{status},
+  \texttt{started\_at}, \texttt{completed\_at},
+  \texttt{alert\_90\_sent}, \texttt{grace\_deadline},
+  \texttt{overstay\_minutes}, \texttt{overstay\_fee},
+  \texttt{energy\_delivered\_kwh}.
+\item
+  \textbf{Quan hệ:} được \texttt{SmartChargingScheduler} quản lý trong
+  danh sách phiên đang hoạt động.
+\item
+  \textbf{Invariant:} một xe không được có nhiều phiên sạc hoạt động
+  đồng thời; SoC nằm trong 0--100.
+\item
+  \textbf{Phương thức:} các phương thức quản lý phiên được thực hiện bởi
+  scheduler.
+\end{itemize}
+
+\hypertarget{chargingport}{%
+\subsubsection{5.4. ChargingPort}\label{chargingport}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} biểu diễn cổng sạc và trạng thái khả dụng.
+\item
+  \textbf{Mức triển khai:} đề xuất theo hợp đồng.
+\item
+  \textbf{Thuộc tính dự kiến:} \texttt{port\_id}, \texttt{hub\_id},
+  \texttt{power\_kw}, \texttt{status}, \texttt{session\_id}.
+\item
+  \textbf{Quan hệ:} thuộc một hub; có thể được một phiên sạc chiếm dụng.
+\item
+  \textbf{Invariant:} cổng đang bận không được cấp cho phiên khác.
+\end{itemize}
+
+\hypertarget{chargingbill}{%
+\subsubsection{5.5. ChargingBill}\label{chargingbill}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} biểu diễn thông tin phí điện và phí quá giờ của
+  phiên sạc.
+\item
+  \textbf{Mức triển khai:} đề xuất theo hợp đồng.
+\item
+  \textbf{Thuộc tính:} \texttt{session\_id},
+  \texttt{energy\_delivered\_kwh}, \texttt{energy\_fee\_vnd},
+  \texttt{overstay\_fee\_vnd}, \texttt{charge\_lines},
+  \texttt{payment\_info}.
+\item
+  \textbf{Quan hệ:} được cung cấp cho SS2 thông qua
+  \texttt{ChargingService.get\_bill()}.
+\item
+  \textbf{Invariant:} hóa đơn chỉ cung cấp dữ liệu tính phí; không tự
+  thực hiện trừ tiền ví.
+\end{itemize}
+
+\hypertarget{portfailureresult}{%
+\subsubsection{5.6. PortFailureResult}\label{portfailureresult}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} trả kết quả xử lý sự cố cổng sạc.
+\item
+  \textbf{Mức triển khai:} đề xuất theo hợp đồng.
+\item
+  \textbf{Thuộc tính:} \texttt{hub\_id}, \texttt{affected\_port\_ids},
+  \texttt{affected\_session\_ids}, \texttt{resulting\_capacity}.
+\item
+  \textbf{Quan hệ:} kết quả của
+  \texttt{ChargingService.handle\_port\_failure()}.
+\item
+  \textbf{Invariant:} sự cố cổng sạc không tự động thay đổi trạng thái
+  chỗ đỗ xe.
+\end{itemize}
+
+\hypertarget{chargingservice}{%
+\subsubsection{5.7. ChargingService}\label{chargingservice}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} cung cấp giao tiếp SS5 cho các phân hệ khác.
+\item
+  \textbf{Mức triển khai:} thiết kế theo hợp đồng, chưa khẳng định đã
+  triển khai.
+\item
+  \textbf{Phương thức chính:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{request\_charging(...)}
+  \item
+    \texttt{get\_bill(session\_id)}
+  \item
+    \texttt{handle\_port\_failure(...)}
+  \end{itemize}
+\item
+  \textbf{Quan hệ:} SS2 gọi yêu cầu sạc và truy vấn hóa đơn; SS7 gọi xử
+  lý sự cố cổng.
+\end{itemize}
+
+\hypertarget{smartchargingscheduler}{%
+\subsubsection{5.8.
+SmartChargingScheduler}\label{smartchargingscheduler}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trách nhiệm:} tính điểm ưu tiên, quản lý hàng chờ, cấp cổng,
+  giới hạn công suất và tiến trình phiên sạc.
+\item
+  \textbf{Mức triển khai:} đã triển khai.
+\item
+  \textbf{Thuộc tính:} \texttt{cap\_kw}, \texttt{\_queue},
+  \texttt{\_active\_sessions}.
+\item
+  \textbf{Quan hệ:} quản lý \texttt{ChargingRequest} và
+  \texttt{ChargingSession}.
+\item
+  \textbf{Invariant:} tổng công suất các phiên sạc được cấp không vượt
+  quá công suất giới hạn của hub.
+\item
+  \textbf{Phương thức:} \texttt{calculate\_priority()},
+  \texttt{add\_request()}, \texttt{remove\_request()},
+  \texttt{get\_sorted\_queue()}, \texttt{allocate\_ports()},
+  \texttt{advance\_simulation\_tick()}, \texttt{unplug\_vehicle()}.
+\end{itemize}
+
+\hypertarget{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c}{%
+\subsection{6. Mô tả phương
+thức}\label{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c}}
+
+\hypertarget{chargingrequest-1}{%
+\subsubsection{6.1. ChargingRequest}\label{chargingrequest-1}}
+
+\textbf{\texttt{\_\_post\_init\_\_()}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tự tính điểm ưu tiên khi yêu cầu chưa có điểm.
+\item
+  Dữ liệu tác động: \texttt{priority\_score}.
+\item
+  Tiền điều kiện: đối tượng yêu cầu sạc đã được tạo.
+\item
+  Hậu điều kiện: điểm ưu tiên được tính theo chính sách SS5.
+\end{itemize}
+
+\textbf{\texttt{\_\_repr\_\_()}}
+
+\begin{itemize}
+\tightlist
+\item
+  Trả chuỗi biểu diễn yêu cầu sạc.
+\item
+  Không thay đổi trạng thái.
+\end{itemize}
+
+\hypertarget{smartchargingscheduler-1}{%
+\subsubsection{6.2.
+SmartChargingScheduler}\label{smartchargingscheduler-1}}
+
+\textbf{\texttt{\_\_init\_\_(cap\_kw)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Khởi tạo scheduler với giới hạn công suất.
+\item
+  Tạo hàng chờ và danh sách phiên sạc đang hoạt động.
+\end{itemize}
+
+\textbf{\texttt{calculate\_priority(request)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tính điểm ưu tiên theo SoC và trạng thái đặt chỗ sinh viên.
+\item
+  Công thức:
+\end{itemize}
+
+\texttt{0.5\ *\ (100\ -\ SoC)\ +\ 100\ *\ I(SoC\ \textless{}\ 20)\ +\ 60\ *\ I(has\_student\_booking)\ +\ 30\ *\ I(SoC\ \textless{}\ 50)}
+
+\begin{itemize}
+\tightlist
+\item
+  SoC càng thấp thì điểm ưu tiên càng cao.
+\item
+  Yêu cầu SoC dưới 20 được cộng điểm ưu tiên khẩn cấp.
+\item
+  Yêu cầu có booking sinh viên được cộng điểm ưu tiên.
+\item
+  Yêu cầu SoC dưới 50 được cộng thêm điểm.
+\end{itemize}
+
+\textbf{\texttt{add\_request(request)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tiếp nhận yêu cầu sạc vào hàng chờ.
+\item
+  Loại yêu cầu trùng xe trước khi thêm.
+\item
+  Tính lại điểm ưu tiên.
+\end{itemize}
+
+\textbf{\texttt{remove\_request(vehicle\_id)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Loại yêu cầu của xe khỏi hàng chờ.
+\item
+  Không tạo phiên sạc.
+\end{itemize}
+
+\textbf{\texttt{get\_sorted\_queue()}}
+
+\begin{itemize}
+\tightlist
+\item
+  Trả hàng chờ theo điểm ưu tiên giảm dần.
+\item
+  Nếu điểm bằng nhau, ưu tiên thời điểm yêu cầu sớm hơn; tiếp theo là
+  \texttt{vehicle\_id} để bảo đảm thứ tự xác định.
+\end{itemize}
+
+\textbf{\texttt{allocate\_ports(hub\_id,\ available\_port\_count,\ current\_active\_kw)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Xét các yêu cầu thuộc hub.
+\item
+  Kiểm tra cổng còn khả dụng và tổng công suất hiện tại.
+\item
+  Chỉ cấp phiên nếu không vượt giới hạn công suất.
+\item
+  Yêu cầu chưa được cấp tiếp tục ở hàng chờ.
+\end{itemize}
+
+\textbf{\texttt{advance\_simulation\_tick(minutes)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Cập nhật năng lượng và SoC của các phiên sạc.
+\item
+  Phát sự kiện khi SoC đạt 90\%.
+\item
+  Khi SoC đạt 100\%, bắt đầu thời gian ân hạn.
+\item
+  Khi hết ân hạn mà xe vẫn chiếm cổng, chuyển sang trạng thái quá giờ và
+  tính phí.
+\end{itemize}
+
+\textbf{\texttt{unplug\_vehicle(session\_id)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Kết thúc phiên sạc và giải phóng phiên khỏi danh sách đang hoạt động.
+\end{itemize}
+
+\textbf{\texttt{queue\_length}}
+
+\begin{itemize}
+\tightlist
+\item
+  Trả số lượng yêu cầu đang chờ.
+\end{itemize}
+
+\textbf{\texttt{get\_queue\_as\_dicts()}}
+
+\begin{itemize}
+\tightlist
+\item
+  Trả hàng chờ dưới dạng danh sách dictionary phục vụ giao diện.
+\end{itemize}
+
+\hypertarget{chargingservice-thiux1ebft-kux1ebf-theo-hux1ee3p-ux111ux1ed3ng}{%
+\subsubsection{6.3. ChargingService --- thiết kế theo hợp
+đồng}\label{chargingservice-thiux1ebft-kux1ebf-theo-hux1ee3p-ux111ux1ed3ng}}
+
+\textbf{\texttt{request\_charging(owner\_id,\ vehicle\_id,\ hub\_id,\ current\_soc,\ target\_soc=100,\ reservation\_id=None)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Bên gọi: SS2.
+\item
+  Tiếp nhận yêu cầu sạc sau check-in hợp lệ.
+\item
+  Kiểm tra dữ liệu, tránh tạo yêu cầu trùng cho cùng chuyến/xe.
+\item
+  Kết quả: \texttt{OperationResult{[}ChargingRequestResult{]}}.
+\end{itemize}
+
+\textbf{\texttt{get\_bill(session\_id)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Bên gọi: SS2/SS3.
+\item
+  Trả dữ liệu đo lường và phí điện/phí quá giờ.
+\item
+  Không tự trừ tiền.
+\item
+  Kết quả: \texttt{OperationResult{[}ChargingBill{]}}.
+\end{itemize}
+
+\textbf{\texttt{handle\_port\_failure(hub\_id,\ port\_ids,\ operation\_key)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Bên gọi: TV7 thông qua SimulationCoordinator.
+\item
+  Xử lý các cổng gặp sự cố và trả danh sách phiên bị ảnh hưởng.
+\item
+  Không thay đổi chỗ đỗ xe chỉ vì cổng sạc gặp sự cố.
+\item
+  Kết quả: \texttt{OperationResult{[}PortFailureResult{]}}.
+\end{itemize}
+
+\hypertarget{billingservice-giao-tiux1ebfp-buxean-ngouxe0i-ss5}{%
+\subsubsection{6.4. BillingService --- giao tiếp bên ngoài
+SS5}\label{billingservice-giao-tiux1ebfp-buxean-ngouxe0i-ss5}}
+
+\textbf{\texttt{settle\_invoice(owner\_id,\ reference\_id,\ charge\_lines,\ operation\_key)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Chủ sở hữu: TV1.
+\item
+  SS5 cung cấp các khoản phí cần thu; TV1 chịu trách nhiệm xử lý ví và
+  thanh toán.
+\item
+  Cần hỗ trợ xử lý lặp an toàn theo \texttt{operation\_key} và ID khoản
+  phí.
+\end{itemize}
+
+\hypertarget{cuxe1c-huxe0m-billing-hiux1ec7n-tux1ea1i}{%
+\subsubsection{6.5. Các hàm billing hiện
+tại}\label{cuxe1c-huxe0m-billing-hiux1ec7n-tux1ea1i}}
+
+\textbf{\texttt{settle\_overstay\_charging(...)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tính và ghi nhận phí quá giờ/điện theo luồng hiện tại.
+\item
+  Trong code hiện tại có thao tác trực tiếp với wallet.
+\item
+  Đây là khác biệt so với kiến trúc mục tiêu, trong đó TV1 quản lý việc
+  thu tiền.
+\end{itemize}
+
+\textbf{\texttt{calculate\_private\_ev\_bill(...)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tính phí cho phiên sạc xe điện theo dữ liệu đầu vào.
+\item
+  Không được xem là một phương thức của \texttt{ChargingService} nếu
+  chưa được đưa vào class diagram.
+\end{itemize}
+
+\textbf{\texttt{record\_transaction(...)} và
+\texttt{record\_wallet\_debt(...)}}
+
+\begin{itemize}
+\tightlist
+\item
+  Ghi nhận giao dịch và khoản nợ ví theo luồng billing hiện tại.
+\item
+  Cần đối chiếu với trách nhiệm BillingService trong kiến trúc chung.
+\end{itemize}
+
+\hypertarget{truy-vux1ebft-sub1-sub2-sub3-revision-tuxedch-hux1ee3p}{%
+\subsection{7. Truy vết Sub1-Sub2-Sub3 (revision tích
+hợp)}\label{truy-vux1ebft-sub1-sub2-sub3-revision-tuxedch-hux1ee3p}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss5_01---lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}{%
+\subsection{UC\_SS5\_01 - Lập lịch sạc tự động theo điểm ưu tiên \& Giới
+hạn công suất
+lưới}\label{uc_ss5_01---lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-10, US-12, US-18, US-20, FR-04, FR-09, FR-11.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Usecase\%20scenario/UC_SS5_DuongDangKhoa.md}{UC\_SS5\_DuongDangKhoa.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Sequence\%20diagrams/UC_SS5_01_DuongDangKhoa_sequence.puml}{UC\_SS5\_01\_DuongDangKhoa\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Activity\%20diagrams/UC_SS5_01_DuongDangKhoa_activity.puml}{UC\_SS5\_01\_DuongDangKhoa\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{SmartChargingScheduler.calculate\_priority},
+  \texttt{SmartChargingScheduler.allocate\_ports},
+  \texttt{ChargingService.request\_charging}. Class diagram SS5, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_priority\_scores\_matching\_plan\_specification},
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_deterministic\_tie\_breaking},
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_allocation\_and\_power\_cap},
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r09\_repeated\_charging\_allocation\_obeys\_power\_cap}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss5_02---giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-tuxednh-phuxed-quuxe1-giux1edd}{%
+\subsection{UC\_SS5\_02 - Giám sát hàng chờ sạc, hoàn thành, ân hạn \&
+Tính phí quá
+giờ}\label{uc_ss5_02---giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-tuxednh-phuxed-quuxe1-giux1edd}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-12, US-19, US-19b, FR-05b, FR-10, FR-10b, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Usecase\%20scenario/UC_SS5_DuongDangKhoa.md}{UC\_SS5\_DuongDangKhoa.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Sequence\%20diagrams/UC_SS5_02_DuongDangKhoa_sequence.puml}{UC\_SS5\_02\_DuongDangKhoa\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Activity\%20diagrams/UC_SS5_02_DuongDangKhoa_activity.puml}{UC\_SS5\_02\_DuongDangKhoa\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{SmartChargingScheduler.advance\_simulation\_tick},
+  \texttt{SmartChargingScheduler.unplug\_vehicle},
+  \texttt{ChargingService.get\_bill}. Class diagram SS5, catalog cùng
+  thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_simulation\_tick\_and\_overstay},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_charging\_completion\_notification\_survives\_rerun\_and\_receipt\_is\_recorded},
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r11\_overstay\_charging\_settlement\_and\_debt}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{test-case-bonus}{%
+\subsection{8. Test case bonus}\label{test-case-bonus}}
+
+Các test case bonus được xây dựng để kiểm tra thuật toán ưu tiên, thứ tự
+cấp cổng, giới hạn công suất và tiến trình phiên sạc.
+
+\hypertarget{tc-ss5-b01-kiux1ec3m-tra-thux1ee9-tux1ef1-ux1b0u-tiuxean-vuxe0-cux1ea5p-cux1ed5ng}{%
+\subsubsection{TC-SS5-B01 --- Kiểm tra thứ tự ưu tiên và cấp
+cổng}\label{tc-ss5-b01-kiux1ec3m-tra-thux1ee9-tux1ef1-ux1b0u-tiuxean-vuxe0-cux1ea5p-cux1ed5ng}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UC:} UC\_SS5\_01
+\item
+  \textbf{Đầu vào:} giới hạn công suất 20 kW; ba yêu cầu sạc có SoC lần
+  lượt 5\%, 30\% có booking, 30\% không booking; công suất mỗi yêu cầu
+  7.4 kW.
+\item
+  \textbf{Kết quả mong đợi:} điểm ưu tiên lần lượt 177.5, 125.0, 65.0;
+  cấp hai yêu cầu đầu tiên; yêu cầu còn lại tiếp tục chờ.
+\item
+  \textbf{Trạng thái:} Đã thiết kế; chưa xác nhận PASS bằng kết quả chạy
+  thực tế.
+\end{itemize}
+
+\hypertarget{tc-ss5-b02-kiux1ec3m-tra-vux1b0ux1ee3t-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t}{%
+\subsubsection{TC-SS5-B02 --- Kiểm tra vượt giới hạn công
+suất}\label{tc-ss5-b02-kiux1ec3m-tra-vux1b0ux1ee3t-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UC:} UC\_SS5\_01
+\item
+  \textbf{Đầu vào:} giới hạn 20 kW; hai yêu cầu sạc, mỗi yêu cầu 11 kW.
+\item
+  \textbf{Kết quả mong đợi:} chỉ cấp một phiên sạc; yêu cầu thứ hai tiếp
+  tục chờ do không đủ công suất.
+\item
+  \textbf{Trạng thái:} Đã thiết kế; chưa xác nhận PASS bằng kết quả chạy
+  thực tế.
+\end{itemize}
+
+\hypertarget{tc-ss5-b03-kiux1ec3m-tra-houxe0n-thuxe0nh-vuxe0-phuxed-quuxe1-giux1edd}{%
+\subsubsection{TC-SS5-B03 --- Kiểm tra hoàn thành và phí quá
+giờ}\label{tc-ss5-b03-kiux1ec3m-tra-houxe0n-thuxe0nh-vuxe0-phuxed-quuxe1-giux1edd}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UC:} UC\_SS5\_02
+\item
+  \textbf{Đầu vào:} phiên sạc SoC 98\%, công suất 7.4 kW; mô phỏng 15
+  phút, tiếp tục 15 phút, rồi thêm 5 phút.
+\item
+  \textbf{Kết quả mong đợi:} chuyển sang grace period khi đạt 100\%; hết
+  15 phút ân hạn chuyển sang quá giờ; phí một block là 10.000 VND; thao
+  tác rút xe giải phóng phiên.
+\item
+  \textbf{Trạng thái:} Đã thiết kế; chưa xác nhận PASS bằng kết quả chạy
+  thực tế.
+\end{itemize}
+
+\hypertarget{tc-ss5-b04-ruxfat-xe-trong-thux1eddi-gian-uxe2n-hux1ea1n}{%
+\subsubsection{TC-SS5-B04 --- Rút xe trong thời gian ân
+hạn}\label{tc-ss5-b04-ruxfat-xe-trong-thux1eddi-gian-uxe2n-hux1ea1n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{UC:} UC\_SS5\_02
+\item
+  \textbf{Đầu vào:} phiên sạc SoC 98\%, công suất 7.4 kW; mô phỏng 15
+  phút để đạt trạng thái ân hạn; rút xe trước khi hết ân hạn.
+\item
+  \textbf{Kết quả mong đợi:} phiên được kết thúc; cổng được giải phóng;
+  không phát sinh phí quá giờ.
+\item
+  \textbf{Trạng thái:} Test case đề xuất; cần kiểm tra lại với yêu cầu
+  và mã nguồn trước khi xác nhận.
+\end{itemize}
+
+Test source: \texttt{tests/test\_scheduler\_and\_charging.py}
+
+Lệnh chạy:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pytest} \AttributeTok{{-}v}\NormalTok{ tests/test\_scheduler\_and\_charging.py}
+\end{Highlighting}
+\end{Shaded}
+
+Chỉ ghi trạng thái PASS khi có kết quả thực thi thành công. Không suy ra
+PASS từ việc test case đã được viết.
+
+\hypertarget{giux1edbi-hux1ea1n-vuxe0-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf}{%
+\subsection{9. Giới hạn và quyết định thiết
+kế}\label{giux1edbi-hux1ea1n-vuxe0-quyux1ebft-ux111ux1ecbnh-thiux1ebft-kux1ebf}}
+
+\hypertarget{quyux1ebft-ux111ux1ecbnh-uxe1p-dux1ee5ng}{%
+\subsubsection{Quyết định áp
+dụng}\label{quyux1ebft-ux111ux1ecbnh-uxe1p-dux1ee5ng}}
+
+\begin{itemize}
+\tightlist
+\item
+  SS5 quản lý hàng chờ, ưu tiên, cấp cổng, công suất, phiên sạc và phí
+  điện/phí quá giờ.
+\item
+  SS2 chịu trách nhiệm luồng booking/check-in; SS5 tiếp nhận yêu cầu sạc
+  theo hợp đồng.
+\item
+  SS7 điều phối mô phỏng và sự cố cổng theo hợp đồng.
+\item
+  TV1 sở hữu trách nhiệm xử lý thanh toán ví.
+\item
+  SS5 không tạo bản sao các lớp dùng chung và không tự định nghĩa lại
+  Hub.
+\item
+  Các đơn vị sử dụng thống nhất: SoC \%, công suất kW, năng lượng kWh,
+  tiền VND.
+\item
+  Thời gian ân hạn 15 phút và phí quá giờ theo block 15 phút, 10.000
+  VND/block được giữ độc lập với hold booking 30 phút của SS2.
+\end{itemize}
+
+\hypertarget{giux1edbi-hux1ea1n-thuux1ed9c-phuxe2n-hux1ec7}{%
+\subsubsection{Giới hạn thuộc phân
+hệ}\label{giux1edbi-hux1ea1n-thuux1ed9c-phuxe2n-hux1ec7}}
+
+\begin{itemize}
+\tightlist
+\item
+  Mô phỏng sạc hiện sử dụng dữ liệu trong session state của Streamlit.
+\item
+  Không xác nhận có tích hợp IoT thật hoặc thiết bị sạc vật lý.
+\item
+  Không xác nhận có thanh toán thật.
+\item
+  Không xác nhận có cơ sở dữ liệu bền vững cho phiên sạc.
+\item
+  Các giao tiếp ChargingService và xử lý sự cố cổng được mô tả theo hợp
+  đồng kiến trúc; cần đánh dấu rõ phần nào chưa có trong code hiện tại.
+\end{itemize}
+
+\hypertarget{vux1ea5n-ux111ux1ec1-ux111uxe3-tux1ef1-xux1eed-luxfd-cuxf2n-mux1edf}{%
+\subsubsection{Vấn đề đã tự xử lý / còn
+mở}\label{vux1ea5n-ux111ux1ec1-ux111uxe3-tux1ef1-xux1eed-luxfd-cuxf2n-mux1edf}}
+
+\begin{itemize}
+\tightlist
+\item
+  Đã xác định khác biệt giữa luồng billing hiện tại và kiến trúc mục
+  tiêu TV1.
+\item
+  Đã phân biệt lớp đã triển khai với lớp đề xuất.
+\item
+  Cần đối chiếu giao tiếp SS2/SS7 và BillingService theo phiên bản hợp
+  đồng chung đã chốt.
+\item
+  Cần lưu kết quả chạy test thực tế và kiểm tra PDF trước khi bàn giao.
+\end{itemize}
+
+\hypertarget{tux1ef1-kiux1ec3m-tra-vuxe0-khai-buxe1o-ai}{%
+\subsection{10. Tự kiểm tra và khai báo
+AI}\label{tux1ef1-kiux1ec3m-tra-vuxe0-khai-buxe1o-ai}}
+
+\hypertarget{xuxe1c-nhux1eadn-tux1ef1-kiux1ec3m-tra}{%
+\subsubsection{Xác nhận tự kiểm
+tra}\label{xuxe1c-nhux1eadn-tux1ef1-kiux1ec3m-tra}}
+
+\textbf{CHƯA XÁC NHẬN.}
+
+Tác giả chỉ cập nhật trạng thái xác nhận sau khi tự kiểm tra class
+diagram, method descriptions, traceability, code mapping, test results
+và PDF đầu ra.
+
+\hypertarget{khai-buxe1o-sux1eed-dux1ee5ng-ai}{%
+\subsubsection{Khai báo sử dụng
+AI}\label{khai-buxe1o-sux1eed-dux1ee5ng-ai}}
+
+AI được sử dụng để hỗ trợ:
+
+\begin{itemize}
+\tightlist
+\item
+  Tổ chức và hoàn thiện cấu trúc báo cáo theo mẫu Submission 3.
+\item
+  Hỗ trợ viết mô tả lớp, phương thức, thuật toán và truy vết.
+\item
+  Hỗ trợ rà soát sự nhất quán giữa code hiện tại và thiết kế đề xuất.
+\item
+  Hỗ trợ xây dựng test case và checklist tự kiểm tra.
+\end{itemize}
+
+Tác giả chịu trách nhiệm kiểm tra tính chính xác, đối chiếu với mã nguồn
+và tài liệu nhóm, chạy test, xác nhận kết quả và hoàn thiện bản nộp cuối
+cùng.
+
+\hypertarget{bux1ed9-file-revision-tuxedch-hux1ee3p}{%
+\subsection{11. Bộ file revision tích
+hợp}\label{bux1ed9-file-revision-tuxedch-hux1ee3p}}
+
+PDF chuẩn được build vào output/submission\_3/ từ nguồn
+Markdown/PlantUML cùng revision, kèm catalog, truy vết, test,
+self-check, AI và kiến trúc chung. Chủ sở hữu cần mở lại, xác nhận và
+nộp theo quy định LMS đã kiểm chứng.
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}{%
+\subsection{Hiệu chỉnh tích hợp
+06/11/2026}\label{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}}
+
+Các chữ ký ChargingService/BillingFunctions được bổ sung kiểu/tham số
+mặc định đúng code hoặc hợp đồng. Ảnh class\_diagram thiếu đuôi được
+thay bằng PNG/SVG chuẩn từ đúng nguồn. Catalog bổ sung điều kiện, tác
+động và lỗi mọi phương thức; test mới thiết kế vẫn DESIGNED. Không khẳng
+định ChargingService đã được tích hợp hoặc billing đã có dedup
+charge\_id. Nguồn DOCX/PDF cũ lưu trong lịch sử Git, không dùng thay bản
+build mới.
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss5---revision-06112026}{%
+\section{Danh mục mọi phương thức SS5 - revision
+06/11/2026}\label{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss5---revision-06112026}}
+
+Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn giao; kiểu
+dữ liệu/đơn vị và class descriptions đọc cùng REPORT\_SUB3.md. Không suy
+ra service đề xuất đã tồn tại từ test của hàm core.
+
+\hypertarget{chargingrequest.__post_init__}{%
+\subsection{\texorpdfstring{\texttt{ChargingRequest.\_\_post\_init\_\_}}{ChargingRequest.\_\_post\_init\_\_}}\label{chargingrequest.__post_init__}}
+
+\textbf{Chữ ký:} \texttt{\_\_post\_init\_\_()\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} ChargingRequest đã
+có. Sau khởi tạo dataclass, nếu priority\_score==0 thì tính từ
+calculate\_priority; score khác0 được giữ. Cần battery\_soc hữu
+hạn0--100 từ caller; core chưa validation đầy đủ. Không thêm queue hoặc
+thu phí.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingrequest.__repr__}{%
+\subsection{\texorpdfstring{\texttt{ChargingRequest.\_\_repr\_\_}}{ChargingRequest.\_\_repr\_\_}}\label{chargingrequest.__repr__}}
+
+\textbf{Chữ ký:} \texttt{\_\_repr\_\_()\ -\textgreater{}\ str}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} ChargingRequest đã
+có. Tạo chuỗi vehicle/SoC/priority để debug, không cập nhật
+request/queue. Gọi lặp cho cùng dữ liệu trả cùng chuỗi.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.__init__}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.\_\_init\_\_}}{SmartChargingScheduler.\_\_init\_\_}}\label{smartchargingscheduler.__init__}}
+
+\textbf{Chữ ký:}
+\texttt{\_\_init\_\_(cap\_kw:\ float\ =\ HUB\_POWER\_CAP\_KW)\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Scheduler đã có.
+Nhận cap\_kw mặc định150 kW, tạo queue và active\_sessions rỗng. Thiết
+kế ràng buộc cap\_kw\textgreater0/hữu hạn; khởi tạo không đặt cổng/thu
+phí.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.calculate_priority}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.calculate\_priority}}{SmartChargingScheduler.calculate\_priority}}\label{smartchargingscheduler.calculate_priority}}
+
+\textbf{Chữ ký:}
+\texttt{calculate\_priority(request:\ ChargingRequest)\ -\textgreater{}\ float}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Static đã có.
+Score=0.5\emph{(100-SoC)+100}I(SoC\textless20)+60\emph{I(has\_booking)+30}I(SoC\textless50).
+Trả float; ví dụ SoC5 không booking177.5, SoC30 không booking65, có
+booking125. Thuần đọc; chưa có thành phần giá điện hoặc thời gian chờ
+tăng điểm theo SRS, requested\_at chỉ dùng phá hòa.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.add_request}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.add\_request}}{SmartChargingScheduler.add\_request}}\label{smartchargingscheduler.add_request}}
+
+\textbf{Chữ ký:}
+\texttt{add\_request(request:\ ChargingRequest)\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: bỏ request
+cũ cùng vehicle\_id khỏi queue, tính lại score rồi append request mới.
+Không tự allocate hoặc kiểm tra trùng xe trong active\_sessions; yêu cầu
+active-dedup do service thiết kế kiểm tra. Không đổi wallet/cổng.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.remove_request}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.remove\_request}}{SmartChargingScheduler.remove\_request}}\label{smartchargingscheduler.remove_request}}
+
+\textbf{Chữ ký:}
+\texttt{remove\_request(vehicle\_id:\ str)\ -\textgreater{}\ Optional{[}ChargingRequest{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: tìm
+vehicle\_id trong queue, xóa và trả ChargingRequest hoặc None nếu không
+có. Gọi lặp trả None và không tác động session đang sạc.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.get_sorted_queue}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.get\_sorted\_queue}}{SmartChargingScheduler.get\_sorted\_queue}}\label{smartchargingscheduler.get_sorted_queue}}
+
+\textbf{Chữ ký:}
+\texttt{get\_sorted\_queue()\ -\textgreater{}\ List{[}ChargingRequest{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: trả bản sắp
+xếp theo (-priority\_score,requested\_at,vehicle\_id), không sửa thứ tự
+lưu của queue hay allocate. Bảo đảm tie deterministic khi
+requested\_at/ID đã cố định.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.allocate_ports}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.allocate\_ports}}{SmartChargingScheduler.allocate\_ports}}\label{smartchargingscheduler.allocate_ports}}
+
+\textbf{Chữ ký:}
+\texttt{allocate\_ports(hub\_id:\ str,\ available\_port\_count:\ int,\ current\_active\_kw:\ float\ =\ 0.0)\ -\textgreater{}\ List{[}Dict{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: theo Hub và
+số cổng available, ưu tiên queue, kiểm tra active power đang có và
+current\_active\_kw trước thêm port\_kw; trả danh sách allocation, xóa
+request được nhận và tạo session CHARGING. Không vượt cap khi gọi liên
+tiếp; không tự giảm charging\_ports của Hub ngoài scheduler, UI/service
+chịu đồng bộ. Caller loại cổng offline. Không đảm bảo port ID vật lý
+hoặc giao dịch SS2/SS7.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.advance_simulation_tick}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.advance\_simulation\_tick}}{SmartChargingScheduler.advance\_simulation\_tick}}\label{smartchargingscheduler.advance_simulation_tick}}
+
+\textbf{Chữ ký:}
+\texttt{advance\_simulation\_tick(minutes:\ int\ =\ 15)\ -\textgreater{}\ List{[}Dict{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: tăng mức
+pin/energy theo minutes, phát ngưỡng90\%, đạt target ghi completed và
+GRACE\_PERIOD. Sau15 phút grace, mỗi khối15 phút bắt đầu tính10.000 VNĐ;
+cập nhật session, trả sự kiện. Mỗi lời gọi là một bước thời gian mới,
+không idempotent; retry phải do service/key kiểm soát. Không tự thu ví;
+core dùng giờ session thực khi tạo, cần adapter đồng hồ mô phỏng.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.unplug_vehicle}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.unplug\_vehicle}}{SmartChargingScheduler.unplug\_vehicle}}\label{smartchargingscheduler.unplug_vehicle}}
+
+\textbf{Chữ ký:}
+\texttt{unplug\_vehicle(session\_id:\ str)\ -\textgreater{}\ Optional{[}ChargingSession{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: pop
+session\_id khỏi active\_sessions, trả ChargingSession hoặc None. Lặp
+không tháo phiên hai lần. UI/service trả port/count và chuyển trạng thái
+xe, đối soát phí; hàm scheduler không tự thay Hub/wallet.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{smartchargingscheduler.get_queue_as_dicts}{%
+\subsection{\texorpdfstring{\texttt{SmartChargingScheduler.get\_queue\_as\_dicts}}{SmartChargingScheduler.get\_queue\_as\_dicts}}\label{smartchargingscheduler.get_queue_as_dicts}}
+
+\textbf{Chữ ký:}
+\texttt{get\_queue\_as\_dicts()\ -\textgreater{}\ list}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Đã có: trả danh
+sách dictionary biểu diễn queue cho UI, không tạo request hay quyết
+toán. Không coi returned list là dữ liệu giao dịch có khóa hoặc snapshot
+toàn hệ thống.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingservice.request_charging}{%
+\subsection{\texorpdfstring{\texttt{ChargingService.request\_charging}}{ChargingService.request\_charging}}\label{chargingservice.request_charging}}
+
+\textbf{Chữ ký:}
+\texttt{request\_charging(owner\_id:\ str,\ vehicle\_id:\ str,\ hub\_id:\ str,\ current\_soc:\ float,\ target\_soc:\ float\ =\ 100.0,\ reservation\_id:\ Optional{[}str{]}\ =\ None)\ -\textgreater{}\ OperationResult{[}ChargingRequestResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-01 (thiết kế
+TV5). Xe/owner/Hub hợp lệ, check-in đã thành công, SoC0--100 và
+target\textgreater=current. Tạo request có ID ổn định, chưa có
+session/cổng khi còn chờ; thêm queue, cấp theo power/cổng thực khi có
+khả năng. Không cấp trùng cùng lượt/xe;
+NOT\_FOUND/FORBIDDEN/INVALID\_STATE/INVALID\_INPUT không commit.
+Prototype SS2 giảm cổng tổng hợp trực tiếp, chưa gọi service này.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingservice.get_bill}{%
+\subsection{\texorpdfstring{\texttt{ChargingService.get\_bill}}{ChargingService.get\_bill}}\label{chargingservice.get_bill}}
+
+\textbf{Chữ ký:}
+\texttt{get\_bill(session\_id:\ str)\ -\textgreater{}\ OperationResult{[}ChargingBill{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-02 (thiết kế
+TV5). Tìm session\_id và đối soát energy\_delivered\_kwh, giá/phí,
+charge\_id và khoản đã thu từ ledger. Trả ChargingBill chỉ đọc; gọi lặp
+không trừ ví hoặc tăng phí giả. Phiên không có trả NOT\_FOUND. SS2 lấy
+dòng phí còn phải thu, không tính lại giá điện/quá giờ độc lập.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{chargingservice.handle_port_failure}{%
+\subsection{\texorpdfstring{\texttt{ChargingService.handle\_port\_failure}}{ChargingService.handle\_port\_failure}}\label{chargingservice.handle_port_failure}}
+
+\textbf{Chữ ký:}
+\texttt{handle\_port\_failure(hub\_id:\ str,\ port\_ids:\ list{[}str{]},\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}PortFailureResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-05 (thiết kế
+TV5), chỉ trong coordinator Apply SS7. Kiểm tra Hub, port\_ids duy nhất
+thuộc Hub và operation\_key; ngắt các phiên liên quan, đưa về chờ hợp
+lệ, cập nhật port offline và công suất, trả PortFailureResult. Không
+thay capacity đỗ. Stage cùng preview, lỗi rollback toàn bộ. Lặp key/cùng
+nội dung không ngắt lần hai;
+CONFLICTING\_OPERATION/NOT\_FOUND/INVALID\_STATE. Prototype chưa có
+adapter này và cổng chỉ là số đếm ở simulator.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingfunctions.settle_overstay_charging}{%
+\subsection{\texorpdfstring{\texttt{BillingFunctions.settle\_overstay\_charging}}{BillingFunctions.settle\_overstay\_charging}}\label{billingfunctions.settle_overstay_charging}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_overstay\_charging(wallet:\ Dict{[}str,\ Any{]},\ session\_id:\ str,\ vehicle\_id:\ str,\ overstay\_fee:\ int,\ energy\_fee:\ int=0,\ kwh\_charged:\ float=0.0,\ sim\_time:\ Optional{[}str{]}=None)\ -\textgreater{}\ Dict{[}str,\ Any{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm module billing
+hiện có. Nhận phí overstay/energy đã tính và session\_id/vehicle\_id;
+thu tối đa số dư, ghi nợ còn thiếu, append invoice/ledger. Không tự tái
+tính tariff. Không có operation\_key/charge\_id dedup toàn cục; caller
+chỉ gọi một lần theo vòng đời unplug. Phí tiền VNĐ nguyên không âm là
+điều kiện caller phải bảo vệ.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingfunctions.calculate_private_ev_bill}{%
+\subsection{\texorpdfstring{\texttt{BillingFunctions.calculate\_private\_ev\_bill}}{BillingFunctions.calculate\_private\_ev\_bill}}\label{billingfunctions.calculate_private_ev_bill}}
+
+\textbf{Chữ ký:}
+\texttt{calculate\_private\_ev\_bill(parking\_fee:\ int=PARKING\_PER\_VISIT\_VND,\ kwh\_consumed:\ float=0.0,\ checkin\_time\_str:\ Optional{[}str{]}=None,\ overstay\_minutes:\ int=0)\ -\textgreater{}\ Dict{[}str,\ Any{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm module billing
+hiện có, thuần tính toán phí đỗ/kWh theo khung giờ và phí overstay. Trả
+dictionary phân rã phí, không đổi ví/Hub. parking\_fee mặc định5.000
+VNĐ/lượt, tariff7.000 cao điểm/3.000 thấp điểm; không mô hình hourly
+parking hay tích phân biểu giá theo từng tick.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingfunctions.record_transaction}{%
+\subsection{\texorpdfstring{\texttt{BillingFunctions.record\_transaction}}{BillingFunctions.record\_transaction}}\label{billingfunctions.record_transaction}}
+
+\textbf{Chữ ký:}
+\texttt{record\_transaction(wallet:\ Dict{[}str,\ Any{]},\ tx\_type:\ str,\ amount:\ int,\ booking\_id:\ Optional{[}str{]}=None,\ note:\ str=\textquotesingle{}\textquotesingle{},\ sim\_time:\ Optional{[}str{]}=None)\ -\textgreater{}\ Dict{[}str,\ Any{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm module billing
+hiện có: append ledger entry mới với tx\_id, time/type/amount và
+balance\_after/held\_after/debt\_after, booking\_id/note. Caller đã thực
+hiện thay đổi số dư; hàm không tự giữ/hoàn/thu và không kiểm tra dedup.
+Gọi hai lần tạo hai entry; đây không là một API idempotent.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingfunctions.record_wallet_debt}{%
+\subsection{\texorpdfstring{\texttt{BillingFunctions.record\_wallet\_debt}}{BillingFunctions.record\_wallet\_debt}}\label{billingfunctions.record_wallet_debt}}
+
+\textbf{Chữ ký:}
+\texttt{record\_wallet\_debt(wallet:\ Dict{[}str,\ Any{]},\ amount:\ int,\ reason:\ str=\textquotesingle{}\textquotesingle{},\ sim\_time:\ Optional{[}str{]}=None)\ -\textgreater{}\ None}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Hàm module billing
+hiện có: cộng khoản thiếu vào debt và ghi ledger theo reason/sim\_time;
+amount\textless=0 không phát sinh nợ. Gọi lại cùng amount vẫn có thể
+cộng thêm; caller kiểm soát vòng đời. Không coi ghi nợ là doanh thu thực
+thu.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{billingservice.settle_invoice}{%
+\subsection{\texorpdfstring{\texttt{BillingService.settle\_invoice}}{BillingService.settle\_invoice}}\label{billingservice.settle_invoice}}
+
+\textbf{Chữ ký:}
+\texttt{settle\_invoice(owner\_id:\ str,\ reference\_id:\ str,\ charge\_lines:\ list{[}ChargeLine{]},\ operation\_key:\ str)\ -\textgreater{}\ OperationResult{[}SettlementResult{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Chỉ thu charge\_id
+chưa thu, cùng ID khác tiền trả CONFLICTING\_CHARGE. Đối trừ/hoàn cọc
+đúng reference rồi trừ số dư tối đa phần có thể thu và ghi nợ phần
+thiếu; paid/refunded/debt lấy từ ledger. Gọi lặp cùng key trả kết quả
+cũ, không thu lại phí SS5 ở SS2. Prototype có nhiều hàm thu trực tiếp,
+chưa có BillingService hay dedup charge\_id. Thiết kế phải stage tất cả
+thay đổi trước commit.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{class-descriptions-bux1ed5-sung}{%
+\subsection{Class descriptions bổ
+sung}\label{class-descriptions-bux1ed5-sung}}
+
+\texttt{BillingFunctions} là nhóm hàm ở core/billing.py, không phải
+class instance; mọi phương thức được vẽ đã mô tả ở trên.
+\texttt{BillingService}, \texttt{ChargeLine}, \texttt{OperationResult}
+là hợp đồng thuộc TV1, không định nghĩa lại thành lớp SS5. DTO
+ChargingRequestResult/ChargingBill/PortFailureResult và ChargingPort
+thuộc TV5, không có phương thức ngoài các thuộc tính; số liệu kWh/kW/VNĐ
+và quan hệ được ghi trong báo cáo. \texttt{queue\_length} là property
+đọc int, không phải method bị bỏ mô tả; đọc len(\_queue), không thay đổi
+dữ liệu.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss5---revision-06112026}{%
+\section{Truy vết SS5 - revision
+06/11/2026}\label{truy-vux1ebft-ss5---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss5_01---lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}{%
+\subsection{UC\_SS5\_01 - Lập lịch sạc tự động theo điểm ưu tiên \& Giới
+hạn công suất
+lưới}\label{uc_ss5_01---lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-10, US-12, US-18, US-20, FR-04, FR-09, FR-11.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Usecase\%20scenario/UC_SS5_DuongDangKhoa.md}{UC\_SS5\_DuongDangKhoa.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Sequence\%20diagrams/UC_SS5_01_DuongDangKhoa_sequence.puml}{UC\_SS5\_01\_DuongDangKhoa\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Activity\%20diagrams/UC_SS5_01_DuongDangKhoa_activity.puml}{UC\_SS5\_01\_DuongDangKhoa\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{SmartChargingScheduler.calculate\_priority},
+  \texttt{SmartChargingScheduler.allocate\_ports},
+  \texttt{ChargingService.request\_charging}. Class diagram SS5, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_priority\_scores\_matching\_plan\_specification},
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_deterministic\_tie\_breaking},
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_allocation\_and\_power\_cap},
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r09\_repeated\_charging\_allocation\_obeys\_power\_cap}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss5_02---giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-tuxednh-phuxed-quuxe1-giux1edd}{%
+\subsection{UC\_SS5\_02 - Giám sát hàng chờ sạc, hoàn thành, ân hạn \&
+Tính phí quá
+giờ}\label{uc_ss5_02---giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-tuxednh-phuxed-quuxe1-giux1edd}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-12, US-19, US-19b, FR-05b, FR-10, FR-10b, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Usecase\%20scenario/UC_SS5_DuongDangKhoa.md}{UC\_SS5\_DuongDangKhoa.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Sequence\%20diagrams/UC_SS5_02_DuongDangKhoa_sequence.puml}{UC\_SS5\_02\_DuongDangKhoa\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS5/Activity\%20diagrams/UC_SS5_02_DuongDangKhoa_activity.puml}{UC\_SS5\_02\_DuongDangKhoa\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{SmartChargingScheduler.advance\_simulation\_tick},
+  \texttt{SmartChargingScheduler.unplug\_vehicle},
+  \texttt{ChargingService.get\_bill}. Class diagram SS5, catalog cùng
+  thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_scheduler\_and\_charging.py::test\_simulation\_tick\_and\_overstay},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_charging\_completion\_notification\_survives\_rerun\_and\_receipt\_is\_recorded},
+  \texttt{tests/test\_submission\_2\_readiness\_fixes.py::test\_r11\_overstay\_charging\_settlement\_and\_debt}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-case-bonus-dux1b0ux1a1ng-ux111ux103ng-khoa-ss5}{%
+\section{TEST CASE BONUS --- DƯƠNG ĐĂNG KHOA ---
+SS5}\label{test-case-bonus-dux1b0ux1a1ng-ux111ux103ng-khoa-ss5}}
+
+\textbf{Trạng thái:} Đã thiết kế test case (DESIGNED); chưa chạy kiểm
+thử Sub3 (NOT\_RUN). Không có kết quả PASS mặc định.
+
+\hypertarget{uc_ss5_01-lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-vuxe0-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}{%
+\subsection{UC\_SS5\_01 --- Lập lịch sạc tự động theo điểm ưu tiên và
+giới hạn công suất
+lưới}\label{uc_ss5_01-lux1eadp-lux1ecbch-sux1ea1c-tux1ef1-ux111ux1ed9ng-theo-ux111iux1ec3m-ux1b0u-tiuxean-vuxe0-giux1edbi-hux1ea1n-cuxf4ng-suux1ea5t-lux1b0ux1edbi}}
+
+\hypertarget{tc-ss5-b01-luux1ed3ng-chuxednh-tuxednh-ux111iux1ec3m-ux1b0u-tiuxean-vuxe0-phuxe2n-bux1ed5-cux1ed5ng-sux1ea1c}{%
+\subsubsection{TC-SS5-B01 --- Luồng chính: Tính điểm ưu tiên và phân bổ
+cổng
+sạc}\label{tc-ss5-b01-luux1ed3ng-chuxednh-tuxednh-ux111iux1ec3m-ux1b0u-tiuxean-vuxe0-phuxe2n-bux1ed5-cux1ed5ng-sux1ea1c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Test ID:} TC-SS5-B01
+\item
+  \textbf{Method ID:}
+  \texttt{SmartChargingScheduler.calculate\_priority()},
+  \texttt{SmartChargingScheduler.get\_sorted\_queue()},
+  \texttt{SmartChargingScheduler.allocate\_ports()}
+\item
+  \textbf{Tiền điều kiện:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Scheduler được khởi tạo với giới hạn công suất 20 kW.
+  \item
+    Hub H1 có 3 cổng sạc khả dụng.
+  \item
+    Không có phiên sạc nào đang hoạt động.
+  \end{itemize}
+\item
+  \textbf{Dữ liệu đầu vào:}
+\end{itemize}
+
+\begin{longtable}[]{@{}lrlr@{}}
+\toprule\noalign{}
+Vehicle ID & SoC & Student Booking & Port Power \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+EV-01 & 5\% & No & 7.4 kW \\
+EV-02 & 30\% & Yes & 7.4 kW \\
+EV-03 & 30\% & No & 7.4 kW \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Các bước thực hiện:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Khởi tạo \texttt{SmartChargingScheduler(cap\_kw=20.0)}.
+  \item
+    Tạo ba \texttt{ChargingRequest} tương ứng với dữ liệu đầu vào.
+  \item
+    Gọi \texttt{add\_request()} cho từng request.
+  \item
+    Gọi \texttt{get\_sorted\_queue()} để kiểm tra thứ tự ưu tiên.
+  \item
+    Gọi
+    \texttt{allocate\_ports(hub\_id="H1",\ available\_port\_count=3)}.
+  \item
+    Kiểm tra số phiên sạc được tạo và số request còn lại trong queue.
+  \end{enumerate}
+\item
+  \textbf{Kết quả mong đợi:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    EV-01 có Priority Score = 177.5.
+  \item
+    EV-02 có Priority Score = 125.0.
+  \item
+    EV-03 có Priority Score = 65.0.
+  \item
+    Thứ tự ưu tiên: EV-01 → EV-02 → EV-03.
+  \item
+    Chỉ hai phương tiện đầu tiên được phân bổ cổng vì tổng công suất là
+    14.8 kW; nếu phân bổ thêm EV-03 thì tổng công suất là 22.2 kW, vượt
+    giới hạn 20 kW.
+  \item
+    Hai phiên sạc được tạo; một request còn lại trong queue.
+  \end{itemize}
+\item
+  \textbf{Kết quả thực tế / bằng chứng:} CHƯA CHẠY.
+\item
+  \textbf{Trạng thái:} DESIGNED / NOT\_RUN.
+\end{itemize}
+
+\hypertarget{tc-ss5-b02-ngoux1ea1i-lux1ec7-tux1ed5ng-cuxf4ng-suux1ea5t-vux1b0ux1ee3t-giux1edbi-hux1ea1n-hub}{%
+\subsubsection{TC-SS5-B02 --- Ngoại lệ: Tổng công suất vượt giới hạn
+hub}\label{tc-ss5-b02-ngoux1ea1i-lux1ec7-tux1ed5ng-cuxf4ng-suux1ea5t-vux1b0ux1ee3t-giux1edbi-hux1ea1n-hub}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Test ID:} TC-SS5-B02
+\item
+  \textbf{Method ID:} \texttt{SmartChargingScheduler.add\_request()},
+  \texttt{SmartChargingScheduler.allocate\_ports()}
+\item
+  \textbf{Tiền điều kiện:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Scheduler được khởi tạo với giới hạn công suất 20 kW.
+  \item
+    Hub H1 có 3 cổng khả dụng.
+  \item
+    Không có phiên sạc đang hoạt động.
+  \end{itemize}
+\item
+  \textbf{Dữ liệu đầu vào:}
+\end{itemize}
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule\noalign{}
+Vehicle ID & SoC & Port Power \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+EV-04 & 10\% & 11 kW \\
+EV-05 & 15\% & 11 kW \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Các bước thực hiện:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Khởi tạo \texttt{SmartChargingScheduler(cap\_kw=20.0)}.
+  \item
+    Tạo hai \texttt{ChargingRequest} cho EV-04 và EV-05.
+  \item
+    Thêm hai request vào hàng đợi.
+  \item
+    Gọi
+    \texttt{allocate\_ports(hub\_id="H1",\ available\_port\_count=3)}.
+  \item
+    Kiểm tra kết quả phân bổ và hàng đợi sau khi xử lý.
+  \end{enumerate}
+\item
+  \textbf{Kết quả mong đợi:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    EV-04 được ưu tiên phân bổ trước.
+  \item
+    Công suất sau khi phân bổ EV-04 là 11 kW.
+  \item
+    Không thể phân bổ EV-05 vì tổng công suất dự kiến là 22 kW, vượt
+    giới hạn 20 kW.
+  \item
+    Chỉ một phiên sạc được tạo.
+  \item
+    EV-05 tiếp tục ở trạng thái chờ trong queue.
+  \item
+    Không có phiên sạc nào làm tổng công suất vượt 20 kW.
+  \end{itemize}
+\item
+  \textbf{Kết quả thực tế / bằng chứng:} CHƯA CHẠY.
+\item
+  \textbf{Trạng thái:} DESIGNED / NOT\_RUN.
+\end{itemize}
+
+\hypertarget{uc_ss5_02-giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-vuxe0-tuxednh-phuxed-quuxe1-giux1edd}{%
+\subsection{UC\_SS5\_02 --- Giám sát hàng chờ sạc, hoàn thành, ân hạn và
+tính phí quá
+giờ}\label{uc_ss5_02-giuxe1m-suxe1t-huxe0ng-chux1edd-sux1ea1c-houxe0n-thuxe0nh-uxe2n-hux1ea1n-vuxe0-tuxednh-phuxed-quuxe1-giux1edd}}
+
+\hypertarget{tc-ss5-b03-luux1ed3ng-chuxednh-sux1ea1c-houxe0n-tux1ea5t-hux1ebft-uxe2n-hux1ea1n-vuxe0-phuxe1t-sinh-phuxed-overstay}{%
+\subsubsection{TC-SS5-B03 --- Luồng chính: Sạc hoàn tất, hết ân hạn và
+phát sinh phí
+Overstay}\label{tc-ss5-b03-luux1ed3ng-chuxednh-sux1ea1c-houxe0n-tux1ea5t-hux1ebft-uxe2n-hux1ea1n-vuxe0-phuxe1t-sinh-phuxed-overstay}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Test ID:} TC-SS5-B03
+\item
+  \textbf{Method ID:}
+  \texttt{SmartChargingScheduler.advance\_simulation\_tick()},
+  \texttt{SmartChargingScheduler.unplug\_vehicle()}
+\item
+  \textbf{Tiền điều kiện:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Scheduler được khởi tạo với giới hạn công suất 150 kW.
+  \item
+    Hub H1 có ít nhất một cổng sạc khả dụng.
+  \item
+    Không có phiên sạc đang hoạt động.
+  \end{itemize}
+\item
+  \textbf{Dữ liệu đầu vào:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Vehicle ID: EV-06.
+  \item
+    Initial SoC: 98\%.
+  \item
+    Port Power: 7.4 kW.
+  \item
+    Target SoC: 100\%.
+  \item
+    Grace Period: 15 phút.
+  \item
+    Overstay Rate: 10,000 VND / 15 phút.
+  \end{itemize}
+\item
+  \textbf{Các bước thực hiện:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Khởi tạo \texttt{SmartChargingScheduler(cap\_kw=150.0)}.
+  \item
+    Tạo request cho EV-06 với SoC 98\% và công suất cổng 7.4 kW.
+  \item
+    Thêm request vào queue và gọi \texttt{allocate\_ports()}.
+  \item
+    Lấy phiên sạc vừa tạo từ \texttt{\_active\_sessions}.
+  \item
+    Gọi \texttt{advance\_simulation\_tick(minutes=15)} để mô phỏng quá
+    trình sạc.
+  \item
+    Kiểm tra trạng thái phiên sạc sau khi đạt SoC 100\%.
+  \item
+    Gọi \texttt{advance\_simulation\_tick(minutes=15)} để mô phỏng thời
+    gian ân hạn.
+  \item
+    Gọi \texttt{advance\_simulation\_tick(minutes=5)} để mô phỏng xe
+    tiếp tục chiếm cổng sau thời gian ân hạn.
+  \item
+    Kiểm tra trạng thái Overstay và phí phát sinh.
+  \item
+    Gọi \texttt{unplug\_vehicle(session\_id)} để giải phóng phiên sạc.
+  \end{enumerate}
+\item
+  \textbf{Kết quả mong đợi:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Phiên sạc chuyển sang \texttt{GRACE\_PERIOD} sau khi đạt SoC 100\%.
+  \item
+    Trong 15 phút ân hạn, phiên vẫn ở trạng thái \texttt{GRACE\_PERIOD}.
+  \item
+    Sau khi vượt quá thời gian ân hạn, phiên chuyển sang
+    \texttt{OVERSTAY}.
+  \item
+    Phí Overstay được tính là 10,000 VND.
+  \item
+    Gọi \texttt{unplug\_vehicle()} trả về phiên sạc đã kết thúc.
+  \item
+    Phiên sạc được loại khỏi \texttt{\_active\_sessions}.
+  \end{itemize}
+\item
+  \textbf{Kết quả thực tế / bằng chứng:} CHƯA CHẠY.
+\item
+  \textbf{Trạng thái:} DESIGNED / NOT\_RUN.
+\end{itemize}
+
+\hypertarget{tc-ss5-b04-ngoux1ea1i-lux1ec7-xe-rux1eddi-cux1ed5ng-trong-thux1eddi-gian-uxe2n-hux1ea1n}{%
+\subsubsection{TC-SS5-B04 --- Ngoại lệ: Xe rời cổng trong thời gian ân
+hạn}\label{tc-ss5-b04-ngoux1ea1i-lux1ec7-xe-rux1eddi-cux1ed5ng-trong-thux1eddi-gian-uxe2n-hux1ea1n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Test ID:} TC-SS5-B04
+\item
+  \textbf{Method ID:}
+  \texttt{SmartChargingScheduler.advance\_simulation\_tick()},
+  \texttt{SmartChargingScheduler.unplug\_vehicle()}
+\item
+  \textbf{Tiền điều kiện:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Scheduler được khởi tạo với giới hạn công suất 150 kW.
+  \item
+    Hub H1 có ít nhất một cổng sạc khả dụng.
+  \item
+    Không có phiên sạc đang hoạt động.
+  \end{itemize}
+\item
+  \textbf{Dữ liệu đầu vào:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Vehicle ID: EV-07.
+  \item
+    Initial SoC: 98\%.
+  \item
+    Port Power: 7.4 kW.
+  \item
+    Target SoC: 100\%.
+  \item
+    Grace Period: 15 phút.
+  \end{itemize}
+\item
+  \textbf{Các bước thực hiện:}
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Khởi tạo \texttt{SmartChargingScheduler(cap\_kw=150.0)}.
+  \item
+    Tạo request cho EV-07 với SoC 98\%.
+  \item
+    Thêm request vào queue và phân bổ cổng sạc.
+  \item
+    Lấy phiên sạc từ \texttt{\_active\_sessions}.
+  \item
+    Gọi \texttt{advance\_simulation\_tick(minutes=15)} để đưa phiên sạc
+    đến trạng thái hoàn tất.
+  \item
+    Kiểm tra phiên sạc chuyển sang \texttt{GRACE\_PERIOD}.
+  \item
+    Trong thời gian ân hạn, gọi \texttt{unplug\_vehicle(session\_id)}.
+  \item
+    Kiểm tra phiên sạc đã được giải phóng và không phát sinh phí
+    Overstay.
+  \end{enumerate}
+\item
+  \textbf{Kết quả mong đợi:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Phiên sạc đạt trạng thái \texttt{GRACE\_PERIOD}.
+  \item
+    Khi xe rời cổng trong thời gian ân hạn, phiên sạc được kết thúc.
+  \item
+    Phiên sạc được loại khỏi \texttt{\_active\_sessions}.
+  \item
+    Không phát sinh phí Overstay.
+  \item
+    Cổng sạc có thể được sử dụng cho request tiếp theo.
+  \end{itemize}
+\item
+  \textbf{Kết quả thực tế / bằng chứng:} CHƯA CHẠY.
+\item
+  \textbf{Trạng thái:} DESIGNED / NOT\_RUN.
+\end{itemize}
+
+\hypertarget{test-execution-summary}{%
+\subsection{Test Execution Summary}\label{test-execution-summary}}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+Test ID & Use Case & Test Type & Status \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+TC-SS5-B01 & UC\_SS5\_01 & Main Flow & DESIGNED / NOT\_RUN \\
+TC-SS5-B02 & UC\_SS5\_01 & Exception Flow & DESIGNED / NOT\_RUN \\
+TC-SS5-B03 & UC\_SS5\_02 & Main Flow & DESIGNED / NOT\_RUN \\
+TC-SS5-B04 & UC\_SS5\_02 & Exception Flow & DESIGNED / NOT\_RUN \\
+\end{longtable}
+
+\textbf{Test File:} \texttt{tests/test\_scheduler\_and\_charging.py}
+(unit tests hiện có); bốn bonus test case ở trên là thiết kế bổ sung,
+chưa được xác nhận đã viết thành test function.
+
+\textbf{Execution Command:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{pytest} \AttributeTok{{-}v}\NormalTok{ tests/test\_scheduler\_and\_charging.py}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Important:} Chỉ cập nhật trạng thái thành PASS hoặc FAIL sau khi
+thực thi test và lưu lại bằng chứng tương ứng.
+
+\hypertarget{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}{%
+\subsection{Đối chiếu thực thi
+06/11/2026}\label{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}}
+
+Bộ49 test hiện có đã chạy PASS (log baseline chung). Các tên test dẫn
+trong traceability.md được đối chiếu với nguồn. Nhãn PASS của bản bàn
+giao chỉ có hiệu lực trong phạm vi các assert thực sự có trong test đó;
+các điều kiện mở rộng/operation\_key/service đề xuất vẫn DESIGNED. Không
+dùng test của core để xác nhận service chưa tồn tại.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

@@ -429,7 +429,6 @@ Chỉ ghi trạng thái PASS khi có kết quả thực thi thành công. Không
 
 ## 10. Tự kiểm tra và khai báo AI
 
-[Checklist tự chịu trách nhiệm](self_check.md) · [Khai báo AI](ai_usage.md)
 
 ### Xác nhận tự kiểm tra
 
@@ -460,7 +459,6 @@ Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.
 
 ![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
 
-Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
 
 ## Hiệu chỉnh tích hợp 06/11/2026
 

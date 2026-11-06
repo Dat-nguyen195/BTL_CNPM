@@ -1,0 +1,579 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS3 - Phạm Tiến Đạt},
+    pdfauthor={Nhóm BEE BRAVE - Phạm Tiến Đạt}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS3 -- Phạm Tiến Đạt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS3 -- Phạm Tiến Đạt}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS3: Giám sát Mạng lưới Hub (Hub Network Monitoring)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Phạm Tiến Đạt\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2410724\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{submission-3---phux1ea1m-tiux1ebfn-ux111ux1ea1t---ss3}{%
+\section{Submission 3 - Phạm Tiến Đạt -
+SS3}\label{submission-3---phux1ea1m-tiux1ebfn-ux111ux1ea1t---ss3}}
+
+\textbf{MSSV:} 2410724. \textbf{Revision:} 06/11/2026. \textbf{Trạng
+thái:} bản tích hợp kỹ thuật, cần chủ sở hữu đọc và xác nhận trước nộp.
+
+Nội dung được bổ sung/chỉnh trong đợt tổng hợp theo yêu cầu trưởng nhóm,
+có AI hỗ trợ; không ghi nhận thay tác giả rằng họ đã tự làm hoặc tự xác
+nhận. Nguồn bàn giao cũ giữ trong lịch sử Git.
+
+\hypertarget{phux1ea1m-vi}{%
+\subsection{1. Phạm vi}\label{phux1ea1m-vi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{UC\_SS3\_01}: Giám sát mạng lưới Hub, KPI \& Doanh thu thời
+  gian thực.
+\item
+  \texttt{UC\_SS3\_02}: Cảnh báo phân cấp chiếm dụng Hub \& Sự cố IoT.
+\end{itemize}
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{class-diagram-ss3}{%
+\subsection{2. Class diagram SS3}\label{class-diagram-ss3}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS3/class_diagram.png}
+\caption{Class diagram SS3}
+\end{figure}
+
+Mô hình OOP là thiết kế đề xuất, trừ HubEventSimulator thực sự tồn tại ở
+SS6. Service trong sơ đồ là giao tiếp nội bộ, không phải server độc lập.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}{%
+\subsection{3. Mô tả lớp, thuộc tính và ràng
+buộc}\label{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}}
+
+\hypertarget{hub}{%
+\subsubsection{\texorpdfstring{\texttt{Hub}}{Hub}}\label{hub}}
+
+Mô hình chuẩn TV3 cho toàn nhóm. Capacity:
+available+present+holds+background=total, present loại xe IN\_USE. Cổng
+sạc và chỗ đỗ là hai tài nguyên riêng.
+
+Thuộc tính và kiểu: \texttt{hub\_id:\ str}, \texttt{name:\ str},
+\texttt{latitude:\ float}, \texttt{longitude:\ float},
+\texttt{total\_slots:\ int}, \texttt{available\_slots:\ int},
+\texttt{destination\_holds:\ int}, \texttt{background\_occupied:\ int},
+\texttt{current\_vehicles:\ list{[}Vehicle{]}},
+\texttt{charging\_ports:\ dict{[}str,int{]}}.
+
+\hypertarget{occupancysnapshot}{%
+\subsubsection{\texorpdfstring{\texttt{OccupancySnapshot}}{OccupancySnapshot}}\label{occupancysnapshot}}
+
+Bản đọc theo thời điểm cho một Hub; không tự cập nhật Hub.
+available\_ports và offline\_ports không cộng lẫn vào số phiên đang sạc.
+
+Thuộc tính và kiểu: \texttt{hub\_id:\ str},
+\texttt{captured\_at:\ datetime}, \texttt{total\_slots:\ int},
+\texttt{available\_slots:\ int}, \texttt{present\_vehicles:\ int},
+\texttt{destination\_holds:\ int}, \texttt{background\_occupied:\ int},
+\texttt{occupancy\_pct:\ float}, \texttt{level:\ str},
+\texttt{available\_ports:\ int}, \texttt{offline\_ports:\ int}.
+
+\hypertarget{networksnapshot}{%
+\subsubsection{\texorpdfstring{\texttt{NetworkSnapshot}}{NetworkSnapshot}}\label{networksnapshot}}
+
+Bản đọc toàn mạng cùng captured\_at/version; KPI tiền dựa trên khoản thu
+thực, held/debt tách riêng.
+
+Thuộc tính và kiểu: \texttt{captured\_at:\ datetime},
+\texttt{state\_version:\ int},
+\texttt{hubs:\ list{[}OccupancySnapshot{]}},
+\texttt{collected\_revenue\_vnd:\ int},
+\texttt{held\_deposit\_vnd:\ int}, \texttt{debt\_vnd:\ int}.
+
+\hypertarget{alert}{%
+\subsubsection{\texorpdfstring{\texttt{Alert}}{Alert}}\label{alert}}
+
+Cảnh báo occupancy hoặc offline mô phỏng. Không suy ra đã có cảm biến,
+popup/push hoặc tự sửa tài nguyên.
+
+Thuộc tính và kiểu: \texttt{alert\_id:\ str}, \texttt{hub\_id:\ str},
+\texttt{kind:\ str}, \texttt{level:\ str}, \texttt{message:\ str},
+\texttt{captured\_at:\ datetime}.
+
+\hypertarget{monitoringservice}{%
+\subsubsection{\texorpdfstring{\texttt{MonitoringService}}{MonitoringService}}\label{monitoringservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}{%
+\subsection{4. Mô tả mọi phương
+thức}\label{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}}
+
+Xem \url{method_catalog.md}, được nhúng đầy đủ trong PDF. Danh mục có
+chữ ký, đầu vào/đầu ra, điều kiện, tác động, lỗi và quy tắc gọi lặp cho
+từng phương thức được vẽ.
+
+\hypertarget{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}{%
+\subsection{5. Ánh xạ và giới
+hạn}\label{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}}
+
+Dashboard hiện đọc session tại rerun; không polling IoT/background
+worker. Doanh thu hiện chỉ đếm
+SETTLE\_RENTAL\_FEE/SETTLE\_RENTAL\_DEBT/PENALTY\_NOSHOW, không đủ khoản
+thu SS2/SS5. Ước tính kW dùng 7.4 và total-available có thể đếm offline;
+thiết kế phải đọc active sessions. MonitoringService/NetworkSnapshot
+chưa tồn tại trong code. Yêu cầu phản hồi/mở rộng/bền vững của SRS là
+mục tiêu, chưa có benchmark hay bằng chứng môi trường sản xuất.
+
+\hypertarget{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}{%
+\subsection{6. Chính sách và ranh giới thiết
+kế}\label{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}}
+
+Giữ xe SS1 30 phút từ tạo; hạn SS2 30 phút từ giờ đến. Cọc 50.000,
+no-show phạt10.000/hoàn40.000 VNĐ. Reroute thêm15 phút miễn phí tối đa
+một lần, không đổi TTL. Sạc grace15 phút, phí10.000/khối15 phút bắt đầu
+sau grace; công suất mặc định150 kW/Hub và11 kW/cổng, cấu hình từng test
+có thể khác. Phí đỗ prototype5.000 VNĐ/lượt khác SRS tính theo giờ, phải
+ghi chênh lệch. Ownership PERSONAL/SHARED và binding nguồn lực không
+được trộn.
+
+NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu năng là mục
+tiêu thiết kế. Prototype per-session không chứng minh tính nhất quán
+toàn mạng giữa nhiều phiên; thiết kế tương lai cần shared
+storage/transaction/version và authorization thật. Đề không bắt buộc
+thêm database cho Sub3.
+
+\hypertarget{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}{%
+\subsection{7. Truy vết, test, đóng góp và
+AI}\label{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss3---revision-06112026}{%
+\section{Danh mục phương thức SS3 - revision
+06/11/2026}\label{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss3---revision-06112026}}
+
+Mọi kiểu/đơn vị như class diagram. \texttt{OperationResult} là hợp đồng
+đề xuất; các tuple/dict hiện có được nêu ở ánh xạ. UC chi tiết và test
+được liên kết trong traceability.md.
+
+\hypertarget{ss3-mth-01-monitoringservice.get_network_snapshot}{%
+\subsection{\texorpdfstring{SS3-MTH-01:
+\texttt{MonitoringService.get\_network\_snapshot}}{SS3-MTH-01: MonitoringService.get\_network\_snapshot}}\label{ss3-mth-01-monitoringservice.get_network_snapshot}}
+
+\textbf{Chữ ký:}
+\texttt{get\_network\_snapshot()\ -\textgreater{}\ OperationResult{[}NetworkSnapshot{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} INT-03. Đọc một phiên bản
+session, timestamp theo đồng hồ mô phỏng; tính
+occupancy=(total\_slots-available\_slots)/total\_slots*100 nếu
+total\textgreater0. Kiểm tra available+present+holds+background=total.
+Tổng doanh thu thiết kế là tổng khoản thu thực có đối soát, tách tiền
+cọc, hoàn và nợ. Đếm cổng offline riêng, không suy ra công suất từ
+total-available. Trả INVALID\_INPUT nếu capacity \textless=0 hoặc dữ
+liệu bất nhất, không chia 0 và không sửa booking/ví. Rerun lấy snapshot
+mới, không có polling IoT nền. Prototype dashboard mới cộng một số loại
+giao dịch SS1, chưa phải doanh thu toàn hệ thống.
+
+\textbf{Ánh xạ:} \texttt{src/components/hub\_monitor.py:render}. Chữ ký
+prototype có thể khác service; không khẳng định service đã có trong
+code.
+
+\hypertarget{ss3-mth-02-monitoringservice.classify_occupancy}{%
+\subsection{\texorpdfstring{SS3-MTH-02:
+\texttt{MonitoringService.classify\_occupancy}}{SS3-MTH-02: MonitoringService.classify\_occupancy}}\label{ss3-mth-02-monitoringservice.classify_occupancy}}
+
+\textbf{Chữ ký:}
+\texttt{classify\_occupancy(occupancy\_pct:\ float)\ -\textgreater{}\ str}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Đầu vào phần trăm hữu hạn
+\textgreater=0. NORMAL khi \textless70; WARNING khi
+70\textless=x\textless85; CRITICAL khi 85\textless=x\textless100; FULL
+khi \textgreater=100. Thuần đọc, cùng đầu vào cùng kết quả; adapter phải
+từ chối NaN/âm thay vì mặc định NORMAL. Không đồng nhất mức occupancy
+với tỷ lệ cổng hay kW. Khóa đặt chỗ thuộc service đặt chỗ, không thuộc
+phương thức phân loại.
+
+\textbf{Ánh xạ:} \texttt{src/core/policies.py:get\_occupancy\_level}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss3---revision-06112026}{%
+\section{Truy vết SS3 - revision
+06/11/2026}\label{truy-vux1ebft-ss3---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss3_01---giuxe1m-suxe1t-mux1ea1ng-lux1b0ux1edbi-hub-kpi-doanh-thu-thux1eddi-gian-thux1ef1c}{%
+\subsection{UC\_SS3\_01 - Giám sát mạng lưới Hub, KPI \& Doanh thu thời
+gian
+thực}\label{uc_ss3_01---giuxe1m-suxe1t-mux1ea1ng-lux1b0ux1edbi-hub-kpi-doanh-thu-thux1eddi-gian-thux1ef1c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-07, US-13, FR-05, FR-15b.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Usecase\%20scenario/UC_SS3_PhamTienDat.md}{UC\_SS3\_PhamTienDat.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Sequence\%20diagrams/UC_SS3_01_PhamTienDat_sequence.puml}{UC\_SS3\_01\_PhamTienDat\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Activity\%20diagrams/UC_SS3_01_PhamTienDat_activity.puml}{UC\_SS3\_01\_PhamTienDat\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{MonitoringService.get\_network\_snapshot}.
+  Class diagram SS3, catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_dashboard\_shows\_actual\_booking\_ledger\_and\_revenue}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss3_02---cux1ea3nh-buxe1o-phuxe2n-cux1ea5p-chiux1ebfm-dux1ee5ng-hub-sux1ef1-cux1ed1-iot}{%
+\subsection{UC\_SS3\_02 - Cảnh báo phân cấp chiếm dụng Hub \& Sự cố
+IoT}\label{uc_ss3_02---cux1ea3nh-buxe1o-phuxe2n-cux1ea5p-chiux1ebfm-dux1ee5ng-hub-sux1ef1-cux1ed1-iot}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-13b, US-14, FR-05c, FR-06.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Usecase\%20scenario/UC_SS3_PhamTienDat.md}{UC\_SS3\_PhamTienDat.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Sequence\%20diagrams/UC_SS3_02_PhamTienDat_sequence.puml}{UC\_SS3\_02\_PhamTienDat\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS3/Activity\%20diagrams/UC_SS3_02_PhamTienDat_activity.puml}{UC\_SS3\_02\_PhamTienDat\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{MonitoringService.get\_network\_snapshot},
+  \texttt{MonitoringService.classify\_occupancy}. Class diagram SS3,
+  catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_occupancy\_threshold\_levels}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-cases-ss3---revision-06112026}{%
+\section{Test cases SS3 - revision
+06/11/2026}\label{test-cases-ss3---revision-06112026}}
+
+Các test prototype hiện có đã chạy trong bộ49 test baseline; log chung ở
+docs/audit/submission\_3/review\_20261106/pytest-baseline.txt. Không có
+class service đề xuất đang chạy; không ghi PASS thay cho contract test.
+
+\hypertarget{uc_ss3_01}{%
+\subsection{UC\_SS3\_01}\label{uc_ss3_01}}
+
+\begin{itemize}
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_dashboard\_shows\_actual\_booking\_ledger\_and\_revenue};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP. \#\# UC\_SS3\_02
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_occupancy\_threshold\_levels};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\end{itemize}
+
+\hypertarget{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}{%
+\subsection{Các ca thiết kế chưa thực thi
+(DESIGNED)}\label{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}}
+
+\hypertarget{ss3-d01---doanh-thu-touxe0n-hux1ec7-thux1ed1ng}{%
+\subsubsection{SS3-D01 - Doanh thu toàn hệ
+thống}\label{ss3-d01---doanh-thu-touxe0n-hux1ec7-thux1ed1ng}}
+
+\textbf{Đầu vào/thao tác:} ledger có cọc50.000, hoàn40.000,
+thuSS1=10.000, SS2=5.000, SS5=7.000, debt3.000.
+
+\textbf{Mong đợi:} Collected22.000, held/debt tách riêng, không lấy tổng
+tiền cọc.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss3-d02---power-cuxf3-offline}{%
+\subsubsection{SS3-D02 - Power có
+offline}\label{ss3-d02---power-cuxf3-offline}}
+
+\textbf{Đầu vào/thao tác:} 10 cổng,3 available,2 offline; 5 phiên đang
+CHARGING*11 kW.
+
+\textbf{Mong đợi:} Công suất55 kW, không (10-3)*7.4; snapshot không thay
+state.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

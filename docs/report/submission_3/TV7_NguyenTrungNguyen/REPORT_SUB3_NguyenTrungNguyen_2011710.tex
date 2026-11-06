@@ -1,0 +1,1497 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS7 - Nguyễn Trung Nguyên},
+    pdfauthor={Nhóm BEE BRAVE - Nguyễn Trung Nguyên}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS7 -- Nguyễn Trung Nguyên}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS7 -- Nguyễn Trung Nguyên}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS7: Mô phỏng What-if Hạ tầng (Infrastructure Simulator)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Nguyễn Trung Nguyên\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2011710\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+
+TRƯỜNG ĐẠI HỌC BÁCH KHOA
+
+KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH
+
+BÁO CÁO SUBMISSION 3
+
+SMART E-MOBILITY HUB
+
+SS7 --- SỰ CỐ HẠ TẦNG VÀ GỢI Ý HUB THAY THẾ
+
+Sinh viên: Nguyễn Trung Nguyên
+
+MSSV: 2011710
+
+Môn học: Công nghệ Phần mềm --- CO3001, HK261
+
+Nhóm: BEE BRAVE --- Nhóm 7
+
+Ngày hoàn thiện: 30/10/2026
+
+\hypertarget{submission-3-nguyux1ec5n-trung-nguyuxean-ss7}{%
+\section{Submission 3 --- Nguyễn Trung Nguyên ---
+SS7}\label{submission-3-nguyux1ec5n-trung-nguyuxean-ss7}}
+
+\begin{quote}
+\textbf{Revision tích hợp06/11/2026:} có chỉnh sửa với Codex hỗ trợ; chủ
+sở hữu cần xác nhận bản mới. Truy vết/test/catalog revision này được
+dùng khi khác nhận định của bản bàn giao trước.
+\end{quote}
+
+\textbf{MSSV:} 2011710\\
+\textbf{Phân hệ:} SS7 --- Sự cố hạ tầng và gợi ý Hub thay thế\\
+\textbf{Phiên bản nội dung:} 1.2 - tích hợp06/11/2026, kế thừa review
+PR20 ngày03/11/2026. \textbf{Trạng thái:} Báo cáo, nguồn sơ đồ, ảnh xuất
+và PDF cá nhân đã được cập nhật theo các phát hiện review; còn phân biệt
+rõ giới hạn prototype và hợp đồng chưa tích hợp. \textbf{Khoảng thực
+hiện theo kế hoạch:} 21/10/2026--30/10/2026.
+
+\href{../../../../GUIDANCE_FOR_SUB_3.md}{Hướng dẫn Sub3} ·
+\href{../shared/shared_contracts.md}{Hợp đồng dùng chung} ·
+\href{../../../diagrams/submission_3/README.md}{Chỉ mục sơ đồ}
+
+\begin{quote}
+Nội dung dưới đây phân biệt rõ code hiện có với giao tiếp thiết kế Sub3.
+Các sơ đồ đã được render PNG/SVG và kiểm tra; báo cáo có kèm các nội
+dung cần nộp.
+\end{quote}
+
+\hypertarget{mux1ee5c-lux1ee5c}{%
+\subsection{Mục lục}\label{mux1ee5c-lux1ee5c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{1-pham-vi-va-ong-gop}{1. Phạm vi và đóng góp}
+\item
+  \protect\hyperlink{2-deployment-view}{2. Deployment view}
+\item
+  \protect\hyperlink{3-developmentimplementation-view-va-anh-xa-code}{3.
+  Development/Implementation view và ánh xạ code}
+\item
+  \protect\hyperlink{4-class-diagram-ca-nhan}{4. Class diagram cá nhân}
+\item
+  \protect\hyperlink{5-hop-ong-lien-phan-he-va-xu-ly-su-co}{5. Hợp đồng
+  liên phân hệ và xử lý sự cố}
+\item
+  \protect\hyperlink{6-truy-vet-sub1sub2sub3}{6. Truy vết
+  Sub1--Sub2--Sub3}
+\item
+  \protect\hyperlink{7-test-case-bonus}{7. Test case bonus}
+\item
+  \protect\hyperlink{8-gioi-han-va-van-e-con-mo}{8. Giới hạn và vấn đề
+  còn mở}
+\item
+  \protect\hyperlink{9-tu-kiem-tra-khai-bao-ai-va-au-ra}{9. Tự kiểm tra,
+  khai báo AI và đầu ra}
+\end{itemize}
+
+\hypertarget{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}{%
+\subsection{1. Phạm vi và đóng
+góp}\label{phux1ea1m-vi-vuxe0-ux111uxf3ng-guxf3p}}
+
+\hypertarget{use-case-kux1ebf-thux1eeba}{%
+\subsubsection{Use case kế thừa}\label{use-case-kux1ebf-thux1eeba}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+UC
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tên
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Truy vết kế thừa
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vị trí code liên quan
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{UC\_SS7\_01} & Mô phỏng sự cố hạ tầng \& mất điện trạm sạc &
+\texttt{US-23}, \texttt{US-24}; \texttt{FR-14}, \texttt{FR-15} &
+\texttt{src/components/sim\_infrastructure.py};
+\texttt{src/core/simulator.py} \\
+\texttt{UC\_SS7\_02} & Đề xuất gợi ý điều hướng sang Hub lân cận \& cảnh
+báo & \texttt{US-24}, \texttt{US-24b}; \texttt{FR-15}, \texttt{FR-15c} &
+Gợi ý trong \texttt{src/components/sim\_infrastructure.py} và
+\texttt{src/components/student\_booking.py}; đổi booking từ UI SS1 qua
+\texttt{src/core/booking.py} \\
+\end{longtable}
+
+Nguồn scenario, sequence, activity và bảng truy vết Sub2 được liệt kê
+trong \url{traceability.md}. Các sơ đồ Sub2 là đầu vào kế thừa; nếu
+chúng mô tả IoT/SSO/payment hoạt động hoặc thuật toán khác với code, báo
+cáo này ghi đó là chênh lệch cần xác nhận, không dùng làm bằng chứng
+tích hợp.
+
+\hypertarget{ux111uxf3ng-guxf3p-thux1ef1c-tux1ebf}{%
+\subsubsection{Đóng góp thực
+tế}\label{ux111uxf3ng-guxf3p-thux1ef1c-tux1ebf}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tài liệu và nguồn PlantUML trong phần TV7 của Submission 3 được
+  soạn/cập nhật với AI hỗ trợ dựa trên repository và hợp đồng thiết kế
+  chung.
+\item
+  Bản ghi AI và prompt history được đính kèm. TV7 tự rà soát bộ file/PDF
+  cuối và thao tác nộp LMS.
+\end{itemize}
+
+\hypertarget{deployment-view}{%
+\subsection{2. Deployment view}\label{deployment-view}}
+
+\textbf{Nguồn chung:}
+\href{../../../diagrams/submission_3/shared/deployment.puml}{deployment.puml}.
+Sơ đồ chỉ mô tả prototype hiện tại; không có deployment production hoặc
+sơ đồ tương lai giả định.
+
+Nguồn vector:
+\href{../../../diagrams/submission_3/shared/deployment.svg}{deployment.svg}.
+
+\hypertarget{thuxe0nh-phux1ea7n-vuxe0-luux1ed3ng-chux1ea1y}{%
+\subsubsection{Thành phần và luồng
+chạy}\label{thuxe0nh-phux1ea7n-vuxe0-luux1ed3ng-chux1ea1y}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Người dùng thao tác trong trình duyệt; tiến trình Streamlit/Python
+  chạy trên máy chủ hoặc máy phát triển do người chạy ứng dụng chọn.
+  Hướng dẫn repo là \texttt{streamlit\ run\ src/app.py}; repository
+  không chốt host, URL hoặc cổng.
+\item
+  \texttt{src/app.py} khởi tạo session state, quét reservation hết hạn,
+  dựng điều hướng và gọi \texttt{render()} của component được chọn.
+\item
+  Với SS7, \texttt{src/components/sim\_infrastructure.py} đọc dữ liệu
+  Hub trong \texttt{st.session\_state}, gọi \texttt{HubEventSimulator}
+  hoặc hàm định tuyến, hiển thị preview/log và xử lý lựa chọn Apply/hủy.
+\item
+  \texttt{src/core/state.py} nạp dữ liệu ban đầu từ
+  \texttt{src/data/mock\_hubs.json}. Dữ liệu Hub,
+  \texttt{state\_version}, \texttt{sim\_preview\_ss7},
+  \texttt{infra\_log} và \texttt{port\_overrides} được giữ trong
+  \texttt{st.session\_state} phía tiến trình ứng dụng.
+\item
+  \texttt{HubEventSimulator.simulate\_port\_failure} sao chép sâu dữ
+  liệu Hub, tính kết quả dự kiến và trả dữ liệu cho UI. Preview được lưu
+  vào session; chỉ khi bấm Apply và phiên bản nền còn khớp thì component
+  mới thay \texttt{hubs} trong session state.
+\item
+  Reset gọi \texttt{init\_session\_state(...,\ force\_reset=True)}, nạp
+  lại seed và tạo lại trạng thái demo. Không có lưu bền nghiệp vụ vào
+  database; session/memory mất khi tiến trình hoặc session tương ứng kết
+  thúc.
+\end{enumerate}
+
+\hypertarget{ranh-giux1edbi-triux1ec3n-khai}{%
+\subsubsection{Ranh giới triển
+khai}\label{ranh-giux1edbi-triux1ec3n-khai}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Đã có:} ứng dụng Streamlit, các module Python, dữ liệu seed
+  JSON, xử lý trong bộ nhớ theo session, mô phỏng và thao tác UI
+  Apply/hủy.
+\item
+  \textbf{Chưa có tích hợp vận hành:} thiết bị/cảm biến/IoT, SSO,
+  payment gateway, API server, message broker, database bền vững hoặc tự
+  động phát hiện sự cố từ phần cứng. Nội dung IoT/SSO/wallet trong một
+  số sơ đồ Sub2 không phải node đã triển khai.
+\item
+  Cổng sạc trong dữ liệu hiện là bộ đếm
+  \texttt{total}/\texttt{available}/có thể có \texttt{offline}, không
+  phải danh mục cổng vật lý có định danh và telemetry riêng.
+\end{itemize}
+
+\hypertarget{developmentimplementation-view-vuxe0-uxe1nh-xux1ea1-code}{%
+\subsection{3. Development/Implementation view và ánh xạ
+code}\label{developmentimplementation-view-vuxe0-uxe1nh-xux1ea1-code}}
+
+\textbf{Sơ đồ module chung:}
+\href{../../../diagrams/submission_3/shared/implementation.puml}{implementation.puml}
+(TV3 tổng hợp). Bổ sung
+\href{../../../diagrams/submission_3/SS7/implementation_view.puml}{Implementation
+view SS7} để chỉ rõ module/lời gọi do TV7 phụ trách; sơ đồ này không
+thay thế view tổng hợp hệ thống của TV3.
+
+Nguồn vector:
+\href{../../../diagrams/submission_3/SS7/implementation_view.svg}{implementation\_view.svg}.
+
+Implementation view chung cấp hệ thống vẫn thuộc TV3; hình SS7 bên trên
+hoàn thiện phần ánh xạ module cá nhân của TV7, không tuyên bố sơ đồ tổng
+hợp hệ thống đã hoàn thành.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trách nhiệm
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hiện thực trong prototype
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái / giới hạn
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+UI SS7, preview, log, Apply/hủy &
+\texttt{src/components/sim\_infrastructure.py} --- \texttt{render},
+\texttt{\_init\_ss7} & Đã triển khai bằng Streamlit; preview dictionary
+có \texttt{preview\_id}, \texttt{baseline\_version},
+\texttt{target\_hub\_id}, \texttt{modified\_hubs}, \texttt{event\_log},
+\texttt{metrics}. \\
+Mô phỏng cổng lỗi & \texttt{src/core/simulator.py} ---
+\texttt{HubEventSimulator.simulate\_port\_failure} & Đã triển khai trên
+bản sao sâu Hub; trả \texttt{(hubs,\ log,\ metrics)}. Chưa có ID cổng
+thật/định tuyến tới charging session theo port ID. Tham số \texttt{seed}
+hiện không quyết định kết quả trong hàm này. \\
+Gợi ý Hub lân cận & \texttt{src/core/routing.py} ---
+\texttt{find\_alternative\_hubs},
+\texttt{find\_nearest\_alternative\_hubs},
+\texttt{haversine\_distance\_km} & Đã triển khai; lọc theo chỗ/cổng theo
+tham số rồi xếp khoảng cách. Chưa lọc một trạng thái hoạt động/offline
+chuẩn hóa của Hub. \\
+Nạp/reset state và version & \texttt{src/core/state.py} ---
+\texttt{load\_and\_normalize\_hubs}, \texttt{init\_session\_state},
+\texttt{bump\_state\_version} & Đã triển khai; state và version trong
+session, reset nạp JSON seed. \\
+Đổi Hub booking sau xác nhận & UI
+\texttt{src/components/student\_booking.py} gọi
+\texttt{src/core/booking.py} --- \texttt{apply\_rerouting\_to\_booking}
+& Luồng hiện có ở UI SS1 chuyển giữ chỗ nếu Hub mới còn slot, tăng
+version và chỉ cộng \texttt{REROUTING\_EXTRA\_FREE\_MINUTES} (15 phút)
+nếu booking chưa nhận ưu đãi. \texttt{sim\_infrastructure.py} không gọi
+hàm này; hợp đồng \texttt{BookingService.accept\_rerouting} là thiết kế
+mục tiêu có kiểm soát version/idempotency chặt hơn. \\
+Xử lý phiên/cổng bị lỗi & Hợp đồng
+\texttt{ChargingService.handle\_port\_failure} do TV5 sở hữu &
+\textbf{Chưa được gọi bởi SS7 prototype.} \texttt{src/core/scheduler.py}
+có model/lập lịch phiên nhưng chưa có adapter \texttt{ChargingService}
+theo \texttt{INT-05}. \\
+Schema preview và Apply dùng chung & \texttt{SimulationPreview} /
+\texttt{SimulationCoordinator.apply\_preview} do TV6 sở hữu &
+\textbf{Thiết kế mục tiêu.} UI hiện giữ \texttt{sim\_preview\_ss7}
+dictionary và tự kiểm tra \texttt{baseline\_version}; chưa dùng
+coordinator chung hoặc đánh dấu Apply lặp theo \texttt{preview\_id}. \\
+\end{longtable}
+
+\hypertarget{huxe0nh-vi-ss7-ux111ang-chux1ea1y}{%
+\subsubsection{Hành vi SS7 đang
+chạy}\label{huxe0nh-vi-ss7-ux111ang-chux1ea1y}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{render()} hiển thị console bật/tắt cổng, mô phỏng sự cố, tổng
+  quan và log.
+\item
+  Nút tạo preview gọi \texttt{simulate\_port\_failure} với Hub và số
+  cổng do UI chọn, seed truyền vào là \texttt{42}; kết quả mô phỏng
+  không trực tiếp sửa \texttt{hubs} gốc.
+\item
+  Trong tab preview, UI tìm tối đa hai Hub thay thế với
+  \texttt{need\_ports=True}, \texttt{need\_slots=False}. Đây là gợi ý
+  cho năng lực sạc, không phải chấp nhận chuyển booking.
+\item
+  Nút Apply so \texttt{baseline\_version} với \texttt{state\_version};
+  nếu trùng, gán \texttt{modified\_hubs} vào state và tăng version. Chưa
+  có \texttt{SimulationCoordinator}, chưa gọi \texttt{ChargingService},
+  chưa có transaction toàn phần cho Hub và phiên sạc.
+\item
+  Luồng đổi điểm đến booking riêng phải yêu cầu người dùng xác nhận và
+  gọi nghiệp vụ SS1. Ưu đãi 15 phút không làm thay đổi TTL giữ chỗ 30
+  phút.
+\end{itemize}
+
+\hypertarget{class-diagram-cuxe1-nhuxe2n}{%
+\subsection{4. Class diagram cá
+nhân}\label{class-diagram-cuxe1-nhuxe2n}}
+
+\textbf{Nguồn:}
+\href{../../../diagrams/submission_3/SS7/class_diagram.puml}{class\_diagram.puml}.
+Đây là thiết kế đề xuất có ánh xạ prototype; nhãn \texttt{implemented}
+chỉ dùng cho lớp/module/hàm đang có. Shared classes được tham chiếu theo
+chủ sở hữu, không sao chép định nghĩa.
+
+Nguồn vector:
+\href{../../../diagrams/submission_3/SS7/class_diagram.svg}{class\_diagram.svg}.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp}{%
+\subsubsection{4.1. Mô tả lớp}\label{muxf4-tux1ea3-lux1edbp}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Class ID / lớp
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Chủ sở hữu, mức triển khai
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trách nhiệm, thuộc tính và ràng buộc
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Quan hệ / truy vết
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{SS7-CLS-01\ InfrastructureFailure} & TV7; value object
+\textbf{đề xuất}, hiện ánh xạ một phần tới preview dictionary &
+\texttt{failure\_id:\ str}; \texttt{hub\_id:\ str};
+\texttt{num\_ports\_down:\ int}; \texttt{seed:\ int};
+\texttt{baseline\_version:\ int}; \texttt{event\_log:\ list{[}str{]}};
+\texttt{metrics:\ dict{[}str,\ Any{]}}. Số cổng lỗi không âm; phạm vi
+thực tế không vượt tổng cổng. Bản ghi là kết quả/kịch bản, không đại
+diện sự kiện IoT thật. & Một kịch bản có thể làm đầu vào cho nhiều
+preview; UC\_SS7\_01. \\
+\texttt{SS7-CLS-02\ InfrastructureSimulationService} & TV7; \textbf{đề
+xuất} bọc hàm simulator hiện tại & Tạo preview \texttt{PORT\_FAILURE} từ
+snapshot Hub; không sửa Hub thật trước Apply; dùng schema preview và cơ
+chế Apply chung. & Dùng \texttt{HubEventSimulator}; trả
+\texttt{SimulationPreview} của TV6; gọi \texttt{ChargingService} chỉ khi
+Apply qua coordinator. UC\_SS7\_01, INT-05/09/10. \\
+\texttt{SS7-CLS-03\ RouteSuggestion} & TV7; value object \textbf{đề
+xuất}, hiện chuẩn hóa dictionary routing & \texttt{hub\_id:\ str};
+\texttt{distance\_km:\ float}; \texttt{available\_slots:\ int};
+\texttt{available\_ports:\ int}; \texttt{reason:\ str}. Snapshot chỉ
+đúng tại thời điểm gợi ý, không bảo đảm capacity còn nguyên khi Apply. &
+Được tạo bởi \texttt{ReroutingService}; không tự thay booking.
+UC\_SS7\_02, INT-06. \\
+\texttt{SS7-CLS-04\ ReroutingService} & TV7; \textbf{đề xuất} bọc
+\texttt{core.routing} & Lọc Hub theo nhu cầu chỗ/cổng và trạng thái vận
+hành, xếp tăng dần theo Haversine, trả danh sách rỗng nếu không có ứng
+viên. Không ghi thay đổi vào booking hoặc capacity. & Đọc Hub chuẩn của
+TV3; đề xuất cho SS1/UI; sau xác nhận, TV1 xử lý booking qua INT-07.
+UC\_SS7\_02. \\
+\texttt{HubEventSimulator} & Module core hiện có &
+\texttt{simulate\_port\_failure} làm bản sao sâu danh sách Hub, giảm
+cổng available, phân bổ cổng ảnh hưởng vào busy trước rồi free, chuyển
+số xe tương ứng \texttt{CHARGING} sang \texttt{WAITING}; trả log và
+metrics. & Được gọi từ component SS7; hiện không biết ID cổng hoặc phiên
+sạc cụ thể. \\
+\texttt{core.routing} & Module core hiện có & Hàm khoảng cách Haversine
+và các hàm lọc/xếp Hub hiện trả dictionary, không phải
+\texttt{RouteSuggestion} có kiểu riêng. & \texttt{ReroutingService}
+tương lai chuẩn hóa kết quả. \\
+\texttt{Hub} & TV3; shared domain model, \textbf{không định nghĩa lại
+bởi TV7} & Dùng tham chiếu tới Hub chuẩn và schema đã chốt;
+\texttt{RouteSuggestion.hub\_id} định danh Hub đích, không tạo bản sao
+entity Hub thuộc SS7. & Mỗi \texttt{RouteSuggestion} liên kết đúng một
+Hub; một Hub có thể được gợi ý trong nhiều kết quả. \\
+\texttt{SimulationPreview}, \texttt{SimulationCoordinator} & TV6; shared
+contract, \textbf{không sở hữu bởi TV7} & Preview có
+\texttt{preview\_id}, \texttt{scenario\_type},
+\texttt{baseline\_version}, \texttt{modified\_hubs},
+\texttt{charging\_effects}, \texttt{summary}, trạng thái Apply.
+\texttt{apply\_preview} kiểm tra version/invariant, commit đồng bộ và
+chống Apply lặp theo hợp đồng INT-10. & SS7 dùng INT-09/10; không tạo
+một cơ chế Apply thứ hai. \\
+\texttt{ChargingService} & TV5; shared contract, \textbf{không sở hữu
+bởi TV7} &
+\texttt{handle\_port\_failure(hub\_id,\ port\_ids,\ operation\_key)} cập
+nhật cổng/phiên bị ảnh hưởng, trả công suất và danh sách phiên; không
+đổi số slot đỗ. & Coordinator gọi INT-05 khi Apply; prototype chưa triển
+khai adapter này. \\
+\texttt{BookingService} & TV1; shared contract, \textbf{không sở hữu bởi
+TV7} &
+\texttt{accept\_rerouting(booking\_id,\ new\_hub\_id,\ expected\_version,\ operation\_key)}
+xác nhận lại trạng thái/version/capacity và chuyển giữ chỗ nguyên tử;
+thưởng tối đa một lần. & Chỉ gọi sau xác nhận của người dùng, INT-07. \\
+\end{longtable}
+
+\textbf{Quan hệ và bội số thiết kế:} một kịch bản
+\texttt{InfrastructureFailure} có thể làm đầu vào cho 0..N
+\texttt{SimulationPreview}; mỗi preview lỗi cổng gắn với đúng một kịch
+bản. Liên kết này mô tả bối cảnh đầu vào/kết quả SS7, không thêm thuộc
+tính vào schema \texttt{SimulationPreview} chung của TV6. Một
+\texttt{ReroutingService} tạo 0..N \texttt{RouteSuggestion} cho một Hub
+đích; mỗi suggestion tham chiếu đúng một \texttt{Hub} chuẩn do TV3 sở
+hữu. Một booking có thể được yêu cầu đổi đích nhiều lần, nhưng mỗi thao
+tác phải kiểm tra lại trạng thái/sức chứa; ưu đãi 15 phút không cộng
+dồn. Một \texttt{SimulationPreview} được Apply nhiều nhất một lần có
+hiệu lực.
+
+\hypertarget{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c-truxean-sux1a1-ux111ux1ed3}{%
+\subsubsection{4.2. Mô tả phương thức trên sơ
+đồ}\label{muxf4-tux1ea3-phux1b0ux1a1ng-thux1ee9c-truxean-sux1a1-ux111ux1ed3}}
+
+\hypertarget{ss7-mth-01-hubeventsimulator.simulate_port_failuretarget_hub_id-str-hub-004-num_ports_down-int-3-seed-optionalint-42---tuplelistdict-liststr-dict}{%
+\paragraph{\texorpdfstring{\texttt{SS7-MTH-01\ —\ HubEventSimulator.simulate\_port\_failure(target\_hub\_id:\ str\ =\ "HUB-004",\ num\_ports\_down:\ int\ =\ 3,\ seed:\ Optional{[}int{]}\ =\ 42)\ -\textgreater{}\ tuple{[}list{[}dict{]},\ list{[}str{]},\ dict{]}}}{SS7-MTH-01 --- HubEventSimulator.simulate\_port\_failure(target\_hub\_id: str = "HUB-004", num\_ports\_down: int = 3, seed: Optional{[}int{]} = 42) -\textgreater{} tuple{[}list{[}dict{]}, list{[}str{]}, dict{]}}}\label{ss7-mth-01-hubeventsimulator.simulate_port_failuretarget_hub_id-str-hub-004-num_ports_down-int-3-seed-optionalint-42---tuplelistdict-liststr-dict}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} Đã triển khai tại \texttt{src/core/simulator.py};
+  gọi từ UI SS7.
+\item
+  \textbf{Mục đích:} mô phỏng cổng sạc lỗi và tác động cơ bản trên bản
+  sao Hub.
+\item
+  \textbf{Tiền điều kiện:} \texttt{target\_hub\_id} có trong danh sách;
+  \texttt{num\_ports\_down} là số lượng trong khoảng hợp lệ theo UI.
+  Core hiện chưa có validate input đầy đủ; UI giới hạn số tối thiểu/tối
+  đa.
+\item
+  \textbf{Xử lý:} deepcopy dữ liệu; tính
+  \texttt{actual\_down\ =\ min(num\_ports\_down,\ total\_ports)}; cổng
+  đang bận bị ảnh hưởng trước, xe \texttt{CHARGING} tương ứng chuyển
+  \texttt{WAITING}; phần còn lại làm giảm cổng available; trả danh sách
+  Hub mô phỏng, log và metrics.
+\item
+  \textbf{Hậu điều kiện:} dữ liệu Hub đầu vào không bị sửa; không có ghi
+  nhận phiên/cổng vật lý hay side effect lên lịch sạc thật. Nếu không
+  tìm thấy Hub, hàm trả snapshot, log lỗi và metrics rỗng theo hành vi
+  hiện tại.
+\item
+  \textbf{Lỗi/lặp:} hàm thuần trên dữ liệu đầu vào theo deepcopy; không
+  có preview ID, idempotency key hoặc xử lý đồng thời bên trong. Tham số
+  \texttt{seed} hiện không ảnh hưởng kết quả cổng lỗi.
+\item
+  \textbf{Truy vết:} UC\_SS7\_01; test hiện có
+  \texttt{test\_port\_failure\_distinguishes\_free\_vs\_busy\_ports}.
+\end{itemize}
+
+\hypertarget{ss7-mth-02-infrastructuresimulationservice.preview_port_failurehub_id-str-num_ports_down-int-seed-int-42---operationresultsimulationpreview}{%
+\paragraph{\texorpdfstring{\texttt{SS7-MTH-02\ —\ InfrastructureSimulationService.preview\_port\_failure(hub\_id:\ str,\ num\_ports\_down:\ int,\ seed:\ int\ =\ 42)\ -\textgreater{}\ OperationResult{[}SimulationPreview{]}}}{SS7-MTH-02 --- InfrastructureSimulationService.preview\_port\_failure(hub\_id: str, num\_ports\_down: int, seed: int = 42) -\textgreater{} OperationResult{[}SimulationPreview{]}}}\label{ss7-mth-02-infrastructuresimulationservice.preview_port_failurehub_id-str-num_ports_down-int-seed-int-42---operationresultsimulationpreview}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} Giao tiếp đề xuất theo INT-09; chưa tồn tại dưới
+  dạng service trong code.
+\item
+  \textbf{Mục đích/bên gọi:} UI SS7 yêu cầu tạo preview mô phỏng.
+\item
+  \textbf{Tiền điều kiện:} Hub tồn tại; số cổng yêu cầu hợp lệ; lấy
+  \texttt{baseline\_version} từ state hiện tại.
+\item
+  \textbf{Xử lý/hậu điều kiện:} gọi simulator trên snapshot; đóng gói
+  \texttt{scenario\_type=PORT\_FAILURE}, \texttt{modified\_hubs},
+  \texttt{charging\_effects}, \texttt{summary} vào schema
+  \texttt{SimulationPreview} của TV6; giữ dữ liệu gốc không đổi; lưu
+  preview có ID trong session. Không sửa cổng/phiên vận hành.
+\item
+  \textbf{Lỗi/lặp:} trả \texttt{NOT\_FOUND} hoặc \texttt{INVALID\_INPUT}
+  theo \texttt{OperationResult}; preview mới là kết quả độc lập, chưa
+  Apply. Không tự đổi dữ liệu nếu lỗi.
+\item
+  \textbf{Truy vết:} UC\_SS7\_01, INT-09; ca \texttt{SS7-TC-02}.
+\end{itemize}
+
+\hypertarget{ss7-mth-03-reroutingservice.suggest_hubstarget_hub_id-str-need_slots-bool-true-need_ports-bool-false-limit-int-2---operationresultlistroutesuggestion}{%
+\paragraph{\texorpdfstring{\texttt{SS7-MTH-03\ —\ ReroutingService.suggest\_hubs(target\_hub\_id:\ str,\ need\_slots:\ bool\ =\ True,\ need\_ports:\ bool\ =\ False,\ limit:\ int\ =\ 2)\ -\textgreater{}\ OperationResult{[}list{[}RouteSuggestion{]}{]}}}{SS7-MTH-03 --- ReroutingService.suggest\_hubs(target\_hub\_id: str, need\_slots: bool = True, need\_ports: bool = False, limit: int = 2) -\textgreater{} OperationResult{[}list{[}RouteSuggestion{]}{]}}}\label{ss7-mth-03-reroutingservice.suggest_hubstarget_hub_id-str-need_slots-bool-true-need_ports-bool-false-limit-int-2---operationresultlistroutesuggestion}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} Giao tiếp đề xuất INT-06; hiện ánh xạ một phần
+  tới
+  \texttt{find\_alternative\_hubs}/\texttt{find\_nearest\_alternative\_hubs}.
+\item
+  \textbf{Mục đích/bên gọi:} SS1 hoặc SS7 lấy danh sách Hub phù hợp; chỉ
+  đọc, không đổi booking.
+\item
+  \textbf{Tiền điều kiện:} Hub mục tiêu tồn tại;
+  \texttt{limit\ \textgreater{}=\ 0}; yêu cầu slot/cổng lấy theo nghiệp
+  vụ (trả xe cần slot, đổi nơi sạc cần cổng).
+\item
+  \textbf{Xử lý:} bỏ Hub mục tiêu; lọc theo capacity cần thiết và trạng
+  thái vận hành được xác nhận; xếp theo khoảng cách Haversine tăng dần;
+  chuyển kết quả thành \texttt{RouteSuggestion}.
+\item
+  \textbf{Hậu điều kiện:} trả 0..\texttt{limit} kết quả; state không
+  đổi. Capacity là snapshot và phải kiểm tra lại ở thao tác Apply/đổi
+  booking.
+\item
+  \textbf{Lỗi/lặp:} Hub đích không tồn tại trả lỗi phù hợp; không có ứng
+  viên trả danh sách rỗng. Gọi lặp không có side effect.
+\item
+  \textbf{Giới hạn ánh xạ:} code hiện tại không lọc trạng thái hoạt
+  động/offline của Hub; khi thiếu tọa độ dùng tọa độ mặc định trong hàm
+  khoảng cách. Không tuyên bố lọc \texttt{OFFLINE} cho đến khi dữ liệu
+  trạng thái có thật.
+\item
+  \textbf{Hàm được bọc:} \texttt{find\_alternative\_hubs} chuyển
+  \texttt{need\_slots}/\texttt{need\_ports} thành ngưỡng availability
+  rồi gọi \texttt{find\_nearest\_alternative\_hubs}; hàm lõi bỏ Hub
+  nguồn, lọc capacity, tính khoảng cách Haversine, sắp xếp tăng dần và
+  giới hạn số kết quả.
+\item
+  \textbf{Truy vết:} UC\_SS7\_02, INT-06; ca \texttt{SS7-TC-04}.
+\end{itemize}
+
+\begin{quote}
+\texttt{SimulationCoordinator.apply\_preview} (INT-10),
+\texttt{ChargingService.handle\_port\_failure} (INT-05) và
+\texttt{BookingService.accept\_rerouting} (INT-07) là giao tiếp được
+vẽ/tham chiếu nhưng thuộc TV6, TV5 và TV1. TV7 chịu trách nhiệm ánh
+xạ/kiểm thử lời gọi SS7 khi các chủ sở hữu tích hợp; không nhận chúng là
+code hiện có hoặc mô tả lại nội bộ của service chủ sở hữu.
+\end{quote}
+
+\hypertarget{hux1ee3p-ux111ux1ed3ng-liuxean-phuxe2n-hux1ec7-vuxe0-xux1eed-luxfd-sux1ef1-cux1ed1}{%
+\subsection{5. Hợp đồng liên phân hệ và xử lý sự
+cố}\label{hux1ee3p-ux111ux1ed3ng-liuxean-phuxe2n-hux1ec7-vuxe0-xux1eed-luxfd-sux1ef1-cux1ed1}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Giao tiếp
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Nội dung SS7
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Quy tắc bắt buộc
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+INT-05 --- TV5 \texttt{ChargingService.handle\_port\_failure} & Khi
+Apply, gửi Hub, các port ID và operation key; nhận danh sách phiên bị
+ảnh hưởng/công suất mới. & Không thay số chỗ đỗ vì lỗi cổng. Prototype
+chưa có port ID/adapter; không giả định tự động cập nhật phiên sạc. \\
+INT-06 --- TV7 \texttt{ReroutingService.suggest\_hubs} & Chỉ trả gợi ý
+phù hợp với nhu cầu slot/cổng, khoảng cách và tình trạng. & Danh sách
+rỗng là kết quả hợp lệ; không thay booking; kiểm tra lại capacity khi
+nhận đề xuất. \\
+INT-07 --- TV1 \texttt{BookingService.accept\_rerouting} & Chỉ gọi sau
+khi người dùng xác nhận điểm đến mới. & Kiểm tra version/trạng thái/sức
+chứa và chuyển giữ chỗ nhất quán; ưu đãi 15 phút tối đa một lần, độc lập
+TTL 30 phút. \\
+INT-09 --- TV7
+\texttt{InfrastructureSimulationService.preview\_port\_failure} & Tạo
+preview cô lập theo schema chung \texttt{SimulationPreview}. &
+\texttt{scenario\_type=PORT\_FAILURE}; không cập nhật state thật trước
+Apply. \\
+INT-10 --- TV6 \texttt{SimulationCoordinator.apply\_preview} & Apply
+theo \texttt{preview\_id} và \texttt{expected\_version}. & Kiểm tra
+version và invariant; cập nhật Hub/phiên đồng bộ, tăng version, chống
+Apply lặp; không ghi đè ví/booking bằng snapshot cũ. \\
+\end{longtable}
+
+\hypertarget{phuxe2n-biux1ec7t-loux1ea1i-sux1ef1-cux1ed1-vuxe0-tuxe1c-ux111ux1ed9ng}{%
+\subsubsection{Phân biệt loại sự cố và tác
+động}\label{phuxe2n-biux1ec7t-loux1ea1i-sux1ef1-cux1ed1-vuxe0-tuxe1c-ux111ux1ed9ng}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Cổng rảnh hỏng:} giảm khả dụng/công suất cổng; không làm đổi
+  slot đỗ.
+\item
+  \textbf{Cổng đang bận hỏng:} phiên sạc bị ảnh hưởng và phải được xác
+  định qua \texttt{ChargingService}/port ID; prototype hiện chỉ chuyển
+  tối đa số xe phù hợp từ \texttt{CHARGING} sang \texttt{WAITING}, chưa
+  liên kết phiên sạc cụ thể.
+\item
+  \textbf{Mất điện toàn Hub:} cần mô hình trạng thái hoạt động và cập
+  nhật phiên/công suất nhất quán. Prototype không có tín hiệu điện lưới,
+  trạng thái Hub chuẩn \texttt{OFFLINE} hoặc tự phát hiện outage;
+  \texttt{simulate\_port\_failure} không phải tích hợp mất điện thật.
+\item
+  \textbf{Gợi ý Hub thay thế:} đối với sạc, lọc cổng theo nhu cầu; đối
+  với nơi trả xe/booking, cần slot. Không dùng một kết quả lọc cho mọi
+  nhu cầu.
+\item
+  \textbf{Không có ứng viên:} báo không có Hub đáp ứng, không tự chuyển
+  booking hoặc khẳng định đã phục hồi hệ thống.
+\item
+  \textbf{Preview cũ / Apply lặp:} thiết kế chung trả
+  \texttt{STALE\_STATE} nếu baseline không khớp,
+  \texttt{already\_applied} nếu cùng preview đã được áp dụng. UI
+  prototype hiện có kiểm tra version cơ bản nhưng chưa có bảo vệ Apply
+  lặp theo hợp đồng.
+\end{itemize}
+
+\hypertarget{truy-vux1ebft-sub1sub2sub3}{%
+\subsection{6. Truy vết
+Sub1--Sub2--Sub3}\label{truy-vux1ebft-sub1sub2sub3}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+US / FR
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+UC
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Thiết kế Sub3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Code/test
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{US-23}, \texttt{US-24} / \texttt{FR-14}, \texttt{FR-15} &
+\texttt{UC\_SS7\_01} mô phỏng lỗi cổng/mất điện &
+\texttt{InfrastructureFailure};
+\texttt{InfrastructureSimulationService}; preview tách khỏi Apply &
+\texttt{sim\_infrastructure.py};
+\texttt{HubEventSimulator.simulate\_port\_failure}; \texttt{SS7-TC-01}
+đến \texttt{SS7-TC-03}; test hiện có về phân biệt free/busy \\
+\texttt{US-24}, \texttt{US-24b} / \texttt{FR-15}, \texttt{FR-15c} &
+\texttt{UC\_SS7\_02} gợi ý Hub và cảnh báo & \texttt{RouteSuggestion};
+\texttt{ReroutingService.suggest\_hubs}; booking chỉ đổi sau xác nhận
+qua TV1 & \texttt{core.routing};
+\texttt{core.booking.apply\_rerouting\_to\_booking}; \texttt{SS7-TC-04}
+đến \texttt{SS7-TC-06}; test hiện có chọn hai Hub và chuyển giữ chỗ \\
+\end{longtable}
+
+Nguồn chi tiết:
+\href{../../../diagrams/Use-case\%20detail-scenario/SS7/Usecase\%20scenario/UC_SS7_NguyenTrungNguyen.md}{scenario
+SS7},
+\href{../../../diagrams/Use-case\%20detail-scenario/SS7/Sequence\%20diagrams/UC_SS7_01_NguyenTrungNguyen_sequence.puml}{sequence
+UC\_SS7\_01},
+\href{../../../diagrams/Use-case\%20detail-scenario/SS7/Sequence\%20diagrams/UC_SS7_02_NguyenTrungNguyen_sequence.puml}{sequence
+UC\_SS7\_02},
+\href{../../../diagrams/Use-case\%20detail-scenario/SS7/Activity\%20diagrams/UC_SS7_01_NguyenTrungNguyen_activity.puml}{activity
+UC\_SS7\_01},
+\href{../../../diagrams/Use-case\%20detail-scenario/SS7/Activity\%20diagrams/UC_SS7_02_NguyenTrungNguyen_activity.puml}{activity
+UC\_SS7\_02}.
+
+sequence/activity Sub2 có nhắc đến IoT, SSO, xử lý offline, trạng thái
+Hub \texttt{OFFLINE}, tự động Apply/đổi Hub và (ở activity UC\_SS7\_02)
+khoảng cách Euclidean. Prototype hiện không triển khai tích hợp ngoài;
+routing dùng Haversine; mô phỏng không phát hiện outage từ phần cứng.
+Báo cáo Sub3 mô tả code thực tế và hợp đồng tương lai, không coi các
+bước cũ này là đã chạy.
+
+\hypertarget{test-case-bonus}{%
+\subsection{7. Test case bonus}\label{test-case-bonus}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Test ID / use case
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Dữ liệu và thao tác
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kết quả mong đợi
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Trạng thái
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{SS7-TC-01} / \texttt{UC\_SS7\_01} & Hub \texttt{H-1}: 4 cổng, 2
+rảnh, 2 xe \texttt{CHARGING}; mô phỏng hỏng 3 cổng. & 2 cổng bận bị ảnh
+hưởng, 1 cổng rảnh bị tắt; \texttt{available=1}; hai xe chuyển
+\texttt{WAITING}; dữ liệu gốc không đổi. & DESIGNED / NOT\_RUN \\
+\texttt{SS7-TC-02} / \texttt{UC\_SS7\_01} & Snapshot state khởi tạo; tạo
+preview lỗi cổng, chưa Apply hoặc hủy. & Hub, version, booking, ví và
+charging sessions không đổi; preview ghi đúng baseline và
+\texttt{PORT\_FAILURE}. & DESIGNED / NOT\_RUN; test hiện tại chỉ kiểm
+tra một phần deepcopy. \\
+\texttt{SS7-TC-03} / \texttt{UC\_SS7\_01} & Apply preview tại version
+cũ, sau đó thử Apply preview hợp lệ hai lần. & Trường hợp cũ trả
+\texttt{STALE\_STATE} không commit từng phần; Apply hợp lệ lần đầu, lần
+hai \texttt{already\_applied}; slot đỗ không đổi do lỗi cổng. & DESIGNED
+/ NOT\_RUN; coordinator chưa triển khai. \\
+\texttt{SS7-TC-04} / \texttt{UC\_SS7\_02} & Hub nguồn \texttt{H0};
+\texttt{HA}/\texttt{HB} có chỗ và cổng; \texttt{HC} hết cổng; yêu cầu cả
+slot/cổng, limit 2. & Loại nguồn và \texttt{HC}; trả \texttt{HA},
+\texttt{HB} theo Haversine tăng dần; kết quả không sửa capacity. &
+DESIGNED / NOT\_RUN \\
+\texttt{SS7-TC-05} / \texttt{UC\_SS7\_02} & Mọi Hub thay thế đều thiếu
+slot hoặc cổng theo nhu cầu. & Trả danh sách rỗng/cảnh báo; không đổi
+booking, holds, ví, Hub hoặc thời gian thuê. & DESIGNED / NOT\_RUN \\
+\texttt{SS7-TC-06} / \texttt{UC\_SS7\_02} & Booking có giữ chỗ Hub cũ;
+người dùng xác nhận Hub mới đang còn slot; thử thao tác lặp. & Nhả/giữ
+đúng một slot; không đổi ví; thưởng 15 phút tối đa một lần; Hub hết chỗ
+khi nhận thì không sửa state. & DESIGNED / NOT\_RUN cho hợp đồng
+idempotent; test hiện tại xác nhận luồng chuyển một lần. \\
+\end{longtable}
+
+\hypertarget{kux1ebft-quux1ea3-test-prototype-thux1ef1c-sux1ef1-chux1ea1y}{%
+\subsubsection{Kết quả test prototype thực sự
+chạy}\label{kux1ebft-quux1ea3-test-prototype-thux1ef1c-sux1ef1-chux1ea1y}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Phạm vi
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Lệnh
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kết quả
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Mô phỏng cổng lỗi, deepcopy và metrics &
+\texttt{\$env:PYTHONPATH\ =\ (Resolve-Path\ .\textbackslash{}src).Path;\ python\ -m\ pytest\ -q\ tests/test\_simulations.py}
+& \textbf{PASS --- 2 passed.} \\
+Gợi ý Hub và chuyển giữ chỗ booking &
+\texttt{\$env:PYTHONPATH\ =\ (Resolve-Path\ .\textbackslash{}src).Path;\ python\ -m\ pytest\ -q\ tests/test\_submission\_2\_acceptance.py\ -k\ rerouting}
+& \textbf{PASS --- 1 passed, 12 deselected.} \\
+\end{longtable}
+
+Các lệnh cần \texttt{PYTHONPATH=src} do repository không có pytest
+configuration đưa thư mục \texttt{src} vào import path. Kết quả này chỉ
+áp dụng cho test hiện có; sáu ca Sub3 phía trên vẫn là test được thiết
+kế/chưa chạy. Mô tả chi tiết từng ca nằm trong \url{test_cases.md}.
+
+\hypertarget{giux1edbi-hux1ea1n-vuxe0-vux1ea5n-ux111ux1ec1-cuxf2n-mux1edf}{%
+\subsection{8. Giới hạn và vấn đề còn
+mở}\label{giux1edbi-hux1ea1n-vuxe0-vux1ea5n-ux111ux1ec1-cuxf2n-mux1edf}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Không có danh mục port ID trong dữ liệu Hub; cần thống nhất cách ánh
+  xạ số cổng mô phỏng sang ID ổn định trước INT-05.
+\item
+  \texttt{simulate\_port\_failure} hiện không điều chỉnh/đối soát đầy đủ
+  \texttt{offline} cũ, phiên sạc cụ thể hoặc toàn bộ invariant của Hub;
+  không gọi kết quả như dự báo chính xác cho vận hành vật lý.
+\item
+  Routing không loại Hub lỗi/offline dựa trên trạng thái chuẩn; thiếu
+  tọa độ có thể rơi về giá trị mặc định. Bọc service cần validate dữ
+  liệu trước khi đề xuất.
+\item
+  \texttt{sim\_preview\_ss7} là dictionary riêng; UI chưa gọi
+  \texttt{SimulationCoordinator}, chưa lưu lịch sử Apply/idempotency và
+  chưa xử lý transaction SS7--SS5.
+\item
+  Chưa có endpoint/port/hosting cấu hình trong repository; deployment
+  view vì vậy không ghi số cổng hoặc topology cloud.
+\item
+  Nguồn class diagram và Implementation view SS7 đã được cập nhật theo
+  review PR \#20; PNG/SVG được xuất lại từ cùng nguồn. PDF cá nhân đã
+  được xuất, mở kiểm tra bố cục và đặt tại
+  \texttt{output/submission\_3/REPORT\_SUB3\_NguyenTrungNguyen\_2011710.pdf}.
+\end{enumerate}
+
+\hypertarget{tux1ef1-kiux1ec3m-tra-khai-buxe1o-ai-vuxe0-ux111ux1ea7u-ra}{%
+\subsection{9. Tự kiểm tra, khai báo AI và đầu
+ra}\label{tux1ef1-kiux1ec3m-tra-khai-buxe1o-ai-vuxe0-ux111ux1ea7u-ra}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Xác nhận nội dung:} TV7 xác nhận phần nội dung ban đầu ngày
+  30/10/2026; cập nhật tài liệu/sơ đồ theo review PR \#20 ngày
+  03/11/2026.
+\item
+  \textbf{Tự kiểm tra kỹ thuật:} ba sơ đồ TV7 đã qua PlantUML syntax
+  check và được xuất PNG/SVG; hai test prototype nêu ở mục 7 đã chạy
+  đạt. Các ca bonus ở mức thiết kế chưa chạy. PDF được xuất lại từ báo
+  cáo đã cập nhật, gồm các ảnh sơ đồ hiện hành, rồi mở kiểm tra sau khi
+  tạo.
+\item
+  \textbf{Khai báo AI:} AI assistant using Copilot SDK in VS Code hỗ trợ
+  đọc hướng dẫn/code, soạn và chỉnh báo cáo TV7, tạo nguồn sơ đồ
+  Deployment/SS7 và Implementation SS7, truy vết, test case, khai
+  báo/checklist và xuất bản PDF. TV7 rà soát và chấp nhận nội dung theo
+  xác nhận nêu trên. Không sửa code triển khai. Tên model cụ thể không
+  được cung cấp trong phiên làm việc.
+\item
+  \textbf{Đóng góp và giới hạn:} TV7 phụ trách SS7 và Deployment view
+  chung; class diagram hệ thống/Implementation view chung cấp hệ thống
+  thuộc TV3. SimulationCoordinator thuộc TV6, ChargingService thuộc TV5,
+  BookingService thuộc TV1. Phần chia sẻ và giao tiếp được ghi theo đúng
+  chủ sở hữu.
+\item
+  \textbf{Prompt history:}
+  \href{../../../prompt-history/TV7_NguyenTrungNguyen/prompt_history_NguyenTrungNguyen_sub3.txt}{Bản
+  ghi prompt Sub3} gồm prompt thực tế của phiên hỗ trợ và tóm tắt công
+  việc; đây là bản ghi bổ sung, không phải transcript toàn bộ hội thoại.
+\item
+  \textbf{PDF cá nhân:}
+  \href{../../../../output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf}{REPORT\_SUB3\_NguyenTrungNguyen\_2011710.pdf}
+  --- PDF đã xuất và kiểm tra, được bàn giao cùng nguồn trong cây
+  repository.
+\item
+  \textbf{LMS:} chưa xác nhận trạng thái nộp; TV7 phải tự tải đúng bộ
+  file và kiểm tra biên nhận/trạng thái trên LMS.
+\end{itemize}
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}{%
+\subsection{Hiệu chỉnh tích hợp
+06/11/2026}\label{hiux1ec7u-chux1ec9nh-tuxedch-hux1ee3p-06112026}}
+
+INT-08 thuộc DemandSimulationService/TV6, không phải nghĩa vụ hiện thực
+riêng của SS7; SS7 cần dùng schema/INT-10 chung và mô tả
+INT-05/06/07/09. Quan hệ failure\_scenario là phụ thuộc bối cảnh, không
+phải thuộc tính thêm vào SimulationPreview. INT-07 version/key/ưu đãi
+một lần là hợp đồng mục tiêu; chưa có coordinator hay adapter cổng vật
+lý đang chạy.
+
+\hypertarget{class-diagram-revision-tuxedch-hux1ee3p}{%
+\subsection{Class diagram revision tích
+hợp}\label{class-diagram-revision-tuxedch-hux1ee3p}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS7/class_diagram.png}
+\caption{Class diagram SS7}
+\end{figure}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss7---revision-06112026}{%
+\section{Danh mục mọi phương thức SS7 - revision
+06/11/2026}\label{danh-mux1ee5c-mux1ecdi-phux1b0ux1a1ng-thux1ee9c-ss7---revision-06112026}}
+
+Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn giao; kiểu
+dữ liệu/đơn vị và class descriptions đọc cùng REPORT\_SUB3.md. Không suy
+ra service đề xuất đã tồn tại từ test của hàm core.
+
+\hypertarget{infrastructuresimulationservice.preview_port_failure}{%
+\subsection{\texorpdfstring{\texttt{InfrastructureSimulationService.preview\_port\_failure}}{InfrastructureSimulationService.preview\_port\_failure}}\label{infrastructuresimulationservice.preview_port_failure}}
+
+\textbf{Chữ ký:}
+\texttt{preview\_port\_failure(hub\_id:\ str,\ num\_ports\_down:\ int,\ seed:\ int\ =\ 42)\ -\textgreater{}\ OperationResult{[}SimulationPreview{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-09 đề xuất.
+Hub tồn tại, số cổng nguyên không âm và không vượt tập cổng hoạt động
+hợp lệ; snapshot baseline\_version, gọi engine/adapter rồi đóng gói
+PORT\_FAILURE với charging\_effects/summary/is\_applied. Không commit
+Hub/phiên/booking trước Apply. Invalid/NOT\_FOUND không tạo preview hợp
+lệ; dùng DTO/INT-10 TV6, không tạo coordinator thứ hai.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{reroutingservice.suggest_hubs}{%
+\subsection{\texorpdfstring{\texttt{ReroutingService.suggest\_hubs}}{ReroutingService.suggest\_hubs}}\label{reroutingservice.suggest_hubs}}
+
+\textbf{Chữ ký:}
+\texttt{suggest\_hubs(target\_hub\_id:\ str,\ need\_slots:\ bool\ =\ True,\ need\_ports:\ bool\ =\ False,\ limit:\ int\ =\ 2)\ -\textgreater{}\ OperationResult{[}list{[}RouteSuggestion{]}{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} INT-06 đề xuất.
+Hub gốc tồn tại, limit\textgreater0; lọc nhu cầu chỗ/cổng và operational
+status, loại Hub gốc, xếp khoảng cách Haversine km rồi ID để phá hòa.
+Trả list RouteSuggestion (rỗng là hợp lệ), không đổi booking/cọc.
+Prototype mapping
+find\_alternative\_hubs/find\_nearest\_alternative\_hubs chưa lọc
+OFFLINE chuẩn. Khi nhận gợi ý phải kiểm tra lại capacity/version ở
+INT-07 sau xác nhận.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\hypertarget{hubeventsimulator.simulate_port_failure}{%
+\subsection{\texorpdfstring{\texttt{HubEventSimulator.simulate\_port\_failure}}{HubEventSimulator.simulate\_port\_failure}}\label{hubeventsimulator.simulate_port_failure}}
+
+\textbf{Chữ ký:}
+\texttt{simulate\_port\_failure(target\_hub\_id:\ str\ =\ "HUB-004",\ num\_ports\_down:\ int\ =\ 3,\ seed:\ Optional{[}int{]}\ =\ 42)\ -\textgreater{}\ tuple{[}list{[}dict{]},list{[}str{]},dict{]}}.
+
+\textbf{Điều kiện, hành vi, kết quả, lỗi và gọi lặp:} Engine hiện có:
+deepcopy \_original, xác định Hub, phân chia busy/free bị ảnh hưởng bằng
+số đếm, chuyển xe CHARGING ảnh hưởng sang WAITING, cập nhật
+available/offline và trả hubs/log/metrics. Không đổi slot đỗ hoặc dữ
+liệu nguồn. Hub không tồn tại trả metrics rỗng; core chưa chặn đầy đủ số
+âm/lỗi lặp/offline đã có, không có port-ID/session adapter.
+
+\textbf{Truy vết:} các UC/method liên quan được dẫn trong
+traceability.md; test và trạng thái thực thi ở test\_cases.md.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss7---revision-06112026}{%
+\section{Truy vết SS7 - revision
+06/11/2026}\label{truy-vux1ebft-ss7---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss7_01---muxf4-phux1ecfng-sux1ef1-cux1ed1-hux1ea1-tux1ea7ng-mux1ea5t-ux111iux1ec7n-trux1ea1m-sux1ea1c}{%
+\subsection{UC\_SS7\_01 - Mô phỏng sự cố hạ tầng \& Mất điện trạm
+sạc}\label{uc_ss7_01---muxf4-phux1ecfng-sux1ef1-cux1ed1-hux1ea1-tux1ea7ng-mux1ea5t-ux111iux1ec7n-trux1ea1m-sux1ea1c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-23, US-24, FR-14, FR-15.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Usecase\%20scenario/UC_SS7_NguyenTrungNguyen.md}{UC\_SS7\_NguyenTrungNguyen.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Sequence\%20diagrams/UC_SS7_01_NguyenTrungNguyen_sequence.puml}{UC\_SS7\_01\_NguyenTrungNguyen\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Activity\%20diagrams/UC_SS7_01_NguyenTrungNguyen_activity.puml}{UC\_SS7\_01\_NguyenTrungNguyen\_activity.puml}.
+\item
+  \textbf{Thiết kế:}
+  \texttt{InfrastructureSimulationService.preview\_port\_failure},
+  \texttt{HubEventSimulator.simulate\_port\_failure},
+  \texttt{SimulationCoordinator.apply\_preview}. Class diagram SS7,
+  catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_simulations.py::test\_port\_failure\_distinguishes\_free\_vs\_busy\_ports},
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_infrastructure\_preview\_isolated\_apply\_and\_stale\_rejected}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss7_02---ux111ux1ec1-xuux1ea5t-gux1ee3i-uxfd-ux111iux1ec1u-hux1b0ux1edbng-tux1ef1-ux111ux1ed9ng-sang-hub-luxe2n-cux1eadn-cux1ea3nh-buxe1o}{%
+\subsection{UC\_SS7\_02 - Đề xuất gợi ý điều hướng tự động sang Hub lân
+cận \& Cảnh
+báo}\label{uc_ss7_02---ux111ux1ec1-xuux1ea5t-gux1ee3i-uxfd-ux111iux1ec1u-hux1b0ux1edbng-tux1ef1-ux111ux1ed9ng-sang-hub-luxe2n-cux1eadn-cux1ea3nh-buxe1o}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-24, US-24b, FR-15, FR-15c.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Usecase\%20scenario/UC_SS7_NguyenTrungNguyen.md}{UC\_SS7\_NguyenTrungNguyen.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Sequence\%20diagrams/UC_SS7_02_NguyenTrungNguyen_sequence.puml}{UC\_SS7\_02\_NguyenTrungNguyen\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS7/Activity\%20diagrams/UC_SS7_02_NguyenTrungNguyen_activity.puml}{UC\_SS7\_02\_NguyenTrungNguyen\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{ReroutingService.suggest\_hubs},
+  \texttt{BookingService.accept\_rerouting}. Class diagram SS7, catalog
+  cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_rerouting\_selects\_two\_hubs\_and\_transfers\_hold\_once},
+  \texttt{tests/test\_core\_state\_and\_billing.py::test\_haversine\_distance\_accuracy}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-case-bonus-nguyux1ec5n-trung-nguyuxean-ss7}{%
+\section{Test case bonus --- Nguyễn Trung Nguyên ---
+SS7}\label{test-case-bonus-nguyux1ec5n-trung-nguyuxean-ss7}}
+
+\textbf{Trạng thái:} 6 ca được thiết kế; chưa thực thi riêng các ca
+trong bảng. Không ghi PASS trước khi có kết quả lệnh/test cụ thể.
+\textbf{Quy ước:} test thiết kế cho hợp đồng Sub3 được phân biệt với
+test prototype hiện có.
+
+\hypertarget{uc_ss7_01-muxf4-phux1ecfng-sux1ef1-cux1ed1-hux1ea1-tux1ea7ng}{%
+\subsection{UC\_SS7\_01 --- Mô phỏng sự cố hạ
+tầng}\label{uc_ss7_01-muxf4-phux1ecfng-sux1ef1-cux1ed1-hux1ea1-tux1ea7ng}}
+
+\hypertarget{ss7-tc-01-sux1ef1-cux1ed1-ux1ea3nh-hux1b0ux1edfng-cux1ea3-cux1ed5ng-bux1eadn-vuxe0-cux1ed5ng-rux1ea3nh}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-01} --- Sự cố ảnh hưởng cả
+cổng bận và cổng
+rảnh}{SS7-TC-01 --- Sự cố ảnh hưởng cả cổng bận và cổng rảnh}}\label{ss7-tc-01-sux1ef1-cux1ed1-ux1ea3nh-hux1b0ux1edfng-cux1ea3-cux1ed5ng-bux1eadn-vuxe0-cux1ed5ng-rux1ea3nh}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN}.
+\item
+  \textbf{Mức:} unit test cho
+  \texttt{HubEventSimulator.simulate\_port\_failure}.
+\item
+  \textbf{Dữ liệu:} Hub fixture \texttt{H-1}, \texttt{total=4},
+  \texttt{available=2}, \texttt{offline=0}; có hai xe trạng thái
+  \texttt{CHARGING}; yêu cầu \texttt{num\_ports\_down=3}.
+\item
+  \textbf{Bước:} giữ snapshot dữ liệu gốc; mô phỏng trên Hub này; đối
+  chiếu output, metrics và snapshot ban đầu.
+\item
+  \textbf{Kết quả mong đợi:} \texttt{failed\_ports\_total=3};
+  \texttt{busy\_ports\_interrupted=2}; \texttt{free\_ports\_disabled=1};
+  \texttt{remaining\_available\_ports=1}; hai xe đang sạc chuyển sang
+  \texttt{WAITING}; Hub đầu vào vẫn có \texttt{available=2} và hai xe
+  giữ nguyên trạng thái.
+\item
+  \textbf{Truy vết:} UC\_SS7\_01 / \texttt{SS7-MTH-01}.
+\end{itemize}
+
+\hypertarget{ss7-tc-02-preview-khuxf4ng-luxe0m-thay-ux111ux1ed5i-hub-gux1ed1c}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-02} --- Preview không làm
+thay đổi Hub
+gốc}{SS7-TC-02 --- Preview không làm thay đổi Hub gốc}}\label{ss7-tc-02-preview-khuxf4ng-luxe0m-thay-ux111ux1ed5i-hub-gux1ed1c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN} (hợp đồng service
+  tương lai; test prototype hiện có kiểm tra một phần).
+\item
+  \textbf{Mức:} service/component, \texttt{preview\_port\_failure} /
+  INT-09.
+\item
+  \textbf{Dữ liệu:} state khởi tạo; chọn \texttt{HUB-004}; ghi deep copy
+  \texttt{hubs}, \texttt{state\_version}, booking, ví và charging
+  sessions trước khi chạy preview.
+\item
+  \textbf{Bước:} tạo preview lỗi một số cổng; chưa Apply hoặc bấm Hủy.
+\item
+  \textbf{Kết quả mong đợi:} \texttt{hubs}, booking, ví, charging
+  sessions và \texttt{state\_version} không đổi; preview có
+  \texttt{scenario\_type=PORT\_FAILURE}, \texttt{baseline\_version} bằng
+  version trước mô phỏng. Hủy preview không tạo side effect.
+\item
+  \textbf{Truy vết:} UC\_SS7\_01 / INT-09; test hiện có
+  \texttt{test\_port\_failure\_distinguishes\_free\_vs\_busy\_ports} chỉ
+  chứng minh simulator không sửa Hub gốc, không kiểm tra toàn bộ
+  session/service này.
+\end{itemize}
+
+\hypertarget{ss7-tc-03-tux1eeb-chux1ed1i-apply-preview-cux169-vuxe0-apply-lux1eb7p}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-03} --- Từ chối Apply
+preview cũ và Apply
+lặp}{SS7-TC-03 --- Từ chối Apply preview cũ và Apply lặp}}\label{ss7-tc-03-tux1eeb-chux1ed1i-apply-preview-cux169-vuxe0-apply-lux1eb7p}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN} (hợp đồng INT-10;
+  chưa triển khai coordinator).
+\item
+  \textbf{Mức:} integration \texttt{SimulationCoordinator} +
+  \texttt{ChargingService}.
+\item
+  \textbf{Dữ liệu:} một preview tại version \texttt{v}; một phiên sạc
+  gắn với cổng chịu ảnh hưởng; state sau đó được tăng version thành
+  \texttt{v+1}.
+\item
+  \textbf{Bước A:} gọi
+  \texttt{apply\_preview(preview\_id,\ expected\_version=v)}.
+\item
+  \textbf{Kết quả A:} trả \texttt{STALE\_STATE}; Hub, session/công suất,
+  booking và ví không thay đổi một phần.
+\item
+  \textbf{Bước B:} với state hợp lệ, Apply preview một lần rồi gọi Apply
+  lại cùng preview.
+\item
+  \textbf{Kết quả B:} lần đầu \texttt{applied=true}; lần sau
+  \texttt{already\_applied=true}; cổng/phiên chỉ bị tác động một lần; số
+  slot đỗ không đổi chỉ vì lỗi cổng.
+\item
+  \textbf{Truy vết:} UC\_SS7\_01 / INT-05 / INT-10.
+\end{itemize}
+
+\hypertarget{uc_ss7_02-gux1ee3i-uxfd-hub-thay-thux1ebf}{%
+\subsection{UC\_SS7\_02 --- Gợi ý Hub thay
+thế}\label{uc_ss7_02-gux1ee3i-uxfd-hub-thay-thux1ebf}}
+
+\hypertarget{ss7-tc-04-lux1ecdc-theo-nhu-cux1ea7u-vuxe0-xux1ebfp-gux1ea7n-nhux1ea5t-trux1b0ux1edbc}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-04} --- Lọc theo nhu cầu
+và xếp gần nhất
+trước}{SS7-TC-04 --- Lọc theo nhu cầu và xếp gần nhất trước}}\label{ss7-tc-04-lux1ecdc-theo-nhu-cux1ea7u-vuxe0-xux1ebfp-gux1ea7n-nhux1ea5t-trux1b0ux1edbc}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN}.
+\item
+  \textbf{Mức:} unit test cho \texttt{ReroutingService.suggest\_hubs} /
+  \texttt{core.routing}.
+\item
+  \textbf{Dữ liệu:} Hub nguồn \texttt{H0} tại \texttt{(10,\ 0)}; Hub
+  \texttt{HA} tại \texttt{(10,\ 1)} còn slot và cổng; \texttt{HB} tại
+  \texttt{(11,\ 0)} còn slot và cổng; \texttt{HC} tại
+  \texttt{(10,\ 0.5)} không còn cổng; yêu cầu \texttt{need\_ports=true},
+  \texttt{need\_slots=true}, \texttt{limit=2}.
+\item
+  \textbf{Bước:} truy vấn gợi ý từ \texttt{H0}.
+\item
+  \textbf{Kết quả mong đợi:} loại \texttt{H0} và \texttt{HC}; trả
+  \texttt{HA}, \texttt{HB} theo thứ tự khoảng cách Haversine tăng dần;
+  kết quả không sửa capacity. Sau khi một Hub bị lấp đầy trước thao tác
+  xác nhận, acceptance phải từ chối/stale thay vì dùng snapshot cũ.
+\item
+  \textbf{Truy vết:} UC\_SS7\_02 / INT-06.
+\end{itemize}
+
+\hypertarget{ss7-tc-05-khuxf4ng-cuxf3-hub-ux111uxe1p-ux1ee9ng-nhu-cux1ea7u}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-05} --- Không có Hub đáp
+ứng nhu
+cầu}{SS7-TC-05 --- Không có Hub đáp ứng nhu cầu}}\label{ss7-tc-05-khuxf4ng-cuxf3-hub-ux111uxe1p-ux1ee9ng-nhu-cux1ea7u}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN}.
+\item
+  \textbf{Mức:} unit test cho \texttt{ReroutingService.suggest\_hubs}.
+\item
+  \textbf{Dữ liệu:} Hub nguồn tồn tại; tất cả Hub khác không còn chỗ
+  hoặc không còn cổng theo nhu cầu.
+\item
+  \textbf{Bước:} yêu cầu gợi ý với \texttt{need\_slots=true},
+  \texttt{need\_ports=true}.
+\item
+  \textbf{Kết quả mong đợi:} thành công với danh sách rỗng (hoặc cảnh
+  báo không có ứng viên ở UI); không đổi booking, holds, ví, Hub hoặc
+  thời gian thuê; không tự chọn Hub không đủ điều kiện.
+\item
+  \textbf{Truy vết:} UC\_SS7\_02 / INT-06.
+\end{itemize}
+
+\hypertarget{ss7-tc-06-chuyux1ec3n-booking-sau-xuxe1c-nhux1eadn-ux1b0u-ux111uxe3i-khuxf4ng-cux1ed9ng-dux1ed3n}{%
+\subsubsection{\texorpdfstring{\texttt{SS7-TC-06} --- Chuyển booking sau
+xác nhận, ưu đãi không cộng
+dồn}{SS7-TC-06 --- Chuyển booking sau xác nhận, ưu đãi không cộng dồn}}\label{ss7-tc-06-chuyux1ec3n-booking-sau-xuxe1c-nhux1eadn-ux1b0u-ux111uxe3i-khuxf4ng-cux1ed9ng-dux1ed3n}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Trạng thái:} \texttt{DESIGNED\ /\ NOT\_RUN} cho hợp đồng
+  INT-07; test prototype hiện có xác nhận một lần chuyển.
+\item
+  \textbf{Mức:} integration \texttt{BookingService.accept\_rerouting} /
+  \texttt{core.booking.apply\_rerouting\_to\_booking}.
+\item
+  \textbf{Dữ liệu:} booking hợp lệ có giữ chỗ tại Hub cũ; Hub mới còn
+  slot; ghi snapshot holds, capacity, ví và
+  \texttt{extra\_free\_minutes}.
+\item
+  \textbf{Bước:} người dùng xác nhận Hub mới; sau thành công gọi lại
+  cùng yêu cầu/booking (hoặc điều hướng lại) theo chính sách
+  idempotency.
+\item
+  \textbf{Kết quả mong đợi:} Hub cũ được nhả đúng một slot; Hub mới giữ
+  đúng một slot; tiền/cọc không đổi; \texttt{extra\_free\_minutes=15}
+  tối đa một lần; yêu cầu lặp không làm giảm thêm capacity hoặc cộng
+  thêm phút. Nếu Hub mới hết chỗ tại thời điểm nhận thì không sửa state.
+\item
+  \textbf{Truy vết:} UC\_SS7\_02 / INT-07; test prototype
+  \texttt{test\_rerouting\_selects\_two\_hubs\_and\_transfers\_hold\_once}
+  kiểm tra luồng chuyển một lần hiện tại.
+\end{itemize}
+
+\hypertarget{bux1eb1ng-chux1ee9ng-chux1ea1y-hiux1ec7n-cuxf3}{%
+\subsection{Bằng chứng chạy hiện
+có}\label{bux1eb1ng-chux1ee9ng-chux1ea1y-hiux1ec7n-cuxf3}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Phạm vi test đã có
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Lệnh
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kết quả trong lượt hỗ trợ
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Mô phỏng cổng lỗi, cách ly deepcopy và metrics cơ bản & PowerShell:
+\texttt{\$env:PYTHONPATH\ =\ (Resolve-Path\ .\textbackslash{}src).Path;\ python\ -m\ pytest\ -q\ tests/test\_simulations.py}
+& PASS --- 2 passed. \\
+Gợi ý 2 Hub và chuyển giữ chỗ & PowerShell:
+\texttt{\$env:PYTHONPATH\ =\ (Resolve-Path\ .\textbackslash{}src).Path;\ python\ -m\ pytest\ -q\ tests/test\_submission\_2\_acceptance.py\ -k\ rerouting}
+& PASS --- 1 passed, 12 deselected. \\
+\end{longtable}
+
+Hai lệnh cần \texttt{PYTHONPATH=src} vì repository không có pytest
+configuration đưa thư mục \texttt{src} vào import path. Các ca
+\texttt{SS7-TC-01} đến \texttt{SS7-TC-06} là test case bonus được thiết
+kế, không phải kết quả kiểm thử riêng; kết quả PASS ở trên chỉ áp dụng
+cho test hiện có được nêu trong bảng.
+
+\hypertarget{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}{%
+\subsection{Đối chiếu thực thi
+06/11/2026}\label{ux111ux1ed1i-chiux1ebfu-thux1ef1c-thi-06112026}}
+
+Bộ49 test hiện có đã chạy PASS (log baseline chung). Các tên test dẫn
+trong traceability.md được đối chiếu với nguồn. Nhãn PASS của bản bàn
+giao chỉ có hiệu lực trong phạm vi các assert thực sự có trong test đó;
+các điều kiện mở rộng/operation\_key/service đề xuất vẫn DESIGNED. Không
+dùng test của core để xác nhận service chưa tồn tại.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

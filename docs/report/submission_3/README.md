@@ -1,12 +1,15 @@
-# Submission 3 - bản tích hợp 06/11/2026
+# Submission 3 - bộ PDF revision 06/11/2026
 
-Đã tiếp nhận nguồn SS2/SS5/SS6/SS7 từ PR22/21/23/20, bổ sung thiết kế còn thiếu SS1/SS3/SS4 và kiến trúc chung. Đây là bản tích hợp kỹ thuật; chủ sở hữu cần đọc/xác nhận nội dung, đóng góp và PDF cuối trước LMS.
+Bảy báo cáo dưới đây được build từ nguồn đã tích hợp; có hai view kiến trúc chung, class diagram, mô tả lớp/phương thức và phụ lục truy vết/test/self-check/AI. Đây là bộ kỹ thuật để tác giả mở lại và xác nhận; chưa có bằng chứng nộp LMS.
 
-- [Báo cáo review chi tiết](../../review/REVIEW_SUBMISSION_3_20261106.md).
-- [Kiến trúc chung](shared/architecture.md) và [hợp đồng](shared/shared_contracts.md).
-- [Truy vết 17 UC](../../traceability/submission_3.md).
-- [Vấn đề còn mở](shared/open_issues.md).
-- [Kế hoạch hoàn thiện](COMPLETION_PLAN.md).
-- [Đầu ra PDF](../../../output/submission_3/README.md).
+- [REPORT_SUB3_DangHoangQuyNhan_2412401.pdf](REPORT_SUB3_DangHoangQuyNhan_2412401.pdf).
+- [REPORT_SUB3_DuongDangKhoa_2411589.pdf](REPORT_SUB3_DuongDangKhoa_2411589.pdf).
+- [REPORT_SUB3_HoangVanTan_2213074.pdf](REPORT_SUB3_HoangVanTan_2213074.pdf).
+- [REPORT_SUB3_NguyenAnhTai_2413035.pdf](REPORT_SUB3_NguyenAnhTai_2413035.pdf).
+- [REPORT_SUB3_NguyenThanhDat_2410709.pdf](REPORT_SUB3_NguyenThanhDat_2410709.pdf).
+- [REPORT_SUB3_NguyenTrungNguyen_2011710.pdf](REPORT_SUB3_NguyenTrungNguyen_2011710.pdf).
+- [REPORT_SUB3_PhamTienDat_2410724.pdf](REPORT_SUB3_PhamTienDat_2410724.pdf).
 
-Mỗi TV1..TV7 có REPORT_SUB3.md, method_catalog.md, traceability.md, test_cases.md, self_check.md và ai_usage.md. Nguồn sơ đồ ở docs/diagrams/submission_3/. Script build nhúng phụ lục để người chấm đọc đủ trong PDF; không phải mở Markdown mới thấy phần bắt buộc.
+[SHA256SUMS](SHA256SUMS.txt) định danh đúng bộ PDF. Nguồn: docs/report/submission_3 và docs/diagrams/submission_3. Script build: scripts/build_submission_3.py; toolchain: scripts/requirements-submission3.txt. Bản PDF/DOCX bàn giao trước giữ trong lịch sử Git, không trộn với đầu ra canonical revision này.
+
+Kế hoạch chốt: docs/report/submission_3/COMPLETION_PLAN.md. Mỗi chủ sở hữu cần đọc/hiểu bản sửa, khai báo AI/đóng góp đúng, xác nhận PDF rồi nộp theo LMS đã kiểm chứng. Không mặc định các service đề xuất đã có code hoặc test PASS, không dùng ZIP/source thay báo cáo doc/docx/pdf bắt buộc.

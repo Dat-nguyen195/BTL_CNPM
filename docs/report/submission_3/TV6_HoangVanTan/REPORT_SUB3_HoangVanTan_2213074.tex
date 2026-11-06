@@ -1,0 +1,680 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage{iftex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont{DejaVu Sans}
+  \setmonofont{DejaVu Sans Mono}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+\fi
+
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm, headheight=15pt}
+
+\usepackage{graphicx}
+\graphicspath{{../../assets/}{../../../diagrams/}{./}}
+
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=blue,
+    pdftitle={Submission 3 - SS6 - Hoàng Văn Tấn},
+    pdfauthor={Nhóm BEE BRAVE - Hoàng Văn Tấn}
+}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+\fancyhead[R]{\small SS6 -- Hoàng Văn Tấn}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\small Smart E-Mobility Hub -- Submission 3}
+  \fancyhead[R]{\small SS6 -- Hoàng Văn Tấn}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+\begin{document}
+
+% ============================================================
+%                       TRANG BÌA
+% ============================================================
+\begin{titlepage}
+    \noindent
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width = 2pt] ($(current page.north west) + (1.5cm,-1.0cm)$) rectangle ($(current page.south east) + (-0.8cm,1.0cm)$);
+        \draw[line width = 0.8pt] ($(current page.north west) + (1.6cm,-1.1cm)$) rectangle ($(current page.south east) + (-0.9cm,1.1cm)$);
+    \end{tikzpicture}%
+    \centering
+    \textbf{\large ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}\\[0.2cm]
+    \textbf{\Large TRƯỜNG ĐẠI HỌC BÁCH KHOA}\\[0.2cm]
+    \textbf{\large KHOA KHOA HỌC VÀ KỸ THUẬT MÁY TÍNH}\\[0.6cm]
+
+    \includegraphics[width=6cm]{mau.png}\\[0.5cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    {\fontsize{22}{26}\selectfont\textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\Large\textbf{SUBMISSION \#3}}\\[0.6cm]
+
+    {\large MÔN HỌC: \textbf{CÔNG NGHỆ PHẦN MỀM (CO3001)} --- HK261}\\[0.3cm]
+    {\large ĐỀ TÀI:}\\[0.2cm]
+    {\Large\textbf{SMART E-MOBILITY HUB}}\\[0.2cm]
+    {\large Phân hệ: \textbf{SS6: Mô phỏng What-if Nhu cầu (Demand Simulator)}}\\[0.6cm]
+
+    \rule{\textwidth}{0.5pt}\\[0.6cm]
+
+    \begin{flushleft}
+        \hspace{1cm}\textbf{Giảng viên hướng dẫn:} TS. Trần Thị Ngọc Trâm\\[0.3cm]
+        \hspace{1cm}\textbf{Lớp học phần:} L02\\[0.3cm]
+        \hspace{1cm}\textbf{Nhóm báo cáo:} BEE BRAVE (Nhóm 7)\\[0.3cm]
+        \hspace{1cm}\textbf{Sinh viên thực hiện:} Hoàng Văn Tấn\\[0.3cm]
+        \hspace{1cm}\textbf{MSSV:} 2213074\\[0.3cm]
+        \hspace{1cm}\textbf{Revision:} 06/11/2026 (Bản kỹ thuật trước nộp LMS)
+    \end{flushleft}
+    \vfill
+    Thành phố Hồ Chí Minh, Tháng 11/2026
+\end{titlepage}
+
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+
+\hypertarget{submission-3---houxe0ng-vux103n-tux1ea5n---ss6}{%
+\section{Submission 3 - Hoàng Văn Tấn -
+SS6}\label{submission-3---houxe0ng-vux103n-tux1ea5n---ss6}}
+
+\textbf{MSSV:} 2213074. \textbf{Revision:} 06/11/2026. \textbf{Trạng
+thái:} bản tích hợp kỹ thuật, cần chủ sở hữu đọc và xác nhận trước nộp.
+
+Nội dung được bổ sung/chỉnh trong đợt tổng hợp theo yêu cầu trưởng nhóm,
+có AI hỗ trợ; không ghi nhận thay tác giả rằng họ đã tự làm hoặc tự xác
+nhận. Nguồn bàn giao cũ giữ trong lịch sử Git.
+
+\hypertarget{phux1ea1m-vi}{%
+\subsection{1. Phạm vi}\label{phux1ea1m-vi}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{UC\_SS6\_01}: Mô phỏng tăng đột biến nhu cầu khách Metro
+  (What-if Metro Surge).
+\item
+  \texttt{UC\_SS6\_02}: Dự báo phụ tải nhu cầu và phân tích hàng đợi
+  24h.
+\end{itemize}
+
+\hypertarget{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}{%
+\subsection{Kiến trúc chung và trạng thái phiên bản tích
+hợp}\label{kiux1ebfn-truxfac-chung-vuxe0-trux1ea1ng-thuxe1i-phiuxean-bux1ea3n-tuxedch-hux1ee3p}}
+
+Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt
+-\textgreater{} app.py -\textgreater{} components/core -\textgreater{}
+dữ liệu seed và session ở tiến trình server. Không có database bắt buộc,
+SSO/IoT/payment thật hay các microservice đang vận hành. Session thuộc
+từng kết nối Streamlit; reset nạp lại seed; rerun làm mới giao diện,
+không tạo telemetry nền. Chạy từ repository:
+\texttt{streamlit\ run\ src/app.py}; host/cổng phụ thuộc cấu hình, không
+cố định trong dự án.
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment view chung}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Development/Implementation view chung}
+\end{figure}
+
+\hypertarget{class-diagram-ss6}{%
+\subsection{2. Class diagram SS6}\label{class-diagram-ss6}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/SS6/class_diagram.png}
+\caption{Class diagram SS6}
+\end{figure}
+
+Mô hình OOP là thiết kế đề xuất, trừ HubEventSimulator thực sự tồn tại ở
+SS6. Service trong sơ đồ là giao tiếp nội bộ, không phải server độc lập.
+
+\hypertarget{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}{%
+\subsection{3. Mô tả lớp, thuộc tính và ràng
+buộc}\label{muxf4-tux1ea3-lux1edbp-thuux1ed9c-tuxednh-vuxe0-ruxe0ng-buux1ed9c}}
+
+\hypertarget{demandscenario}{%
+\subsubsection{\texorpdfstring{\texttt{DemandScenario}}{DemandScenario}}\label{demandscenario}}
+
+Dữ liệu đầu vào nhu cầu không âm và seed, không tự thay đổi state.
+
+Thuộc tính và kiểu: \texttt{scenario\_id:\ str}, \texttt{hub\_id:\ str},
+\texttt{num\_students:\ int}, \texttt{seed:\ int}.
+
+\hypertarget{forecastpoint}{%
+\subsubsection{\texorpdfstring{\texttt{ForecastPoint}}{ForecastPoint}}\label{forecastpoint}}
+
+Một mốc giờ: arrivals/queue theo người, wait\_time\_min theo phút; không
+phải số liệu thực tế đã quan sát.
+
+Thuộc tính và kiểu: \texttt{hour:\ str}, \texttt{arrivals:\ int},
+\texttt{queue\_length:\ int}, \texttt{wait\_time\_min:\ float}.
+
+\hypertarget{forecastresult}{%
+\subsubsection{\texorpdfstring{\texttt{ForecastResult}}{ForecastResult}}\label{forecastresult}}
+
+Kết quả 24 điểm liên tiếp, seed/giả định được ghi để tái lập; mô hình
+phục vụ 8 xe/giờ là giả định, chưa dự báo doanh thu.
+
+Thuộc tính và kiểu: \texttt{forecast\_id:\ str}, \texttt{hub\_id:\ str},
+\texttt{hours:\ int\ =\ 24}, \texttt{seed:\ int},
+\texttt{assumptions:\ str}, \texttt{points:\ list{[}ForecastPoint{]}}.
+
+\hypertarget{simulationpreview}{%
+\subsubsection{\texorpdfstring{\texttt{SimulationPreview}}{SimulationPreview}}\label{simulationpreview}}
+
+DTO chuẩn SS6/SS7, bản sao dữ liệu và hiệu ứng dự kiến. metrics
+prototype -\textgreater{} summary; charging\_effects là danh sách tác
+động sạc; is\_applied chống lặp ở thiết kế.
+
+Thuộc tính và kiểu: \texttt{preview\_id:\ str},
+\texttt{scenario\_type:\ str}, \texttt{baseline\_version:\ int},
+\texttt{modified\_hubs:\ list{[}dict{]}},
+\texttt{charging\_effects:\ list{[}dict{]}}, \texttt{summary:\ dict},
+\texttt{is\_applied:\ bool}, \texttt{target\_hub\_id:\ str},
+\texttt{event\_log:\ list{[}str{]}}.
+
+\hypertarget{applyresult}{%
+\subsubsection{\texorpdfstring{\texttt{ApplyResult}}{ApplyResult}}\label{applyresult}}
+
+Kết quả áp dụng preview, phân biệt applied và already\_applied,
+new\_state\_version chính xác.
+
+Thuộc tính và kiểu: \texttt{preview\_id:\ str}, \texttt{applied:\ bool},
+\texttt{already\_applied:\ bool}, \texttt{new\_state\_version:\ int}.
+
+\hypertarget{demandsimulationservice}{%
+\subsubsection{\texorpdfstring{\texttt{DemandSimulationService}}{DemandSimulationService}}\label{demandsimulationservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{forecastservice}{%
+\subsubsection{\texorpdfstring{\texttt{ForecastService}}{ForecastService}}\label{forecastservice}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{simulationcoordinator}{%
+\subsubsection{\texorpdfstring{\texttt{SimulationCoordinator}}{SimulationCoordinator}}\label{simulationcoordinator}}
+
+Service thiết kế đề xuất; các method bên dưới nêu rõ ánh xạ đến hàm/UI
+đang có. Lớp sở hữu vòng đời nghiệp vụ, gọi các hợp đồng dùng chung theo
+quyền sở hữu.
+
+\hypertarget{hubeventsimulator}{%
+\subsubsection{\texorpdfstring{\texttt{HubEventSimulator}}{HubEventSimulator}}\label{hubeventsimulator}}
+
+Lớp hiện có tại src/core/simulator.py; constructor giữ \_original, các
+phép mô phỏng deepcopy để không ghi dữ liệu nguồn.
+
+\hypertarget{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}{%
+\subsection{4. Mô tả mọi phương
+thức}\label{muxf4-tux1ea3-mux1ecdi-phux1b0ux1a1ng-thux1ee9c}}
+
+Xem \url{method_catalog.md}, được nhúng đầy đủ trong PDF. Danh mục có
+chữ ký, đầu vào/đầu ra, điều kiện, tác động, lỗi và quy tắc gọi lặp cho
+từng phương thức được vẽ.
+
+\hypertarget{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}{%
+\subsection{5. Ánh xạ và giới
+hạn}\label{uxe1nh-xux1ea1-vuxe0-giux1edbi-hux1ea1n}}
+
+Service/coordinator/DTO trong sơ đồ là đề xuất, không có package
+core.services/core.domain hoặc hàm UI tách tab. UI hiện một render(),
+mặc định dự báo 12 giờ, có chọn 24. Hai UI Apply riêng có version check
+nhưng chưa dùng coordinator nguyên tử dùng chung. Chuyển tab không tự
+hủy preview nếu chưa reset/discard. US-21 chưa mô hình biến động doanh
+thu; mở rộng cần demand-\textgreater admitted-\textgreater service
+mix-\textgreater tariff-\textgreater expected collected/debt, ghi giả
+định thay vì dùng doanh thu dashboard làm bằng chứng. Core dùng thời
+gian log thực; datetime mô phỏng trong session là chuỗi naive quy ước
+UTC+7.
+
+\hypertarget{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}{%
+\subsection{6. Chính sách và ranh giới thiết
+kế}\label{chuxednh-suxe1ch-vuxe0-ranh-giux1edbi-thiux1ebft-kux1ebf}}
+
+Giữ xe SS1 30 phút từ tạo; hạn SS2 30 phút từ giờ đến. Cọc 50.000,
+no-show phạt10.000/hoàn40.000 VNĐ. Reroute thêm15 phút miễn phí tối đa
+một lần, không đổi TTL. Sạc grace15 phút, phí10.000/khối15 phút bắt đầu
+sau grace; công suất mặc định150 kW/Hub và11 kW/cổng, cấu hình từng test
+có thể khác. Phí đỗ prototype5.000 VNĐ/lượt khác SRS tính theo giờ, phải
+ghi chênh lệch. Ownership PERSONAL/SHARED và binding nguồn lực không
+được trộn.
+
+NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu năng là mục
+tiêu thiết kế. Prototype per-session không chứng minh tính nhất quán
+toàn mạng giữa nhiều phiên; thiết kế tương lai cần shared
+storage/transaction/version và authorization thật. Đề không bắt buộc
+thêm database cho Sub3.
+
+\hypertarget{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}{%
+\subsection{7. Truy vết, test, đóng góp và
+AI}\label{truy-vux1ebft-test-ux111uxf3ng-guxf3p-vuxe0-ai}}
+
+\newpage
+\section*{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Danh mục Phương thức (method\_catalog.md)}
+\hypertarget{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss6---revision-06112026}{%
+\section{Danh mục phương thức SS6 - revision
+06/11/2026}\label{danh-mux1ee5c-phux1b0ux1a1ng-thux1ee9c-ss6---revision-06112026}}
+
+Mọi kiểu/đơn vị như class diagram. \texttt{OperationResult} là hợp đồng
+đề xuất; các tuple/dict hiện có được nêu ở ánh xạ. UC chi tiết và test
+được liên kết trong traceability.md.
+
+\hypertarget{ss6-mth-01-demandsimulationservice.preview_demand}{%
+\subsection{\texorpdfstring{SS6-MTH-01:
+\texttt{DemandSimulationService.preview\_demand}}{SS6-MTH-01: DemandSimulationService.preview\_demand}}\label{ss6-mth-01-demandsimulationservice.preview_demand}}
+
+\textbf{Chữ ký:}
+\texttt{preview\_demand(hub\_id:\ str,\ num\_students:\ int,\ seed:\ int\ =\ 42)\ -\textgreater{}\ OperationResult{[}SimulationPreview{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} INT-08, service đề xuất.
+Hub tồn tại, num\_students nguyên \textgreater=0. Deepcopy snapshot và
+lưu baseline\_version; gọi engine, đóng gói scenario\_type=DEMAND,
+summary=metrics, charging\_effects dự kiến và is\_applied=False. Không
+sửa hubs thật/ví/booking. admitted=min(demand,available\_slots),
+unserved=demand-admitted. Invalid/NOT\_FOUND không lưu preview hợp lệ;
+timestamp log thực không là tiêu chí tái lập.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/simulator.py:HubEventSimulator.simulate\_metro\_surge}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss6-mth-02-forecastservice.forecast}{%
+\subsection{\texorpdfstring{SS6-MTH-02:
+\texttt{ForecastService.forecast}}{SS6-MTH-02: ForecastService.forecast}}\label{ss6-mth-02-forecastservice.forecast}}
+
+\textbf{Chữ ký:}
+\texttt{forecast(hub\_id:\ str,\ base\_arrival\_rate:\ float,\ surge\_multiplier:\ float,\ hours:\ int\ =\ 24,\ seed:\ int\ =\ 42)\ -\textgreater{}\ OperationResult{[}ForecastResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} INT-04, service đề xuất.
+Xác nhận Hub tồn tại, rate/multiplier hữu hạn \textgreater=0 và hours=24
+cho báo cáo Sub3. Gọi engine với hours tường minh, trả 24 mốc 06:00 đến
+05:00, arrivals/queue theo người và wait\_time\_min theo phút.
+service\_rate=8 xe/giờ là giả định mô hình, không phải số đo từng Hub.
+Cùng input/seed cùng dữ liệu; không sửa state. INVALID\_INPUT/NOT\_FOUND
+nếu không hợp lệ. Prototype UI vẫn mặc định 12, có thể chọn 24.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/simulator.py:HubEventSimulator.generate\_demand\_forecast}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss6-mth-03-simulationcoordinator.apply_preview}{%
+\subsection{\texorpdfstring{SS6-MTH-03:
+\texttt{SimulationCoordinator.apply\_preview}}{SS6-MTH-03: SimulationCoordinator.apply\_preview}}\label{ss6-mth-03-simulationcoordinator.apply_preview}}
+
+\textbf{Chữ ký:}
+\texttt{apply\_preview(preview\_id:\ str,\ expected\_version:\ int)\ -\textgreater{}\ OperationResult{[}ApplyResult{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} INT-10, coordinator dùng
+chung đề xuất. Tìm preview, kiểm tra
+baseline\_version=expected\_version=current version và invariant
+capacity/tài chính/công suất. Nếu đã apply cùng preview trả
+already\_applied=True trước kiểm tra stale, không tác động lại. Stage
+candidate và tác động SS5 (INT-05) nếu PORT\_FAILURE; chỉ commit toàn bộ
+khi hợp lệ, tăng version một lần và ghi applied. Không chép ví/booking
+từ snapshot. NOT\_FOUND/STALE\_STATE/INVALID\_STATE giữ nguyên state.
+Prototype chỉ có Apply riêng ở UI và version check, chưa có
+class/coordinator, kiểm tra toàn bộ invariant hoặc giao dịch SS5.
+
+\textbf{Ánh xạ:} \texttt{src/components/sim\_demand.py:render},
+\texttt{src/components/sim\_infrastructure.py:render}. Chữ ký prototype
+có thể khác service; không khẳng định service đã có trong code.
+
+\hypertarget{ss6-mth-04-hubeventsimulator.simulate_metro_surge}{%
+\subsection{\texorpdfstring{SS6-MTH-04:
+\texttt{HubEventSimulator.simulate\_metro\_surge}}{SS6-MTH-04: HubEventSimulator.simulate\_metro\_surge}}\label{ss6-mth-04-hubeventsimulator.simulate_metro_surge}}
+
+\textbf{Chữ ký:}
+\texttt{simulate\_metro\_surge(target\_hub\_id:\ str\ =\ "HUB-002",\ num\_new\_students:\ int\ =\ 20,\ seed:\ Optional{[}int{]}\ =\ 42)\ -\textgreater{}\ tuple{[}list{[}dict{]},list{[}str{]},dict{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Đã có trong core. Sao chép
+\_original, tìm Hub, tiếp nhận tối đa số chỗ trống, thêm xe mô phỏng,
+giảm slots và cấp số cổng tổng hợp cho xe pin thấp; trả
+hubs/log/metrics. Không sửa nguồn. Hub không tồn tại trả metrics rỗng
+kèm log. Core chưa validation đầy đủ số âm/kiểu; adapter đề xuất phải
+chặn. Log timestamp dùng đồng hồ thật; loại log khi so tính tái lập.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/simulator.py:HubEventSimulator.simulate\_metro\_surge}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\hypertarget{ss6-mth-05-hubeventsimulator.generate_demand_forecast}{%
+\subsection{\texorpdfstring{SS6-MTH-05:
+\texttt{HubEventSimulator.generate\_demand\_forecast}}{SS6-MTH-05: HubEventSimulator.generate\_demand\_forecast}}\label{ss6-mth-05-hubeventsimulator.generate_demand_forecast}}
+
+\textbf{Chữ ký:}
+\texttt{generate\_demand\_forecast(base\_arrival\_rate:\ float\ =\ 10.0,\ surge\_multiplier:\ float\ =\ 1.0,\ hours:\ int\ =\ 12,\ seed:\ Optional{[}int{]}\ =\ 42)\ -\textgreater{}\ list{[}dict{]}}.
+
+\textbf{Hành vi, điều kiện, lỗi và gọi lặp:} Đã có, static, mặc định
+thực tế 12 giờ. Cao điểm 7/8/17/18 factor2.5; 9/16/19 factor1.5; còn
+lại1.0, Gaussian sigma1.5,
+arrivals=max(0,int(rate\emph{factor}mult+noise)).
+queue=max(0,queue+arrivals-8), wait=round(queue/8*60,1). Trả list
+hour/arrivals/queue\_length/wait\_time\_min, không sửa state. Để đáp ứng
+Sub3 gọi hours=24; không mô tả giá trị mặc định là 24 và không coi wait
+estimate là đo chờ thực.
+
+\textbf{Ánh xạ:}
+\texttt{src/core/simulator.py:HubEventSimulator.generate\_demand\_forecast}.
+Chữ ký prototype có thể khác service; không khẳng định service đã có
+trong code.
+
+\newpage
+\section*{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Ma trận Truy vết Yêu cầu (traceability.md)}
+\hypertarget{truy-vux1ebft-ss6---revision-06112026}{%
+\section{Truy vết SS6 - revision
+06/11/2026}\label{truy-vux1ebft-ss6---revision-06112026}}
+
+ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế thừa
+manifest Sub2. Các tên alias cũ trong trường functions của Sub2 không
+chứng minh code có method tương ứng; bảng này dùng tên hiện tại.
+
+\hypertarget{uc_ss6_01---muxf4-phux1ecfng-tux103ng-ux111ux1ed9t-biux1ebfn-nhu-cux1ea7u-khuxe1ch-metro-what-if-metro-surge}{%
+\subsection{UC\_SS6\_01 - Mô phỏng tăng đột biến nhu cầu khách Metro
+(What-if Metro
+Surge)}\label{uc_ss6_01---muxf4-phux1ecfng-tux103ng-ux111ux1ed9t-biux1ebfn-nhu-cux1ea7u-khuxe1ch-metro-what-if-metro-surge}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-21, FR-12.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Usecase\%20scenario/UC_SS6_HoangVanTan.md}{UC\_SS6\_HoangVanTan.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Sequence\%20diagrams/UC_SS6_01_HoangVanTan_sequence.puml}{UC\_SS6\_01\_HoangVanTan\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Activity\%20diagrams/UC_SS6_01_HoangVanTan_activity.puml}{UC\_SS6\_01\_HoangVanTan\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{DemandSimulationService.preview\_demand},
+  \texttt{SimulationCoordinator.apply\_preview},
+  \texttt{HubEventSimulator.simulate\_metro\_surge}. Class diagram SS6,
+  catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_simulations.py::test\_metro\_surge\_deepcopy\_isolation\_and\_unserved\_students}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\hypertarget{uc_ss6_02---dux1ef1-buxe1o-phux1ee5-tux1ea3i-nhu-cux1ea7u-vuxe0-phuxe2n-tuxedch-huxe0ng-ux111ux1ee3i-24h}{%
+\subsection{UC\_SS6\_02 - Dự báo phụ tải nhu cầu và phân tích hàng đợi
+24h}\label{uc_ss6_02---dux1ef1-buxe1o-phux1ee5-tux1ea3i-nhu-cux1ea7u-vuxe0-phuxe2n-tuxedch-huxe0ng-ux111ux1ee3i-24h}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Yêu cầu:} US-22, FR-13.
+\item
+  \textbf{Scenario:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Usecase\%20scenario/UC_SS6_HoangVanTan.md}{UC\_SS6\_HoangVanTan.md}.
+\item
+  \textbf{Sequence:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Sequence\%20diagrams/UC_SS6_02_HoangVanTan_sequence.puml}{UC\_SS6\_02\_HoangVanTan\_sequence.puml}.
+\item
+  \textbf{Activity:}
+  \href{../../../../docs/diagrams/Use-case\%20detail-scenario/SS6/Activity\%20diagrams/UC_SS6_02_HoangVanTan_activity.puml}{UC\_SS6\_02\_HoangVanTan\_activity.puml}.
+\item
+  \textbf{Thiết kế:} \texttt{ForecastService.forecast},
+  \texttt{HubEventSimulator.generate\_demand\_forecast}. Class diagram
+  SS6, catalog cùng thư mục.
+\item
+  \textbf{Luồng truy vết:} kiểm tra điều kiện/nhánh lỗi ở scenario và
+  sequence/activity tương ứng -\textgreater{} phương thức phụ trách ở
+  trên -\textgreater{} test prototype bên dưới; không tự đặt số bước nếu
+  nguồn chưa có đánh số ổn định.
+\item
+  \textbf{Test prototype:}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_forecast\_24h\_queue\_wait\_and\_reproducibility}.
+\item
+  \textbf{Trạng thái:} thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác
+  nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích
+  hợp đầy đủ.
+\end{itemize}
+
+\newpage
+\section*{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiểm thử \& Test Cases (test\_cases.md)}
+\hypertarget{test-cases-ss6---revision-06112026}{%
+\section{Test cases SS6 - revision
+06/11/2026}\label{test-cases-ss6---revision-06112026}}
+
+Các test prototype hiện có đã chạy trong bộ49 test baseline; log chung ở
+docs/audit/submission\_3/review\_20261106/pytest-baseline.txt. Không có
+class service đề xuất đang chạy; không ghi PASS thay cho contract test.
+
+\hypertarget{uc_ss6_01}{%
+\subsection{UC\_SS6\_01}\label{uc_ss6_01}}
+
+\begin{itemize}
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_simulations.py::test\_metro\_surge\_deepcopy\_isolation\_and\_unserved\_students};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP. \#\# UC\_SS6\_02
+\item
+  \textbf{PASS (prototype):}
+  \texttt{tests/test\_submission\_2\_acceptance.py::test\_forecast\_24h\_queue\_wait\_and\_reproducibility};
+  xem assert cụ thể trong nguồn và log baseline. Phạm vi là hành vi
+  core/UI đang có, không phải lớp service OOP.
+\end{itemize}
+
+\hypertarget{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}{%
+\subsection{Các ca thiết kế chưa thực thi
+(DESIGNED)}\label{cuxe1c-ca-thiux1ebft-kux1ebf-chux1b0a-thux1ef1c-thi-designed}}
+
+\hypertarget{ss6-d01---coordinator-staleduplicateinvalid}{%
+\subsubsection{SS6-D01 - Coordinator
+stale/duplicate/invalid}\label{ss6-d01---coordinator-staleduplicateinvalid}}
+
+\textbf{Đầu vào/thao tác:} preview baseline1, current2; hoặc
+applied=True; hoặc candidate capacity âm.
+
+\textbf{Mong đợi:} Stale/invalid từ chối giữ dữ liệu gốc, applied trả
+already\_applied; không tăng version lần hai.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss6-d02---int05-thux1ea5t-bux1ea1i-trong-apply}{%
+\subsubsection{SS6-D02 - INT05 thất bại trong
+Apply}\label{ss6-d02---int05-thux1ea5t-bux1ea1i-trong-apply}}
+
+\textbf{Đầu vào/thao tác:} preview PORT\_FAILURE;
+ChargingService.handle\_port\_failure trả lỗi.
+
+\textbf{Mong đợi:} Rollback Hub/port/session toàn bộ, wallet/booking
+nguyên trạng, version không đổi.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\hypertarget{ss6-d03---dto-chung-vuxe0-validation}{%
+\subsubsection{SS6-D03 - DTO chung và
+validation}\label{ss6-d03---dto-chung-vuxe0-validation}}
+
+\textbf{Đầu vào/thao tác:} num\_students âm, rate NaN hoặc hours12 tại
+ForecastService.
+
+\textbf{Mong đợi:} INVALID\_INPUT, không tạo preview/kết quả24h giả; DTO
+chứa charging\_effects/summary/is\_applied.
+
+\textbf{Trạng thái:} DESIGNED; cần hiện thực service/adapter trước khi
+chạy.
+
+\newpage
+\section*{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\addcontentsline{toc}{section}{PHỤ LỤC: Kiến trúc Hệ thống Chung (architecture.md)}
+\hypertarget{kiux1ebfn-truxfac-chung-revision-06112026}{%
+\section{Kiến trúc chung revision
+06/11/2026}\label{kiux1ebfn-truxfac-chung-revision-06112026}}
+
+\hypertarget{deployment-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Deployment view hiện
+tại}\label{deployment-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/deployment.png}
+\caption{Deployment}
+\end{figure}
+
+Browser giao tiếp ứng dụng Streamlit/Python; server đọc seed từ
+src/data/mock\_hubs.json khi khởi tạo/reset. st.session\_state giữ hubs,
+ví/ledger, booking, scheduler, preview và version trong bộ nhớ server
+theo session. Rerun chạy lại script theo tương tác; không có một tiến
+trình IoT/polling/background riêng. Đổi tab không tự bảo đảm xóa
+preview. Session/reset/restart không là lưu bền; hai session không phải
+cùng một cơ sở dữ liệu mạng lưới.
+
+Chạy \texttt{streamlit\ run\ src/app.py} từ repository. 8501 chỉ là giá
+trị mặc định công cụ nếu không bị cấu hình đổi, không phải endpoint cố
+định được triển khai bởi nhóm. SSO, QR/barie/IoT/payment thật là mô
+phỏng hoặc ngoài phạm vi prototype.
+
+\hypertarget{developmentimplementation-view-hiux1ec7n-tux1ea1i}{%
+\subsection{Development/Implementation view hiện
+tại}\label{developmentimplementation-view-hiux1ec7n-tux1ea1i}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/implementation.png}
+\caption{Implementation}
+\end{figure}
+
+app.py điều hướng tới bảy components;
+core.booking/personal\_ev/billing/scheduler/simulator/routing/state/policies
+chứa phần nghiệp vụ đã tách. SS3/SS4 và Apply SS6/SS7 vẫn có xử lý trong
+render(). Các service OOP trong class diagram là thiết kế mục tiêu,
+không là import/package đang chạy. Thư viện Streamlit/Pandas/Plotly phụ
+trách UI/biểu đồ, không thay lớp miền nghiệp vụ.
+
+\hypertarget{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}{%
+\subsection{Class diagram hệ thống - thiết kế mục
+tiêu}\label{class-diagram-hux1ec7-thux1ed1ng---thiux1ebft-kux1ebf-mux1ee5c-tiuxeau}}
+
+\begin{figure}
+\centering
+\includegraphics{../../../diagrams/submission_3/shared/system_classes.png}
+\caption{System classes}
+\end{figure}
+
+Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; từng SS có sơ đồ
+chi tiết, lớp/thuộc tính và catalog cho mọi phương thức. Không vẽ lược
+để né mô tả phương thức. Hub chuẩn TV3, Vehicle/User/tài chính TV1, sạc
+TV5, preview/coordinator TV6. INT01--10 trong shared\_contracts.md là
+chữ ký thống nhất.
+
+\hypertarget{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}{%
+\subsection{Ràng buộc chất lượng và hướng mở
+rộng}\label{ruxe0ng-buux1ed9c-chux1ea5t-lux1b0ux1ee3ng-vuxe0-hux1b0ux1edbng-mux1edf-rux1ed9ng}}
+
+Kiểm tra capacity, quyền và version phải nằm tại ranh giới service,
+không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên
+tử trong thiết kế; cùng operation\_key/charge\_id không được gây tác
+động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction
+dùng chung và authentication/authorization thật. SRS về độ trễ, tải và
+availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh
+bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+\end{document}

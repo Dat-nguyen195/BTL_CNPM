@@ -18,7 +18,6 @@ Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.
 
 ![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
 
-Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
 
 ## 2. Class diagram SS1
 
@@ -118,4 +117,3 @@ NFR về bảo mật, dữ liệu bền, phân quyền đồng thời và hiệu
 
 ## 7. Truy vết, test, đóng góp và AI
 
-Các phụ lục traceability.md, test_cases.md, self_check.md và ai_usage.md được nhúng khi build PDF. Các test trên core/UI prototype không chứng minh service OOP đề xuất đã triển khai. Không tự xác nhận PASS cho test chưa có nguồn và log tái chạy.

@@ -528,14 +528,11 @@ Theo đúng yêu cầu tại Mục 5.2 và Mục 7 của Hướng dẫn, phân h
 ### 9.3. Vấn đề đã tự xử lý / còn mở
 
 * **Vấn đề Blocker:** Không có.
-* **Vấn đề Major:** Không có mâu thuẫn hợp đồng; các điểm chênh lệch giữa prototype và SRS/thiết kế mục tiêu (phí đỗ `5.000 VNĐ/lượt`, kết nối `INT-01`/`INT-02` ở mức thiết kế hợp đồng, luồng xác nhận của nhân viên vận hành `US-12`) đã được công khai và ghi nhận rõ ràng tại Mục 9.2 cùng [self_check.md](<self_check.md>).
 
 ---
 
 ## 10. Tự kiểm tra và khai báo AI
 
-* **Checklist tự chịu trách nhiệm:** [self_check.md](<self_check.md>)
-* **Khai báo sử dụng AI:** [ai_usage.md](<ai_usage.md>)
 * **Lịch sử Prompt Submission 3:** [prompt_history_NguyenAnhTai_sub3.txt](<../../../prompt-history/TV2_NguyenAnhTai/prompt_history_NguyenAnhTai_sub3.txt>)
 
 **Xác nhận tự kiểm tra:** ĐÃ TỰ KIỂM TRA (`SELF_CHECKED` — Ngày 31/10/2026). Tác giả (Nguyễn Anh Tài — 2413035) đã đối chiếu toàn bộ 4 Use Case của SS2, sơ đồ lớp `class_diagram.puml` / `class_diagram.svg` / `class_diagram.png`, mô tả lớp, mô tả phương thức, bảng truy vết và kết quả chạy kiểm thử tự động với mã nguồn thực tế của dự án.
@@ -554,7 +551,6 @@ Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.
 
 ![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
 
-Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
 
 ## Hiệu chỉnh tích hợp 06/11/2026
 

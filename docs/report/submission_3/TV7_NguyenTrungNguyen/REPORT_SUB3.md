@@ -240,7 +240,6 @@ Các lệnh cần `PYTHONPATH=src` do repository không có pytest configuration
 - **Khai báo AI:** AI assistant using Copilot SDK in VS Code hỗ trợ đọc hướng dẫn/code, soạn và chỉnh báo cáo TV7, tạo nguồn sơ đồ Deployment/SS7 và Implementation SS7, truy vết, test case, khai báo/checklist và xuất bản PDF. TV7 rà soát và chấp nhận nội dung theo xác nhận nêu trên. Không sửa code triển khai. Tên model cụ thể không được cung cấp trong phiên làm việc.
 - **Đóng góp và giới hạn:** TV7 phụ trách SS7 và Deployment view chung; class diagram hệ thống/Implementation view chung cấp hệ thống thuộc TV3. SimulationCoordinator thuộc TV6, ChargingService thuộc TV5, BookingService thuộc TV1. Phần chia sẻ và giao tiếp được ghi theo đúng chủ sở hữu.
 - **Prompt history:** [Bản ghi prompt Sub3](<../../../prompt-history/TV7_NguyenTrungNguyen/prompt_history_NguyenTrungNguyen_sub3.txt>) gồm prompt thực tế của phiên hỗ trợ và tóm tắt công việc; đây là bản ghi bổ sung, không phải transcript toàn bộ hội thoại.
-- **Self-check:** [Checklist và bằng chứng](<self_check.md>).
 - **PDF cá nhân:** [REPORT_SUB3_NguyenTrungNguyen_2011710.pdf](<../../../../output/submission_3/REPORT_SUB3_NguyenTrungNguyen_2011710.pdf>) — PDF đã xuất và kiểm tra, được bàn giao cùng nguồn trong cây repository.
 - **LMS:** chưa xác nhận trạng thái nộp; TV7 phải tự tải đúng bộ file và kiểm tra biên nhận/trạng thái trên LMS.
 
@@ -253,7 +252,6 @@ Revision 06/11/2026. Một ứng dụng Python/Streamlit: trình duyệt -> app.
 
 ![Development/Implementation view chung](../../../diagrams/submission_3/shared/implementation.png)
 
-Sơ đồ hệ thống lược thuộc tính/phương thức nằm trong phụ lục chung. Tất cả mô tả chi tiết phải được đọc cùng [danh mục phương thức](method_catalog.md), [truy vết](traceability.md), [test cases](test_cases.md) và [khai báo AI](ai_usage.md); PDF build sẽ nhúng toàn bộ các phụ lục này. Không đánh đồng kiểm tra kỹ thuật với chữ ký xác nhận của tác giả hoặc biên nhận LMS.
 
 ## Hiệu chỉnh tích hợp 06/11/2026
 
