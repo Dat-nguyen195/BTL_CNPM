@@ -29,4 +29,4 @@ cd docs/report/submission_2
 latexmk -xelatex -interaction=nonstopmode -halt-on-error REPORT_SUBMISSION_2.tex
 ```
 
-Kết quả kiểm tra nằm trong validation.txt. Các kết quả PASS xác nhận cú pháp, truy vết và bộ test hiện có; không phải chứng nhận toàn bộ ngữ nghĩa UML hay mọi tính năng sản phẩm đã hoàn thiện. Hồ sơ final/ trước ngày này phản ánh baseline cũ, không được dùng làm checksum của bản mới.
+Xem [kết quả kiểm tra](validation.txt) và [log render UML](../final/reservation-30-render.txt). Các kết quả PASS xác nhận cú pháp, truy vết và bộ test hiện có; không phải chứng nhận toàn bộ ngữ nghĩa UML hay mọi tính năng sản phẩm đã hoàn thiện. Hồ sơ final/ trước ngày này phản ánh baseline cũ, không được dùng làm checksum của bản mới.
