@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      EMOBILITY_IOT_ENABLED: "1"
+      EMOBILITY_PARKING_HOURLY_VND: "5000"
+    volumes:
+      - telemetry:/data
+    restart: unless-stopped
+  producer:
+    build: .
+    command: ["python", "scripts/iot_producer.py", "--interval", "5"]
+    volumes:
+      - telemetry:/data
+    restart: unless-stopped
+volumes:
+  telemetry:

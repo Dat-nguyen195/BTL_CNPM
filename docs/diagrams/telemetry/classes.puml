@@ -1,0 +1,31 @@
+@startuml
+class TelemetryModule <<Python module>> {
++publish_event(event: dict, path: Optional[Path]): bool
++consume_events(state: dict, path: Optional[Path]): int
++connect_feed(path: Optional[Path]): Connection
++feed_path(): Path
+}
+class SchedulerModule <<Python module>> {
++release_charging_session(state: dict, session_id: str): Optional[ChargingSession]
++apply_hub_snapshot(state: dict, hubs: list): None
++allocate_hub_ports(state: dict, hub_id: str): list
+}
+class ChargingSession {
+session_id: str
+port_id: str
+energy_delivered_kwh: float
+energy_cost_vnd: float
+overstay_fee: int
+}
+class Event <<JSON record>> {
+event_id: str
+hub_id: str
+port_id: str
+event_type: ONLINE | OFFLINE
+occurred_at: ISO8601
+received_at: ISO8601
+}
+TelemetryModule --> Event
+TelemetryModule --> SchedulerModule
+SchedulerModule --> ChargingSession
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+node "Máy chạy demo / server" {
+component "iot_producer.py" as Producer
+database "SQLite event feed (volume)" as Feed
+component "Streamlit app.py (fragment 2 giây)" as App
+component "core.telemetry / scheduler" as Core
+Producer --> Feed
+Feed --> Core : polling theo cursor
+App --> Core
+}
+node "Trình duyệt A" as A
+node "Trình duyệt B" as B
+A --> App : HTTP / Streamlit session
+B --> App : HTTP / Streamlit session
+note bottom of App
+Mỗi phiên có state nghiệp vụ riêng.
+Cùng nhận feed cảm biến đã lưu.
+end note
+@enduml

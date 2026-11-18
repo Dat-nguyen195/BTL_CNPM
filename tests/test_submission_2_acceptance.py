@@ -245,9 +245,7 @@ def test_personal_charging_is_billed_once_on_consolidated_checkout():
     at = app(5)
     for key in ["wallet", "hubs", "personal_reservations"]:
         at.session_state[key] = s[key]
-    sched = SmartChargingScheduler(cap_kw=150)
-    sched.add_request(ChargingRequest(vehicle_id=ev["ev_id"], hub_id="HUB-001", battery_soc=98, port_kw=7.4))
-    sched.allocate_ports(hub_id="HUB-001", available_port_count=1)
+    sched = s["charging_scheduler"]
     session = next(iter(sched._active_sessions.values()))
     at.session_state["charging_scheduler"] = sched
     at.run()
@@ -263,7 +261,7 @@ def test_personal_charging_is_billed_once_on_consolidated_checkout():
         s[key] = at.session_state[key]
     ok, final, msg = check_out_personal_ev(s, reservation["reservation_id"], duration_hours=1, kwh_charged=deferred["kwh_charged"], overstay_minutes=0)
     assert ok, msg
-    assert final["energy_fee"] == int(deferred["kwh_charged"] * 7000)
+    assert final["energy_fee"] == round(deferred["kwh_charged"] * 7000)
     assert s["wallet"]["balance"] == balance + held - final["total_amount"]
     assert s["wallet"]["held_deposit"] == 0
     assert s["hubs"][0]["charging_ports"]["available"] == 4

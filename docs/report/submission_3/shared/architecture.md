@@ -23,3 +23,7 @@ Sơ đồ tổng quan chỉ thể hiện quyền sở hữu và liên kết; t�
 ## Ràng buộc chất lượng và hướng mở rộng
 
 Kiểm tra capacity, quyền và version phải nằm tại ranh giới service, không chỉ ở UI. Commit thay đổi Hub/booking/wallet/charging phải nguyên tử trong thiết kế; cùng operation_key/charge_id không được gây tác động hai lần. Để hỗ trợ nhiều người dùng cần storage/version/transaction dùng chung và authentication/authorization thật. SRS về độ trễ, tải và availability cần kế hoạch benchmark/deploy riêng, chưa được chứng minh bởi unit test prototype. Đề giảng viên không bắt buộc database cho Sub3.
+
+## Bổ sung kiến trúc runtime sau review
+
+Khi EMOBILITY_IOT_ENABLED=1, bộ phát Python ghi event feed SQLite dùng chung, app đọc theo chu kỳ fragment 2 giây. Luồng tiếp nhận và triển khai hiện hành được mô tả ở docs/current/CURRENT_TECHNICAL_DESIGN.md và docs/diagrams/telemetry/. Các phiên giữ nghiệp vụ local và nhận cùng sự kiện ngoại vi. Hóa đơn sạc giữ chi phí qua nhiều phiên sạc/ngắt cổng và quyết toán một lần tại SS2.

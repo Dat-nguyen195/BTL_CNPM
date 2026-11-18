@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 import datetime
 import uuid
+from core.policies import get_kwh_rate
 
 from core.policies import (
     HUB_POWER_CAP_KW,
@@ -69,6 +70,7 @@ class ChargingSession:
     overstay_minutes: int = 0
     overstay_fee: int = 0
     energy_delivered_kwh: float = 0.0
+    energy_cost_vnd: float = 0.0
 
 class SmartChargingScheduler:
     """
@@ -154,7 +156,11 @@ class SmartChargingScheduler:
                 continue
 
             session_id = f"CHG-{uuid.uuid4().hex[:6].upper()}"
-            port_id = f"PORT-{hub_id[-3:]}-{remaining_ports}"
+            used_ports = {session.port_id for session in self._active_sessions.values() if session.hub_id == hub_id}
+            port_number = 1
+            while f"PORT-{hub_id[-3:]}-{port_number}" in used_ports:
+                port_number += 1
+            port_id = f"PORT-{hub_id[-3:]}-{port_number}"
             sess = ChargingSession(
                 session_id=session_id,
                 vehicle_id=req.vehicle_id,
@@ -177,7 +183,7 @@ class SmartChargingScheduler:
 
         return allocations
 
-    def advance_simulation_tick(self, minutes: int = 15) -> List[Dict[str, Any]]:
+    def advance_simulation_tick(self, minutes: int = 15, sim_time: Optional[str] = None) -> List[Dict[str, Any]]:
         """
         Tiến hành 1 bước mô phỏng thời gian cho tất cả phiên sạc:
         - Tăng pin theo công suất
@@ -190,7 +196,14 @@ class SmartChargingScheduler:
             if sess.status == "CHARGING":
                 # Nạp năng lượng: e = P * t (kWh)
                 hrs = minutes / 60.0
-                kwh_added = sess.port_kw * hrs
+                kwh_added = min(sess.port_kw * hrs, max(0, sess.target_soc - sess.current_soc) / 100 * 3.5)
+                start = datetime.datetime.fromisoformat(sim_time) if sim_time else sess.started_at
+                remaining = kwh_added
+                for minute in range(minutes):
+                    energy = min(remaining, sess.port_kw / 60)
+                    sess.energy_cost_vnd += energy * get_kwh_rate((start + datetime.timedelta(minutes=minute)).time())
+                    remaining -= energy
+                sess.started_at = start + datetime.timedelta(minutes=minutes)
                 sess.energy_delivered_kwh += kwh_added
                 # Giả định xe pin 3.5 kWh: % tăng = kwh_added / 3.5 * 100
                 soc_added = (kwh_added / 3.5) * 100.0
@@ -258,3 +271,68 @@ class SmartChargingScheduler:
             }
             for r in self.get_sorted_queue()
         ]
+
+
+def allocate_hub_ports(state: Dict[str, Any], hub_id: str) -> List[Dict[str, Any]]:
+    """Allocate queued requests and update the operational hub and reservations together."""
+    hub = next((h for h in state.get("hubs", []) if h.get("hub_id") == hub_id), None)
+    scheduler = state.get("charging_scheduler")
+    if not hub or not scheduler:
+        return []
+    allocations = scheduler.allocate_ports(hub_id, hub["charging_ports"].get("available", 0))
+    if allocations:
+        hub["charging_ports"]["available"] -= len(allocations)
+        for allocation in allocations:
+            vehicle_id = allocation["vehicle_id"]
+            vehicle = next((v for v in hub.get("current_vehicles", []) if v.get("vehicle_id") == vehicle_id), None)
+            if vehicle:
+                vehicle["status"] = "CHARGING"
+            reservation = next((r for r in state.get("personal_reservations", []) if r.get("ev_id") == vehicle_id and r.get("status") == "CHECKED_IN"), None)
+            if reservation:
+                reservation.update(charging_port_allocated=True, charging_ever_allocated=True, charging_session_id=allocation["session_id"])
+        bump_state_version(state)
+    return allocations
+
+
+def release_charging_session(state, session_id):
+    """Release once and preserve personal billing across unplug, failure and checkout."""
+    scheduler = state.get("charging_scheduler")
+    session = scheduler.unplug_vehicle(session_id) if scheduler else None
+    if not session:
+        return None
+    reservation = next((r for r in state.get("personal_reservations", [])
+                        if r.get("charging_session_id") == session_id), None)
+    if reservation:
+        reservation["measured_energy_fee"] = reservation.get("measured_energy_fee", 0) + session.energy_cost_vnd
+        reservation["delivered_kwh"] = reservation.get("delivered_kwh", 0) + session.energy_delivered_kwh
+        reservation["accrued_overstay_fee"] = reservation.get("accrued_overstay_fee", 0) + session.overstay_fee
+        reservation["charging_port_allocated"] = False
+        reservation["charging_session_id"] = None
+    hub = next((h for h in state["hubs"] if h["hub_id"] == session.hub_id), None)
+    if hub:
+        ports = hub["charging_ports"]
+        ports["available"] = min(ports["total"] - ports.get("offline", 0), ports["available"] + 1)
+    bump_state_version(state)
+    return session
+
+
+def apply_hub_snapshot(state, hubs):
+    """Commit a simulated hub snapshot and interrupt affected live charging sessions."""
+    scheduler = state.get("charging_scheduler")
+    if scheduler:
+        for hub in hubs:
+            old = next(h for h in state["hubs"] if h["hub_id"] == hub["hub_id"])
+            newly_offline = max(0, hub["charging_ports"].get("offline", 0) -
+                                old["charging_ports"].get("offline", 0))
+            sessions = [s for s in scheduler._active_sessions.values() if s.hub_id == hub["hub_id"]]
+            for session in sessions[:newly_offline]:
+                release_charging_session(state, session.session_id)
+                vehicle = next((v for v in hub["current_vehicles"] if v["vehicle_id"] == session.vehicle_id), None)
+                if vehicle:
+                    vehicle["status"] = "WAITING"
+                    vehicle["battery_soc"] = session.current_soc
+                    scheduler.add_request(ChargingRequest(vehicle_id=session.vehicle_id,
+                        hub_id=hub["hub_id"], battery_soc=session.current_soc,
+                        ownership=vehicle.get("ownership", "SHARED"), owner_id=vehicle.get("owner_id")))
+    state["hubs"] = hubs
+    bump_state_version(state)

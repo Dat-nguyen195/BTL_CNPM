@@ -50,33 +50,18 @@
 ## 📁 Cấu trúc Thư mục
 
 ```
-smart-emobility-hub/
-├── .github/
-│   └── pull_request_template.md
+BTL_CNPM/
+├── src/                  # Streamlit, nghiệp vụ, dữ liệu mẫu
+├── tests/                # Kiểm thử nghiệp vụ và tích hợp
+├── scripts/              # Bộ phát IoT, kiểm tra, đóng gói
 ├── docs/
-│   ├── meeting-minutes/
-│   │   ├── Meeting_01_20260908.md
-│   │   └── README.md
-│   ├── tasks-assignment.md
-│   └── README.md
-├── src/
-│   ├── app.py                     # Entry point chính
-│   ├── components/
-│   │   ├── student_booking.py     # SS1: Đặt xe & chỗ đỗ
-│   │   ├── personal_ev.py         # SS2: Xe cá nhân
-│   │   ├── hub_monitor.py         # SS3: Dashboard giám sát
-│   │   ├── dispatch_incident.py   # SS4: Điều phối & sự cố
-│   │   ├── smart_charging.py      # SS5: Sạc thông minh
-│   │   ├── sim_demand.py          # SS6: Mô phỏng nhu cầu
-│   │   └── sim_infrastructure.py  # SS7: Mô phỏng hạ tầng
-│   ├── core/
-│   │   ├── scheduler.py           # Logic hàng đợi sạc
-│   │   └── simulator.py           # Logic mô phỏng sự kiện
-│   └── data/
-│       └── mock_hubs.json         # Dữ liệu mock 6 Hub
-├── requirements.txt
-├── .gitignore
-└── README.md
+│   ├── current/          # Hướng dẫn demo, thiết kế, kiểm thử và kế hoạch
+│   ├── diagrams/         # Sơ đồ hệ thống, phân hệ và IoT
+│   ├── report/           # Báo cáo và tài nguyên theo submission
+│   └── traceability/     # Ma trận truy vết
+├── Dockerfile
+├── compose.yaml
+└── requirements*.txt
 ```
 
 ---
@@ -102,8 +87,8 @@ smart-emobility-hub/
 
 ```bash
 # Clone repository
-git clone https://github.com/Dat-nguyen195/BTL_1_CNPM.git
-cd smart-emobility-hub
+git clone https://github.com/Dat-nguyen195/BTL_CNPM.git
+cd BTL_CNPM
 
 # Tạo virtual environment (khuyến nghị)
 python -m venv venv
@@ -158,7 +143,7 @@ Dự án phục vụ mục đích học tập tại HCMUT – ĐHQG-HCM.
 - Báo cáo: `docs/report/submission_2/REPORT_SUBMISSION_2.pdf`.
 - Truy vết đúng baseline SRS: `docs/traceability/submission_2.md`.
 - Bằng chứng thực thi: `docs/audit/submission_2/final/`.
-- Hướng dẫn demo và giới hạn: `SUBMISSION_2_HANDOFF.md`.
+- Hướng dẫn demo và giới hạn: `docs/audit/submission_2/execution/checklist.md`.
 
 Môi trường đã kiểm thử dùng Python 3.12; các phiên bản thư viện được ghi trong `requirements-tested.txt`. Cài môi trường tái lập và kiểm thử:
 
@@ -166,6 +151,8 @@ Môi trường đã kiểm thử dùng Python 3.12; các phiên bản thư việ
 python3 -m venv venv
 venv/bin/python -m pip install -r requirements-tested.txt -r requirements-dev.txt
 PYTHONPATH=src venv/bin/python -m pytest -q tests
+JAVA_TOOL_OPTIONS=-Djava.awt.headless=true venv/bin/python scripts/validate_submission_2.py
+venv/bin/python scripts/validate_submission_3.py --technical-only
 venv/bin/python -m streamlit run src/app.py
 ```
 
@@ -191,7 +178,19 @@ Chính sách giữ chỗ cập nhật ngày 21/10/2026: SS1 có hạn 30 phút k
 - [Bộ nguồn7 thành viên](docs/report/submission_3/README.md).
 - [Review chi tiết theo đề giảng viên/SRS](docs/review/REVIEW_SUBMISSION_3_20261106.md).
 - [Kế hoạch chốt bài](docs/report/submission_3/COMPLETION_PLAN.md).
-- [Bộ7 PDF và SHA256SUMS](output/submission_3/README.md).
+- [Sơ đồ thiết kế chung S3](docs/diagrams/submission_3/shared/).
 - [Truy vết17 UC](docs/traceability/submission_3.md).
 
 Bản tích hợp cần các chủ sở hữu đọc/hiểu và xác nhận trước nộp LMS; service OOP đề xuất không đồng nghĩa đã có code. Xem review/open_issues cho các chênh lệch MVP còn cần triển khai trước demo/final.
+
+## Demo IoT và bản cập nhật nghiệp vụ
+
+Xem [hướng dẫn real-time](docs/current/REALTIME_DEMO.md) để chạy ứng dụng, bộ phát, hai cửa sổ quan sát và Docker Compose. Đây là hướng dẫn hiện hành cho runtime. Các PDF hiện có giữ nội dung revision trước. Thay đổi kỹ thuật và giới hạn mới được ghi trong hướng dẫn này và [kế hoạch](docs/current/plan.md).
+
+
+Để tạo lại ZIP và checksum trong `output/submission_2/`, đặt PlantUML JAR tại `tools/plantuml.jar` rồi chạy từ gốc repo.
+
+```bash
+venv/bin/python scripts/package_submission_2.py
+(cd output/submission_2 && sha256sum -c SHA256SUMS.txt)
+```

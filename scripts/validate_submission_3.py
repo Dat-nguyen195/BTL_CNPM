@@ -28,7 +28,7 @@ def diagram_methods(path):
     return found
 
 
-def validate(require_pdfs=False):
+def validate(require_pdfs=False, technical_only=False):
     errors = []
     manifest = json.loads((ROOT / 'docs/traceability/submission_3.json').read_text())
     baseline = json.loads((ROOT / 'docs/traceability/submission_2.json').read_text())['canonical_use_cases']
@@ -55,7 +55,10 @@ def validate(require_pdfs=False):
         member = next((ROOT / 'docs/report/submission_3').glob(f'TV{number}_*'))
         catalog = (member / 'method_catalog.md').read_text()
         report = (member / 'REPORT_SUB3.md').read_text()
-        for required in ['REPORT_SUB3.md', 'method_catalog.md', 'traceability.md', 'test_cases.md', 'self_check.md', 'ai_usage.md']:
+        required_files = ['REPORT_SUB3.md', 'method_catalog.md', 'traceability.md', 'test_cases.md']
+        if not technical_only:
+            required_files += ['self_check.md', 'ai_usage.md']
+        for required in required_files:
             if not (member / required).is_file():
                 errors.append(f'SS{number}: missing {required}')
         for owner, method, args, returns in diagram_methods(ROOT / f'docs/diagrams/submission_3/SS{number}/class_diagram.puml'):
@@ -63,7 +66,7 @@ def validate(require_pdfs=False):
             signature = f'{method}({args}) -> {returns}'
             if f'{owner}.{method}' not in catalog or signature not in catalog:
                 errors.append(f'SS{number}: missing exact method description: {owner}.{signature}')
-        if '[CHƯA ĐIỀN' in report or 'KHUNG CHƯA HOÀN THIỆN' in report:
+        if not technical_only and ('[CHƯA ĐIỀN' in report or 'KHUNG CHƯA HOÀN THIỆN' in report):
             errors.append(f'SS{number}: mandatory report still has placeholders')
         if require_pdfs:
             if not list((ROOT / 'output/submission_3').glob(f'REPORT_SUB3_{member.name.split("_", 1)[1]}_*.pdf')):
@@ -82,4 +85,6 @@ def validate(require_pdfs=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--pdfs', action='store_true')
-    raise SystemExit(0 if validate(parser.parse_args().pdfs) else 1)
+    parser.add_argument('--technical-only', action='store_true', help='Skip individual submission and AI declaration checks')
+    args = parser.parse_args()
+    raise SystemExit(0 if validate(args.pdfs, args.technical_only) else 1)

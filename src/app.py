@@ -121,4 +121,15 @@ elif selected_module == "sim_infrastructure":
     from components.sim_infrastructure import render
 
 # Gọi hàm render() của subsystem đã chọn
-render()
+if os.environ.get("EMOBILITY_IOT_ENABLED") == "1":
+    from core.telemetry import consume_events
+    @st.fragment(run_every="2s")
+    def live_view():
+        consume_events(st.session_state)
+        render()
+        if st.session_state.get("telemetry_log"):
+            st.subheader("Sự kiện cảm biến")
+            st.dataframe(st.session_state["telemetry_log"][-10:], use_container_width=True)
+    live_view()
+else:
+    render()

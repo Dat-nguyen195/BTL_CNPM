@@ -43,7 +43,7 @@ def render():
     with pc2:
         surge_mult = st.slider("Hệ số tăng đột biến (Multiplier):", min_value=1.0, max_value=5.0, value=1.5, step=0.5, key="ss6_surge_mult")
     with pc3:
-        sim_hours = st.slider("Số giờ dự báo:", min_value=6, max_value=24, value=12, key="ss6_sim_hours")
+        sim_hours = st.slider("Số giờ dự báo:", min_value=6, max_value=24, value=24, key="ss6_sim_hours")
 
     forecast = HubEventSimulator.generate_demand_forecast(
         base_arrival_rate=base_rate,
@@ -52,6 +52,12 @@ def render():
         seed=42
     )
     forecast_df = pd.DataFrame(forecast)
+    price = st.number_input("Giả định doanh thu mỗi lượt phục vụ (VNĐ)", min_value=0, value=5000, step=1000)
+    served = sum(min(row["arrivals"] + (forecast[i-1]["queue_length"] if i else 0), 8)
+                 for i, row in enumerate(forecast))
+    st.metric("Doanh thu dự báo theo giả định", f"{served * price:,.0f} VNĐ")
+    st.caption("Giả định phục vụ tối đa 8 lượt/giờ, thu đủ đơn giá mỗi lượt. Doanh thu thực ở SS3.")
+
 
     # Biểu đồ cột & đường
     fig1 = go.Figure()

@@ -44,3 +44,31 @@ def test_port_failure_distinguishes_free_vs_busy_ports(clean_state):
     # Original hubs untouched
     assert orig_hubs[3]["charging_ports"]["available"] == hub_bk["charging_ports"]["available"]
     assert metrics["failed_ports_total"] == 4
+
+def test_repeated_failures_do_not_count_offline_ports_as_busy():
+    hubs = [{"hub_id": "H", "name": "Test", "charging_ports": {"total": 2, "available": 2}, "current_vehicles": []}]
+    for expected in (1, 2, 2):
+        hubs, _, metrics = HubEventSimulator(hubs).simulate_port_failure("H", 1)
+        ports = hubs[0]["charging_ports"]
+        assert ports["offline"] == expected
+        assert ports["available"] == 2 - expected
+        assert metrics["busy_ports_interrupted"] == 0
+
+def test_personal_vehicle_cannot_be_booked_as_shared(clean_state):
+    import copy
+    from core.booking import create_shared_booking
+    hub = clean_state['hubs'][0]
+    vehicle = hub['current_vehicles'][0]
+    vehicle.update(ownership='PERSONAL', status='AVAILABLE', battery_soc=90)
+    before = copy.deepcopy(clean_state)
+    ok, _, _ = create_shared_booking(clean_state, 'student', hub['hub_id'], vehicle['vehicle_id'])
+    assert not ok
+    assert clean_state == before
+
+def test_surge_ids_are_unique_across_previews_from_changed_state():
+    hubs = [{"hub_id": "H", "name": "Test", "total_slots": 30, "available_slots": 30,
+             "charging_ports": {"total": 0, "available": 0}, "current_vehicles": []}]
+    first, _, metrics1 = HubEventSimulator(hubs).simulate_metro_surge('H', 5, 42)
+    second, _, metrics2 = HubEventSimulator(first).simulate_metro_surge('H', 5, 42)
+    assert len({v['vehicle_id'] for v in second[0]['current_vehicles']}) == 10
+    assert metrics1['new_vehicles_count'] == metrics2['new_vehicles_count'] == 5

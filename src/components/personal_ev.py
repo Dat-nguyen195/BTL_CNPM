@@ -13,6 +13,7 @@ US Covered: US-08, US-09, US-10, US-11, US-11b, US-12
 """
 
 import streamlit as st
+import os
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -48,6 +49,7 @@ def render():
     """Render giao diện Subsystem 2 – Đăng ký & Vận hành dịch vụ Xe điện Cá nhân."""
     _init_pev_state()
 
+    st.caption("Biểu phí demo giả định: tính theo giờ bắt đầu, mặc định 5.000đ/giờ; cấu hình EMOBILITY_PARKING_HOURLY_VND.")
     st.header("🔌 Quản lý & Vận hành Dịch vụ Xe điện Cá nhân")
     st.caption("Phân hệ SS2 — Personal EV Services | Đăng ký → Đặt chỗ/Sạc → Check-in → Check-out")
 
@@ -60,7 +62,7 @@ def render():
     wc1.metric("👤 Chủ xe / SV", f"{user['name']} ({user['user_id']})")
     wc2.metric("💰 Ví khả dụng", f"{wallet.get('balance', 0):,.0f} ₫")
     wc3.metric("🔒 Tiền cọc giữ chỗ", f"{wallet.get('held_deposit', 0):,.0f} ₫")
-    wc4.metric("🅿️ Phí đỗ xe", f"{PEV_PARKING_FEE_PER_VISIT_VND:,.0f} ₫/lượt")
+    wc4.metric("🅿️ Phí đỗ xe", f"{int(os.environ.get('EMOBILITY_PARKING_HOURLY_VND', '5000')):,.0f} ₫/giờ bắt đầu (demo)")
 
     st.divider()
 
@@ -133,7 +135,7 @@ def render():
                     st.markdown(f"""
 | Khoản mục | Đơn giá quy định |
 |:---|:---|
-| **Phí đỗ xe** | **{PEV_PARKING_FEE_PER_VISIT_VND:,.0f} ₫/lượt** |
+| **Phí đỗ xe** | **{int(os.environ.get('EMOBILITY_PARKING_HOURLY_VND', '5000')):,.0f} ₫/giờ bắt đầu (demo)** |
 | **Giá điện giờ thấp điểm** | **{PEV_OFFPEAK_KWH_RATE_VND:,.0f} ₫/kWh** |
 | **Giá điện giờ cao điểm** | **{PEV_PEAK_KWH_RATE_VND:,.0f} ₫/kWh** (06:00-09:00 & 16:00-19:30) |
 | **Tiền cọc giữ chỗ** | **{PEV_RESERVATION_DEPOSIT_VND:,.0f} ₫** (Khóa tạm trong ví, hoàn 100% khi quyết toán check-out) |

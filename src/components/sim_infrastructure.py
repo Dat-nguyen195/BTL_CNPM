@@ -81,30 +81,18 @@ def render():
                     st.success("✅ Hoạt động bình thường")
 
         if st.button("⚡ Áp dụng trạng thái bật/tắt cổng sạc", type="primary", key="btn_apply_port_toggles"):
-            for hub in hubs:
-                hid = hub["hub_id"]
+            import copy
+            from core.scheduler import apply_hub_snapshot
+            updated = copy.deepcopy(hubs)
+            for hub in updated:
                 ports = hub["charging_ports"]
-                # Save baseline available capacity on first override
-                if "base_available" not in ports:
-                    ports["base_available"] = ports["available"]
-                base_avail = ports["base_available"]
-
-                old_d = st.session_state["port_overrides"].get(hid, 0)
-                new_d = st.session_state.get(f"toggle_port_{hid}", 0)
-                if old_d != new_d:
-                    # New available cannot exceed baseline available
-                    ports["available"] = max(0, base_avail - new_d)
-                    ports["offline"] = min(ports["total"], new_d)
-                    action = "TẮT" if new_d > old_d else "BẬT LẠI"
-                    diff = abs(new_d - old_d)
-                    st.session_state["infra_log"].append({
-                        "time": sim_time,
-                        "hub": hub["name"],
-                        "action": f"{action} {diff} cổng sạc",
-                        "ports_remaining": ports["available"]
-                    })
-                    st.session_state["port_overrides"][hid] = new_d
-
+                new_d = int(st.session_state.get(f"toggle_port_{hub['hub_id']}", 0))
+                busy = ports["total"] - ports.get("offline", 0) - ports["available"]
+                increase = new_d - ports.get("offline", 0)
+                ports["available"] = max(0, ports["available"] - max(0, increase - busy)) if increase > 0 else ports["available"] - increase
+                ports["offline"] = new_d
+                st.session_state["port_overrides"][hub["hub_id"]] = new_d
+            apply_hub_snapshot(st.session_state, updated)
             bump_state_version(st.session_state)
             st.success("✅ Đã cập nhật trạng thái cổng sạc thành công (Bảo toàn sức chứa)!")
             st.rerun()
@@ -177,7 +165,8 @@ def render():
                     if prev7["baseline_version"] != cur_v:
                         st.error("❌ Dữ liệu trạm đã thay đổi trong phiên. Vui lòng chạy lại mô phỏng trước khi áp dụng!")
                     else:
-                        st.session_state["hubs"] = prev7["modified_hubs"]
+                        from core.scheduler import apply_hub_snapshot
+                        apply_hub_snapshot(st.session_state, prev7["modified_hubs"])
                         bump_state_version(st.session_state)
                         del st.session_state["sim_preview_ss7"]
                         st.success("🎉 Đã áp dụng thành công sự cố hạ tầng vào dữ liệu hệ thống!")
@@ -198,18 +187,20 @@ def render():
         for h in hubs:
             tot = h["charging_ports"]["total"]
             av = h["charging_ports"]["available"]
+            offline = h["charging_ports"].get("offline", 0)
             infra_data.append({
                 "Hub": h["name"].replace("Hub ", ""),
-                "Đang sạc / Bận": tot - av,
-                "Khả dụng": av
+                "Đang sạc / Bận": max(0, tot - av - offline),
+                "Khả dụng": av,
+                "Offline": offline,
             })
         fig = px.bar(
             pd.DataFrame(infra_data),
             x="Hub",
-            y=["Đang sạc / Bận", "Khả dụng"],
+            y=["Đang sạc / Bận", "Khả dụng", "Offline"],
             title="Phân bổ trạng thái cổng sạc theo Hub",
             barmode="stack",
-            color_discrete_sequence=["#ff6b6b", "#51cf66"]
+            color_discrete_sequence=["#ff6b6b", "#51cf66", "#777777"]
         )
         fig.update_layout(height=400)
         st.plotly_chart(fig, use_container_width=True)

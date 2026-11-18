@@ -86,8 +86,7 @@ def test_reserve_and_checkin_checkout_lifecycle(clean_state):
     assert len(present_pev) == 1
     assert present_pev[0]["ownership"] == "PERSONAL"
 
-    # Check-out with 2.0 hrs, 4.0 kWh charged, 20 min overstay (5 min billable = 1 block = 10,000)
-    # Peak hour 08:00:00 -> Energy rate 7,000 / kWh
+    # No tick has delivered energy yet. Client-supplied energy/overstay cannot override measured zero.
     ok_out, inv, msg_out = check_out_personal_ev(
         state=clean_state,
         reservation_id=res["reservation_id"],
@@ -96,10 +95,36 @@ def test_reserve_and_checkin_checkout_lifecycle(clean_state):
         overstay_minutes=20
     )
     assert ok_out is True
-    assert inv["parking_fee"] == 5000
+    assert inv["parking_fee"] == 10000
     assert inv["is_peak_tariff"] is True
-    assert inv["energy_fee"] == 4.0 * 7000  # 28,000
-    assert inv["overstay_fee"] == 10000     # 20 - 15 = 5 min -> 1 block of 10,000
-    assert inv["total_amount"] == 5000 + 28000 + 10000  # 43,000
+    assert inv["energy_fee"] == 0  # measured zero
+    assert inv["overstay_fee"] == 0     # no actual overstay
+    assert inv["total_amount"] == 10000  # two hourly blocks
     # Physical slot freed!
     assert hub["available_slots"] == initial_avail
+
+def test_checkin_waits_if_port_fails_after_reservation(clean_state):
+    _, ev, _ = register_personal_ev(clean_state, 'u', 'User', 'TEST-123', 'scooter', 'X', 3.5)
+    hub = clean_state['hubs'][0]
+    _, res, _ = reserve_personal_ev_slot(clean_state, 'u', ev['ev_id'], hub['hub_id'], True)
+    hub['charging_ports']['offline'] = hub['charging_ports']['total']
+    hub['charging_ports']['available'] = 0
+    assert check_in_personal_ev(clean_state, res['reservation_id'])[0]
+    v = next(v for v in hub['current_vehicles'] if v['vehicle_id'] == ev['ev_id'])
+    assert v['status'] == 'WAITING'
+    assert not res['charging_port_allocated']
+    ok, invoice, _ = check_out_personal_ev(clean_state, res['reservation_id'], kwh_charged=4, overstay_minutes=20)
+    assert ok and invoice['energy_fee'] == invoice['overstay_fee'] == 0
+
+def test_waiting_personal_vehicle_can_be_allocated_once(clean_state):
+    from core.scheduler import allocate_hub_ports
+    _, ev, _ = register_personal_ev(clean_state, 'u', 'User', 'TEST-456', 'scooter', 'X', 3.5)
+    hub = clean_state['hubs'][0]
+    _, res, _ = reserve_personal_ev_slot(clean_state, 'u', ev['ev_id'], hub['hub_id'], True)
+    hub['charging_ports']['available'] = 0
+    assert check_in_personal_ev(clean_state, res['reservation_id'])[0]
+    hub['charging_ports']['available'] = 1
+    assert len(allocate_hub_ports(clean_state, hub['hub_id'])) == 1
+    assert allocate_hub_ports(clean_state, hub['hub_id']) == []
+    assert res['charging_port_allocated']
+    assert len([s for s in clean_state['charging_scheduler']._active_sessions.values() if s.vehicle_id == ev['ev_id']]) == 1

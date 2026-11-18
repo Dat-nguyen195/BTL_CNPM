@@ -158,6 +158,9 @@ def render():
                 )
                 if st.button(f"📥 Xác nhận tiếp nhận tại {d['destination_name']} (#{d['dispatch_id']})", key=f"btn_recv_{d['dispatch_id']}"):
                     dst_h = next((h for h in hubs if h["hub_id"] == d["destination_hub_id"]), None)
+                    if not dst_h or dst_h.get("destination_holds", 0) < len(d["vehicles"]):
+                        st.error("Thiếu Hub hoặc chỗ giữ. Cần đối soát trước khi nhận xe.")
+                        return
                     if dst_h:
                         # Restore destination_holds and insert vehicles as AVAILABLE
                         dst_h["destination_holds"] = max(0, dst_h.get("destination_holds", 0) - len(d["vehicles"]))

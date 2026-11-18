@@ -328,6 +328,7 @@ def _tab_return():
 |:---|:---|
 | **Mã hóa đơn** | `{invoice['invoice_id']}` |
 | **Mã chuyến đi** | `{invoice['booking_id']}` |
+| **Quãng đường mô phỏng** | {invoice.get("distance_km", "Chưa có")} km · {invoice.get("distance_source", "")} |
 | **Tổng thời lượng** | {invoice['duration_minutes']} phút (Miễn phí: {invoice['free_minutes_applied']} phút) |
 | **Thời gian tính phí** | {invoice['billable_minutes']} phút × {SHARED_RATE_PER_MINUTE:,.0f}₫ |
 | **Phí thuê gộp** | {invoice['gross_rental_fee']:,.0f} ₫ |

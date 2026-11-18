@@ -16,12 +16,12 @@ for folder in ["src", "docs", "tests", "scripts"]:
         rel = path.relative_to(ROOT)
         if any(part in {"__pycache__", ".pytest_cache", "build", ".git", ".venv", "venv"} for part in rel.parts):
             continue
-        if path.suffix.lower() in {".pyc", ".aux", ".log", ".out", ".toc", ".xdv", ".fls", ".fdb_latexmk", ".synctex", ".bak"}:
+        if path.suffix.lower() in {".zip",".pyc", ".aux", ".log", ".out", ".toc", ".xdv", ".fls", ".fdb_latexmk", ".synctex", ".bak"}:
             continue
         if "docs/audit/" in rel.as_posix() and not rel.as_posix().startswith("docs/audit/submission_2/final/"):
             continue
         sources.add(path)
-for name in ["README.md", "requirements.txt", "requirements-dev.txt", "requirements-tested.txt", "SUBMISSION_2_HANDOFF.md", "REVIEW_READINESS_SUBMISSION_2.md", ".gitignore", "tools/plantuml.jar"]:
+for name in ["README.md", "requirements.txt", "requirements-dev.txt", "requirements-tested.txt", "Dockerfile", "compose.yaml", ".gitignore", "tools/plantuml.jar"]:
     path = ROOT / name
     if not path.is_file():
         raise FileNotFoundError(path)

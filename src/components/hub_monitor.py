@@ -144,11 +144,14 @@ def render():
 
     with tab_rev:
         st.subheader("💰 Báo cáo Doanh thu & Sổ cái Giao dịch Ví (US-07)")
+        payment_confirmation()
         wallet = st.session_state.get("wallet", {})
         txs = wallet.get("ledger", [])
         
         # Thống kê giao dịch
         rev_shared = -sum(t.get("amount", 0) for t in txs if t.get("type") in ["SETTLE_RENTAL_FEE", "SETTLE_RENTAL_DEBT", "PENALTY_NOSHOW"])
+        rev_shared += sum(r["invoice"].get("deducted_from_wallet", 0) for r in st.session_state.get("personal_reservations", []) if r.get("invoice"))
+        rev_shared += sum(i.get("deducted", 0) for i in st.session_state.get("charging_invoices", []))
         total_tx = len(txs)
         debt = wallet.get("debt", 0)
 
@@ -177,7 +180,7 @@ def render():
         power_data = []
         for h in hubs:
             busy_ports = h["charging_ports"]["total"] - h["charging_ports"]["available"]
-            est_kw = busy_ports * 7.4  # Giả định 7.4 kW mỗi cổng đang sạc
+            est_kw = sum(s.port_kw for s in getattr(st.session_state.get("charging_scheduler"), "_active_sessions", {}).values() if s.hub_id == h["hub_id"] and s.status == "CHARGING")  # Giả định 7.4 kW mỗi cổng đang sạc
             power_data.append({
                 "Hub": h["name"].replace("Hub ", ""),
                 "Cổng đang sạc": busy_ports,
@@ -186,3 +189,16 @@ def render():
                 "Tải so với trần 150kW (%)": f"{(est_kw / HUB_POWER_CAP_KW * 100):.1f}%"
             })
         st.dataframe(pd.DataFrame(power_data), use_container_width=True, hide_index=True)
+
+
+def payment_confirmation():
+    """Operator confirmation is an audit action after consolidated settlement."""
+    invoices = [r["invoice"] for r in st.session_state.get("personal_reservations", []) if r.get("invoice")]
+    for invoice in invoices:
+        st.write(f"Hóa đơn {invoice['invoice_id']} · Đã thu {invoice['deducted_from_wallet']:,}đ · Nợ {invoice['debt_incurred']:,}đ")
+        if invoice.get("operator_confirmed_at"):
+            st.caption("Đã xác nhận bởi nhân viên")
+        elif st.button("Xác nhận đối soát " + invoice["invoice_id"], key="confirm_" + invoice["invoice_id"]):
+            invoice["operator_confirmed_at"] = st.session_state["current_sim_time"]
+            invoice["operator_id"] = st.session_state.get("active_user", {}).get("user_id")
+            st.rerun()

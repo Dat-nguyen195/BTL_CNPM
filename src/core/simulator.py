@@ -55,7 +55,7 @@ class HubEventSimulator:
         for i in range(admitted):
             v_type = rng.choice(vehicle_types)
             soc = rng.randint(15, 45)
-            v_id = f"EV-SURGE-{rng.randint(1000, 9999)}"
+            v_id = f"EV-SURGE-{uuid.uuid4().hex.upper()}"
             veh = {
                 "vehicle_id": v_id,
                 "type": v_type,
@@ -114,9 +114,10 @@ class HubEventSimulator:
         ports = hub.get("charging_ports", {})
         total_p = ports.get("total", 0)
         avail_p = ports.get("available", 0)
-        busy_p = max(0, total_p - avail_p)
+        offline_p = ports.get("offline", 0)
+        busy_p = max(0, total_p - avail_p - offline_p)
 
-        actual_down = min(num_ports_down, total_p)
+        actual_down = min(max(0, num_ports_down), total_p - offline_p)
         log.append(f"[{timestamp}] 🔧 BẮT ĐẦU mô phỏng sự cố {actual_down} cổng sạc tại {hub['name']} (Tổng {total_p} cổng, Rảnh: {avail_p}, Đang sạc: {busy_p})")
 
         # Phân bổ số cổng hỏng vào cổng bận trước rồi đến cổng rảnh
@@ -154,7 +155,7 @@ class HubEventSimulator:
     def generate_demand_forecast(
         base_arrival_rate: float = 10.0,
         surge_multiplier: float = 1.0,
-        hours: int = 12,
+        hours: int = 24,
         seed: Optional[int] = 42
     ) -> List[Dict[str, Any]]:
         """

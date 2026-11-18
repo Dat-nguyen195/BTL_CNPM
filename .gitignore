@@ -40,3 +40,7 @@ build/
 tools/
 .venv/
 tmp/
+
+# Generated packages and test cache
+/output/
+.pytest_cache/

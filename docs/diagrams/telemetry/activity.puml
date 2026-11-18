@@ -1,0 +1,23 @@
+@startuml
+start
+:Nhận bản tin từ feed;
+if (Đã nhận event_id?) then (có)
+:Dừng xử lý lặp;
+else (chưa)
+if (Hub, cổng, timestamp hợp lệ?) then (có)
+if (Mới hơn bản tin của cùng cổng?) then (có)
+:Cập nhật snapshot cổng;
+:Ngắt phiên bị ảnh hưởng;
+:Lưu điện năng và phí;
+:Tăng state_version;
+:Hiện cảnh báo và thời gian;
+else (cũ)
+:Ghi STALE;
+endif
+else (sai)
+:Ghi REJECTED;
+endif
+endif
+:Cập nhật cursor;
+stop
+@enduml

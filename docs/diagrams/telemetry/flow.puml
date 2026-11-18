@@ -1,0 +1,21 @@
+@startuml
+actor "Bộ mô phỏng cảm biến" as Sensor
+participant "telemetry.publish_event" as Ingest
+database "SQLite event feed" as Feed
+participant "app.live_view (2s)" as UI
+participant "telemetry.consume_events" as Consumer
+participant "scheduler.apply_hub_snapshot" as Core
+Sensor -> Ingest : event_id, hub_id, port_id, type, occurred_at
+Ingest -> Ingest : kiểm tra schema và múi giờ
+Ingest -> Feed : INSERT OR IGNORE theo event_id
+UI -> Consumer : nhận bản tin sau cursor
+Consumer -> Feed : SELECT theo seq
+Consumer -> Consumer : kiểm tra Hub/cổng và timestamp
+alt mới và hợp lệ
+Consumer -> Core : cập nhật snapshot, ngắt phiên, tăng version
+Core --> Consumer : trạng thái mới
+Consumer --> UI : event_id, before, after, displayed_at
+else trùng, cũ hoặc sai đích
+Consumer --> UI : bỏ qua / STALE / REJECTED
+end
+@enduml

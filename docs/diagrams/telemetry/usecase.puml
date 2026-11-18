@@ -1,0 +1,15 @@
+@startuml
+actor "Bộ mô phỏng cảm biến" as Sensor
+actor "Nhân viên vận hành" as Operator
+rectangle "Smart E-Mobility Hub" {
+usecase "Tiếp nhận trạng thái cổng sạc" as Ingest
+usecase "Kiểm tra bản tin và chống trùng" as Validate
+usecase "Giám sát / cảnh báo sự cố" as Monitor
+usecase "Bảo toàn phiên sạc và từ chối preview cũ" as Reconcile
+}
+Sensor --> Ingest
+Ingest .> Validate : <<include>>
+Ingest .> Reconcile : <<include>>
+Operator --> Monitor
+Monitor .> Ingest : đọc trạng thái đã tiếp nhận
+@enduml

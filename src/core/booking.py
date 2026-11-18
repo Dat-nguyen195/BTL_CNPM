@@ -107,6 +107,13 @@ def create_shared_booking(
     """
     Creates a new shared EV booking with 30-minute countdown and deposit hold.
     """
+    # Reject personal vehicles before any expiry sweep or financial mutation.
+    candidate_hub = next((h for h in state.get("hubs", []) if h.get("hub_id") == hub_id), None)
+    candidate = next((v for v in (candidate_hub or {}).get("current_vehicles", [])
+                      if v.get("vehicle_id") == vehicle_id), None)
+    if candidate and candidate.get("ownership") != "SHARED":
+        return False, None, "Chỉ phương tiện SHARED mới được phép thuê."
+
     # 1. Clean up any expired bookings first
     process_expired_bookings(state)
     
@@ -324,6 +331,8 @@ def return_shared_vehicle(
         
     # Check slot consumption at destination Hub
     is_pre_held = (booking.get("destination_hub_id") == return_hub_id and booking.get("destination_held"))
+    if not is_pre_held and dest_hub.get("available_slots", 0) <= 0:
+        return False, None, "Hub đích hết chỗ."
     if is_pre_held:
         # Slot was already accounted for in destination_holds
         dest_hub["destination_holds"] = max(0, dest_hub.get("destination_holds", 0) - 1)
@@ -396,6 +405,9 @@ def return_shared_vehicle(
         booking_id=booking_id,
         sim_time=sim_now_str
     )
+    invoice["distance_km"] = round(duration_minutes / 60 * 15, 2)
+    invoice["distance_source"] = "Mô phỏng tốc độ trung bình 15 km/h"
+
     
     # Complete booking
     booking["status"] = ReservationStatus.COMPLETED.value

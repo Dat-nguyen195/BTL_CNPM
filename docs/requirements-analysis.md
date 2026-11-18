@@ -267,3 +267,7 @@ Yêu cầu/ID SRS ở trên được giữ nguyên. Các nhãn Implemented cũ k
 | NFR | Prototype dùng session và mock auth, unit/UI tests | Chưa chứng minh tải/availability/multi-session consistency hoặc bảo mật production; cần benchmark và kiến trúc lưu/chia sẻ dữ liệu khi mở rộng |
 
 Chi tiết thiết kế và việc còn mở tại docs/report/submission_3/shared/open_issues.md và docs/review/REVIEW_SUBMISSION_3_20261106.md. Không đổi yêu cầu để khớp phần prototype còn thiếu.
+
+## Bổ sung runtime sau review
+
+Đối chiếu hành vi đã cập nhật, tác nhân IoT giả lập và phần triển khai thực tế tại [thiết kế kỹ thuật hiện hành](current/CURRENT_TECHNICAL_DESIGN.md). Nội dung này bổ sung baseline 17 UC, không đổi mã FR/US. Giá đỗ theo giờ trong demo là giả định cấu hình được và được công khai trên UI.

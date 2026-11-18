@@ -14,7 +14,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import datetime
 
-from core.scheduler import SmartChargingScheduler, ChargingRequest
+from core.scheduler import SmartChargingScheduler, ChargingRequest, allocate_hub_ports, release_charging_session
 from core.policies import HUB_POWER_CAP_KW, OVERSTAY_GRACE_MINUTES, OVERSTAY_RATE_PER_BLOCK_VND, get_kwh_rate
 from core.billing import settle_overstay_charging
 from core.state import bump_state_version
@@ -106,12 +106,8 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
                 if avail_p <= 0:
                     st.error("❌ Hub này hiện không còn cổng sạc trống khả dụng!")
                 else:
-                    allocs = scheduler.allocate_ports(
-                        hub_id=sel_h["hub_id"],
-                        available_port_count=avail_p
-                    )
+                    allocs = allocate_hub_ports(st.session_state, sel_h["hub_id"])
                     if allocs:
-                        sel_h["charging_ports"]["available"] = max(0, sel_h["charging_ports"]["available"] - len(allocs))
                         st.success(f"✅ Đã phân bổ cổng thành công cho {len(allocs)} xe tại {sel_h_name}!")
                         st.rerun()
                     else:
@@ -132,7 +128,10 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
             st.info("Mô phỏng nạp pin thời gian thực: mỗi bước nạp năng lượng tương ứng vào pin xe.")
         with sim_cols[1]:
             if st.button("⏩ Mô phỏng +15 phút sạc", key="btn_tick_ss5"):
-                events = scheduler.advance_simulation_tick(minutes=15)
+                events = scheduler.advance_simulation_tick(minutes=15, sim_time=st.session_state.get("current_sim_time"))
+                from core.state import advance_sim_time
+                advance_sim_time(st.session_state, minutes=15)
+                bump_state_version(st.session_state)
                 st.session_state.setdefault("charging_notifications", []).extend(events)
                 st.rerun()
 
@@ -175,15 +174,10 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
                     f"Quá hạn: **{s.overstay_minutes} phút** | Phạt: **{s.overstay_fee:,.0f} VNĐ**"
                 )
                 if st.button(f"🔌 Rút sạc & Giải phóng cổng ({s.vehicle_id})", key=f"unplug_{s.session_id}"):
-                    unplugged = scheduler.unplug_vehicle(s.session_id)
+                    unplugged = release_charging_session(st.session_state, s.session_id)
                     if unplugged:
-                        # Trả lại 1 cổng trống cho Hub & cập nhật trạng thái xe
                         for h in hubs:
                             if h["hub_id"] == unplugged.hub_id:
-                                h["charging_ports"]["available"] = min(
-                                    h["charging_ports"]["total"],
-                                    h["charging_ports"]["available"] + 1
-                                )
                                 for v in h.get("current_vehicles", []):
                                     if v.get("vehicle_id") == unplugged.vehicle_id:
                                         v["battery_soc"] = unplugged.current_soc
@@ -196,7 +190,7 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
                         wallet = st.session_state.setdefault("wallet", {})
                         # Personal EVs pay once on their consolidated SS2 invoice.
                         personal_reservation = next((r for r in st.session_state.get("personal_reservations", []) if r.get("ev_id") == unplugged.vehicle_id and r.get("status") == "CHECKED_IN"), None)
-                        energy_fee = round(unplugged.energy_delivered_kwh * get_kwh_rate(datetime.strptime(sim_now_str, "%Y-%m-%d %H:%M:%S").time()))
+                        energy_fee = round(unplugged.energy_cost_vnd)
                         invoice = settle_overstay_charging(
                             wallet=wallet,
                             session_id=unplugged.session_id,
