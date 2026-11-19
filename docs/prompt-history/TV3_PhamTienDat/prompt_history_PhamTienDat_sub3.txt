@@ -1,8 +1,1285 @@
-PROMPT HISTORY SUBMISSION 3 — Phạm Tiến Đạt — 2410724 — SS3
+Hoàn thiện Báo cáo Phân hệ SS3
 
-TRẠNG THÁI: KHUNG NHẬT KÝ; KHÔNG PHẢI HỘI THOẠI CÁ NHÂN ĐÃ HOÀN TẤT.
-Tệp được khởi tạo cùng bộ khung tài liệu cấp nhóm. Không bịa prompt, phản hồi, ngày giờ hoặc xác nhận đã kiểm tra.
+Created: 11/2/2026 15:03:35
+Updated: 11/6/2026 23:20:35
+Exported: 11/6/2026 23:23:09
+Link: https://gemini.google.com/app/22c3f7c8dcd1111f
 
-Mỗi mục thực tế cần ghi: prompt nguyên văn; công cụ/model nếu biết; phản hồi hoặc tóm tắt có gắn nhãn; phần tự sửa/kiểm tra và quyết định của tác giả.
+User:
 
-CHƯA GHI NHẬN PROMPT CÁ NHÂN TRONG TỆP KHUNG NÀY. Thành viên bổ sung lịch sử thật của mình nếu có.
+11/2/2026 15:03:35
+
+GUIDANCE_FOR_SUB_3.md (text/markdown)
+
+SS3_Activity_diagrams.drawio.pdf (application/pdf)
+
+SS3_State-chart_diagrams.drawio.pdf (application/pdf)
+
+SS3_Sequence_diagrams.drawio.pdf (application/pdf)
+
+UC_SS3_PhamTienDat.pdf (application/pdf)
+
+Bạn dựa vào những file này, giúp mình làm tiếp SS3 nha
+
+User:
+
+11/2/2026 15:33:35
+
+Vậy bạn làm luôn cái testcase bonus nha, với làm sao để kiểm tra code chạy
+
+User:
+
+11/5/2026 15:29:54
+
+requirements-tested.txt (text/plain)
+
+.gitignore (application/octet-stream)
+
+GUIDANCE_FOR_SUB_3.md (text/markdown)
+
+README.md (text/markdown)
+
+requirements.txt (text/plain)
+
+requirements-dev.txt (text/plain)
+
+mock_hubs.json (application/json)
+
+app.py (text/x-python)
+
+bạn xem trước các file mới nhất trên github nha (còn vài file nữa)
+
+User:
+
+11/5/2026 15:31:34
+
+test_core_state_and_billing.py (text/x-python)
+
+test_personal_ev.py (text/x-python)
+
+test_reservation_30_minutes.py (text/x-python)
+
+test_scheduler_and_charging.py (text/x-python)
+
+test_simulations.py (text/x-python)
+
+test_streamlit_navigation.py (text/x-python)
+
+test_submission_2_acceptance.py (text/x-python)
+
+test_submission_2_readiness_fixes.py (text/x-python)
+
+test_traceability_baseline.py (text/x-python)
+
+User:
+
+11/5/2026 15:32:58
+
+personal_ev.py (text/x-python)
+
+sim_demand.py (text/x-python)
+
+sim_infrastructure.py (text/x-python)
+
+smart_charging.py (text/x-python)
+
+student_booking.py (text/x-python)
+
+dispatch_incident.py (text/x-python)
+
+hub_monitor.py (text/x-python)
+
+bạn xem tiếp nha
+
+User:
+
+11/5/2026 15:33:31
+
+state.py (text/x-python)
+
+billing.py (text/x-python)
+
+booking.py (text/x-python)
+
+personal_ev.py (text/x-python)
+
+policies.py (text/x-python)
+
+routing.py (text/x-python)
+
+scheduler.py (text/x-python)
+
+simulator.py (text/x-python)
+
+tiếp nha bạn
+
+User:
+
+11/5/2026 15:35:00
+
+BTL_CNPM-main.zip (application/x-zip-compressed)
+
+Đây là full file zip của dự án, bạn xem mình cần phải làm gì cho phần SS3 nha
+
+User:
+
+11/5/2026 15:35:48
+
+BTL_CNPM-main.zip (application/x-zip-compressed)
+
+Đây là full file zip của dự án, bạn xem mình cần phải làm gì cho phần SS3 nha
+
+User:
+
+11/5/2026 15:40:06
+
+nếu như mình chỉ cần file để commit lên github thôi thì sao
+
+User:
+
+11/5/2026 15:58:33
+
+traceability.md (text/markdown)
+
+ai_usage.md (text/markdown)
+
+REPORT_SUB3.md (text/markdown)
+
+self_check.md (text/markdown)
+
+test_cases.md (text/markdown)
+
+image_99b848.png (image/png)
+
+đây là danh sách những file cần nộp, bạn kiểm tra giúp mình xem mình đã làm xong các file nào và cần làm thêm file nào
+
+User:
+
+11/5/2026 16:09:02
+
+image_99a547.jpg (image/jpeg)
+
+image_99a1ff.png (image/png)
+
+bạn modify lại code sao cho sơ đồ trông rõ ràng như cái của TV5 và các đường nối, chữ cũng được tách ra chứ không để dính liền vô nhau (cái ảnh thứ 2 là cái SS3 của mình)
+
+User:
+
+11/5/2026 16:35:41
+
+bạn làm cho cả Development / Implementation View và Class Diagram Cấp Hệ Thống nha (không cần làm sơ đồ quá giống TV5 đâu, style khác cũng được, miễn là dễ đọc như của TV5 là ok)
+
+User:
+
+11/5/2026 16:44:10
+
+image_8f2614.png (image/png)
+
+sơ đồ Development / Implementation View vẫn bị dính chữ nè bạn
+
+User:
+
+11/5/2026 16:49:29
+
+nó vẫn vậy á bạn
+
+User:
+
+11/5/2026 16:55:57
+
+image_8ebfe7.png (image/png)
+
+các chữ ở trên các đường nối là của chung hay là của riêng đường nào
+
+User:
+
+11/5/2026 16:57:26
+
+bạn chỉnh cho mình nha
+
+User:
+
+11/5/2026 17:00:13
+
+bạn chỉnh lại sao cho các đường nối và các chữ thuộc đường nối đó tách riêng ra để dễ nhìn hơn nha
+
+User:
+
+11/5/2026 17:07:40
+
+image_8e53e2.png (image/png)
+
+bạn chỉnh code của Development / Implementation View theo format của ảnh này cho mình với
+
+User:
+
+11/5/2026 17:09:56
+
+bạn chỉnh code của Development / Implementation View theo format của ảnh này cho mình với
+
+User:
+
+11/5/2026 17:19:11
+
+image_8e399b.png (image/png)
+
+bạn chỉnh code của Development / Implementation View theo format của ảnh này cho mình với
+
+User:
+
+11/5/2026 17:21:57
+
+image_8de37f.png (image/png)
+
+bạn xem lỗi này cho mình với
+
+User:
+
+11/5/2026 17:29:46
+
+REPORT_SUB3_HoangVanTan_2213074.pdf (application/pdf)
+
+REPORT_SUB3_NguyenTrungNguyen_2011710.pdf (application/pdf)
+
+bạn xem 2 file report sub mẫu rồi chỉnh lại report của SS3 nha
+
+User:
+
+11/5/2026 17:45:47
+
+@startuml class_diagram
+title Phân hệ SS3: Giám sát mạng lưới Hub & Cảnh báo — Class Diagram (Submission 3)\nChủ sở hữu: TV3 — Phạm Tiến Đạt (MSSV: 2410724)
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam packageStyle rectangle
+skinparam Padding 4
+skinparam NodePadding 10
+
+package "UI & Boundary Layer" {
+    class HubMonitorUI <> {
+        + render()
+        + render_kpi_metrics()
+        + render_occupancy_alerts()
+        + render_revenue_reports()
+        + render_iot_logs()
+    }
+}
+
+package "Business Service & Coordination Layer" {
+    class MonitoringService <> {
+        - warning_threshold_pct: float = 70.0
+        - critical_threshold_pct: float = 85.0
+        - full_threshold_pct: float = 100.0
+        --
+        + get_network_snapshot(): OperationResult+ calculate_hub_occupancy(hub_id: str): OperationResult+ generate_revenue_report(hub_id: str = None): OperationResult+ evaluate_hub_alerts(hub_id: str): OperationResult<list>
+        + sync_hub_booking_lock(hub_id: str, lock_state: bool, operation_key: str): OperationResult+ manual_lock_hub(operator_id: str, hub_id: str, lock_state: bool): OperationResult+ update_alert_thresholds(admin_id: str, warning_pct: float, critical_pct: float): OperationResult+ get_iot_error_logs(hub_id: str = None): OperationResult<list>
+        + record_iot_maintenance_plan(tech_id: str, alert_id: str, plan_note: str): OperationResult}
+}
+
+package "Core Domain Models & DTOs" {
+    class Hub <<Entity, Shared>> {
+        + hub_id: str
+        + name: str
+        + latitude: float
+        + longitude: float
+        + capacity: int
+        + available_slots: int
+        + present_vehicles_count: int
+        + incoming_reserved_count: int
+        + background_load_count: int
+        + total_ports: int
+        + active_ports_count: int
+        + max_power_kw: float
+        + current_load_kw: float
+        + is_locked: bool
+        + iot_online: bool
+        --
+        + calculate_occupancy_rate(): float
+        + get_occupancy_level(): OccupancyLevel
+        + validate_capacity_invariant(): bool
+    }
+
+class OccupancySnapshot <> {
+        + snapshot_id: str
+        + hub_id: str
+        + captured_at: datetime
+        + capacity: int
+        + present_vehicles: int
+        + incoming_reserved: int
+        + background_load: int
+        + available_slots: int
+        + occupancy_rate_pct: float
+        + occupancy_level: OccupancyLevel
+        + active_ports: int
+        + total_ports: int
+        + port_utilization_pct: float
+        + current_power_kw: float
+        + max_power_kw: float
+        + is_locked: bool
+    }
+
+class RevenueReport <> {
+        + report_id: str
+        + generated_at: datetime
+        + hub_id: str [0..1]
+        + settled_rental_fee_vnd: int
+        + settled_parking_fee_vnd: int
+        + settled_charging_fee_vnd: int
+        + settled_penalty_fee_vnd: int
+        + total_realized_revenue_vnd: int
+        + held_deposit_vnd: int
+        + refunded_amount_vnd: int
+        + outstanding_debt_vnd: int
+    }
+
+class Alert <> {
+        + alert_id: str
+        + hub_id: str
+        + alert_type: AlertType
+        + severity: AlertSeverity
+        + occupancy_level: OccupancyLevel [0..1]
+        + message: str
+        + created_at: datetime
+        + acknowledged_by: str [0..1]
+        + acknowledged_at: datetime [0..1]
+        + is_resolved: bool
+        --
+        + acknowledge(user_id: str, now: datetime): bool
+    }
+
+class NetworkSnapshot <> {
+        + captured_at: datetime
+        + state_version: int
+        + total_active_vehicles: int
+        + network_occupancy_pct: float
+        + is_using_cached_data: bool
+        + occupancy_snapshots: list+ revenue_summary: RevenueReport
+        + active_alerts: list}
+
+enum OccupancyLevel <> {
+        NORMAL
+        WARNING
+        CRITICAL
+        FULL
+    }
+
+enum AlertSeverity <> {
+        INFO
+        WARNING
+        CRITICAL
+        EMERGENCY
+    }
+
+enum AlertType <> {
+        OCCUPANCY_THRESHOLD
+        IOT_SENSOR_TIMEOUT
+        IOT_HARDWARE_FAULT
+        LOCK_SYNC_FAILURE
+    }
+}
+
+package "Shared Contracts (TV1 / TV5)" {
+    class "OperationResult" as OpResult <> {
+        + ok: bool
+        + data: T
+        + error_code: str
+        + message: str
+        + state_version: int
+    }
+
+class BillingService <> {
+    }
+
+class ChargingService <> {
+        + get_bill(session_id: str): OperationResult}
+}
+
+' Layout positioning adjustments
+HubMonitorUI ..> MonitoringService : <>
+MonitoringService ..> NetworkSnapshot : creates >
+MonitoringService ..> OccupancySnapshot : computes >
+MonitoringService ..> RevenueReport : aggregates >
+MonitoringService ..> Alert : manages >
+MonitoringService --> "1..*" Hub : reads & locks >
+MonitoringService ..> OpResult : returns >
+MonitoringService ..> BillingService : reads settled ledger >
+MonitoringService ..> ChargingService : calls INT-02 >
+
+NetworkSnapshot "1" -- "1.." OccupancySnapshot : contains >
+NetworkSnapshot "1" -- "1" RevenueReport : summarizes >
+NetworkSnapshot "1" o-- "0.." Alert : includes active >
+OccupancySnapshot "" --> "1" Hub : captures state >
+Alert "" --> "1" Hub : raised at >
+Hub --> OccupancyLevel : classifies >
+Alert --> AlertSeverity : has >
+Alert --> AlertType : categorized as >
+
+@enduml
+
+@startuml system_classes
+title System-Level Class Diagram — Smart E-Mobility Hub (Tổng hợp bởi TV3)
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam Padding 4
+skinparam NodePadding 10
+
+left to right direction
+
+package "SS1 & Shared Finance (TV1)" {
+    class User {
+        + user_id: str
+        + role: UserRole
+    }
+    class Vehicle {
+        + vehicle_id: str
+        + ownership: Ownership
+        + hub_id: str
+        + soc: float
+        + status: VehicleStatus
+    }
+    class SharedVehicle
+    class Booking {
+        + booking_id: str
+        + user_id: str
+        + vehicle_id: str
+        + origin_hub_id: str
+        + dest_hub_id: str [0..1]
+        + expires_at: datetime
+        + status: BookingStatus
+    }
+    class Wallet {
+        + owner_id: str
+        + available_balance_vnd: int
+        + held_deposit_vnd: int
+        + debt_vnd: int
+    }
+    class Invoice {
+        + invoice_id: str
+        + paid_vnd: int
+        + refunded_vnd: int
+        + debt_vnd: int
+    }
+    class ChargeLine {
+        + charge_id: str
+        + kind: str
+        + amount_vnd: int
+    }
+    class BookingService {
+        + accept_rerouting(booking_id, new_hub_id, expected_version, operation_key)
+    }
+    class BillingService {
+        + hold_deposit(owner_id, reference_id, amount_vnd, operation_key)
+        + release_deposit(owner_id, reference_id, operation_key)
+        + settle_no_show(owner_id, reference_id, operation_key)
+        + settle_invoice(owner_id, reference_id, charge_lines, operation_key)
+    }
+    Vehicle <|-- SharedVehicle
+    User "1" --> "1" Wallet
+    User "1" --> "0.." Booking
+    Booking "" --> "1" SharedVehicle
+    Invoice "1" -- "1.." ChargeLine
+}
+
+package "SS2: Personal EV & Parking (TV2)" {
+    class PersonalVehicle {
+        + license_plate: str
+        + battery_capacity_kwh: float
+    }
+    class ParkingReservation {
+        + reservation_id: str
+        + booking_start_time: datetime
+        + expires_at: datetime
+        + status: ReservationStatus
+    }
+    class ParkingSession {
+        + session_id: str
+        + charging_session_id: str [0..1]
+    }
+    class PersonalEVService
+    Vehicle <|-- PersonalVehicle
+    User "1" --> "0.." PersonalVehicle
+    ParkingReservation "" --> "1" PersonalVehicle
+    ParkingSession "1" --> "1" ParkingReservation
+}
+
+package "SS3: Hub & Monitoring (TV3)" {
+    class Hub {
+        + hub_id: str
+        + capacity: int
+        + available_slots: int
+        + is_locked: bool
+    }
+    class NetworkSnapshot
+    class OccupancySnapshot
+    class Alert
+    class RevenueReport
+    class MonitoringService {
+        + get_network_snapshot()
+    }
+    NetworkSnapshot "1" -- "1.." OccupancySnapshot
+    NetworkSnapshot "1" -- "1" RevenueReport
+    OccupancySnapshot "" --> "1" Hub
+    Alert "*" --> "1" Hub
+}
+
+package "SS4: Dispatch & Incident (TV4)" {
+    class DispatchOrder {
+        + order_id: str
+        + vehicle_id: str
+        + from_hub_id: str
+        + to_hub_id: str
+    }
+    class VehicleIncident {
+        + incident_id: str
+        + vehicle_id: str
+    }
+    class DispatchService
+    class IncidentService
+    DispatchOrder "" --> "1" SharedVehicle
+    VehicleIncident "" --> "1" Vehicle
+}
+
+package "SS5: Smart Charging (TV5)" {
+    class ChargingPort {
+        + port_id: str
+        + hub_id: str
+        + max_power_kw: float
+        + status: PortStatus
+    }
+    class ChargingRequest {
+        + request_id: str
+        + vehicle_id: str
+        + hub_id: str
+    }
+    class ChargingSession {
+        + session_id: str
+        + port_id: str
+        + energy_delivered_kwh: float
+    }
+    class ChargingBill
+    class ChargingService {
+        + request_charging(...)
+        + get_bill(session_id)
+        + handle_port_failure(hub_id, port_ids, operation_key)
+    }
+    class SmartChargingScheduler
+    Hub "1" -- "0.." ChargingPort
+    ChargingSession "1" --> "1" ChargingPort
+    ChargingSession "1" --> "1" Vehicle
+    ChargingService --> SmartChargingScheduler
+}
+
+package "SS6: Demand Forecast & Sim Coordinator (TV6)" {
+    class ForecastResult {
+        + forecast_id: str
+        + hours: int = 24
+    }
+    class SimulationPreview {
+        + preview_id: str
+        + baseline_version: int
+    }
+    class ForecastService {
+        + forecast(hub_id, base_arrival_rate, surge_multiplier, hours=24, seed=42)
+    }
+    class DemandSimulationService {
+        + preview_demand(hub_id, num_students, seed=42)
+    }
+    class SimulationCoordinator {
+        + apply_preview(preview_id, expected_version)
+    }
+}
+
+package "SS7: Infrastructure Failure & Rerouting (TV7)" {
+    class InfrastructureFailure
+    class RouteSuggestion {
+        + hub_id: str
+        + distance_km: float
+    }
+    class InfrastructureSimulationService {
+        + preview_port_failure(hub_id, num_ports_down, seed=42)
+    }
+    class ReroutingService {
+        + suggest_hubs(target_hub_id, need_slots, need_ports, limit=2)
+    }
+}
+
+' Cross-Subsystem Links
+Booking "" --> "1" Hub : origin >
+Booking "" --> "0..1" Hub : destination >
+ParkingReservation "" --> "1" Hub : at >
+DispatchOrder "" --> "2" Hub : from/to >
+
+BookingService ..> BillingService : uses
+BookingService ..> ReroutingService : INT-06
+PersonalEVService ..> BillingService : uses
+PersonalEVService ..> ChargingService : INT-01, INT-02
+ChargingService ..> BillingService : settles via
+MonitoringService ..> Hub : monitors
+MonitoringService ..> BillingService : reads revenue
+SimulationCoordinator ..> ChargingService : INT-05
+InfrastructureSimulationService ..> SimulationPreview : creates (INT-09)
+DemandSimulationService ..> SimulationPreview : creates (INT-08)
+
+@enduml
+(bạn chỉnh lại 2 đoạn code này sao cho sơ đồ hiện ra rõ ràng và các đường nối, chữ được tách ra rõ ràng, và cái System Class bạn chỉnh sao cho sơ đồ nằm ngang nha)
+
+User:
+
+11/5/2026 17:54:25
+
+image_8cfde8.png (image/png)
+
+ảnh nó hiện không hết ạ
+
+User:
+
+11/5/2026 18:15:34
+
+class_diagram.puml (application/octet-stream)
+
+bạn xem thử file này xem mình có cần chỉnh gì ở các đoạn code huml không
+
+User:
+
+11/5/2026 18:18:04
+
+' SCAFFOLD_ONLY: DRAFT - CHUA HOAN THIEN
+' Khung do AI khoi tao; chu so huu tu hoan thien va chiu trach nhiem.
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName SansSerif
+title Class diagram SS3 — DRAFT
+note "KHUNG CHƯA HOÀN THIỆN\nChủ sở hữu: TV3 — Phạm Tiến Đạt\nUC_SS3_01, UC_SS3_02\nBổ sung thiết kế thực tế trước khi sử dụng để nộp." as DRAFT
+' Lop/kieu chu tri: Hub
+' Lop/kieu chu tri: OccupancySnapshot
+' Lop/kieu chu tri: NetworkSnapshot
+' Lop/kieu chu tri: Alert
+' Lop/kieu chu tri: MonitoringService
+(thế mình có phải chỉnh kiểu chữ rồi background gì không)
+
+User:
+
+11/5/2026 18:26:27
+
+mình đã làm xong các file huml, vậy giờ mình có phải chạy các file .py không
+
+User:
+
+11/5/2026 18:37:47
+
+vậy ở trong tệp zip mà mình đã gửi, giờ nếu mình cần chạy file .py thì mình nên chạy file nào
+
+User:
+
+11/5/2026 18:40:17
+
+image_8bf7bb.png (image/png)
+
+User:
+
+11/5/2026 18:49:56
+
+streamlit-runner.app.py (chạy lệnh này được không ạ)
+
+User:
+
+11/5/2026 18:51:35
+
+image_8b91a5.png (image/png)
+
+lệnh python -m streamlit run src/app.py cũng cho lỗi tương tự ạ
+
+User:
+
+11/5/2026 18:55:10
+
+image_8b871f.png (image/png)
+
+vẫn bị lỗi ạ
+
+User:
+
+11/5/2026 19:06:28
+
+image_81953c.png (image/png)
+
+bạn xem lỗi này với
+
+User:
+
+11/5/2026 19:11:25
+
+PS C:\Users\ASUS\Downloads\BTL_CNPM-main> python -m pytest -q
+
+================================ ERRORS ================================
+___________ ERROR collecting scripts/test_capture_details.py ___________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\scripts\test_capture_details.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init_.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts\test_capture_details.py:6: in from selenium import webdriver
+E   ModuleNotFoundError: No module named 'selenium'
+________ ERROR collecting tests/test_core_state_and_billing.py _________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_core_state_and_billing.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_core_state_and_billing.py:8: in from core.state import (
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+______________ ERROR collecting tests/test_personal_ev.py ______________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_personal_ev.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_personal_ev.py:7: in from core.state import get_initial_session_state, VehicleStatus, ReservationStatus
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+________ ERROR collecting tests/test_reservation_30_minutes.py _________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_reservation_30_minutes.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_reservation_30_minutes.py:7: in from core.state import get_initial_session_state, validate_state_invariants
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+________ ERROR collecting tests/test_scheduler_and_charging.py _________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_scheduler_and_charging.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_scheduler_and_charging.py:7: in from core.scheduler import SmartChargingScheduler, ChargingRequest
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+______________ ERROR collecting tests/test_simulations.py ______________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_simulations.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_simulations.py:6: in from core.state import get_initial_session_state
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+________ ERROR collecting tests/test_submission_2_acceptance.py ________
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_submission_2_acceptance.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap.gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_submission_2_acceptance.py:8: in from core.state import get_initial_session_state, validate_state_invariants
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+_____ ERROR collecting tests/test_submission_2_readiness_fixes.py ______
+ImportError while importing test module 'C:\Users\ASUS\Downloads\BTL_CNPM-main\tests\test_submission_2_readiness_fixes.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python315\Lib\importlib_init.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests\test_submission_2_readiness_fixes.py:8: in from core.state import get_initial_session_state, VehicleStatus, ReservationStatus
+E   ModuleNotFoundError: No module named 'core'. Did you mean: 'code'?
+======================= short test summary info ========================
+ERROR scripts/test_capture_details.py
+ERROR tests/test_core_state_and_billing.py
+ERROR tests/test_personal_ev.py
+ERROR tests/test_reservation_30_minutes.py
+ERROR tests/test_scheduler_and_charging.py
+ERROR tests/test_simulations.py
+ERROR tests/test_submission_2_acceptance.py
+ERROR tests/test_submission_2_readiness_fixes.py
+!!!!!!!!!!!!!!! Interrupted: 8 errors during collection !!!!!!!!!!!!!!!!
+8 errors in 2.92s
+(lỗi này là lỗi gì ạ)
+
+User:
+
+11/5/2026 19:14:37
+
+................................F....F...F.FFF........            [100%]
+=============================== FAILURES ===============================
+____________ test_all_subsystems_render_without_exceptions _____________
+
+def test_all_subsystems_render_without_exceptions():
+        at = AppTest.from_file(str(REPO_ROOT / "src" / "app.py"))
+        at.run()
+    
+        assert not at.exception, f"App had exception on startup: {at.exception}"
+    
+        # Radio options for 7 subsystems
+        subsystems = [
+            "1️⃣ Đặt xe & Chỗ đỗ (SV)",
+            "2️⃣ Xe cá nhân – Đăng ký",
+            "3️⃣ Giám sát Hub (Operator)",
+            "4️⃣ Điều phối & Sự cố",
+            "5️⃣ Lập lịch Sạc thông minh",
+            "6️⃣ Mô phỏng: Nhu cầu SV",
+            "7️⃣ Mô phỏng: Sự cố Hạ tầng",
+        ]
+    
+        for label in subsystems:
+            at.sidebar.radio[0].set_value(label).run()
+
+assert not at.exception, f"Subsystem '{label}' threw an exception: {at.exception}"
+E           AssertionError: Subsystem '3️⃣ Giám sát Hub (Operator)' threw an exception: ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 113, in \n    from components.hub_monitor import render', 'File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in \n    import plotly.express as px'])])
+E           assert not ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in \n    import plotly.express as px'])])
+E            +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=3,\n    _sessio...             15: Caption()\n            }\n  ),\n        2: SpecialBlock(\n            type='event'\n        )\n}\n).exception
+
+tests\test_streamlit_navigation.py:31: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:11.409 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:13.447 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:13.488 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:13.509 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:13.527 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 113, in from components.hub_monitor import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 113, in from components.hub_monitor import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+___________ test_forecast_24h_queue_wait_and_reproducibility ___________
+
+def test_forecast_24h_queue_wait_and_reproducibility():
+        rows = HubEventSimulator.generate_demand_forecast(10, 1.5, hours=24, seed=42)
+        assert rows == HubEventSimulator.generate_demand_forecast(10, 1.5, hours=24, seed=42)
+        assert len(rows) == 24 and len({r["hour"] for r in rows}) == 24
+        queue = 0
+        for row in rows:
+            assert row["arrivals"] >= 0
+            queue = max(0, queue + row["arrivals"] - 8)
+            assert row["queue_length"] == queue
+            assert row["wait_time_min"] == round(queue / 8 * 60, 1)
+        low = HubEventSimulator.generate_demand_forecast(10, 1, 24, seed=42)
+        assert sum(r["arrivals"] for r in rows) > sum(r["arrivals"] for r in low)
+
+at = app(6)
+             ^^^^^^
+
+tests\test_submission_2_acceptance.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+subsystem = 6
+
+def app(subsystem):
+        at = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=15).run()
+        at.session_state["current_sim_time"] = "2026-10-21 08:00:00"
+        at.sidebar.radio[0].set_value(at.sidebar.radio[0].options[subsystem - 1]).run()
+
+assert not at.exception
+E       assert not ElementList(_list=[Exception(message="No module named'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\sim_demand.py", line 17, in \n    import plotly.express as px'])])
+E        +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\sim_demand.py", line 17, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=15,\n    _sessi...             15: Caption()\n            }\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests\test_submission_2_acceptance.py:28: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:13.663 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:13.857 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:13.860 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:13.871 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 119, in from components.sim_demand import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\sim_demand.py", line 17, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 119, in from components.sim_demand import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\sim_demand.py", line 17, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+________ test_dashboard_shows_actual_booking_ledger_and_revenue ________
+
+def test_dashboard_shows_actual_booking_ledger_and_revenue():
+        s = state()
+        hub = s["hubs"][0]
+        vehicle = next(v for v in hub["current_vehicles"] if v["status"]== "AVAILABLE")
+        ok, booking, _ = create_shared_booking(s, "SV-TEST", hub["hub_id"], vehicle["vehicle_id"], voucher_code="SVBK50")
+        assert ok and pickup_shared_vehicle(s, booking["booking_id"], booking["pin_code"])[0]
+        s["current_sim_time"] = "2026-10-21 08:45:00"
+        ok, invoice, msg = return_shared_vehicle(s, booking["booking_id"], s["hubs"][1]["hub_id"])
+        assert ok, msg
+        assert invoice["total_fee"] == 10_000
+
+at = app(3)
+             ^^^^^^
+
+tests\test_submission_2_acceptance.py:166: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+subsystem = 3
+
+def app(subsystem):
+        at = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=15).run()
+        at.session_state["current_sim_time"] = "2026-10-21 08:00:00"
+        at.sidebar.radio[0].set_value(at.sidebar.radio[0].options[subsystem - 1]).run()
+
+assert not at.exception
+E       assert not ElementList(_list=[Exception(message="No module named'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in \n    import plotly.express as px'])])
+E        +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=15,\n    _sessi...             15: Caption()\n            }\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests\test_submission_2_acceptance.py:28: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:14.549 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:14.778 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:14.784 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:14.798 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 113, in from components.hub_monitor import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 113, in from components.hub_monitor import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\hub_monitor.py", line 15, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+____ test_infrastructure_preview_isolated_apply_and_stale_rejected _____
+
+def test_infrastructure_preview_isolated_apply_and_stale_rejected():
+
+at = app(7)
+             ^^^^^^
+
+tests\test_submission_2_acceptance.py:196: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+subsystem = 7
+
+def app(subsystem):
+        at = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=15).run()
+        at.session_state["current_sim_time"] = "2026-10-21 08:00:00"
+        at.sidebar.radio[0].set_value(at.sidebar.radio[0].options[subsystem - 1]).run()
+
+assert not at.exception
+E       assert not ElementList(_list=[Exception(message="No module named'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...ads\BTL_CNPM-main\src\components\sim_infrastructure.py", line 17, in \n    import plotly.express as px'])])
+E        +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...ads\BTL_CNPM-main\src\components\sim_infrastructure.py", line 17, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=15,\n    _sessi...             15: Caption()\n            }\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests\test_submission_2_acceptance.py:28: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:15.204 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.397 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:15.401 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.413 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 121, in from components.sim_infrastructure import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\sim_infrastructure.py", line 17, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 121, in from components.sim_infrastructure import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\sim_infrastructure.py", line 17, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+_ test_charging_completion_notification_survives_rerun_and_receipt_is_recorded _
+
+def test_charging_completion_notification_survives_rerun_and_receipt_is_recorded():
+
+at = app(5)
+             ^^^^^^
+
+tests\test_submission_2_acceptance.py:217: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+subsystem = 5
+
+def app(subsystem):
+        at = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=15).run()
+        at.session_state["current_sim_time"] = "2026-10-21 08:00:00"
+        at.sidebar.radio[0].set_value(at.sidebar.radio[0].options[subsystem - 1]).run()
+
+assert not at.exception
+E       assert not ElementList(_list=[Exception(message="No module named'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...wnloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in \n    import plotly.express as px'])])
+E        +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...wnloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=15,\n    _sessi...             15: Caption()\n            }\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests\test_submission_2_acceptance.py:28: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:15.516 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.673 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:15.677 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.688 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 117, in from components.smart_charging import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 117, in from components.smart_charging import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+____ test_personal_charging_is_billed_once_on_consolidated_checkout ____
+
+def test_personal_charging_is_billed_once_on_consolidated_checkout():
+        s = state()
+        _, ev, _ = register_personal_ev(s, "OWNER", "Test", "59T12345", "scooter", "Test", 3.5)
+        ok, reservation, _ = reserve_personal_ev_slot(s, "OWNER", ev["ev_id"], "HUB-001", request_charging=True, current_soc=98)
+        assert ok and check_in_personal_ev(s, reservation["reservation_id"])[0]
+
+at = app(5)
+             ^^^^^^
+
+tests\test_submission_2_acceptance.py:245: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+subsystem = 5
+
+def app(subsystem):
+        at = AppTest.from_file(str(ROOT / "src/app.py"), default_timeout=15).run()
+        at.session_state["current_sim_time"] = "2026-10-21 08:00:00"
+        at.sidebar.radio[0].set_value(at.sidebar.radio[0].options[subsystem - 1]).run()
+
+assert not at.exception
+E       assert not ElementList(_list=[Exception(message="No module named'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...wnloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in \n    import plotly.express as px'])])
+E        +  where ElementList(_list=[Exception(message="No module named 'plotly'", stack_trace=['File "C:\Users\ASUS\Downloads\BTL_C...wnloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in \n    import plotly.express as px'])]) = AppTest(\n    _script_path='C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py',\n    default_timeout=15,\n    _sessi...             15: Caption()\n            }\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).exception
+
+tests\test_submission_2_acceptance.py:28: AssertionError
+------------------------- Captured stderr call -------------------------
+2026-11-05 19:13:15.793 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.948 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+2026-11-05 19:13:15.951 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-11-05 19:13:15.963 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 117, in from components.smart_charging import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+-------------------------- Captured log call ---------------------------
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+WARNING  streamlit.deprecation_util:deprecation_util.py:81 Please replace use_container_width with width.
+
+use_container_width will be removed after 2025-12-31.
+
+For use_container_width=True, use width='stretch'. For use_container_width=False, use width='content'.
+WARNING  streamlit.runtime.scriptrunner_utils.script_run_context:script_run_context.py:508 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ERROR    streamlit.error_util:error_util.py:117 Uncaught app execution
+Traceback (most recent call last):
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 136, in exec_func_with_error_handling
+    result = func()
+  File "C:\Users\ASUS\AppData\Roaming\Python\Python315\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 924, in code_to_exec
+    exec(code, module.dict)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\app.py", line 117, in from components.smart_charging import render
+  File "C:\Users\ASUS\Downloads\BTL_CNPM-main\src\components\smart_charging.py", line 14, in import plotly.express as px
+ModuleNotFoundError: No module named 'plotly'
+======================= short test summary info ========================
+FAILED tests/test_streamlit_navigation.py::test_all_subsystems_render_without_exceptions - AssertionError: Subsystem '3️⃣ Giám sát Hub (Operator)' threw an excep...
+FAILED tests/test_submission_2_acceptance.py::test_forecast_24h_queue_wait_and_reproducibility - assert not ElementList(_list=[Exception(message="No module named 'pl...
+FAILED tests/test_submission_2_acceptance.py::test_dashboard_shows_actual_booking_ledger_and_revenue - assert not ElementList(_list=[Exception(message="No module named 'pl...
+FAILED tests/test_submission_2_acceptance.py::test_infrastructure_preview_isolated_apply_and_stale_rejected - assert not ElementList(_list=[Exception(message="No module named 'pl...
+FAILED tests/test_submission_2_acceptance.py::test_charging_completion_notification_survives_rerun_and_receipt_is_recorded - assert not ElementList(_list=[Exception(message="No module named 'pl...
+FAILED tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout - assert not ElementList(_list=[Exception(message="No module named 'pl...
+6 failed, 48 passed in 13.53s
+(bạn xem lỗi này cho mình với)
+
+User:
+
+11/5/2026 19:23:43
+
+error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [28 lines of output]
+      + meson setup C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867 C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867.mesonpy-e1kxgout -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867.mesonpy-e1kxgout\meson-python-native-file.ini
+      The Meson build system
+      Version: 1.12.1
+      Source dir: C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867
+      Build dir: C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867.mesonpy-e1kxgout
+      Build type: native build
+      Program python found: YES 3.15.1 3.15.1
+      Project name: matplotlib
+      Project version: 3.11.1
+      C compiler for the host machine: cc (gcc 15.1.0 "cc (Rev5, Built by MSYS2 project) 15.1.0")
+      C linker for the host machine: cc ld.bfd 2.44
+      C++ compiler for the host machine: c++ (gcc 15.1.0 "c++ (Rev5, Built by MSYS2 project) 15.1.0")
+      C++ linker for the host machine: c++ ld.bfd 2.44
+      Host machine cpu family: x86_64
+      Host machine cpu: x86_64
+      Program python found: YES (C:\Python315\python.exe)
+      Run-time dependency python found: YES 3.15
+      Did not find pkg-config by name 'pkg-config'
+      Found pkg-config: NO
+      pybind11-config found: YES (C:\Users\ASUS\AppData\Local\Temp\pip-build-env-1fesqtih\overlay\Scripts\pybind11-config.exe) 3.1.0
+      Run-time dependency pybind11 found: YES 3.1.0
+      Downloading freetype2 source from https://download.savannah.nongnu.org/releases/freetype/freetype-2.14.3.tar.xz
+      Applying diff file "freetype-2.14.1-static-harfbuzz.patch"
+      ERROR: Subproject freetype2 is buildable: NO
+      
+      ..\extern\meson.build:12:18: ERROR: Missing "patch" or "git" commands to apply diff files
+      
+      A full log can be found at C:\Users\ASUS\AppData\Local\Temp\pip-install-g1jy__y7\matplotlib_d73edfd537994f14896d4cafa1533867.mesonpy-e1kxgout\meson-logs\meson-log.txt
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> matplotlib
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+(cái này là lỗi gì ạ)
+
+User:
+
+11/5/2026 19:30:09
+
+ai_usage.md (text/markdown)
+
+REPORT_SUB3.md (text/markdown)
+
+self_check.md (text/markdown)
+
+test_cases.md (text/markdown)
+
+traceability.md (text/markdown)
+
+mình đã chạy testcase bonus và đã thành công, bạn điền lại các file này cho mình với (riêng file report_sub3 thì bạn đưa thêm 1 file word nha, dựa trên 2 file báo cáo pdf mình đã gửi ở trên)
+
+User:
+
+11/5/2026 20:06:34
+
+SS3 có cần vẽ sơ đồ của deployment view không
+
+Powered by Gemini Exporter (https://www.ai-chat-exporter.com)

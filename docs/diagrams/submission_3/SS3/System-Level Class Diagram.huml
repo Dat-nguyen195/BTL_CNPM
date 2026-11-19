@@ -1,0 +1,183 @@
+@startuml system_classes
+title Phân hệ SS3 & Tổng thể: System-Level Class Diagram (Submission 3)\n Chủ sở hữu: TV3 — Phạm Tiến Đạt (MSSV: 2410724)  
+
+page 2x1
+scale max 1600 width
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam ranksep 40
+skinparam nodesep 25
+skinparam Padding 3
+skinparam shadowing false
+
+top to bottom direction
+
+
+package "SS1: Đặt Xe Dùng Chung (TV1)" as PKG_SS1 #F1F8FF {
+    class User {
+        + user_id: str
+        + role: UserRole
+    }
+    class Vehicle {
+        + vehicle_id: str
+        + ownership: Ownership
+        + hub_id: str
+        + status: VehicleStatus
+    }
+    class SharedVehicle
+    class Booking {
+        + booking_id: str
+        + user_id: str
+        + vehicle_id: str
+        + origin_hub_id: str
+        + expires_at: datetime
+        + status: BookingStatus
+    }
+    class BookingService {
+        + accept_rerouting(...)
+    }
+    Vehicle <|-- SharedVehicle
+    User "1" --> "0..*" Booking
+    Booking "*" --> "1" SharedVehicle
+}
+
+package "Shared Finance (TV1)" as PKG_FIN #FFFCE8 {
+    class Wallet {
+        + owner_id: str
+        + balance_vnd: int
+        + held_deposit_vnd: int
+        + debt_vnd: int
+    }
+    class Invoice {
+        + invoice_id: str
+        + paid_vnd: int
+        + debt_vnd: int
+    }
+    class ChargeLine {
+        + charge_id: str
+        + amount_vnd: int
+    }
+    class BillingService {
+        + hold_deposit(...)
+        + release_deposit(...)
+        + settle_no_show(...)
+        + settle_invoice(...)
+    }
+    Invoice "1" *-- "1..*" ChargeLine
+    BillingService --> Wallet
+    BillingService --> Invoice
+}
+
+package "SS2: Xe Cá Nhân (TV2)" as PKG_SS2 #F1F8FF {
+    class PersonalVehicle {
+        + vehicle_id: str
+        + plate: str
+    }
+    class ParkingReservation {
+        + reservation_id: str
+        + expires_at: datetime
+    }
+    class ParkingSession {
+        + session_id: str
+    }
+    class PersonalEVService
+    ParkingReservation "*" --> "1" PersonalVehicle
+    ParkingSession "1" --> "1" ParkingReservation
+}
+
+package "SS4: Điều Chuyển & Sự Cố (TV4)" as PKG_SS4 #F8F9FA {
+    class DispatchOrder {
+        + order_id: str
+        + vehicle_id: str
+    }
+    class VehicleIncident {
+        + incident_id: str
+    }
+    class DispatchService
+    class IncidentService
+}
+
+package "SS3: Hub & Giám Sát (TV3)" as PKG_SS3 #F3FBF4 {
+    class Hub <<Shared Hub Entity>> {
+        + hub_id: str
+        + capacity: int
+        + available_slots: int
+        + is_locked: bool
+    }
+    class NetworkSnapshot
+    class OccupancySnapshot
+    class RevenueReport
+    class Alert
+    class MonitoringService {
+        + get_network_snapshot()
+    }
+    NetworkSnapshot "1" *-- "1..*" OccupancySnapshot
+    NetworkSnapshot "1" *-- "1" RevenueReport
+    OccupancySnapshot "*" --> "1" Hub
+    Alert "*" --> "1" Hub
+}
+
+package "SS5: Sạc Thông Minh (TV5)" as PKG_SS5 #F8F9FA {
+    class ChargingPort {
+        + port_id: str
+        + status: PortStatus
+    }
+    class ChargingSession {
+        + session_id: str
+        + energy_delivered_kwh: float
+    }
+    class ChargingBill
+    class ChargingService {
+        + request_charging(...)
+        + get_bill(session_id)
+        + handle_port_failure(...)
+    }
+    class SmartChargingScheduler
+    Hub "1" *-- "0..*" ChargingPort
+    ChargingSession "1" --> "1" ChargingPort
+    ChargingService --> SmartChargingScheduler
+}
+
+package "SS7: Sự Cố Hạ Tầng & Rerouting (TV7)" as PKG_SS7 #FFF5F5 {
+    class RouteSuggestion {
+        + hub_id: str
+        + distance_km: float
+    }
+    class InfrastructureSimulationService
+    class ReroutingService {
+        + suggest_hubs(...)
+    }
+    ReroutingService ..> RouteSuggestion
+}
+
+package "SS6: Dự Báo 24h & Simulation (TV6)" as PKG_SS6 #FFF5F5 {
+    class ForecastResult {
+        + forecast_id: str
+    }
+    class SimulationPreview {
+        + preview_id: str
+    }
+    class ForecastService {
+        + forecast(...)
+    }
+    class SimulationCoordinator {
+        + apply_preview(...)
+    }
+}
+
+User "1" -right-> "1" Wallet
+Booking "*" -down-> "1" Hub : origin/dest >
+ParkingReservation "*" -down-> "1" Hub : at hub >
+DispatchOrder "*" -right-> "2" Hub : from/to >
+
+BookingService ..> BillingService : uses
+BookingService ..> ReroutingService : INT-06
+PersonalEVService ..> BillingService : uses
+PersonalEVService ..> ChargingService : INT-01, INT-02
+ChargingService ..> BillingService : settles via
+MonitoringService ..> Hub : monitors
+MonitoringService ..> BillingService : reads revenue
+SimulationCoordinator ..> ChargingService : INT-05
+InfrastructureSimulationService ..> SimulationPreview : creates (INT-09)
+
+@enduml
