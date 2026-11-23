@@ -68,6 +68,7 @@ class PersonalEVService <<proposed service>> {
   +check_in_personal_ev(owner_id: str, reservation_id: str,\n operation_key: str = ""): OperationResult[ParkingSession]
   +check_out_personal_ev(owner_id: str, reservation_id: str,\n operation_key: str = ""): OperationResult[SettlementResult]
   +sweep_expired_personal_reservations(sim_now: datetime): OperationResult[list[str]]
+  +cancel_personal_reservation(owner_id: str, reservation_id: str,\n operation_key: str = ""): OperationResult[ParkingReservation]
 }
 
 class "personal_ev.render" as SS2UI <<implemented UI>> {
@@ -80,9 +81,11 @@ class "core.personal_ev" as PersonalEVModule <<implemented module>> {
   --
   +parse_time(t_str: str): datetime
   +format_time(dt: datetime): str
+  +normalize_plate(raw_plate: str): str
   +register_personal_ev(state: dict, owner_id: str, owner_name: str,\n plate_number: str, ev_type: str, brand: str,\n battery_kwh: float): tuple[bool, dict | None, str]
   +reserve_personal_ev_slot(state: dict, owner_id: str, ev_id: str,\n hub_id: str, request_charging: bool = False, current_soc: float = 50.0,\n booking_start_time: str | None = None): tuple[bool, dict | None, str]
   +sweep_expired_personal_reservations(state: dict): int
+  +cancel_personal_reservation(state: dict, reservation_id: str,\n owner_id: str | None = None): tuple[bool, str]
   +check_in_personal_ev(state: dict, reservation_id: str): tuple[bool, str]
   +check_out_personal_ev(state: dict, reservation_id: str,\n duration_hours: float = 2.0, kwh_charged: float = 3.5,\n overstay_minutes: int = 0): tuple[bool, dict | None, str]
 }
@@ -114,7 +117,7 @@ ParkingReservation "1" --> "0..1" ParkingSession : kích hoạt khi check-in
 ParkingSession "0..*" --> "1" SharedHub : chiếm chỗ vật lý\n(current_vehicles)
 
 PersonalEVService ..> PersonalVehicle : tạo/kiểm tra hồ sơ xe\n(UC_SS2_01)
-PersonalEVService ..> ParkingReservation : đặt chỗ & quét hết hạn\n(UC_SS2_02)
+PersonalEVService ..> ParkingReservation : đặt chỗ, hủy & quét hết hạn\n(UC_SS2_02)
 PersonalEVService ..> ParkingSession : mở/đóng phiên đỗ\n(UC_SS2_03, UC_SS2_04)
 PersonalEVService ..> PersonalEVModule : ánh xạ hàm hiện tại
 PersonalEVService ..> BillingService : hợp đồng tài chính TV1

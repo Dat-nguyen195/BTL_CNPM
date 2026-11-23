@@ -10,7 +10,7 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Activity:** [UC_SS2_01_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_01_NguyenAnhTai_activity.puml>).
 - **Thiết kế:** `PersonalEVService.register_personal_ev`, `PersonalVehicle.normalize_plate`. Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_register_personal_ev_success_and_duplicate`.
+- **Test prototype:** `tests/test_personal_ev.py::test_register_personal_ev_success_and_duplicate`, `tests/test_personal_ev.py::test_plate_duplicate_ignores_dots_spaces_and_dashes`, `tests/test_personal_ev.py::test_register_rejects_invalid_input`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## UC_SS2_02 - Đặt trước chỗ đỗ và nhu cầu sạc xe EV cá nhân
@@ -19,9 +19,9 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Scenario:** [UC_SS2_NguyenAnhTai.md](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Usecase scenario/UC_SS2_NguyenAnhTai.md>).
 - **Sequence:** [UC_SS2_02_NguyenAnhTai_sequence.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Sequence diagrams/UC_SS2_02_NguyenAnhTai_sequence.puml>).
 - **Activity:** [UC_SS2_02_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_02_NguyenAnhTai_activity.puml>).
-- **Thiết kế:** `PersonalEVService.reserve_personal_ev_slot`, `PersonalEVService.sweep_expired_personal_reservations`. Class diagram SS2, catalog cùng thư mục.
+- **Thiết kế:** `PersonalEVService.reserve_personal_ev_slot`, `PersonalEVService.sweep_expired_personal_reservations`, `PersonalEVService.cancel_personal_reservation` (Alternative 3: hủy trước hạn hoàn 100% cọc). Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_future_arrival_and_exact_expiry`, `tests/test_submission_2_acceptance.py::test_personal_invalid_reservation_has_no_financial_or_capacity_effect`.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_future_arrival_and_exact_expiry`, `tests/test_submission_2_acceptance.py::test_personal_invalid_reservation_has_no_financial_or_capacity_effect`, `tests/test_personal_ev.py::test_tc_ss2_04_reserve_rejections_have_no_side_effects`, `tests/test_personal_ev.py::test_reserve_rejects_invalid_soc_without_side_effects`, `tests/test_personal_ev.py::test_cancel_before_deadline_refunds_full_deposit`, `tests/test_personal_ev.py::test_cancel_at_deadline_is_settled_as_no_show`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## UC_SS2_03 - Check-in xe EV cá nhân tại cổng Hub (QR/Biển số)
@@ -32,7 +32,7 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Activity:** [UC_SS2_03_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_03_NguyenAnhTai_activity.puml>).
 - **Thiết kế:** `PersonalEVService.check_in_personal_ev`, `ParkingSession.attach_charging_ref`. Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement`, `tests/test_personal_ev.py::test_checkin_waits_if_port_fails_after_reservation` (hết cổng sạc lúc check-in → xe `WAITING`), `tests/test_personal_ev.py::test_waiting_personal_vehicle_can_be_allocated_once` (cấp cổng cho xe chờ đúng một lần).
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement`, `tests/test_personal_ev.py::test_checkin_waits_if_port_fails_after_reservation` (hết cổng sạc lúc check-in → xe `WAITING`), `tests/test_personal_ev.py::test_waiting_personal_vehicle_can_be_allocated_once` (cấp cổng cho xe chờ đúng một lần), `tests/test_personal_ev.py::test_checkin_keeps_registered_vehicle_type`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## UC_SS2_04 - Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân
@@ -43,7 +43,7 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Activity:** [UC_SS2_04_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_04_NguyenAnhTai_activity.puml>).
 - **Thiết kế:** `PersonalEVService.check_out_personal_ev`, `BillingService.settle_invoice`. Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`, `tests/test_personal_ev.py::test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once`, `tests/test_personal_ev.py::test_waiting_vehicle_gets_port_when_another_checks_out`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## Bảng test case ↔ test tự động (23/11/2026)
@@ -52,9 +52,11 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 | --- | --- | --- | --- |
 | `TC-SS2-01`, `TC-SS2-02` | `UC_SS2_01` | `test_personal_ev.py::test_register_personal_ev_success_and_duplicate` | PASS |
 | `TC-SS2-03` | `UC_SS2_02` | `test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle` | PASS |
-| `TC-SS2-04` | `UC_SS2_02` | Chưa có test tự động; nhánh đơn hoạt động đã chạy thử thủ công | DESIGNED |
+| `TC-SS2-04` | `UC_SS2_02` | `test_personal_ev.py::test_tc_ss2_04_reserve_rejections_have_no_side_effects` | PASS |
 | `TC-SS2-05`, `TC-SS2-06` | `UC_SS2_02`, `UC_SS2_03` | `test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement` (`service="personal"`) | PASS |
 | `TC-SS2-07` | `UC_SS2_04` | `test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`, `test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle` | PASS |
-| `TC-SS2-08` | `UC_SS2_04` | Chưa có test tự động | DESIGNED |
+| `TC-SS2-08` | `UC_SS2_04` | `test_personal_ev.py::test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once` | PASS |
+| `TC-SS2-09` | `UC_SS2_02` | `test_personal_ev.py::test_cancel_before_deadline_refunds_full_deposit`, `test_cancel_at_deadline_is_settled_as_no_show` | PASS |
+| `TC-SS2-10` | `UC_SS2_03`, `UC_SS2_04` | `test_personal_ev.py::test_waiting_vehicle_gets_port_when_another_checks_out` | PASS |
 
-Toàn bộ bộ test của dự án: 60/60 PASS ngày 23/11/2026.
+Toàn bộ bộ test của dự án: 78/78 PASS ngày 23/11/2026.

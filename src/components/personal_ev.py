@@ -21,7 +21,8 @@ from core.personal_ev import (
     register_personal_ev,
     reserve_personal_ev_slot,
     check_in_personal_ev,
-    check_out_personal_ev
+    check_out_personal_ev,
+    cancel_personal_reservation
 )
 from core.policies import (
     PEV_PARKING_FEE_PER_VISIT_VND,
@@ -178,13 +179,23 @@ def render():
                     f"- Dịch vụ sạc: **{'Có' if r.get('request_charging') else 'Không'}**\n"
                     f"- Hạn chót check-in: `{r['arrival_deadline']}`"
                 )
-                if st.button(f"🚗 Xác thực check-in cho xe {r['plate']}", key=f"btn_checkin_{r['reservation_id']}"):
-                    ok, msg = check_in_personal_ev(st.session_state, r["reservation_id"])
-                    if ok:
-                        st.success(f"🎉 {msg}")
-                        st.rerun()
-                    else:
-                        st.error(f"❌ {msg}")
+                b_in, b_cancel = st.columns(2)
+                with b_in:
+                    if st.button(f"🚗 Xác thực check-in cho xe {r['plate']}", key=f"btn_checkin_{r['reservation_id']}"):
+                        ok, msg = check_in_personal_ev(st.session_state, r["reservation_id"])
+                        if ok:
+                            st.success(f"🎉 {msg}")
+                            st.rerun()
+                        else:
+                            st.error(f"❌ {msg}")
+                with b_cancel:
+                    if st.button(f"✖️ Hủy đặt chỗ (hoàn 100% cọc trước hạn)", key=f"btn_cancel_{r['reservation_id']}"):
+                        ok, msg = cancel_personal_reservation(st.session_state, r["reservation_id"], owner_id=user["user_id"])
+                        if ok:
+                            st.success(f"✅ {msg}")
+                            st.rerun()
+                        else:
+                            st.error(f"❌ {msg}")
 
     # ═══════════════════════════════════════════════
     # TAB 4: CHECK-OUT & QUYẾT TOÁN

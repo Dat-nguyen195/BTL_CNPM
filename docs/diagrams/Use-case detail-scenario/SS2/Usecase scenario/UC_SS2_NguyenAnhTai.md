@@ -200,7 +200,7 @@
       <td colspan="3">
         <strong>Alternative 1 (Chỉ sử dụng dịch vụ đỗ xe):</strong> Tại bước 3, sinh viên chọn chỉ đỗ xe; hệ thống bỏ qua bước 4 và không giữ cổng sạc.<br/>
         <strong>Alternative 2 (Thay đổi lựa chọn):</strong> Tại bước 5, sinh viên có thể đổi Hub, thời gian hoặc dịch vụ; hệ thống kiểm tra và tính lại phí dự kiến.<br/>
-        <strong>Alternative 3 (Hủy đơn trước Check-in):</strong> Sau bước 8, sinh viên được hủy theo chính sách áp dụng; hệ thống cập nhật đơn đã hủy và giải phóng từ <code>RESERVED</code> thành <code>AVAILABLE</code>.<br/>
+        <strong>Alternative 3 (Hủy đơn trước Check-in):</strong> Sau bước 8, sinh viên được hủy đơn trước hạn Check-in (<code>booking_start_time</code> + 30 phút): hệ thống hoàn 100% tiền cọc 50,000VNĐ (cùng chính sách với SS1), cập nhật đơn sang <code>CANCELLED</code> và giải phóng vị trí từ <code>RESERVED</code> thành <code>AVAILABLE</code>. Từ thời điểm đến hạn, đơn không còn hủy được mà xử lý theo Alternative 6.<br/>
         <strong>Alternative 4 (Thông tin hoặc lịch đặt không hợp lệ):</strong> Tại bước 5 hoặc 7, thời gian không hợp lệ, lịch sạc ngoài thời gian đỗ hoặc xe có lịch sử dụng trùng nhau; hệ thống yêu cầu điều chỉnh form nhập.<br/>
         <strong>Alternative 5 (Không còn vị trí đỗ khả dụng):</strong> Tại bước 5 hoặc 7, hệ thống thông báo hết chỗ và gợi ý sinh viên chọn Hub lân cận hoặc khung giờ khác.<br/>
         <strong>Alternative 6 (Quá thời hạn giữ chỗ 30 phút - No-show Timeout):</strong> Nếu sinh viên không Check-in trong vòng 30 phút kể từ <code>booking_start_time</code>, hệ thống tự động cập nhật trạng thái đơn sang <code>EXPIRED</code>, giải phóng vị trí về <code>AVAILABLE</code> và quyết toán cọc 50.000 VNĐ: phạt 10.000 VNĐ, hoàn 40.000 VNĐ đúng một lần.
@@ -431,7 +431,7 @@
 
 ---
 
-> *Cập nhật 23/11/2026: đồng bộ với prototype hiện tại (phí đỗ theo giờ, hết cổng sạc lúc Check-in, phí quá giờ do SS5 tính, ghi nợ khi thiếu số dư).*
+> *Cập nhật 23/11/2026: đồng bộ với prototype hiện tại (phí đỗ theo giờ, hủy đơn trước hạn hoàn 100% cọc, hết cổng sạc lúc Check-in, phí quá giờ do SS5 tính, ghi nợ khi thiếu số dư).*
 
 > *Tài liệu được tạo bởi Nguyễn Anh Tài (TV2 — Developer/Analyst) phục vụ BTL Công nghệ Phần mềm (CO3001) — HCMUT.*
 

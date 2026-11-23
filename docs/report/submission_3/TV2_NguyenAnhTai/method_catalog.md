@@ -90,6 +90,14 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 
+## `PersonalEVService.cancel_personal_reservation`
+
+**Chữ ký:** `cancel_personal_reservation(owner_id: str, reservation_id: str, operation_key: str = "") -> OperationResult[ParkingReservation]`.
+
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Bổ sung 23/11/2026 (UC_SS2_02 Alternative 3). Quét hết hạn trước; chỉ hủy đơn RESERVED thuộc owner khi sim_now<deadline. Trả chỗ giữ (destination_holds-1, available+1), hoàn 100% cọc 50.000 như chính sách SS1, chuyển CANCELLED. Đến hạn: đơn đã EXPIRED, cọc quyết toán no-show (phạt 10.000, hoàn 40.000). Hủy lặp/đơn khác trạng thái trả INVALID_STATE, không hoàn hay trả chỗ lần hai.
+
+**Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
+
 ## `SS2UI._init_pev_state`
 
 **Chữ ký:** `_init_pev_state() -> None`.
@@ -143,6 +151,14 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 **Chữ ký:** `sweep_expired_personal_reservations(state: dict) -> int`.
 
 **Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Duyệt RESERVED khi sim_now>=arrival_deadline, chuyển EXPIRED, giảm hold/tăng available, phạt10.000 hoàn40.000 một lần. Không chạm CHECKED_IN; lặp không phạt lại. Service trả danh sách ID trong OperationResult, hàm core nhận state và trả số lượng int.
+
+**Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
+
+## `PersonalEVModule.cancel_personal_reservation`
+
+**Chữ ký:** `cancel_personal_reservation(state: dict, reservation_id: str, owner_id: str | None = None) -> tuple[bool, str]`.
+
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Hàm core tương ứng của service: cùng quy tắc hủy trước hạn hoàn 100% cọc; owner_id truyền từ UI để chặn hủy đơn của tài khoản khác. Trả (ok, thông báo).
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 

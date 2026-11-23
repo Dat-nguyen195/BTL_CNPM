@@ -44,6 +44,13 @@ def parse_time(t_str: str) -> datetime:
 def format_time(dt: datetime) -> str:
     return dt.strftime("%Y-%m-%d %H:%M:%S")
 
+ALLOWED_EV_TYPES = ("scooter", "bike", "car")
+MAX_BATTERY_KWH = 120.0
+
+def normalize_plate(raw_plate: str) -> str:
+    """Chuẩn hóa biển số để so trùng: viết hoa, bỏ khoảng trắng, gạch ngang và dấu chấm."""
+    return "".join(ch for ch in str(raw_plate).strip().upper() if ch not in " -.")
+
 def register_personal_ev(
     state: Dict[str, Any],
     owner_id: str,
@@ -57,13 +64,23 @@ def register_personal_ev(
     Registers a personal EV to the system (UC_SS2_01).
     Validates duplicate plate numbers.
     """
-    clean_plate = plate_number.strip().upper().replace(" ", "").replace("-", "")
+    clean_plate = normalize_plate(plate_number)
     if not clean_plate:
         return False, None, "Biển số xe không được để trống."
+    if not str(owner_id or "").strip():
+        return False, None, "Chưa xác định được tài khoản chủ xe."
+    if ev_type not in ALLOWED_EV_TYPES:
+        return False, None, f"Loại phương tiện không hợp lệ (chỉ nhận: {', '.join(ALLOWED_EV_TYPES)})."
+    try:
+        battery_kwh = float(battery_kwh)
+    except (TypeError, ValueError):
+        return False, None, "Dung lượng pin không hợp lệ."
+    if not math.isfinite(battery_kwh) or battery_kwh <= 0 or battery_kwh > MAX_BATTERY_KWH:
+        return False, None, f"Dung lượng pin phải lớn hơn 0 và không quá {MAX_BATTERY_KWH:g} kWh."
 
     existing = state.setdefault("personal_evs", [])
     for ev in existing:
-        ep = ev.get("plate", "").strip().upper().replace(" ", "").replace("-", "")
+        ep = normalize_plate(ev.get("plate", ""))
         if ep == clean_plate:
             return False, None, f"Biển số xe '{plate_number}' đã được đăng ký trong hệ thống."
 
@@ -106,6 +123,12 @@ def reserve_personal_ev_slot(
         return False, None, f"Không tìm thấy phương tiện {ev_id}."
     if ev.get("owner_id") != owner_id:
         return False, None, "Phương tiện không thuộc tài khoản đang đặt chỗ."
+    try:
+        current_soc = float(current_soc)
+    except (TypeError, ValueError):
+        return False, None, "Phần trăm pin không hợp lệ."
+    if not math.isfinite(current_soc) or not 0 <= current_soc <= 100:
+        return False, None, "Phần trăm pin phải nằm trong khoảng 0–100%."
 
     sim_now_str = state.get("current_sim_time", format_time(datetime.now()))
     sim_now = parse_time(sim_now_str)
@@ -220,6 +243,43 @@ def sweep_expired_personal_reservations(state: Dict[str, Any]) -> int:
         bump_state_version(state)
     return expired_count
 
+def cancel_personal_reservation(
+    state: Dict[str, Any],
+    reservation_id: str,
+    owner_id: Optional[str] = None
+) -> Tuple[bool, str]:
+    """
+    Hủy đơn đặt chỗ trước Check-in (UC_SS2_02, Alternative 3).
+    Cùng chính sách với SS1: hủy trước hạn check-in (booking_start_time + 30 phút)
+    hoàn 100% cọc và trả chỗ giữ; đến hạn thì đơn đã EXPIRED và quyết toán no-show.
+    """
+    sweep_expired_personal_reservations(state)
+    sim_now_str = state.get("current_sim_time", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+    res = next((r for r in state.get("personal_reservations", []) if r.get("reservation_id") == reservation_id), None)
+    if not res:
+        return False, f"Không tìm thấy đặt chỗ #{reservation_id}."
+    if owner_id is not None and res.get("owner_id") != owner_id:
+        return False, "Đặt chỗ không thuộc tài khoản đang thao tác."
+    if res.get("status") == ReservationStatus.EXPIRED.value:
+        return False, "Đặt chỗ đã quá hạn check-in; cọc đã được quyết toán no-show (phạt 10.000 VNĐ, hoàn 40.000 VNĐ)."
+    if res.get("status") != ReservationStatus.RESERVED.value:
+        return False, f"Không thể hủy đặt chỗ ở trạng thái hiện tại ({res.get('status')})."
+
+    hub = next((h for h in state.get("hubs", []) if h.get("hub_id") == res.get("hub_id")), None)
+    if hub:
+        hub["destination_holds"] = max(0, hub.get("destination_holds", 0) - 1)
+        hub["available_slots"] = hub.get("available_slots", 0) + 1
+
+    wallet = state.setdefault("wallet", {})
+    dep = res.get("deposit_held", PEV_RESERVATION_DEPOSIT_VND)
+    release_held_deposit_full(wallet, amount=dep, booking_id=reservation_id, sim_time=sim_now_str)
+
+    res["status"] = ReservationStatus.CANCELLED.value
+    res["cancelled_at"] = sim_now_str
+    bump_state_version(state)
+    return True, f"Hủy đặt chỗ thành công! Hoàn 100% tiền cọc ({dep:,} VNĐ) về ví."
+
 def check_in_personal_ev(
     state: Dict[str, Any],
     reservation_id: str
@@ -262,10 +322,11 @@ def check_in_personal_ev(
     hub["destination_holds"] = max(0, hub.get("destination_holds", 0) - 1)
     # Physical slot is now occupied, available_slots does NOT change (already decremented during reservation)
 
+    ev = next((e for e in state.get("personal_evs", []) if e.get("ev_id") == res["ev_id"]), {})
     veh_record = {
         "vehicle_id": res["ev_id"],
         "plate": res.get("plate"),
-        "type": "scooter",
+        "type": ev.get("type", "scooter"),
         "battery_soc": res.get("current_soc", 50.0),
         "status": (VehicleStatus.CHARGING.value if hub.get("charging_ports", {}).get("available", 0) > 0 else "WAITING") if res.get("request_charging") else VehicleStatus.AVAILABLE.value,
         "ownership": "PERSONAL",
@@ -401,6 +462,11 @@ def check_out_personal_ev(
     res["check_out_time"] = sim_now_str
     invoice["energy_fee_source"] = "Tích lũy phiên sạc mô phỏng" if "measured_energy_fee" in res else "Đầu vào mô phỏng"
     res["invoice"] = invoice
+
+    # Cổng sạc vừa được trả: cấp ngay cho xe đang chờ (WAITING) tại Hub, nếu có.
+    if hub and state.get("charging_scheduler"):
+        from core.scheduler import allocate_hub_ports
+        allocate_hub_ports(state, hub["hub_id"])
 
     bump_state_version(state)
     return True, invoice, f"Check-out thành công cho xe {res['plate']}! Tổng chi phí: {total_amount:,.0f} VNĐ."

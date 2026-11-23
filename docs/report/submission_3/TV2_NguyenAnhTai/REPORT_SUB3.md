@@ -184,7 +184,7 @@ Dưới đây là đặc tả chi tiết cho toàn bộ các lớp và module xu
 | **Thuộc tính** | • `-billing_service: BillingService` (Bắt buộc) — Tham chiếu tới dịch vụ tài chính dùng chung do TV1 sở hữu.<br>• `-charging_service: ChargingService` (Bắt buộc) — Tham chiếu tới dịch vụ lập lịch và tính phí sạc do TV5 sở hữu. |
 | **Quan hệ** | • Phụ thuộc điều phối (`..>`) tới `PersonalVehicle`, `ParkingReservation`, `ParkingSession` và `Hub` (TV3).<br>• Phụ thuộc hợp đồng (`..>`) tới `BillingService` (TV1) và `ChargingService` (TV5 — `INT-01`, `INT-02`).<br>• Ánh xạ thực thi (`..>`) tới module `core.personal_ev` (`SS2-CLS-06`). |
 | **Ràng buộc (Invariants)** | 1. Mọi phương thức trả về kiểu chuẩn `OperationResult[T]`; khi xảy ra lỗi (`ok = False`), tuyệt đối không làm thay đổi dở dang số dư ví hoặc số chỗ trống của Hub.<br>2. Trước khi xử lý `check_in_personal_ev`, luôn thực thi quét các đơn quá hạn (`sweep_expired_personal_reservations`) để giải phóng tài nguyên kịp thời.<br>3. Mọi biến động tiền cọc, phạt quá hạn và thanh toán hóa đơn đều ủy quyền qua `BillingService` kèm `operation_key` và `charge_id` ổn định để chống thu trùng. |
-| **Phương thức** | `SS2-MTH-07` (`register_personal_ev`), `SS2-MTH-08` (`reserve_personal_ev_slot`), `SS2-MTH-09` (`check_in_personal_ev`), `SS2-MTH-10` (`check_out_personal_ev`), `SS2-MTH-11` (`sweep_expired_personal_reservations`). |
+| **Phương thức** | `SS2-MTH-07` (`register_personal_ev`), `SS2-MTH-08` (`reserve_personal_ev_slot`), `SS2-MTH-09` (`check_in_personal_ev`), `SS2-MTH-10` (`check_out_personal_ev`), `SS2-MTH-11` (`sweep_expired_personal_reservations`), `SS2-MTH-12` (`cancel_personal_reservation`). |
 | **Truy vết** | • Yêu cầu: `US-08`, `US-09`, `US-10`, `US-11`, `US-11b`, `US-12`, `FR-03`, `FR-03b`, `FR-04`, `FR-05b`, `FR-15b`.<br>• Use Case: `UC_SS2_01`, `UC_SS2_02`, `UC_SS2_03`, `UC_SS2_04`.<br>• Code hiện tại: `src/core/personal_ev.py`. |
 
 ### 5.5. Module giao diện `personal_ev.render` (`SS2-CLS-05`) & Module nghiệp vụ `core.personal_ev` (`SS2-CLS-06`)
@@ -234,7 +234,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Nếu kết quả trả về là `""`, phương thức gọi (`register_personal_ev`) trả về lỗi `INVALID_INPUT` (`"Biển số xe không được để trống."`). |
 | **Xử lý lặp/xung đột** | Gọi nhiều lần với cùng đầu vào luôn trả về kết quả giống hệt nhau (Idempotent). |
 | **Tác động dữ liệu** | Không ghi dữ liệu vào session/ví/Hub. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_01` (Thông điệp `3.1: Tra cứu biển số và tài khoản sở hữu`).<br>• Code hiện có: Dòng 60 và 66 trong `src/core/personal_ev.py`.<br>• Test case: `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`), `TC-SS2-01`, `TC-SS2-02`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_01` (Thông điệp `3.1: Tra cứu biển số và tài khoản sở hữu`).<br>• Code hiện có: Dòng 50–52, 67 và 83 trong `src/core/personal_ev.py`.<br>• Test case: `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`), `TC-SS2-01`, `TC-SS2-02`. |
 
 #### `SS2-MTH-02` — `PersonalVehicle.is_owned_by`
 
@@ -251,7 +251,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Khi trả về `False`, dịch vụ gọi trả về mã lỗi `FORBIDDEN` (`"Phương tiện không thuộc tài khoản đang đặt chỗ."`). |
 | **Xử lý lặp/xung đột** | Thao tác chỉ đọc, an toàn khi gọi lặp. |
 | **Tác động dữ liệu** | Không tác động dữ liệu. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_02` (Nhánh kiểm tra quyền sử dụng xe đã đăng ký).<br>• Code hiện có: Dòng 107–108 trong `src/core/personal_ev.py` (`if ev.get("owner_id") != owner_id`).<br>• Test case: `TC-SS2-04`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_02` (Nhánh kiểm tra quyền sử dụng xe đã đăng ký).<br>• Code hiện có: Dòng 124–125 trong `src/core/personal_ev.py` (`if ev.get("owner_id") != owner_id`).<br>• Test case: `TC-SS2-04`. |
 
 #### `SS2-MTH-03` — `ParkingReservation.is_expired`
 
@@ -268,7 +268,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Không phát sinh ngoại lệ nếu `sim_now` hợp lệ. |
 | **Xử lý lặp/xung đột** | Khi đơn đã chuyển sang `EXPIRED` hoặc `CHECKED_IN`, phương thức luôn trả về `False`, ngăn chặn việc quét hết hạn lặp lần hai. |
 | **Tác động dữ liệu** | Chỉ đọc. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_02` (Nhánh `4.1: Đến booking_start_time + 30 phút và chưa Check-in`), `UC_SS2_03`.<br>• Code hiện có: Dòng 197–199 và 251–254 trong `src/core/personal_ev.py`.<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-06`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_02` (Nhánh `4.1: Đến booking_start_time + 30 phút và chưa Check-in`), `UC_SS2_03`.<br>• Code hiện có: Dòng 220–221 và 311–314 trong `src/core/personal_ev.py`.<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-06`. |
 
 #### `SS2-MTH-04` — `ParkingReservation.can_check_in`
 
@@ -285,7 +285,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Trả về `False` khi đến sớm hơn `booking_start_time` (`INVALID_STATE`), đã quá hạn (`EXPIRED`), hoặc đơn đã `CHECKED_IN`/`COMPLETED`. |
 | **Xử lý lặp/xung đột** | Ngăn chặn việc Check-in lặp trên cùng một `reservation_id` vì sau lần Check-in đầu tiên, `status` đã đổi sang `CHECKED_IN`. |
 | **Tác động dữ liệu** | Chỉ đọc. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_03` (Thông điệp `1.1: Đối chiếu QR/PIN, xe, quyền sử dụng, đơn đặt chỗ, Hub và khung giờ`).<br>• Code hiện có: Dòng 242–254 trong `src/core/personal_ev.py`.<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement`, `TC-SS2-05`, `TC-SS2-06`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_03` (Thông điệp `1.1: Đối chiếu QR/PIN, xe, quyền sử dụng, đơn đặt chỗ, Hub và khung giờ`).<br>• Code hiện có: Dòng 302–314 trong `src/core/personal_ev.py`.<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement`, `TC-SS2-05`, `TC-SS2-06`. |
 
 #### `SS2-MTH-05` — `ParkingSession.attach_charging_ref`
 
@@ -302,7 +302,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | `INVALID_INPUT` nếu `request_id` rỗng. |
 | **Xử lý lặp/xung đột** | Chỉ gắn tối đa 1 yêu cầu sạc đang hoạt động cho cùng 1 `ParkingSession`. |
 | **Tác động dữ liệu** | Cập nhật 2 trường `charging_request_id` và `charging_session_id` trên đối tượng `ParkingSession`. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_03` (Nhánh `3.1: Xác thực trụ và bắt đầu sạc nếu đã đăng ký`), Hợp đồng `INT-01`.<br>• Code hiện có: Ánh xạ từ logic đánh dấu `res["charging_port_allocated"]` tại dòng 279–287 trong `src/core/personal_ev.py` (gửi yêu cầu sạc; `allocate_hub_ports()` gán `charging_session_id` khi cấp cổng).<br>• Test case: `TC-SS2-05`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_03` (Nhánh `3.1: Xác thực trụ và bắt đầu sạc nếu đã đăng ký`), Hợp đồng `INT-01`.<br>• Code hiện có: Ánh xạ từ logic đánh dấu `res["charging_port_allocated"]` tại dòng 340–348 trong `src/core/personal_ev.py` (gửi yêu cầu sạc; `allocate_hub_ports()` gán `charging_session_id` khi cấp cổng).<br>• Test case: `TC-SS2-05`. |
 
 #### `SS2-MTH-06` — `ParkingSession.build_parking_charge_line`
 
@@ -319,7 +319,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Không phát sinh lỗi. |
 | **Xử lý lặp/xung đột** | Cùng một `ParkingSession` luôn sinh ra đúng một `charge_id` duy nhất (`CHG-PARK-<reservation_id>`), đảm bảo chống thu trùng ở tầng `BillingService`. |
 | **Tác động dữ liệu** | Chỉ tạo DTO `ChargeLine`, chưa tự trừ số dư ví. |
-| **Truy vết và kiểm thử** | • UC: `UC_SS2_04` (Thông điệp `2.1: Tính phí đỗ ... Lập một hóa đơn tổng hợp`).<br>• Code hiện có: Dòng 312 và 352 trong `src/core/personal_ev.py` (`hourly_rate = EMOBILITY_PARKING_HOURLY_VND`, `parking_fee = max(1, math.ceil(duration_hours)) * hourly_rate`).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`, đỗ 2 giờ → `10.000 VNĐ`), `TC-SS2-07`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_04` (Thông điệp `2.1: Tính phí đỗ ... Lập một hóa đơn tổng hợp`).<br>• Code hiện có: Dòng 373 và 413 trong `src/core/personal_ev.py` (`hourly_rate = EMOBILITY_PARKING_HOURLY_VND`, `parking_fee = max(1, math.ceil(duration_hours)) * hourly_rate`).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`, đỗ 2 giờ → `10.000 VNĐ`), `TC-SS2-07`. |
 
 ---
 
@@ -340,7 +340,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | • `INVALID_INPUT`: Biển số rỗng hoặc dung lượng pin `<= 0`.<br>• `CONFLICTING_OPERATION`: Biển số xe (sau khi chuẩn hóa) đã tồn tại trong hệ thống (của cùng tài khoản hoặc tài khoản khác). |
 | **Xử lý lặp/xung đột** | Nếu người dùng bấm gửi form đăng ký lặp 2 lần với cùng biển số (kể cả khác dấu cách/gạch ngang như `"59-X1 77777"` và `"59X1-77777"`), lần gọi thứ hai bị chặn ngay ở bước kiểm tra trùng biển số và không sinh bản ghi thứ hai. |
 | **Tác động dữ liệu** | Ghi thêm 1 bản ghi vào `st.session_state["personal_evs"]`; tăng `st.session_state["state_version"]`. Không tác động ví, Hub, cổng sạc hay hóa đơn. |
-| **Truy vết và kiểm thử** | • US/FR: `US-08`, `FR-03`.<br>• UC & Sequence: `UC_SS2_01` (`UC_SS2_01_NguyenAnhTai_sequence.puml` — Nhóm 2 & Nhóm 3: thông điệp `3.1 Tra cứu biển số`, `3.2 Cấp mã xe, lưu hồ sơ`).<br>• Code hiện có: Hàm `register_personal_ev()` tại `src/core/personal_ev.py` (dòng 47–87).<br>• Test case: `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`), `TC-SS2-01`, `TC-SS2-02`. |
+| **Truy vết và kiểm thử** | • US/FR: `US-08`, `FR-03`.<br>• UC & Sequence: `UC_SS2_01` (`UC_SS2_01_NguyenAnhTai_sequence.puml` — Nhóm 2 & Nhóm 3: thông điệp `3.1 Tra cứu biển số`, `3.2 Cấp mã xe, lưu hồ sơ`).<br>• Code hiện có: Hàm `register_personal_ev()` tại `src/core/personal_ev.py` (dòng 54–104).<br>• Test case: `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`), `TC-SS2-01`, `TC-SS2-02`. |
 
 #### `SS2-MTH-08` — `PersonalEVService.reserve_personal_ev_slot`
 
@@ -357,7 +357,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | • `NOT_FOUND`: Không tìm thấy `vehicle_id` hoặc `hub_id`.<br>• `FORBIDDEN`: Xe thuộc tài khoản sinh viên khác.<br>• `INVALID_INPUT`: Thời gian đến trạm không hợp lệ hoặc nằm trong quá khứ.<br>• `CONFLICTING_OPERATION`: Xe đang có lượt đặt chỗ `RESERVED` hoặc `CHECKED_IN` chưa hoàn tất.<br>• `NO_CAPACITY`: Hub hết chỗ đỗ trống hoặc hết cổng sạc trống (khi `request_charging = True`).<br>• `DEBT_BLOCKED` / `INSUFFICIENT_FUNDS`: Ví đang có khoản nợ chưa thanh toán hoặc số dư khả dụng `< 50.000 VNĐ`. |
 | **Xử lý lặp/xung đột** | Kiểm tra trùng đơn đang hoạt động theo `vehicle_id` (`RESERVED` / `CHECKED_IN`) và truyền `operation_key` xuống `BillingService.hold_deposit()` để ngăn khóa cọc hai lần cho cùng một thao tác bấm nút. |
 | **Tác động dữ liệu** | Cập nhật `wallet` (`balance`, `held_deposit`, `ledger`), `hub` (`destination_holds`, `available_slots`), thêm phần tử vào `personal_reservations` và tăng `state_version`. |
-| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-10`, `US-12`, `FR-04`, `FR-05b`.<br>• UC & Sequence: `UC_SS2_02` (`UC_SS2_02_NguyenAnhTai_sequence.puml` — Nhóm 2 & Nhóm 3: kiểm tra vị trí, tạm giữ 50.000 VNĐ cọc, đặt hạn `booking_start_time + 30 phút`).<br>• Code hiện có: Hàm `reserve_personal_ev_slot()` tại `src/core/personal_ev.py` (dòng 89–181).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-03`, `TC-SS2-04`. |
+| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-10`, `US-12`, `FR-04`, `FR-05b`.<br>• UC & Sequence: `UC_SS2_02` (`UC_SS2_02_NguyenAnhTai_sequence.puml` — Nhóm 2 & Nhóm 3: kiểm tra vị trí, tạm giữ 50.000 VNĐ cọc, đặt hạn `booking_start_time + 30 phút`).<br>• Code hiện có: Hàm `reserve_personal_ev_slot()` tại `src/core/personal_ev.py` (dòng 106–204).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-03`, `TC-SS2-04`. |
 
 #### `SS2-MTH-09` — `PersonalEVService.check_in_personal_ev`
 
@@ -374,7 +374,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | • `NOT_FOUND`: Không tìm thấy `reservation_id` hoặc `hub_id`.<br>• `FORBIDDEN`: Đơn không thuộc người dùng đang thao tác.<br>• `EXPIRED`: Check-in tại thời điểm `sim_now >= expires_at` (`booking_start_time + 30 phút`).<br>• `INVALID_STATE`: Check-in sớm trước `booking_start_time` hoặc đơn đã ở trạng thái `CHECKED_IN` / `COMPLETED`. |
 | **Xử lý lặp/xung đột** | Nếu bấm Check-in lần thứ hai cho cùng `reservation_id`, điều kiện `res.status != RESERVED` chặn ngay lập tức, không giảm `destination_holds` hay thêm xe vào `current_vehicles` lần hai. |
 | **Tác động dữ liệu** | Cập nhật `personal_reservations` (`status = CHECKED_IN`, `check_in_time`), `hubs` (`destination_holds`, `current_vehicles`, `charging_ports`), khởi tạo `ParkingSession` và tăng `state_version`. |
-| **Truy vết và kiểm thử** | • US/FR: `US-11b`, `FR-03b`.<br>• UC & Sequence: `UC_SS2_03` (`UC_SS2_03_NguyenAnhTai_sequence.puml` — Nhóm 1, 2 & 3: xác thực QR/đơn/khung giờ, mở cổng, đổi `RESERVED -> CHECKED_IN`, kích hoạt sạc).<br>• Code hiện có: Hàm `check_in_personal_ev()` tại `src/core/personal_ev.py` (dòng 223–289).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `test_checkin_waits_if_port_fails_after_reservation`, `test_waiting_personal_vehicle_can_be_allocated_once` (`tests/test_personal_ev.py`), `TC-SS2-05`, `TC-SS2-06`. |
+| **Truy vết và kiểm thử** | • US/FR: `US-11b`, `FR-03b`.<br>• UC & Sequence: `UC_SS2_03` (`UC_SS2_03_NguyenAnhTai_sequence.puml` — Nhóm 1, 2 & 3: xác thực QR/đơn/khung giờ, mở cổng, đổi `RESERVED -> CHECKED_IN`, kích hoạt sạc).<br>• Code hiện có: Hàm `check_in_personal_ev()` tại `src/core/personal_ev.py` (dòng 283–350).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `test_checkin_waits_if_port_fails_after_reservation`, `test_waiting_personal_vehicle_can_be_allocated_once` (`tests/test_personal_ev.py`), `TC-SS2-05`, `TC-SS2-06`. |
 
 #### `SS2-MTH-10` — `PersonalEVService.check_out_personal_ev`
 
@@ -391,7 +391,7 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | • `NOT_FOUND`: Không tìm thấy `reservation_id`.<br>• `INVALID_STATE`: Đơn không ở trạng thái `CHECKED_IN` (chưa check-in, đã hết hạn `EXPIRED` hoặc đã `COMPLETED`).<br>• `CONFLICTING_CHARGE` / `CONFLICTING_OPERATION`: Xung đột mã dòng phí hoặc khóa thao tác trong `BillingService`. *(Lưu ý: Trường hợp ví thiếu số dư khi trả xe/check-out không bị coi là lỗi làm hủy thao tác rời trạm; hệ thống vẫn hoàn tất giải phóng chỗ đỗ và ghi nhận khoản thiếu vào `debt`)*. |
 | **Xử lý lặp/xung đột** | Ngay sau khi Check-out thành công, `status` chuyển thành `COMPLETED`. Mọi lời gọi `check_out_personal_ev` lặp lại trên cùng `reservation_id` đều bị từ chối ở bước kiểm tra `status != CHECKED_IN` (và được bảo vệ thêm bởi `operation_key`/`charge_id` tại `BillingService`), đảm bảo không bao giờ cộng trả `available_slots` hai lần hoặc trừ tiền/hoàn cọc hai lần. |
 | **Tác động dữ liệu** | Cập nhật `hubs` (`current_vehicles`, `available_slots`, `charging_ports`), `wallet` (`balance`, `held_deposit`, `debt`, `ledger`), `personal_reservations` (`status = COMPLETED`, `check_out_time`, `invoice`) và tăng `state_version`. |
-| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-10`, `US-11`, `US-11b`, `US-12`, `FR-03b`, `FR-04`, `FR-05b`, `FR-15b`.<br>• UC & Sequence: `UC_SS2_04` (`UC_SS2_04_NguyenAnhTai_sequence.puml` — Nhóm 2, 3, 4 & 5: chốt dữ liệu sạc, lập hóa đơn tổng hợp, quyết toán cọc/ví, mở barie ra và giải phóng chỗ đỗ/cổng sạc một lần).<br>• Code hiện có: Hàm `check_out_personal_ev()` tại `src/core/personal_ev.py` (dòng 291–406).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_personal_charging_is_billed_once_on_consolidated_checkout` (`tests/test_submission_2_acceptance.py`), `TC-SS2-07`, `TC-SS2-08`. |
+| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-10`, `US-11`, `US-11b`, `US-12`, `FR-03b`, `FR-04`, `FR-05b`, `FR-15b`.<br>• UC & Sequence: `UC_SS2_04` (`UC_SS2_04_NguyenAnhTai_sequence.puml` — Nhóm 2, 3, 4 & 5: chốt dữ liệu sạc, lập hóa đơn tổng hợp, quyết toán cọc/ví, mở barie ra và giải phóng chỗ đỗ/cổng sạc một lần).<br>• Code hiện có: Hàm `check_out_personal_ev()` tại `src/core/personal_ev.py` (dòng 352–472).<br>• Test case: `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`), `test_personal_charging_is_billed_once_on_consolidated_checkout` (`tests/test_submission_2_acceptance.py`), `TC-SS2-07`, `TC-SS2-08`. |
 
 #### `SS2-MTH-11` — `PersonalEVService.sweep_expired_personal_reservations`
 
@@ -408,7 +408,26 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 | **Lỗi/ngoại lệ** | Không phát sinh ngoại lệ làm gián đoạn luồng chính; nếu không có đơn nào quá hạn thì trả về danh sách rỗng (`expired_count = 0`) và không tăng `state_version`. |
 | **Xử lý lặp/xung đột** | Gọi `sweep_expired_personal_reservations` nhiều lần liên tiếp tại cùng thời điểm `sim_now` hoàn toàn an toàn (Idempotent): ở lần gọi thứ hai, các đơn quá hạn đã có `status == EXPIRED` nên không bị quét lại, `sweep(state)` trả về `0`, không cộng trả chỗ đỗ lần hai và không phạt/hoàn tiền cọc lần hai. |
 | **Tác động dữ liệu** | Cập nhật `personal_reservations` (`status`, `expired_at`), `hubs` (`destination_holds`, `available_slots`), `wallet` (`held_deposit`, `balance`, `ledger`) và `state_version`. |
-| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-11b`, `FR-03b`, `FR-04`.<br>• UC & Sequence: `UC_SS2_02` (Nhánh `4.1: Đến booking_start_time + 30 phút và chưa Check-in`), `UC_SS2_03`.<br>• Code hiện có: Hàm `sweep_expired_personal_reservations()` tại `src/core/personal_ev.py` (dòng 183–221) và `settle_pev_noshow_penalty()` tại `src/core/billing.py` (dòng 279–317).<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-06`. |
+| **Truy vết và kiểm thử** | • US/FR: `US-09`, `US-11b`, `FR-03b`, `FR-04`.<br>• UC & Sequence: `UC_SS2_02` (Nhánh `4.1: Đến booking_start_time + 30 phút và chưa Check-in`), `UC_SS2_03`.<br>• Code hiện có: Hàm `sweep_expired_personal_reservations()` tại `src/core/personal_ev.py` (dòng 206–244) và `settle_pev_noshow_penalty()` tại `src/core/billing.py` (dòng 279–317).<br>• Test case: `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`), `TC-SS2-06`. |
+
+---
+
+#### `SS2-MTH-12` — `PersonalEVService.cancel_personal_reservation` (bổ sung 23/11/2026)
+
+| Trường | Nội dung chi tiết |
+| :--- | :--- |
+| **Method ID** | `SS2-MTH-12` |
+| **Lớp và chữ ký** | `PersonalEVService.cancel_personal_reservation(owner_id: str, reservation_id: str, operation_key: str = ""): OperationResult[ParkingReservation]` |
+| **Mục đích và bên gọi** | Thực hiện `UC_SS2_02` — Alternative 3: sinh viên hủy đơn đặt chỗ trước khi Check-in. Bên gọi: Giao diện `personal_ev.render` (Tab 3, nút "Hủy đặt chỗ"). |
+| **Tham số** | • `owner_id: str` — Mã sinh viên thực hiện hủy.<br>• `reservation_id: str` — Mã đơn cần hủy (`PRES-XXXXXX`).<br>• `operation_key: str = ""` — Khóa chống thực thi lặp (thiết kế). |
+| **Kết quả trả về** | `OperationResult[ParkingReservation]`: thành công trả đơn đã `CANCELLED`; thất bại trả `error_code` thuộc `{NOT_FOUND, FORBIDDEN, EXPIRED, INVALID_STATE}`. Hàm prototype `core.personal_ev.cancel_personal_reservation(state, reservation_id, owner_id=None)` trả `tuple[bool, str]`. |
+| **Điều kiện trước** | Đơn tồn tại, thuộc `owner_id`, đang `RESERVED` và `sim_now < expires_at` (`booking_start_time + 30 phút`). |
+| **Xử lý chính** | 1. Gọi `sweep_expired_personal_reservations` trước để đơn đã đến hạn chuyển `EXPIRED` và quyết toán no-show.<br>2. Kiểm tra tồn tại, quyền sở hữu và trạng thái.<br>3. Trả chỗ giữ tại Hub: `destination_holds -= 1`, `available_slots += 1`.<br>4. Hoàn 100% cọc `50.000 VNĐ` về ví (`release_held_deposit_full`).<br>5. Đơn chuyển `CANCELLED`, ghi `cancelled_at`, tăng `state_version`. |
+| **Điều kiện sau** | Đơn `CANCELLED`; ví hoàn đủ cọc; sức chứa Hub trở về như trước khi đặt. Chính sách giống SS1 (`docs/policies/submission_2.md`: hoàn 100% nếu hủy trước mốc 30 phút). |
+| **Lỗi/ngoại lệ** | `NOT_FOUND`; `FORBIDDEN` khi đơn thuộc tài khoản khác; `EXPIRED` khi đã đến hạn (cọc đã quyết toán no-show: phạt `10.000`, hoàn `40.000`); `INVALID_STATE` khi đơn đã `CHECKED_IN`, `COMPLETED` hoặc `CANCELLED`. |
+| **Xử lý lặp/xung đột** | Hủy lặp bị chặn bởi kiểm tra `status != RESERVED`; không hoàn cọc hay trả chỗ hai lần; đơn đã hủy không bị quét phạt no-show. |
+| **Tác động dữ liệu** | `personal_reservations` (`status`, `cancelled_at`), `hubs` (`destination_holds`, `available_slots`), `wallet` (`held_deposit`, `balance`, `ledger`), `state_version`. |
+| **Truy vết và kiểm thử** | • UC: `UC_SS2_02` (Alternative 3), statechart `RESERVED → AVAILABLE` (Hủy trước Check-in).<br>• Code hiện có: Hàm `cancel_personal_reservation()` tại `src/core/personal_ev.py` (dòng 246–281).<br>• Test case: `TC-SS2-09` (`test_cancel_before_deadline_refunds_full_deposit`, `test_cancel_at_deadline_is_settled_as_no_show`). |
 
 ---
 
@@ -418,8 +437,8 @@ Mọi phương thức được vẽ trên Class Diagram SS2 đều được mô 
 
 | Method ID / Khối | Chữ ký phương thức trên sơ đồ | Trách nhiệm, Đầu vào/Đầu ra & Quy tắc xử lý trong SS2 |
 | :--- | :--- | :--- |
-| **`SS2-IMP-01`** (`personal_ev.render`) | `_init_pev_state(): None` | Khởi tạo an toàn các khóa `personal_evs`, `personal_reservations` và `current_user` trong `st.session_state` nếu chưa tồn tại trước khi render UI SS2 (`src/components/personal_ev.py`, dòng 36–46). |
-| **`SS2-IMP-02`** (`personal_ev.render`) | `render(): None` | Kết xuất giao diện 4 tab của phân hệ SS2 (`Đăng ký xe mới`, `Đặt chỗ & Sạc`, `Check-in trạm`, `Check-out & Quyết toán`), hiển thị thẻ metric ví/chính sách và bảng tổng kết xe cá nhân (`src/components/personal_ev.py`, dòng 48–283). |
+| **`SS2-IMP-01`** (`personal_ev.render`) | `_init_pev_state(): None` | Khởi tạo an toàn các khóa `personal_evs`, `personal_reservations` và `current_user` trong `st.session_state` nếu chưa tồn tại trước khi render UI SS2 (`src/components/personal_ev.py`, dòng 37–47). |
+| **`SS2-IMP-02`** (`personal_ev.render`) | `render(): None` | Kết xuất giao diện 4 tab của phân hệ SS2 (`Đăng ký xe mới`, `Đặt chỗ & Sạc`, `Check-in trạm`, `Check-out & Quyết toán`), hiển thị thẻ metric ví/chính sách và bảng tổng kết xe cá nhân (`src/components/personal_ev.py`, dòng 49–308). |
 | **`SS2-IMP-03`** (`core.personal_ev`) | `parse_time(t_str: str): datetime` | Chuyển đổi chuỗi thời gian mô phỏng định dạng `"%Y-%m-%d %H:%M:%S"` sang đối tượng `datetime` để tính hạn 30 phút và so sánh mốc check-in (`src/core/personal_ev.py`, dòng 38–42). |
 | **`SS2-IMP-04`** (`core.personal_ev`) | `format_time(dt: datetime): str` | Định dạng đối tượng `datetime` về chuỗi chuẩn `"%Y-%m-%d %H:%M:%S"` để lưu vào `st.session_state` (`src/core/personal_ev.py`, dòng 44–45). |
 | **Hợp đồng TV1** (`BillingService`) | `hold_deposit(owner_id: str, reference_id: str, amount_vnd: int, operation_key: str): OperationResult[DepositResult]` | **Chủ sở hữu: TV1.** SS2 gọi khi đặt chỗ (`UC_SS2_02`) với `amount_vnd = 50000`. Khóa cọc từ số dư khả dụng; từ chối nếu ví đang có nợ hoặc thiếu tiền; chống giữ cọc lặp theo `operation_key`. |
@@ -485,18 +504,20 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 
 [Tài liệu chi tiết bộ Test Case SS2](<test_cases.md>)
 
-Bộ kiểm thử của phân hệ SS2 bao gồm **8 ca kiểm thử chuẩn hóa** (`TC-SS2-01` → `TC-SS2-08`), đảm bảo mỗi Use Case có ít nhất **1 ca luồng chính** và **1 ca lỗi/ngoại lệ/biên** (đặc biệt là biên 29 phút 59 giây vs 30 phút 00 giây, xử lý nợ và chống quyết toán lặp):
+Bộ kiểm thử của phân hệ SS2 bao gồm **10 ca kiểm thử chuẩn hóa** (`TC-SS2-01` → `TC-SS2-10`, cả 10 ca `PASS` ngày 23/11/2026), đảm bảo mỗi Use Case có ít nhất **1 ca luồng chính** và **1 ca lỗi/ngoại lệ/biên** (đặc biệt là biên 29 phút 59 giây vs 30 phút 00 giây, xử lý nợ và chống quyết toán lặp):
 
 | Test ID | UC & Method ID | Kịch bản kiểm thử & Dữ liệu vào chính | Kết quả mong đợi (Expected Result) | Đối chiếu Test tự động hiện có | Trạng thái |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **`TC-SS2-01`** | `UC_SS2_01`<br>`SS2-MTH-07`<br>`SS2-MTH-01` | **Đăng ký xe EV cá nhân hợp lệ (Luồng chính):**<br>`owner_id="SV-2211234"`, `plate_number="59-X1 77777"`, `ev_type="scooter"`, `brand="VinFast Klara"`, `battery_kwh=3.5`. | Trả về `ok=True`; tạo bản ghi `PEV-...` trong `personal_evs` với `plate="59-X1 77777"`, `ownership="PERSONAL"`, `status="REGISTERED"`, `state_version` tăng +1. | `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`) | **PASS** *(Đã chạy pytest)* |
 | **`TC-SS2-02`** | `UC_SS2_01`<br>`SS2-MTH-07`<br>`SS2-MTH-01` | **Từ chối đăng ký trùng biển số khác định dạng (Luồng lỗi):**<br>Đã có biển số `"59-X1 77777"`, đăng ký tiếp xe mới với `plate_number="59X1-77777"`. | `normalize_plate` quy về `"59X177777"`; trả về `ok=False`, thông báo `"Biển số xe '59X1-77777' đã được đăng ký trong hệ thống"`, không tạo bản ghi trùng. | `test_register_personal_ev_success_and_duplicate` (`tests/test_personal_ev.py`) | **PASS** *(Đã chạy pytest)* |
 | **`TC-SS2-03`** | `UC_SS2_02`<br>`SS2-MTH-08` | **Đặt trước chỗ đỗ + sạc hợp lệ & khóa cọc 50.000 VNĐ (Luồng chính):**<br>Ví có `150.000 VNĐ`, đặt lúc `08:00:00` (`booking_start_time="2026-10-21 08:00:00"`), `request_charging=True`, `current_soc=30.0`. | Trả về `ok=True`; `hub.destination_holds` tăng +1, `hub.available_slots` giảm -1; ví còn `balance=100.000`, `held_deposit=50.000`; `arrival_deadline="2026-10-21 08:30:00"`. | `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`) | **PASS** *(Đã chạy pytest)* |
-| **`TC-SS2-04`** | `UC_SS2_02`<br>`SS2-MTH-08`<br>`SS2-MTH-02` | **Từ chối đặt chỗ khi xe đang có đơn hoạt động hoặc ví có nợ/Hub hết chỗ (Luồng lỗi):**<br>Gọi `reserve_personal_ev_slot` lần 2 trên cùng `ev_id` đang `RESERVED` (hoặc khi `available_slots=0` / `wallet.debt > 0`). | Trả về `ok=False`; giữ nguyên `available_slots`, `destination_holds` và `wallet.held_deposit` (không khóa cọc thêm lần hai). | Thiết kế kiểm thử mở rộng cho `SS2-MTH-08` | **DESIGNED** |
+| **`TC-SS2-04`** | `UC_SS2_02`<br>`SS2-MTH-08`<br>`SS2-MTH-02` | **Từ chối đặt chỗ khi xe đang có đơn hoạt động, Hub hết chỗ hoặc ví có nợ (Luồng lỗi):**<br>(1) Đặt lần 2 cho xe đang `RESERVED`; (2) `available_slots=0`; (3) `wallet.debt=20.000`. | Cả ba trường hợp trả `ok=False`; giữ nguyên `balance`, `held_deposit` và `available_slots` (không khóa cọc thêm). | `test_tc_ss2_04_reserve_rejections_have_no_side_effects` (`tests/test_personal_ev.py`) | **PASS** *(pytest 23/11/2026)* |
 | **`TC-SS2-05`** | `UC_SS2_03`<br>`SS2-MTH-09`<br>`SS2-MTH-04` | **Check-in hợp lệ ngay sát hạn 29 phút 59 giây (Luồng chính & Biên):**<br>`booking_start_time="08:00:00"`, thực hiện `check_in_personal_ev` tại `current_sim_time="2026-10-21 08:29:59"`. | Đơn chưa hết hạn (`sweep=0`); `check_in_personal_ev` trả về `ok=True`; `status="CHECKED_IN"`; `destination_holds` giảm -1, `available_slots` giữ nguyên (không trừ kép), xe vào `hub.current_vehicles`. | `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`, `seconds=1799`) | **PASS** *(Đã chạy pytest)* |
 | **`TC-SS2-06`** | `UC_SS2_02`<br>`UC_SS2_03`<br>`SS2-MTH-11`<br>`SS2-MTH-03` | **Quá hạn tại đúng mốc 30 phút 00 giây, phạt no-show & chống sweep/check-in lặp (Biên & Ngoại lệ):**<br>`booking_start_time="08:00:00"`, tiến đồng hồ tới `"2026-10-21 08:30:00"`, gọi `sweep` 2 lần và gọi `check_in_personal_ev`. | Lần `sweep` 1 trả về `1`: `status="EXPIRED"`, trả lại `available_slots += 1`, `destination_holds = 0`, phạt `10.000`, hoàn `40.000` (`balance=140.000`, `held_deposit=0`). Lần `sweep` 2 trả về `0`, `check_in` trả về `False`, ledger không ghi trùng. | `test_reservation_30_minute_boundary_and_single_settlement` (`tests/test_reservation_30_minutes.py`, `seconds=1800`) | **PASS** *(Đã chạy pytest)* |
 | **`TC-SS2-07`** | `UC_SS2_04`<br>`SS2-MTH-10`<br>`SS2-MTH-06` | **Check-out có sạc giờ cao điểm: phí đỗ theo giờ + điện năng đo từ SS5, thu một lần (Luồng chính):**<br>(a) Xe `SoC=98%` check-in `08:00` (cao điểm `7.000đ/kWh`), SS5 mô phỏng +15 phút sạc rồi rút sạc, check-out `duration_hours=1`.<br>(b) Check-out ngay sau check-in, `duration_hours=2`, nhập tay `kwh_charged=4.0`, `overstay_minutes=20` khi phiên sạc chưa nạp kWh nào. | (a) `parking_fee=5.000` (1 giờ), `kwh_charged=0,07`, `energy_fee=490` (`0,07 × 7.000`), `overstay_fee=0`, `total_amount=5.490 VNĐ`; SS5 không thu riêng (`total_due=0`); ví `100.000 → 144.510` (hoàn cọc `50.000`, trừ `5.490`), `held_deposit=0`, trả cổng sạc.<br>(b) `parking_fee=10.000` (2 giờ bắt đầu), `energy_fee=0`, `overstay_fee=0`, `total_amount=10.000`: số nhập tay không ghi đè số đo; trả chỗ đỗ, `status="COMPLETED"`. | (a) `test_personal_charging_is_billed_once_on_consolidated_checkout` (`tests/test_submission_2_acceptance.py`)<br>(b) `test_reserve_and_checkin_checkout_lifecycle` (`tests/test_personal_ev.py`) | **PASS** *(pytest 23/11/2026: 60/60)* |
-| **`TC-SS2-08`** | `UC_SS2_04`<br>`SS2-MTH-10` | **Check-out khi số dư ví không đủ (ghi nhận nợ) & gọi Check-out lặp lần hai (Luồng ngoại lệ):**<br>Tổng phí vượt số dư khả dụng của ví; sau khi Check-out xong gọi tiếp `check_out_personal_ev` lần 2. | Lần 1: Trừ hết số dư khả dụng về `0`, ghi phần thiếu vào `wallet["debt"]` (`record_wallet_debt`), vẫn cho xe rời trạm và trả chỗ đỗ. Lần 2: Từ chối vì `status == COMPLETED` (`!= CHECKED_IN`), không cộng dư chỗ đỗ hay trừ tiền lần hai. | Thiết kế kiểm thử mở rộng cho `SS2-MTH-10` | **DESIGNED** |
+| **`TC-SS2-08`** | `UC_SS2_04`<br>`SS2-MTH-10` | **Check-out khi số dư ví không đủ (ghi nhận nợ) & gọi Check-out lặp lần hai (Luồng ngoại lệ):**<br>Ví còn `50.000` sau hoàn cọc, đỗ 11 giờ (`55.000`); sau đó gọi check-out lần 2. | Lần 1: trừ ví `50.000`, ghi nợ `5.000`, `status="COMPLETED"`, trả chỗ đỗ. Lần 2: bị từ chối, không ghi nợ hay trả chỗ lần hai. | `test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once` (`tests/test_personal_ev.py`) | **PASS** *(pytest 23/11/2026)* |
+| **`TC-SS2-09`** | `UC_SS2_02` (Alt 3)<br>`SS2-MTH-12` | **Hủy đặt chỗ trước hạn check-in (Luồng thay thế & Biên):**<br>Hủy lúc `08:29:59` (hạn `08:30:00`); đơn khác hủy đúng `08:30:00`. | Trước hạn: `CANCELLED`, hoàn 100% cọc (`balance=150.000`), trả chỗ; hủy lặp/check-in bị từ chối. Đúng hạn: đơn đã `EXPIRED`, phạt `10.000`, hoàn `40.000`. | `test_cancel_before_deadline_refunds_full_deposit`, `test_cancel_at_deadline_is_settled_as_no_show` (`tests/test_personal_ev.py`) | **PASS** *(pytest 23/11/2026)* |
+| **`TC-SS2-10`** | `UC_SS2_03`, `UC_SS2_04`<br>`SS2-MTH-09`, `SS2-MTH-10` | **Xe đang chờ cổng được cấp cổng khi xe khác check-out (Liên phân hệ SS2–SS5):**<br>Xe A giữ cổng, xe B `WAITING`; xe A check-out. | Xe B được cấp phiên sạc (`charging_session_id`), chuyển `CHARGING`; cổng vừa trả được dùng ngay. | `test_waiting_vehicle_gets_port_when_another_checks_out` (`tests/test_personal_ev.py`) | **PASS** *(pytest 23/11/2026)* |
 
 ---
 
@@ -567,4 +588,4 @@ PersonalVehicle kế thừa Vehicle riêng, liên kết User qua owner_id; bỏ 
 
 ## Cập nhật đồng bộ với code 23/11/2026
 
-Tài liệu markdown này được đồng bộ lại với code hiện tại; bản PDF đã nộp giữ nguyên. Thay đổi: phí đỗ chuyển sang tính theo giờ bắt đầu, tối thiểu 1 giờ (`5.000 VNĐ/giờ`, giá demo, cấu hình qua `EMOBILITY_PARKING_HOURLY_VND`); check-in/check-out đã nối với phiên sạc SS5 trong `core/scheduler.py`, điện năng và phí quá giờ lấy từ số đo của phiên; giao diện check-out lấy thời gian đỗ theo đồng hồ demo thay cho ô nhập tay; cập nhật số dòng code trong mục mô tả phương thức; `TC-SS2-07` đối chiếu lại với hai test tự động hiện có. Toàn bộ 60 test PASS ngày 23/11/2026.
+Tài liệu markdown này được đồng bộ lại với code hiện tại; bản PDF đã nộp giữ nguyên. Thay đổi: phí đỗ chuyển sang tính theo giờ bắt đầu, tối thiểu 1 giờ (`5.000 VNĐ/giờ`, giá demo, cấu hình qua `EMOBILITY_PARKING_HOURLY_VND`); check-in/check-out đã nối với phiên sạc SS5 trong `core/scheduler.py`, điện năng và phí quá giờ lấy từ số đo của phiên; giao diện check-out lấy thời gian đỗ theo đồng hồ demo thay cho ô nhập tay; cập nhật số dòng code trong mục mô tả phương thức; `TC-SS2-07` đối chiếu lại với hai test tự động hiện có. Bổ sung hủy đặt chỗ trước hạn (`SS2-MTH-12`, hoàn 100% cọc như SS1), chuẩn hóa biển số bỏ cả dấu chấm, kiểm tra dữ liệu đầu vào ở hàm lõi, giữ đúng loại xe khi check-in và tự cấp cổng cho xe đang chờ khi có xe check-out; thêm `TC-SS2-09`, `TC-SS2-10` và test tự động cho `TC-SS2-04`, `TC-SS2-08`. Toàn bộ 78 test PASS ngày 23/11/2026.
