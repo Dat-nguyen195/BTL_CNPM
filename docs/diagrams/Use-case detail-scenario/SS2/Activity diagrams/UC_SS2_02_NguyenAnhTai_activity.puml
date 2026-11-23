@@ -38,7 +38,7 @@ repeat
   if (Lịch đặt và khả năng phục vụ hợp lệ?) then ([Không])
     :Thông báo dữ liệu không hợp lệ,\nhết chỗ hoặc không có cổng phù hợp;\nyêu cầu chọn lại;
   else ([Có])
-    :Hiển thị phí đỗ 5.000 VNĐ/lượt,\ncọc giữ chỗ 50.000 VNĐ;\nphí sạc dự kiến nếu có;
+    :Hiển thị phí đỗ 5.000 VNĐ/giờ (tối thiểu 1 giờ),\ncọc giữ chỗ 50.000 VNĐ;\nphí sạc dự kiến nếu có;
     note right
       Cao điểm: 7.000 VNĐ/kWh
       06:00–09:00 và 16:00–19:30.

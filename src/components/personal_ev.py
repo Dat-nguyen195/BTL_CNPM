@@ -21,7 +21,8 @@ from core.personal_ev import (
     register_personal_ev,
     reserve_personal_ev_slot,
     check_in_personal_ev,
-    check_out_personal_ev
+    check_out_personal_ev,
+    cancel_personal_reservation
 )
 from core.policies import (
     PEV_PARKING_FEE_PER_VISIT_VND,
@@ -178,13 +179,23 @@ def render():
                     f"- Dịch vụ sạc: **{'Có' if r.get('request_charging') else 'Không'}**\n"
                     f"- Hạn chót check-in: `{r['arrival_deadline']}`"
                 )
-                if st.button(f"🚗 Xác thực check-in cho xe {r['plate']}", key=f"btn_checkin_{r['reservation_id']}"):
-                    ok, msg = check_in_personal_ev(st.session_state, r["reservation_id"])
-                    if ok:
-                        st.success(f"🎉 {msg}")
-                        st.rerun()
-                    else:
-                        st.error(f"❌ {msg}")
+                b_in, b_cancel = st.columns(2)
+                with b_in:
+                    if st.button(f"🚗 Xác thực check-in cho xe {r['plate']}", key=f"btn_checkin_{r['reservation_id']}"):
+                        ok, msg = check_in_personal_ev(st.session_state, r["reservation_id"])
+                        if ok:
+                            st.success(f"🎉 {msg}")
+                            st.rerun()
+                        else:
+                            st.error(f"❌ {msg}")
+                with b_cancel:
+                    if st.button(f"✖️ Hủy đặt chỗ (hoàn 100% cọc trước hạn)", key=f"btn_cancel_{r['reservation_id']}"):
+                        ok, msg = cancel_personal_reservation(st.session_state, r["reservation_id"], owner_id=user["user_id"])
+                        if ok:
+                            st.success(f"✅ {msg}")
+                            st.rerun()
+                        else:
+                            st.error(f"❌ {msg}")
 
     # ═══════════════════════════════════════════════
     # TAB 4: CHECK-OUT & QUYẾT TOÁN
@@ -213,11 +224,41 @@ def render():
 
                 col_sim1, col_sim2, col_sim3 = st.columns(3)
                 with col_sim1:
-                    dur_hrs = st.number_input("Thời gian đỗ (giờ) [Mô phỏng]:", min_value=0.5, max_value=48.0, value=2.5, step=0.5, key=f"dur_{r['reservation_id']}")
+                    # Thời gian đỗ lấy theo đồng hồ demo: giờ hiện tại - giờ check-in.
+                    _fmt = "%Y-%m-%d %H:%M:%S"
+                    _now = datetime.strptime(st.session_state["current_sim_time"], _fmt)
+                    _cin = datetime.strptime(r["check_in_time"], _fmt)
+                    dur_hrs = max(0.0, (_now - _cin).total_seconds() / 3600)
+                    _mins = int(round(dur_hrs * 60))
+                    st.metric("Thời gian đỗ (đồng hồ demo)", f"{_mins // 60} giờ {_mins % 60:02d} phút")
+                    st.caption("Phí đỗ tính theo giờ bắt đầu, tối thiểu 1 giờ.")
+                _sched = st.session_state.get("charging_scheduler")
+                _sess = None
+                if _sched is not None and r.get("charging_session_id"):
+                    _sess = getattr(_sched, "_active_sessions", {}).get(r["charging_session_id"])
                 with col_sim2:
-                    kwh = st.number_input("Điện năng đã nạp (kWh) [Mô phỏng]:", min_value=0.0, max_value=50.0, value=4.2 if r.get('request_charging') else 0.0, step=0.1, key=f"kwh_{r['reservation_id']}")
+                    if r.get("charging_ever_allocated"):
+                        # Xe có phiên sạc thật: SS2 chỉ đọc điện năng do SS5 đo (INT-02).
+                        _measured = r.get("delivered_kwh", 0) + (_sess.energy_delivered_kwh if _sess else 0)
+                        kwh = _measured
+                        st.metric("Điện năng đo từ SS5", f"{_measured:.2f} kWh")
+                        if _measured <= 0:
+                            st.caption("Chưa nạp điện: tua giờ (+15 phút) để phiên sạc tích lũy điện năng.")
+                    elif r.get("request_charging"):
+                        kwh = 0.0
+                        st.metric("Điện năng đo từ SS5", "0.00 kWh")
+                        st.caption("Xe đang chờ cổng sạc (WAITING), chưa được cấp cổng.")
+                    else:
+                        kwh = 0.0
+                        st.metric("Điện năng", "Không đăng ký sạc")
                 with col_sim3:
-                    overstay = st.number_input("Thời gian quá hạn rút sạc (phút) [Mô phỏng]:", min_value=0, max_value=180, value=20, step=5, key=f"over_{r['reservation_id']}")
+                    # Phí quá giờ do SS5 tính trên phiên sạc; SS2 chỉ hiển thị và quyết toán một lần.
+                    overstay = 0
+                    _over_fee = r.get("accrued_overstay_fee", 0) + (_sess.overstay_fee if _sess else 0)
+                    _over_min = _sess.overstay_minutes if _sess else 0
+                    st.metric("Phí quá giờ (SS5)", f"{_over_fee:,.0f} ₫")
+                    if _sess and _sess.status in ("GRACE_PERIOD", "OVERSTAY"):
+                        st.caption(f"Đã sạc đầy, chiếm cổng {_over_min} phút (ân hạn 15 phút).")
 
                 if st.button(f"💳 Quyết toán & Rời trạm ({r['plate']})", type="primary", key=f"btn_checkout_{r['reservation_id']}"):
                     ok, inv, msg = check_out_personal_ev(
@@ -236,8 +277,8 @@ def render():
 | **Mã hóa đơn** | `{inv['invoice_id']}` |
 | **Biển số xe** | **{inv['plate']}** |
 | **Phí đỗ xe** | **{inv['parking_fee']:,.0f} ₫** |
-| **Điện năng sạc** | {inv['kwh_charged']} kWh × {inv['energy_rate']:,.0f} ₫ = **{inv['energy_fee']:,.0f} ₫** |
-| **Biểu giá áp dụng** | **{'GIỜ CAO ĐIỂM (7,000₫/kWh)' if inv['is_peak_tariff'] else 'GIỜ THẤP ĐIỂM (3,000₫/kWh)'}** |
+| **Điện năng sạc** | {inv['kwh_charged']} kWh · **{inv['energy_fee']:,.0f} ₫** |
+| **Đơn giá điện bình quân** | {f"{inv['energy_rate']:,.0f} ₫/kWh" if inv['kwh_charged'] else 'Không phát sinh điện năng'} |
 | **Phí đỗ quá hạn (Overstay)** | {inv['overstay_minutes']} phút (Miễn phí {OVERSTAY_GRACE_MINUTES}p) = **{inv['overstay_fee']:,.0f} ₫** |
 | **Tổng chi phí** | **{inv['total_amount']:,.0f} ₫** |
 | **Đã trừ từ ví** | **-{inv['deducted_from_wallet']:,.0f} ₫** |

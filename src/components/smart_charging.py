@@ -182,7 +182,10 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
                                     if v.get("vehicle_id") == unplugged.vehicle_id:
                                         v["battery_soc"] = unplugged.current_soc
                                         if v.get("status") == "CHARGING":
-                                            v["status"] = "AVAILABLE" if unplugged.current_soc >= 20 else "MAINTENANCE"
+                                            if v.get("ownership") == "PERSONAL":
+                                                v["status"] = "PARKED"  # xe cá nhân vẫn đỗ, chờ check-out SS2
+                                            else:
+                                                v["status"] = "AVAILABLE" if unplugged.current_soc >= 20 else "MAINTENANCE"
                                 break
 
                         # Quyết toán ví/ghi nợ phí quá hạn (Overstay)

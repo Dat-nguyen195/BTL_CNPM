@@ -306,6 +306,7 @@ def release_charging_session(state, session_id):
         reservation["measured_energy_fee"] = reservation.get("measured_energy_fee", 0) + session.energy_cost_vnd
         reservation["delivered_kwh"] = reservation.get("delivered_kwh", 0) + session.energy_delivered_kwh
         reservation["accrued_overstay_fee"] = reservation.get("accrued_overstay_fee", 0) + session.overstay_fee
+        reservation["accrued_overstay_minutes"] = reservation.get("accrued_overstay_minutes", 0) + session.overstay_minutes
         reservation["charging_port_allocated"] = False
         reservation["charging_session_id"] = None
     hub = next((h for h in state["hubs"] if h["hub_id"] == session.hub_id), None)
@@ -319,6 +320,7 @@ def release_charging_session(state, session_id):
 def apply_hub_snapshot(state, hubs):
     """Commit a simulated hub snapshot and interrupt affected live charging sessions."""
     scheduler = state.get("charging_scheduler")
+    interrupted_hubs = []
     if scheduler:
         for hub in hubs:
             old = next(h for h in state["hubs"] if h["hub_id"] == hub["hub_id"])
@@ -326,6 +328,8 @@ def apply_hub_snapshot(state, hubs):
                                 old["charging_ports"].get("offline", 0))
             sessions = [s for s in scheduler._active_sessions.values() if s.hub_id == hub["hub_id"]]
             for session in sessions[:newly_offline]:
+                if hub["hub_id"] not in interrupted_hubs:
+                    interrupted_hubs.append(hub["hub_id"])
                 release_charging_session(state, session.session_id)
                 vehicle = next((v for v in hub["current_vehicles"] if v["vehicle_id"] == session.vehicle_id), None)
                 if vehicle:
@@ -335,4 +339,7 @@ def apply_hub_snapshot(state, hubs):
                         hub_id=hub["hub_id"], battery_soc=session.current_soc,
                         ownership=vehicle.get("ownership", "SHARED"), owner_id=vehicle.get("owner_id")))
     state["hubs"] = hubs
+    # Xe vừa bị ngắt sạc được cấp lại ngay cổng còn trống (nếu có) thay vì chờ thao tác thủ công.
+    for hub_id in interrupted_hubs:
+        allocate_hub_ports(state, hub_id)
     bump_state_version(state)

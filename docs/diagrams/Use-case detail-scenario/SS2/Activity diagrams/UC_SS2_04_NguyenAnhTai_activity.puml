@@ -26,12 +26,12 @@ if (Có sử dụng sạc?) then ([Có])
   |IoT / Barie & Trụ sạc tại Hub|
  :Kết thúc sạc nếu còn hoạt động;\nchốt kWh theo từng khung giá;
   |Control & State (st.session_state)|
- :Tính phí sạc thực tế\ncao điểm / thấp điểm;
+ :Lấy kWh, tiền điện theo thời điểm sạc\nvà phí quá giờ do SS5 chốt;
 else ([Không])
   :Không phát sinh phí sạc;
 endif
 
-:Tính phí đỗ và tổng tiền thực tế;\náp dụng voucher hợp lệ nếu có;
+:Tính phí đỗ theo giờ (tối thiểu 1 giờ)\nvà tổng tiền thực tế;\náp dụng voucher hợp lệ nếu có;
 
 |UI Layer (personal_ev.py)|
 :Hiển thị hóa đơn tổng hợp\nphí đỗ + phí sạc;

@@ -74,7 +74,7 @@ group 2. Kết thúc sạc và lập hóa đơn tổng hợp
             UI --> Student: Chưa thể hoàn tất hóa đơn
         end
 
-        UI -> AppState: Ghi nhận lượng điện và phí sạc thực tế\n7.000 VNĐ/kWh cao điểm; 3.000 VNĐ/kWh thấp điểm
+        UI -> AppState: Ghi nhận kWh, tiền điện theo thời điểm sạc\nvà phí quá giờ do SS5 chốt\n7.000 VNĐ/kWh cao điểm; 3.000 VNĐ/kWh thấp điểm
         activate AppState
         AppState --> UI: Chi tiết phí sạc theo từng khung giờ
         deactivate AppState
@@ -86,15 +86,18 @@ group 2. Kết thúc sạc và lập hóa đơn tổng hợp
         deactivate AppState
     end
 
-    UI -> AppState: Tính phí đỗ 5.000 VNĐ/lượt,\nphí sạc thực tế và voucher đã áp dụng nếu có
+    UI -> AppState: Tính phí đỗ theo giờ (5.000 VNĐ/giờ, tối thiểu 1 giờ),\nphí sạc, phí quá giờ và voucher đã áp dụng nếu có
     activate AppState
     AppState -> AppState: Lập một hóa đơn tổng hợp
     AppState --> UI: Chi tiết hóa đơn và tổng số tiền phải trả
     deactivate AppState
-    UI --> Student: Hiển thị hóa đơn phí đỗ + phí sạc
+    UI --> Student: Hiển thị hóa đơn phí đỗ + phí sạc\n+ phí quá giờ (nếu có)
 
     note over UI, AppState
         Cao điểm: 06:00–09:00 và 16:00–19:30.
+        Phí đỗ tính từ Check-in đến Check-out theo đồng hồ hệ thống.
+        Pin đầy: ngừng tính tiền điện, ân hạn 15 phút;
+        sau đó 10.000 VNĐ/15 phút chiếm cổng (SS5 tính).
         Thời điểm chốt phí và thời hạn rời bãi sau thanh toán
         thực hiện theo chính sách dịch vụ.
     end note
