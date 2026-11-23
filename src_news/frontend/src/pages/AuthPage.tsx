@@ -27,10 +27,7 @@ export const AuthPage: React.FC = () => {
         });
         await login(res.data.access_token, res.data.user);
       } else {
-        const res = await api.post('/api/auth/register', {
-          ...form,
-          role: 'STUDENT',
-        });
+        const res = await api.post('/api/auth/register', form);
         await login(res.data.access_token, res.data.user);
       }
     } catch (err: any) {

@@ -13,19 +13,20 @@ limiter = Limiter(key_func=get_remote_address)
 @limiter.limit("5/minute")
 async def register(request: Request, body: RegisterRequest):
     # Kiểm tra trùng email hoặc MSSV
-    existing = supabase.table("users").select("user_id").or_(
-        f"email.eq.{body.email},mssv.eq.{body.mssv}"
-    ).execute()
-    if existing.data:
+    email = body.email.lower()
+    student_id = body.mssv.strip().upper()
+    same_email = supabase.table("users").select("user_id").eq("email", email).limit(1).execute()
+    same_student = supabase.table("users").select("user_id").eq("mssv", student_id).limit(1).execute()
+    if same_email.data or same_student.data:
         raise HTTPException(status_code=400, detail="Email hoặc MSSV đã được đăng ký.")
 
     hashed_pw = get_password_hash(body.password)
     user_res = supabase.table("users").insert({
-        "mssv": body.mssv.strip().upper(),
-        "email": body.email.lower(),
+        "mssv": student_id,
+        "email": email,
         "full_name": body.full_name.strip(),
         "password_hash": hashed_pw,
-        "role": body.role
+        "role": "STUDENT"
     }).execute()
 
     new_user = user_res.data[0]

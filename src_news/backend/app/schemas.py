@@ -1,12 +1,13 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from typing import Optional, List
 
 class RegisterRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     mssv: str = Field(..., min_length=5, max_length=20, pattern=r"^[a-zA-Z0-9_-]+$")
     email: EmailStr
     full_name: str = Field(..., min_length=2, max_length=100)
     password: str = Field(..., min_length=8, max_length=72)
-    role: str = Field(default="STUDENT", pattern=r"^(STUDENT|OPERATOR)$")
 
 class LoginRequest(BaseModel):
     email: EmailStr

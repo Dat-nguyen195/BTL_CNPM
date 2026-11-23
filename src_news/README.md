@@ -11,6 +11,8 @@ Hệ thống quản lý, đặt xe điện dùng chung, đặt lịch sạc xe �
 └── README.md
 ```
 
+Ứng dụng web này cần schema Supabase/PostgreSQL. Bản demo trên MySQL cần một lớp lưu trữ và schema MySQL tương ứng.
+
 ## 🛠️ Yêu cầu hệ thống
 
 * **Git**
@@ -53,8 +55,8 @@ Tạo file `.env` trong thư mục `backend/` (có thể copy từ `.env.example
 
 ```env
 SUPABASE_URL=https://<your-project-id>.supabase.co
-SUPABASE_KEY=<your-service-role-secret-key>
-JWT_SECRET=thay-doi-chuoi-bi-mat-cua-ban
+SUPABASE_SERVICE_ROLE_KEY=<your-service-role-secret-key>
+JWT_SECRET_KEY=thay-doi-chuoi-bi-mat-cua-ban
 ```
 
 > **Lưu ý Database:** Trên **Supabase → SQL Editor**, đảm bảo đã cấp quyền cho `service_role`:
@@ -83,13 +85,14 @@ Mở **Terminal 2** (giữ nguyên Terminal 1 đang chạy Backend), di chuyển
 cd frontend
 
 # Cài đặt dependencies
-npm install
+npm ci
+npm run build
 ```
 
 *(Tùy chọn)* Nếu Backend không chạy ở `http://localhost:8000`, tạo file `frontend/.env` để cấu hình địa chỉ API:
 
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
 Khởi động server Frontend:
