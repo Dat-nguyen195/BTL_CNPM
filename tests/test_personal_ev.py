@@ -265,3 +265,71 @@ def test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once(clean_st
     assert not check_out_personal_ev(clean_state, res["reservation_id"], duration_hours=11)[0]
     assert clean_state["wallet"]["debt"] == 5_000
     assert hub["available_slots"] == avail_in + 1
+
+
+# ---------------------------------------------------------------------------
+# Tương thích liên phân hệ (23/11/2026): SS1, SS3, SS4, SS5, SS7
+# ---------------------------------------------------------------------------
+
+def test_parked_personal_vehicle_is_not_counted_as_rentable(clean_state):
+    hub = clean_state["hubs"][0]
+    ready_before = len([v for v in hub["current_vehicles"] if v["status"] == "AVAILABLE"])
+    ev, res = _reserve(clean_state, plate="59-P1 00001")          # chỉ gửi đỗ, không sạc
+    assert check_in_personal_ev(clean_state, res["reservation_id"])[0]
+    v = next(v for v in hub["current_vehicles"] if v["vehicle_id"] == ev["ev_id"])
+    assert v["status"] == "PARKED"
+    # SS1 "Xe sẵn sàng" và danh sách cách ly sự cố của SS4 chỉ lấy xe AVAILABLE
+    assert len([v for v in hub["current_vehicles"] if v["status"] == "AVAILABLE"]) == ready_before
+    assert validate_state_invariants(clean_state) == []
+
+
+def test_checkout_payment_is_recorded_in_wallet_ledger(clean_state):
+    _, res = _reserve(clean_state, plate="59-L1 00001")
+    assert check_in_personal_ev(clean_state, res["reservation_id"])[0]
+    n = len(clean_state["wallet"]["ledger"])
+    ok, inv, _ = check_out_personal_ev(clean_state, res["reservation_id"], duration_hours=2)
+    assert ok
+    new = clean_state["wallet"]["ledger"][n:]
+    pay = [t for t in new if t["type"] == "SETTLE_PEV_INVOICE"]
+    assert len(pay) == 1 and pay[0]["amount"] == -inv["deducted_from_wallet"] == -10_000
+    assert pay[0]["booking_id"] == res["reservation_id"]
+
+
+def test_ss3_revenue_includes_ss2_payment_and_no_show_once():
+    from test_submission_2_acceptance import app, state
+    s = state()
+    hub = s["hubs"][0]
+    # Một đơn no-show (phạt 10.000) và một lượt check-out thu 10.000
+    _, ev1, _ = register_personal_ev(s, "SV-2211234", "A", "59-N1 00001", "scooter", "V", 3.5)
+    reserve_personal_ev_slot(s, "SV-2211234", ev1["ev_id"], hub["hub_id"])
+    _, ev2, _ = register_personal_ev(s, "SV-2211234", "A", "59-N1 00002", "scooter", "V", 3.5)
+    _, r2, _ = reserve_personal_ev_slot(s, "SV-2211234", ev2["ev_id"], hub["hub_id"])
+    assert check_in_personal_ev(s, r2["reservation_id"])[0]
+    s["current_sim_time"] = "2026-10-21 08:30:00"
+    assert sweep_expired_personal_reservations(s) == 1
+    assert check_out_personal_ev(s, r2["reservation_id"], duration_hours=2)[0]
+    at = app(3)
+    for key in ["wallet", "hubs", "personal_reservations", "personal_evs", "current_sim_time"]:
+        at.session_state[key] = s[key]
+    at.run()
+    assert not at.exception
+    metric = next(m for m in at.metric if m.label == "💵 Tổng doanh thu thu về")
+    assert metric.value == "20,000 ₫"   # 10.000 phạt no-show + 10.000 phí đỗ, không đếm trùng
+
+
+def test_port_failure_reallocates_interrupted_vehicle_to_free_port(clean_state):
+    import copy
+    from core.scheduler import apply_hub_snapshot
+    hub = clean_state["hubs"][0]
+    ev, res = _reserve(clean_state, plate="59-F1 00001", charging=True, soc=30)
+    assert check_in_personal_ev(clean_state, res["reservation_id"])[0]
+    old_session = res["charging_session_id"]
+    hubs = copy.deepcopy(clean_state["hubs"])
+    ports = hubs[0]["charging_ports"]
+    ports["offline"] = ports.get("offline", 0) + 1                # một cổng hỏng, Hub vẫn còn cổng trống
+    apply_hub_snapshot(clean_state, hubs)
+    hub = clean_state["hubs"][0]
+    assert res["charging_port_allocated"] and res["charging_session_id"] != old_session
+    v = next(v for v in hub["current_vehicles"] if v["vehicle_id"] == ev["ev_id"])
+    assert v["status"] == "CHARGING"
+    assert validate_state_invariants(clean_state) == []

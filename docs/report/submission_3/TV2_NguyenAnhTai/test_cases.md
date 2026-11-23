@@ -60,9 +60,9 @@
 | **Dữ liệu vào** | (1) Đặt chỗ lần hai cho xe thứ nhất.<br>(2) Đặt chỗ cho xe thứ hai khi Hub có `available_slots = 0`.<br>(3) Đặt chỗ cho xe thứ hai khi ví có `debt = 20.000 VNĐ`. |
 | **Các bước** | 1. Tạo đơn thứ nhất thành công.<br>2. Thực hiện lần lượt ba trường hợp (1), (2), (3).<br>3. Sau mỗi trường hợp, kiểm tra `balance`, `held_deposit` và `available_slots`. |
 | **Kết quả mong đợi** | • (1) `ok == False`, `res is None`, thông báo chứa `"chưa hoàn tất"` (mã lỗi thiết kế `CONFLICTING_OPERATION`).<br>• (2) `ok == False` do Hub hết chỗ.<br>• (3) `ok == False`, thông báo nêu khoản nợ chưa quyết toán.<br>• Cả ba trường hợp: không khóa thêm cọc, không trừ thêm chỗ (`balance`, `held_deposit`, `available_slots` giữ nguyên). |
-| **Kết quả thực tế** | Khớp với test tự động `test_tc_ss2_04_reserve_rejections_have_no_side_effects` trong `tests/test_personal_ev.py`. Code: dòng 144–148 (đơn hoạt động), 156–157 (Hub hết chỗ) trong `src/core/personal_ev.py` và `hold_deposit` trong `src/core/billing.py` (ví có nợ). |
+| **Kết quả thực tế** | Khớp với test tự động `test_tc_ss2_04_reserve_rejections_have_no_side_effects` trong `tests/test_personal_ev.py`. Code: dòng 149–153 (đơn hoạt động), 161–162 (Hub hết chỗ) trong `src/core/personal_ev.py` và `hold_deposit` trong `src/core/billing.py` (ví có nợ). |
 | **Trạng thái** | `PASS` |
-| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (78/78 PASS). |
+| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (82/82 PASS). |
 
 ---
 
@@ -109,7 +109,7 @@
 | **Kết quả mong đợi** | **(a)** Hóa đơn SS5 khi rút sạc `total_due == 0` và ghi chú quyết toán một lần tại SS2. Hóa đơn SS2: `parking_fee == 5.000 VNĐ` (1 giờ), `kwh_charged == 0,07` (`(100 − 98)% × 3,5 kWh`), `energy_fee == 490 VNĐ` (`0,07 × 7.000`), `overstay_fee == 0`, `total_amount == 5.490 VNĐ`. Ví `balance == 144.510 VNĐ` (`100.000 + 50.000 − 5.490`), `held_deposit == 0`; cổng sạc của Hub trả lại đủ (`available == 4`).<br>**(b)** `parking_fee == 10.000 VNĐ` (2 giờ bắt đầu), `is_peak_tariff == True`, `energy_fee == 0` và `overstay_fee == 0` vì phiên sạc chưa nạp kWh nào (số nhập tay không ghi đè số đo), `total_amount == 10.000 VNĐ`; xe rời Hub, `available_slots` trở về giá trị ban đầu. |
 | **Kết quả thực tế** | **(a)** Khớp với `test_personal_charging_is_billed_once_on_consolidated_checkout` trong `tests/test_submission_2_acceptance.py` (test kiểm tra `energy_fee == round(kwh × 7.000)`, số dư ví, cọc và cổng sạc); các con số cụ thể ở trên đo lại bằng cùng kịch bản ngày 23/11/2026.<br>**(b)** Khớp với `test_reserve_and_checkin_checkout_lifecycle` trong `tests/test_personal_ev.py` (dòng 92–107). |
 | **Trạng thái** | `PASS` |
-| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy lại pytest ngày 23/11/2026 (78/78 PASS). |
+| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy lại pytest ngày 23/11/2026 (82/82 PASS). |
 
 ### `TC-SS2-08` — Check-out khi ví thiếu số dư (ghi nhận nợ minh bạch) và chống gọi Check-out lặp (Luồng ngoại lệ)
 
@@ -120,9 +120,9 @@
 | **Dữ liệu vào** | Check-out lần 1 với `duration_hours = 11` (11 giờ bắt đầu × `5.000` = `55.000 VNĐ`); sau đó gọi Check-out lần 2 trên cùng `reservation_id`. |
 | **Các bước** | 1. Gọi `check_out_personal_ev` lần 1.<br>2. Kiểm tra hóa đơn, `wallet["balance"]`, `wallet["debt"]`, `res["status"]` và `available_slots`.<br>3. Gọi `check_out_personal_ev` lần 2. |
 | **Kết quả mong đợi** | • Lần 1: `ok == True`; `total_amount == 55.000`, `deducted_from_wallet == 50.000`, `debt_incurred == 5.000`; `balance == 0`, `debt == 5.000`; `res["status"] == "COMPLETED"`; `available_slots` tăng 1.<br>• Lần 2: `ok == False` vì `status != "CHECKED_IN"`; `debt` giữ `5.000`, `available_slots` không tăng thêm. |
-| **Kết quả thực tế** | Khớp với test tự động `test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once` trong `tests/test_personal_ev.py`. Code: dòng 370–371 (chặn check-out lặp) và 430–440 (trừ ví, ghi nợ) trong `src/core/personal_ev.py`. |
+| **Kết quả thực tế** | Khớp với test tự động `test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once` trong `tests/test_personal_ev.py`. Code: dòng 375–376 (chặn check-out lặp) và 435–445 (trừ ví, ghi nợ) trong `src/core/personal_ev.py`. |
 | **Trạng thái** | `PASS` |
-| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (78/78 PASS). |
+| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (82/82 PASS). |
 
 ## 5. Bổ sung 23/11/2026
 
@@ -136,7 +136,7 @@
 | **Kết quả mong đợi** | • (a) Tài khoản khác bị từ chối. Chủ đơn hủy thành công: `status == "CANCELLED"`, `balance == 150.000`, `held_deposit == 0`, `available_slots` và `destination_holds` trở về như trước khi đặt. Hủy lặp, check-in đơn đã hủy đều bị từ chối; quét hết hạn sau đó không phạt đơn đã hủy.<br>• (b) Hủy bị từ chối vì đơn đã `EXPIRED`; cọc quyết toán no-show: `balance == 140.000`, `held_deposit == 0`. |
 | **Kết quả thực tế** | Khớp với `test_cancel_before_deadline_refunds_full_deposit` và `test_cancel_at_deadline_is_settled_as_no_show` trong `tests/test_personal_ev.py`; nút "Hủy đặt chỗ" trên Tab 3 đã chạy thử qua Streamlit AppTest. |
 | **Trạng thái** | `PASS` |
-| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (78/78 PASS). |
+| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (82/82 PASS). |
 
 ### `TC-SS2-10` — Xe đang chờ cổng (`WAITING`) được cấp cổng ngay khi xe khác check-out trả cổng (Luồng chính liên phân hệ SS2–SS5)
 
@@ -148,7 +148,7 @@
 | **Kết quả mong đợi** | Sau check-out của xe A: đơn của xe B có `charging_port_allocated == True` và có `charging_session_id`; xe B chuyển sang `CHARGING`; số cổng trống của Hub vẫn là `0` (cổng vừa trả đã cấp cho xe B). |
 | **Kết quả thực tế** | Khớp với `test_waiting_vehicle_gets_port_when_another_checks_out` trong `tests/test_personal_ev.py`. |
 | **Trạng thái** | `PASS` |
-| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (78/78 PASS). |
+| **Người / ngày kiểm tra** | Nguyễn Anh Tài (`2413035`) — chạy pytest ngày 23/11/2026 (82/82 PASS). |
 
 ## Đối chiếu thực thi 06/11/2026
 
@@ -158,4 +158,4 @@ Test đăng ký hiện tại có kiểm tra duplicate khác dấu gạch/khoản
 
 ## Đối chiếu thực thi 23/11/2026
 
-Chạy lại toàn bộ `pytest`: 60/60 PASS (sau đó 78/78 khi bổ sung test). Code SS2 đã thay đổi sau Sub3: phí đỗ tính theo giờ bắt đầu, tối thiểu 1 giờ (`5.000 VNĐ/giờ`, giá demo, cấu hình qua `EMOBILITY_PARKING_HOURLY_VND`) và điện năng/phí quá giờ lấy từ phiên sạc SS5. Vì vậy `TC-SS2-07` được viết lại theo hai test tự động hiện có; số dòng code trong `TC-SS2-04`, `TC-SS2-08` được cập nhật. Sau đó bổ sung test tự động cho `TC-SS2-04`, `TC-SS2-08` và thêm `TC-SS2-09` (hủy đặt chỗ), `TC-SS2-10` (cấp cổng cho xe chờ): toàn bộ 78/78 test PASS, cả 10 ca chuyển `PASS`.
+Chạy lại toàn bộ `pytest`: 60/60 PASS (sau đó 82/82 khi bổ sung test). Code SS2 đã thay đổi sau Sub3: phí đỗ tính theo giờ bắt đầu, tối thiểu 1 giờ (`5.000 VNĐ/giờ`, giá demo, cấu hình qua `EMOBILITY_PARKING_HOURLY_VND`) và điện năng/phí quá giờ lấy từ phiên sạc SS5. Vì vậy `TC-SS2-07` được viết lại theo hai test tự động hiện có; số dòng code trong `TC-SS2-04`, `TC-SS2-08` được cập nhật. Sau đó bổ sung test tự động cho `TC-SS2-04`, `TC-SS2-08` và thêm `TC-SS2-09` (hủy đặt chỗ), `TC-SS2-10` (cấp cổng cho xe chờ): toàn bộ 82/82 test PASS, cả 10 ca chuyển `PASS`.

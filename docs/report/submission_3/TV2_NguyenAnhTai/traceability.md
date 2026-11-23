@@ -32,7 +32,7 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Activity:** [UC_SS2_03_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_03_NguyenAnhTai_activity.puml>).
 - **Thiết kế:** `PersonalEVService.check_in_personal_ev`, `ParkingSession.attach_charging_ref`. Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement`, `tests/test_personal_ev.py::test_checkin_waits_if_port_fails_after_reservation` (hết cổng sạc lúc check-in → xe `WAITING`), `tests/test_personal_ev.py::test_waiting_personal_vehicle_can_be_allocated_once` (cấp cổng cho xe chờ đúng một lần), `tests/test_personal_ev.py::test_checkin_keeps_registered_vehicle_type`.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_reservation_30_minutes.py::test_reservation_30_minute_boundary_and_single_settlement`, `tests/test_personal_ev.py::test_checkin_waits_if_port_fails_after_reservation` (hết cổng sạc lúc check-in → xe `WAITING`), `tests/test_personal_ev.py::test_waiting_personal_vehicle_can_be_allocated_once` (cấp cổng cho xe chờ đúng một lần), `tests/test_personal_ev.py::test_checkin_keeps_registered_vehicle_type`, `tests/test_personal_ev.py::test_parked_personal_vehicle_is_not_counted_as_rentable`, `tests/test_personal_ev.py::test_port_failure_reallocates_interrupted_vehicle_to_free_port`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## UC_SS2_04 - Check-out và thanh toán tổng hợp dịch vụ xe EV cá nhân
@@ -43,7 +43,7 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 - **Activity:** [UC_SS2_04_NguyenAnhTai_activity.puml](<../../../../docs/diagrams/Use-case detail-scenario/SS2/Activity diagrams/UC_SS2_04_NguyenAnhTai_activity.puml>).
 - **Thiết kế:** `PersonalEVService.check_out_personal_ev`, `BillingService.settle_invoice`. Class diagram SS2, catalog cùng thư mục.
 - **Luồng truy vết:** kiểm tra điều kiện/nhánh lỗi ở scenario và sequence/activity tương ứng -> phương thức phụ trách ở trên -> test prototype bên dưới; không tự đặt số bước nếu nguồn chưa có đánh số ổn định.
-- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`, `tests/test_personal_ev.py::test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once`, `tests/test_personal_ev.py::test_waiting_vehicle_gets_port_when_another_checks_out`.
+- **Test prototype:** `tests/test_personal_ev.py::test_reserve_and_checkin_checkout_lifecycle`, `tests/test_submission_2_acceptance.py::test_personal_charging_is_billed_once_on_consolidated_checkout`, `tests/test_personal_ev.py::test_tc_ss2_08_checkout_with_insufficient_balance_records_debt_once`, `tests/test_personal_ev.py::test_waiting_vehicle_gets_port_when_another_checks_out`, `tests/test_personal_ev.py::test_checkout_payment_is_recorded_in_wallet_ledger`, `tests/test_personal_ev.py::test_ss3_revenue_includes_ss2_payment_and_no_show_once`.
 - **Trạng thái:** thiết kế đã rà soát kỹ thuật; chủ sở hữu chờ xác nhận. Test core/UI hiện có không xác nhận service đề xuất đã được tích hợp đầy đủ.
 
 ## Bảng test case ↔ test tự động (23/11/2026)
@@ -59,4 +59,4 @@ ID US/FR lấy từ SRS, UC và đường dẫn scenario/sequence/activity kế 
 | `TC-SS2-09` | `UC_SS2_02` | `test_personal_ev.py::test_cancel_before_deadline_refunds_full_deposit`, `test_cancel_at_deadline_is_settled_as_no_show` | PASS |
 | `TC-SS2-10` | `UC_SS2_03`, `UC_SS2_04` | `test_personal_ev.py::test_waiting_vehicle_gets_port_when_another_checks_out` | PASS |
 
-Toàn bộ bộ test của dự án: 78/78 PASS ngày 23/11/2026.
+Toàn bộ bộ test của dự án: 82/82 PASS ngày 23/11/2026.

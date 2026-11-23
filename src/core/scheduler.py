@@ -320,6 +320,7 @@ def release_charging_session(state, session_id):
 def apply_hub_snapshot(state, hubs):
     """Commit a simulated hub snapshot and interrupt affected live charging sessions."""
     scheduler = state.get("charging_scheduler")
+    interrupted_hubs = []
     if scheduler:
         for hub in hubs:
             old = next(h for h in state["hubs"] if h["hub_id"] == hub["hub_id"])
@@ -327,6 +328,8 @@ def apply_hub_snapshot(state, hubs):
                                 old["charging_ports"].get("offline", 0))
             sessions = [s for s in scheduler._active_sessions.values() if s.hub_id == hub["hub_id"]]
             for session in sessions[:newly_offline]:
+                if hub["hub_id"] not in interrupted_hubs:
+                    interrupted_hubs.append(hub["hub_id"])
                 release_charging_session(state, session.session_id)
                 vehicle = next((v for v in hub["current_vehicles"] if v["vehicle_id"] == session.vehicle_id), None)
                 if vehicle:
@@ -336,4 +339,7 @@ def apply_hub_snapshot(state, hubs):
                         hub_id=hub["hub_id"], battery_soc=session.current_soc,
                         ownership=vehicle.get("ownership", "SHARED"), owner_id=vehicle.get("owner_id")))
     state["hubs"] = hubs
+    # Xe vừa bị ngắt sạc được cấp lại ngay cổng còn trống (nếu có) thay vì chờ thao tác thủ công.
+    for hub_id in interrupted_hubs:
+        allocate_hub_ports(state, hub_id)
     bump_state_version(state)

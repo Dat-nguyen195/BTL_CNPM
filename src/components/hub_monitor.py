@@ -149,7 +149,7 @@ def render():
         txs = wallet.get("ledger", [])
         
         # Thống kê giao dịch
-        rev_shared = -sum(t.get("amount", 0) for t in txs if t.get("type") in ["SETTLE_RENTAL_FEE", "SETTLE_RENTAL_DEBT", "PENALTY_NOSHOW"])
+        rev_shared = -sum(t.get("amount", 0) for t in txs if t.get("type") in ["SETTLE_RENTAL_FEE", "SETTLE_RENTAL_DEBT", "PENALTY_NOSHOW", "PENALTY_PEV_NOSHOW"])
         rev_shared += sum(r["invoice"].get("deducted_from_wallet", 0) for r in st.session_state.get("personal_reservations", []) if r.get("invoice"))
         rev_shared += sum(i.get("deducted", 0) for i in st.session_state.get("charging_invoices", []))
         total_tx = len(txs)

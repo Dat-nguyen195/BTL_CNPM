@@ -70,7 +70,7 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 
 **Chữ ký:** `check_in_personal_ev(owner_id: str, reservation_id: str, operation_key: str = "") -> OperationResult[ParkingSession]`.
 
-**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Quét hết hạn, yêu cầu RESERVED và start<=now<deadline. Chuyển destination_holds sang hiện diện PERSONAL mà không giảm available lần hai, ghi CHECKED_IN/check_in_time. Service gọi INT-01 nếu request_charging, không tự cấp trùng. Core hiện đưa ChargingRequest vào SmartChargingScheduler (SS5) và gọi allocate_hub_ports(): còn cổng thì cấp phiên sạc, xe CHARGING; hết cổng thì xe WAITING và được cấp sau đúng một lần. Không thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID_STATE, quá hạn EXPIRED.
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Quét hết hạn, yêu cầu RESERVED và start<=now<deadline. Chuyển destination_holds sang hiện diện PERSONAL mà không giảm available lần hai, ghi CHECKED_IN/check_in_time. Service gọi INT-01 nếu request_charging, không tự cấp trùng. Core hiện đưa ChargingRequest vào SmartChargingScheduler (SS5) và gọi allocate_hub_ports(): còn cổng thì cấp phiên sạc, xe CHARGING; hết cổng thì xe WAITING và được cấp sau đúng một lần. Xe chỉ gửi đỗ có trạng thái PARKED (không phải AVAILABLE của xe cho thuê). Không thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID_STATE, quá hạn EXPIRED.
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 
@@ -78,7 +78,7 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 
 **Chữ ký:** `check_out_personal_ev(owner_id: str, reservation_id: str, operation_key: str = "") -> OperationResult[SettlementResult]`.
 
-**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Chỉ CHECKED_IN. Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService bằng charge_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice. Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng đời. Core tính phí đỗ theo giờ bắt đầu, tối thiểu 1 giờ, từ duration_hours (UI lấy theo đồng hồ demo: giờ hiện tại − giờ check-in); điện năng, tiền điện (tích lũy theo phút qua khung giờ cao/thấp điểm) và phí quá giờ lấy từ phiên sạc SS5 qua release_charging_session(), tham số kwh/overstay nhập tay không ghi đè số đo. Owner/key trong service chưa có ở core.
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Chỉ CHECKED_IN. Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService bằng charge_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice. Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng đời. Core tính phí đỗ theo giờ bắt đầu, tối thiểu 1 giờ, từ duration_hours (UI lấy theo đồng hồ demo: giờ hiện tại − giờ check-in); điện năng, tiền điện (tích lũy theo phút qua khung giờ cao/thấp điểm) và phí quá giờ lấy từ phiên sạc SS5 qua release_charging_session(), tham số kwh/overstay nhập tay không ghi đè số đo. Khoản đã thu được ghi sổ cái SETTLE_PEV_INVOICE; cổng vừa trả được cấp ngay cho xe đang chờ. Owner/key trong service chưa có ở core.
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 
@@ -166,7 +166,7 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 
 **Chữ ký:** `check_in_personal_ev(state: dict, reservation_id: str) -> tuple[bool, str]`.
 
-**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Quét hết hạn, yêu cầu RESERVED và start<=now<deadline. Chuyển destination_holds sang hiện diện PERSONAL mà không giảm available lần hai, ghi CHECKED_IN/check_in_time. Service gọi INT-01 nếu request_charging, không tự cấp trùng. Core hiện đưa ChargingRequest vào SmartChargingScheduler (SS5) và gọi allocate_hub_ports(): còn cổng thì cấp phiên sạc, xe CHARGING; hết cổng thì xe WAITING và được cấp sau đúng một lần. Không thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID_STATE, quá hạn EXPIRED.
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Quét hết hạn, yêu cầu RESERVED và start<=now<deadline. Chuyển destination_holds sang hiện diện PERSONAL mà không giảm available lần hai, ghi CHECKED_IN/check_in_time. Service gọi INT-01 nếu request_charging, không tự cấp trùng. Core hiện đưa ChargingRequest vào SmartChargingScheduler (SS5) và gọi allocate_hub_ports(): còn cổng thì cấp phiên sạc, xe CHARGING; hết cổng thì xe WAITING và được cấp sau đúng một lần. Xe chỉ gửi đỗ có trạng thái PARKED (không phải AVAILABLE của xe cho thuê). Không thực sự mở barie/scan QR vật lý. Lặp từ chối INVALID_STATE, quá hạn EXPIRED.
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 
@@ -174,7 +174,7 @@ Chữ ký dưới đây khớp class diagram. Mô tả bổ sung cho bản bàn 
 
 **Chữ ký:** `check_out_personal_ev(state: dict, reservation_id: str, duration_hours: float = 2.0, kwh_charged: float = 3.5, overstay_minutes: int = 0) -> tuple[bool, dict | None, str]`.
 
-**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Chỉ CHECKED_IN. Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService bằng charge_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice. Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng đời. Core tính phí đỗ theo giờ bắt đầu, tối thiểu 1 giờ, từ duration_hours (UI lấy theo đồng hồ demo: giờ hiện tại − giờ check-in); điện năng, tiền điện (tích lũy theo phút qua khung giờ cao/thấp điểm) và phí quá giờ lấy từ phiên sạc SS5 qua release_charging_session(), tham số kwh/overstay nhập tay không ghi đè số đo. Owner/key trong service chưa có ở core.
+**Điều kiện, hành vi, kết quả, lỗi và gọi lặp:** Chỉ CHECKED_IN. Theo thiết kế lấy phí sạc INT-02 + phí đỗ, quyết toán BillingService bằng charge_id, trả slot/cổng thực sự đã cấp, COMPLETED và invoice. Thiếu số dư ghi nợ, không mất phần thiếu; gọi lại không thu thêm do vòng đời. Core tính phí đỗ theo giờ bắt đầu, tối thiểu 1 giờ, từ duration_hours (UI lấy theo đồng hồ demo: giờ hiện tại − giờ check-in); điện năng, tiền điện (tích lũy theo phút qua khung giờ cao/thấp điểm) và phí quá giờ lấy từ phiên sạc SS5 qua release_charging_session(), tham số kwh/overstay nhập tay không ghi đè số đo. Khoản đã thu được ghi sổ cái SETTLE_PEV_INVOICE; cổng vừa trả được cấp ngay cho xe đang chờ. Owner/key trong service chưa có ở core.
 
 **Truy vết:** các UC/method liên quan được dẫn trong traceability.md; test và trạng thái thực thi ở test_cases.md.
 

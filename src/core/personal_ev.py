@@ -32,8 +32,13 @@ from core.billing import (
     hold_deposit,
     release_held_deposit_full,
     record_wallet_debt,
+    record_transaction,
     settle_pev_noshow_penalty
 )
+
+# Xe cá nhân chỉ gửi đỗ: trạng thái riêng, không dùng AVAILABLE (dành cho xe cho thuê SS1),
+# để SS1 không đếm là "xe sẵn sàng" và SS4 không chọn để cách ly như xe dùng chung.
+PERSONAL_PARKED_STATUS = "PARKED"
 
 def parse_time(t_str: str) -> datetime:
     try:
@@ -328,7 +333,7 @@ def check_in_personal_ev(
         "plate": res.get("plate"),
         "type": ev.get("type", "scooter"),
         "battery_soc": res.get("current_soc", 50.0),
-        "status": (VehicleStatus.CHARGING.value if hub.get("charging_ports", {}).get("available", 0) > 0 else "WAITING") if res.get("request_charging") else VehicleStatus.AVAILABLE.value,
+        "status": (VehicleStatus.CHARGING.value if hub.get("charging_ports", {}).get("available", 0) > 0 else "WAITING") if res.get("request_charging") else PERSONAL_PARKED_STATUS,
         "ownership": "PERSONAL",
         "owner_id": res.get("owner_id"),
         "hub_id": res["hub_id"]
@@ -438,6 +443,16 @@ def check_out_personal_ev(
         wallet["balance"] = 0
         debt = total_amount - deducted
         record_wallet_debt(wallet, amount=debt, reason=f"Thanh toán dịch vụ xe cá nhân #{reservation_id}", sim_time=sim_now_str)
+    # Ghi sổ cái khoản đã thu từ ví (mỗi biến động số dư đều có một bản ghi giao dịch).
+    if deducted > 0:
+        record_transaction(
+            wallet=wallet,
+            tx_type="SETTLE_PEV_INVOICE",
+            amount=-deducted,
+            booking_id=reservation_id,
+            note=f"Thanh toán hóa đơn tổng hợp xe cá nhân #{reservation_id} (đỗ + điện + quá giờ)",
+            sim_time=sim_now_str
+        )
 
     invoice = {
         "invoice_id": f"PINV-{uuid.uuid4().hex[:6].upper()}",
