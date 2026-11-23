@@ -16,7 +16,7 @@ state OCCUPIED {
     [*] --> PARKED
     PARKED --> CHARGING : Quét QR tại trụ và cắm sạc\n[Có lịch sạc hợp lệ, kích hoạt thành công]
     CHARGING --> PARKED : Pin đầy hoặc yêu cầu dừng sạc\n[Đã ngắt sạc, chốt điện năng tiêu thụ]
-    PARKED --> CHECK_OUT_PENDING : Yêu cầu Check-out\n/ Lập hóa đơn phí đỗ và phí sạc (nếu có)
+    PARKED --> CHECK_OUT_PENDING : Yêu cầu Check-out\n/ Lập hóa đơn phí đỗ, phí sạc\nvà phí quá giờ (nếu có)
     CHECK_OUT_PENDING --> CHECK_OUT_PENDING : Chưa thanh toán đủ hoặc chưa xác nhận xe ra\n/ Chưa giải phóng chỗ đỗ
 }
 
@@ -29,6 +29,8 @@ CHECK_OUT_PENDING --> AVAILABLE : Hoàn tất Check-out\n[Đã thanh toán đủ
 note right of OCCUPIED
     Chỗ đỗ vẫn OCCUPIED khi đang sạc,
     đã sạc xong hoặc đang chờ Check-out.
+    Pin đầy: ngừng tính điện, ân hạn 15 phút,
+    sau đó tính phí quá giờ 10.000 VNĐ/15 phút.
 end note
 
 @enduml

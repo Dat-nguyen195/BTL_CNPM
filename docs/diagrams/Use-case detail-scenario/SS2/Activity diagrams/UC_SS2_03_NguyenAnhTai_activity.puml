@@ -66,6 +66,11 @@ endif
 
 |UI Layer (personal_ev.py)|
 :Thông báo Check-in thành công;\nhướng dẫn vị trí đỗ và lịch sạc;
+note right
+  Hết cổng sạc lúc Check-in: xe vẫn vào chỗ đỗ,
+  yêu cầu sạc chờ trong hàng đợi SS5 (WAITING)
+  và được cấp cổng khi có cổng trống.
+end note
 
 |Control & State (st.session_state)|
 if (Đơn có dịch vụ sạc?) then ([Không])

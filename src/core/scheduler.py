@@ -306,6 +306,7 @@ def release_charging_session(state, session_id):
         reservation["measured_energy_fee"] = reservation.get("measured_energy_fee", 0) + session.energy_cost_vnd
         reservation["delivered_kwh"] = reservation.get("delivered_kwh", 0) + session.energy_delivered_kwh
         reservation["accrued_overstay_fee"] = reservation.get("accrued_overstay_fee", 0) + session.overstay_fee
+        reservation["accrued_overstay_minutes"] = reservation.get("accrued_overstay_minutes", 0) + session.overstay_minutes
         reservation["charging_port_allocated"] = False
         reservation["charging_session_id"] = None
     hub = next((h for h in state["hubs"] if h["hub_id"] == session.hub_id), None)

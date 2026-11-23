@@ -52,7 +52,7 @@ class ParkingSession <<entity, proposed>> {
   +check_out_time: datetime | None
   +charging_request_id: str | None
   +charging_session_id: str | None
-  +parking_fee_vnd: int = 5000
+  +parking_fee_vnd: int = 5000 (VNĐ/giờ)
   +invoice_id: str | None
   --
   +attach_charging_ref(request_id: str, session_id: str | None = None): None
@@ -127,8 +127,11 @@ note right of PersonalEVModule
   Dữ liệu hiện lưu dạng dict trong session_state;
   adapter ánh xạ ev_id -> vehicle_id.
   Hạn đến: expires_at = booking_start_time + 30 phút.
-  Phí đỗ giữ 5.000 VNĐ/lượt (chênh lệch với SRS
-  yêu cầu tính theo giờ).
+  Phí đỗ theo giờ bắt đầu, tối thiểu 1 giờ:
+  max(1, ceil(duration_hours)) x 5.000 VNĐ/giờ
+  (giá demo, EMOBILITY_PARKING_HOURLY_VND).
+  duration_hours = giờ check-out - giờ check-in
+  theo đồng hồ demo.
 end note
 
 note bottom of ChargingService
@@ -136,14 +139,17 @@ note bottom of ChargingService
   - INT-01 request_charging() khi check-in hợp lệ.
   - INT-02 get_bill() khi check-out (SS2 chỉ đọc,
     không tự tính lại giá điện/phí quá giờ).
-  Prototype hiện tại chưa tạo ChargingSession bên SS5
-  khi xe cá nhân check-in.
+  Prototype gọi trực tiếp core/scheduler.py:
+  check-in tạo ChargingRequest, cấp phiên nếu còn cổng
+  (hết cổng: WAITING); check-out release_charging_session()
+  chốt kWh, tiền điện và phí quá giờ (sau 15 phút ân hạn).
 end note
 
 note bottom of BillingService
   Hợp đồng tài chính thuộc TV1:
   - Cọc 50.000 VNĐ; no-show phạt 10.000, hoàn 40.000 VNĐ.
-  - settle_invoice() đối trừ cọc, thu phí đỗ + phí sạc,
+  - settle_invoice() đối trừ cọc, thu phí đỗ + phí sạc
+    + phí quá giờ,
     ghi nợ nếu thiếu số dư, chống thu trùng theo
     operation_key và charge_id.
 end note

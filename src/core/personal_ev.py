@@ -348,10 +348,16 @@ def check_out_personal_ev(
         kwh_charged = res["delivered_kwh"]
 
     # 2. Tariff calculation
-    parking_fee = math.ceil(duration_hours) * hourly_rate
+    # Mỗi giờ bắt đầu tính một block; xe đã vào bãi là giờ đầu tiên đã bắt đầu.
+    parking_fee = max(1, math.ceil(duration_hours)) * hourly_rate
     is_peak = is_peak_hour(sim_now.time())
     energy_rate = PEV_PEAK_KWH_RATE_VND if is_peak else PEV_OFFPEAK_KWH_RATE_VND
     energy_fee = round(res.get("measured_energy_fee", kwh_charged * energy_rate)) if res.get("charging_ever_allocated") else 0
+    # Hiển thị đơn giá theo thời điểm SẠC (không phải lúc check-out): đơn giá bình quân = tiền điện / kWh.
+    # Sau khi pin đầy, SS5 không tính thêm tiền điện; chỉ tính phí quá giờ.
+    if res.get("charging_ever_allocated") and kwh_charged > 0:
+        energy_rate = round(energy_fee / kwh_charged)
+        is_peak = energy_rate > PEV_OFFPEAK_KWH_RATE_VND
 
     # 3. Overstay fee calculation
     billable_overstay_minutes = max(0, overstay_minutes - OVERSTAY_GRACE_MINUTES) if res.get("charging_port_allocated") else 0
@@ -379,11 +385,11 @@ def check_out_personal_ev(
         "hub_name": hub.get("name") if hub else res.get("hub_name"),
         "duration_hours": round(duration_hours, 1),
         "parking_fee": parking_fee,
-        "kwh_charged": round(kwh_charged, 2) if res.get("charging_ever_allocated") else 0,
+        "kwh_charged": round(kwh_charged, 3) if res.get("charging_ever_allocated") else 0,
         "energy_rate": energy_rate if res.get("charging_ever_allocated") else 0,
         "energy_fee": energy_fee,
         "is_peak_tariff": is_peak,
-        "overstay_minutes": overstay_minutes if res.get("charging_port_allocated") else 0,
+        "overstay_minutes": res.get("accrued_overstay_minutes", 0) + (overstay_minutes if res.get("charging_port_allocated") else 0),
         "overstay_fee": overstay_fee,
         "total_amount": total_amount,
         "deducted_from_wallet": deducted,

@@ -171,7 +171,7 @@
         1. Sinh viên mở ứng dụng di động, hệ thống xác thực phiên làm việc người dùng <code>st.session_state["current_user"]</code> qua Cổng VNU-SSO và tài khoản sinh viên có ít nhất một xe cá nhân đã đăng ký.</br>
         2. Hub được chọn đang hoạt động và có vị trí đỗ <code>AVAILABLE</code> phù hợp trong khoảng thời gian yêu cầu.<br/>
         3. Ví nội bộ tài khoản của sinh viên có ít nhất 50,000VNĐ trong tài khoản <code>(st.session_state["current_user"]["wallet_balance"] ≥ 50000)</code> để làm cọc phí trong quá trình đặt và giữ chỗ.</br> 
-        3. Nếu đăng ký sạc, Hub có các loại cổng sạc tương thích và khả dụng trong khung giờ yêu cầu.
+        4. Nếu đăng ký sạc, Hub có các loại cổng sạc tương thích và khả dụng trong khung giờ yêu cầu.
       </td>
     </tr>
     <tr>
@@ -189,7 +189,7 @@
         2. Hệ thống hiển thị các Hub, khả năng phục vụ và biểu phí.<br/>
         3. Sinh viên chọn Hub, thời gian sử dụng, vị trí đỗ và loại dịch vụ.<br/>
         4. Nếu đăng ký sạc, sinh viên thêm tùy chọn sạc xe trong thời gian đỗ.<br/>
-        5. Hệ thống kiểm tra khả dụng và hiển thị phí đỗ <code>[5,000VNĐ/lượt]</code>, phí cọc giữ chỗ <code>[50,000VNĐ]</code>, phí sạc/kWh dự kiến theo biểu giá áp dụng (giờ cao điểm <code>[7,000VNĐ/kWh]</code> (16h-19h30 và 6h-9h) <code>[3,000VNĐ/kWh]</code> với giờ thấp điểm).<br/>
+        5. Hệ thống kiểm tra khả dụng và hiển thị phí đỗ <code>[5,000VNĐ/giờ]</code> (tính theo giờ bắt đầu, tối thiểu 1 giờ), phí cọc giữ chỗ <code>[50,000VNĐ]</code>, phí sạc/kWh dự kiến theo biểu giá áp dụng (giờ cao điểm <code>[7,000VNĐ/kWh]</code> (16h-19h30 và 6h-9h) <code>[3,000VNĐ/kWh]</code> với giờ thấp điểm).<br/>
         6. Sinh viên kiểm tra lại thông tin, áp mã voucher (nếu có) và xác nhận đặt dịch vụ.<br/>
         7. Hệ thống kiểm tra lại khả dụng, xác nhận đơn và cập nhật vị trí đỗ cùng cổng sạc nếu có.<br/>
         8. Hệ thống thông báo thành công, hiển thị thông tin vị trí và mã QR của đơn.
@@ -307,7 +307,8 @@
         <strong>Alternative 1 (Xác thực bằng PIN):</strong> Tại bước 1, nếu sinh viên không sử dụng mã QR của đơn thì có thể tiếp tục xác thực bằng cách chọn xác thực bằng mã PIN.<br/>
         <strong>Alternative 2 (Thông tin xác thực không hợp lệ):</strong> Tại bước 2 hoặc bước 7, nếu mã QR hoặc PIN không khớp, hệ thống từ chối mở cổng/trụ và cho phép nhập lại tối đa 3 lần.<br/>
         <strong>Alternative 3 (Đơn hoặc khung giờ không hợp lệ):</strong> Tại bước 2, nếu đơn đặt sai Hub hoặc ngoài khung giờ cho phép, hệ thống từ chối Check-in và hiển thị thông tin vi phạm quy định.<br/>
-        <strong>Alternative 4 (Vị trí đã bị chiếm dụng trái phép):</strong> Tại bước 2, nếu vị trí đỗ bị chiếm dụng ngoài dự kiến, hệ thống tự động đổi sang slot trống khác tương đương và gửi cảnh báo cho Operator.
+        <strong>Alternative 4 (Vị trí đã bị chiếm dụng trái phép):</strong> Tại bước 2, nếu vị trí đỗ bị chiếm dụng ngoài dự kiến, hệ thống tự động đổi sang slot trống khác tương đương và gửi cảnh báo cho Operator.<br/>
+        <strong>Alternative 5 (Hết cổng sạc lúc Check-in):</strong> Tại bước 5, nếu đơn có đăng ký sạc nhưng cổng sạc của Hub đã hết hoặc bị lỗi sau thời điểm đặt chỗ, xe vẫn được Check-in vào vị trí đỗ; yêu cầu sạc được đưa vào hàng đợi của phân hệ lập lịch sạc (SS5) với trạng thái <code>WAITING</code> và được cấp cổng ngay khi có cổng trống.
       </td>
     </tr>
     <tr>
@@ -319,7 +320,7 @@
     <tr>
       <td><strong>Notes and Issues:</strong></td>
       <td colspan="3">
-        Check-in sử dụng vị trí đã giữ nên không yêu cầu Hub còn chỗ trống khác và không giữ thêm chỗ lần thứ hai. Phiên sạc tự động ngắt và tính vào hóa đơn khi pin đầy hoặc sinh viên lấy xe sớm hơn dự kiến, đảm bảo kết nối hợp lệ và đáp ứng điều kiện vận hành.
+        Check-in sử dụng vị trí đã giữ nên không yêu cầu Hub còn chỗ trống khác và không giữ thêm chỗ lần thứ hai. Phiên sạc do SS5 quản lý: khi pin đầy, SS5 ngừng tính tiền điện và bắt đầu 15 phút ân hạn; nếu xe vẫn chiếm cổng sau ân hạn, SS5 tính phí chiếm dụng quá giờ <code>[10,000VNĐ / mỗi 15 phút]</code>. Điện năng và phí quá giờ được chốt và gộp vào hóa đơn tổng hợp trong <code>UC_SS2_04</code>, chỉ thu một lần.
       </td>
     </tr>
   </tbody>
@@ -397,7 +398,7 @@
       <td colspan="3">
         1. Sinh viên yêu cầu Check-out; hệ thống xác thực và xác định phiên sử dụng.<br/>
         2. Hệ thống kết thúc phiên sạc và chốt lượng điện tiêu thụ theo từng khung giá.<br/>
-        3. Hệ thống tính phí đỗ thực tế, phí sạc, và hiển thị một hóa đơn tổng hợp.<br/>
+        3. Hệ thống tính phí đỗ thực tế theo thời gian từ Check-in đến Check-out (theo giờ bắt đầu, tối thiểu 1 giờ), lấy phí sạc và phí chiếm dụng quá giờ (nếu có) do phân hệ lập lịch sạc SS5 tính, và hiển thị một hóa đơn tổng hợp.<br/>
         4. Sinh viên kiểm tra hóa đơn và xác nhận thanh toán qua ví nội bộ.<br/>
         5. Ví xử lý giao dịch; hệ thống ghi nhận thanh toán thành công và lưu hóa đơn điện tử và giải phóng khoản tiền tạm giữ và thu chính xác số tiền hóa đơn thực tế.<br/>
         6. Tại cổng ra, hệ thống đối chiếu xe và kiểm tra đã hoàn tất quyết toán.<br/>
@@ -422,13 +423,15 @@
     <tr>
       <td><strong>Notes and Issues:</strong></td>
       <td colspan="3">
-        Thanh toán là một phần của luồng Check-out. Nhân viên xác nhận dựa trên kết quả giao dịch. Thời điểm chốt phí và thời hạn rời bãi sau thanh toán áp dụng theo chính sách dịch vụ.
+        Thanh toán là một phần của luồng Check-out. Nhân viên xác nhận dựa trên kết quả giao dịch. Thời điểm chốt phí và thời hạn rời bãi sau thanh toán áp dụng theo chính sách dịch vụ. Trong prototype, nếu ví không đủ số dư, phần thiếu được ghi nợ minh bạch vào ví và xe vẫn được Check-out; tài khoản đang có nợ bị chặn đặt chỗ mới cho tới khi thanh toán xong (đơn giản hóa so với Alternative 2–3).
       </td>
     </tr>
   </tbody>
 </table>
 
 ---
+
+> *Cập nhật 23/11/2026: đồng bộ với prototype hiện tại (phí đỗ theo giờ, hết cổng sạc lúc Check-in, phí quá giờ do SS5 tính, ghi nợ khi thiếu số dư).*
 
 > *Tài liệu được tạo bởi Nguyễn Anh Tài (TV2 — Developer/Analyst) phục vụ BTL Công nghệ Phần mềm (CO3001) — HCMUT.*
 

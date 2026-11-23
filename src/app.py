@@ -72,6 +72,12 @@ st.sidebar.markdown(f"🕒 **Đồng hồ Demo:** `{sim_time_str}`")
 col_t1, col_t2 = st.sidebar.columns([1, 1])
 with col_t1:
     if st.button("⏩ +15 phút", use_container_width=True, help="Tua nhanh 15 phút để kiểm thử đếm ngược hết hạn, ân hạn sạc"):
+        # Một đồng hồ chung: tua giờ cũng nạp pin cho các phiên sạc đang chạy (SS5),
+        # để hóa đơn check-out SS2 đọc đúng điện năng đã đo.
+        _scheduler = st.session_state.get("charging_scheduler")
+        if _scheduler is not None:
+            _events = _scheduler.advance_simulation_tick(minutes=15, sim_time=st.session_state.get("current_sim_time"))
+            st.session_state.setdefault("charging_notifications", []).extend(_events)
         advance_sim_time(st.session_state, minutes=15)
         st.rerun()
 with col_t2:

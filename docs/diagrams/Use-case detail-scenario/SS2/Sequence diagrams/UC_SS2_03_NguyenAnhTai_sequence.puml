@@ -169,6 +169,8 @@ group 4. Tự ngắt khi pin đầy
         Nếu lấy xe sớm, UC_SS2_04 yêu cầu dừng và chốt sạc.
         Chỉ giải phóng cổng khi hết kết nối/chiếm dụng thực tế.
         Kết thúc sạc không tự kết thúc phiên đỗ.
+        Sau khi đầy: ân hạn 15 phút; quá ân hạn SS5 tính
+        10.000 VNĐ/15 phút, chốt vào hóa đơn UC_SS2_04.
     end note
 end
 @enduml

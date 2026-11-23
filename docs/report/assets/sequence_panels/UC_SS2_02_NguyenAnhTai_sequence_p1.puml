@@ -84,7 +84,7 @@ group 2. Chọn lịch và tra cứu chi phí
         else Có yêu cầu sạc nhưng không có cổng phù hợp
             UI --> Student: Đề nghị đổi lịch hoặc chọn chỉ đỗ xe
         else Đủ điều kiện đặt dịch vụ
-            UI --> Student: Phí đỗ 5.000 VNĐ/lượt;\ncọc giữ chỗ 50.000 VNĐ;\nphí sạc dự kiến nếu có
+            UI --> Student: Phí đỗ 5.000 VNĐ/giờ (tối thiểu 1 giờ);\ncọc giữ chỗ 50.000 VNĐ;\nphí sạc dự kiến nếu có
         end
         deactivate UI
     end

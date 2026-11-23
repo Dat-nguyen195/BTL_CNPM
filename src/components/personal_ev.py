@@ -213,11 +213,41 @@ def render():
 
                 col_sim1, col_sim2, col_sim3 = st.columns(3)
                 with col_sim1:
-                    dur_hrs = st.number_input("Thời gian đỗ (giờ) [Mô phỏng]:", min_value=0.5, max_value=48.0, value=2.5, step=0.5, key=f"dur_{r['reservation_id']}")
+                    # Thời gian đỗ lấy theo đồng hồ demo: giờ hiện tại - giờ check-in.
+                    _fmt = "%Y-%m-%d %H:%M:%S"
+                    _now = datetime.strptime(st.session_state["current_sim_time"], _fmt)
+                    _cin = datetime.strptime(r["check_in_time"], _fmt)
+                    dur_hrs = max(0.0, (_now - _cin).total_seconds() / 3600)
+                    _mins = int(round(dur_hrs * 60))
+                    st.metric("Thời gian đỗ (đồng hồ demo)", f"{_mins // 60} giờ {_mins % 60:02d} phút")
+                    st.caption("Phí đỗ tính theo giờ bắt đầu, tối thiểu 1 giờ.")
+                _sched = st.session_state.get("charging_scheduler")
+                _sess = None
+                if _sched is not None and r.get("charging_session_id"):
+                    _sess = getattr(_sched, "_active_sessions", {}).get(r["charging_session_id"])
                 with col_sim2:
-                    kwh = st.number_input("Điện năng đã nạp (kWh) [Mô phỏng]:", min_value=0.0, max_value=50.0, value=4.2 if r.get('request_charging') else 0.0, step=0.1, key=f"kwh_{r['reservation_id']}")
+                    if r.get("charging_ever_allocated"):
+                        # Xe có phiên sạc thật: SS2 chỉ đọc điện năng do SS5 đo (INT-02).
+                        _measured = r.get("delivered_kwh", 0) + (_sess.energy_delivered_kwh if _sess else 0)
+                        kwh = _measured
+                        st.metric("Điện năng đo từ SS5", f"{_measured:.2f} kWh")
+                        if _measured <= 0:
+                            st.caption("Chưa nạp điện: tua giờ (+15 phút) để phiên sạc tích lũy điện năng.")
+                    elif r.get("request_charging"):
+                        kwh = 0.0
+                        st.metric("Điện năng đo từ SS5", "0.00 kWh")
+                        st.caption("Xe đang chờ cổng sạc (WAITING), chưa được cấp cổng.")
+                    else:
+                        kwh = 0.0
+                        st.metric("Điện năng", "Không đăng ký sạc")
                 with col_sim3:
-                    overstay = st.number_input("Thời gian quá hạn rút sạc (phút) [Mô phỏng]:", min_value=0, max_value=180, value=20, step=5, key=f"over_{r['reservation_id']}")
+                    # Phí quá giờ do SS5 tính trên phiên sạc; SS2 chỉ hiển thị và quyết toán một lần.
+                    overstay = 0
+                    _over_fee = r.get("accrued_overstay_fee", 0) + (_sess.overstay_fee if _sess else 0)
+                    _over_min = _sess.overstay_minutes if _sess else 0
+                    st.metric("Phí quá giờ (SS5)", f"{_over_fee:,.0f} ₫")
+                    if _sess and _sess.status in ("GRACE_PERIOD", "OVERSTAY"):
+                        st.caption(f"Đã sạc đầy, chiếm cổng {_over_min} phút (ân hạn 15 phút).")
 
                 if st.button(f"💳 Quyết toán & Rời trạm ({r['plate']})", type="primary", key=f"btn_checkout_{r['reservation_id']}"):
                     ok, inv, msg = check_out_personal_ev(
