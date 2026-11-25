@@ -101,6 +101,8 @@ pip install -r requirements.txt
 
 ### Chạy ứng dụng
 
+Bản demo Submission 4 dùng Streamlit. Từ thư mục gốc của repo, chạy:
+
 ```bash
 streamlit run src/app.py
 ```
