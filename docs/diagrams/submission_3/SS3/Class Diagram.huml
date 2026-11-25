@@ -1,0 +1,202 @@
+@startuml class_diagram
+title Phân hệ SS3 & Tổng thể: Class Diagram (Submission 3)\nChủ sở hữu: TV3 — Phạm Tiến Đạt (MSSV: 2410724)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam ranksep 65
+skinparam nodesep 45
+skinparam Padding 5
+skinparam shadowing false
+
+package "UI & Boundary Layer" #F1F8FF {
+    class HubMonitorUI <<Boundary>> {
+        + render(): void
+        + render_kpi_metrics(): void
+        + render_occupancy_alerts(): void
+        + render_revenue_reports(): void
+        + render_iot_logs(): void
+    }
+}
+
+package "Business Service & Coordination Layer" #FFFCE8 {
+    class MonitoringService <<Service>> {
+        - warning_threshold_pct: float = 70.0
+        - critical_threshold_pct: float = 85.0
+        - full_threshold_pct: float = 100.0
+        --
+        + get_network_snapshot(): OperationResult<NetworkSnapshot>
+        + calculate_hub_occupancy(hub_id: str): OperationResult<OccupancySnapshot>
+        + generate_revenue_report(hub_id: str = None): OperationResult<RevenueReport>
+        + evaluate_hub_alerts(hub_id: str): OperationResult<list<Alert>>
+        + sync_hub_booking_lock(hub_id: str, lock_state: bool, operation_key: str): OperationResult<bool>
+        + manual_lock_hub(operator_id: str, hub_id: str, lock_state: bool): OperationResult<bool>
+        + update_alert_thresholds(admin_id: str, warning_pct: float, critical_pct: float): OperationResult<bool>
+        + get_iot_error_logs(hub_id: str = None): OperationResult<list<Alert>>
+        + record_iot_maintenance_plan(tech_id: str, alert_id: str, plan_note: str): OperationResult<Alert>
+    }
+}
+
+package "Shared Architecture Contracts (TV1 / TV5)" #F8F9FA {
+    class "OperationResult<T>" as OpResult <<Shared, TV1>> {
+        + ok: bool
+        + data: T
+        + error_code: str
+        + message: str
+        + state_version: int
+    }
+
+    class BillingService <<Shared, TV1>> {
+        + hold_deposit(...)
+        + settle_invoice(...)
+    }
+
+    class ChargingService <<Shared, TV5>> {
+        + get_bill(session_id: str): OperationResult<ChargingBill>
+    }
+}
+
+package "Core Domain Models & Value Objects (SS3)" #F3FBF4 {
+    class NetworkSnapshot <<ValueObject>> {
+        + captured_at: datetime
+        + state_version: int
+        + total_active_vehicles: int
+        + network_occupancy_pct: float
+        + is_using_cached_data: bool
+        + occupancy_snapshots: list<OccupancySnapshot>
+        + revenue_summary: RevenueReport
+        + active_alerts: list<Alert>
+    }
+
+    class OccupancySnapshot <<ValueObject>> {
+        + snapshot_id: str
+        + hub_id: str
+        + captured_at: datetime
+        + capacity: int
+        + present_vehicles: int
+        + incoming_reserved: int
+        + background_load: int
+        + available_slots: int
+        + occupancy_rate_pct: float
+        + occupancy_level: OccupancyLevel
+        + active_ports: int
+        + total_ports: int
+        + port_utilization_pct: float
+        + current_power_kw: float
+        + max_power_kw: float
+        + is_locked: bool
+    }
+
+    class RevenueReport <<ValueObject>> {
+        + report_id: str
+        + generated_at: datetime
+        + hub_id: str [0..1]
+        + settled_rental_fee_vnd: int
+        + settled_parking_fee_vnd: int
+        + settled_charging_fee_vnd: int
+        + settled_penalty_fee_vnd: int
+        + total_realized_revenue_vnd: int
+        + held_deposit_vnd: int
+        + refunded_amount_vnd: int
+        + outstanding_debt_vnd: int
+    }
+
+    class Alert <<Entity>> {
+        + alert_id: str
+        + hub_id: str
+        + alert_type: AlertType
+        + severity: AlertSeverity
+        + occupancy_level: OccupancyLevel [0..1]
+        + message: str
+        + created_at: datetime
+        + acknowledged_by: str [0..1]
+        + acknowledged_at: datetime [0..1]
+        + is_resolved: bool
+        --
+        + acknowledge(user_id: str, now: datetime): bool
+    }
+
+    class Hub <<Entity, Shared>> {
+        + hub_id: str
+        + name: str
+        + latitude: float
+        + longitude: float
+        + capacity: int
+        + available_slots: int
+        + present_vehicles_count: int
+        + incoming_reserved_count: int
+        + background_load_count: int
+        + total_ports: int
+        + active_ports_count: int
+        + max_power_kw: float
+        + current_load_kw: float
+        + is_locked: bool
+        + iot_online: bool
+        --
+        + calculate_occupancy_rate(): float
+        + get_occupancy_level(): OccupancyLevel
+        + validate_capacity_invariant(): bool
+    }
+
+    enum OccupancyLevel <<enumeration>> {
+        NORMAL
+        WARNING
+        CRITICAL
+        FULL
+    }
+
+    enum AlertSeverity <<enumeration>> {
+        INFO
+        WARNING
+        CRITICAL
+        EMERGENCY
+    }
+
+    enum AlertType <<enumeration>> {
+        OCCUPANCY_THRESHOLD
+        IOT_SENSOR_TIMEOUT
+        IOT_HARDWARE_FAULT
+        LOCK_SYNC_FAILURE
+    }
+}
+
+MonitoringService -[hidden]right-> OpResult
+OpResult -[hidden]right-> BillingService
+BillingService -[hidden]right-> ChargingService
+
+HubMonitorUI -down-> MonitoringService : invokes INT-03\n(get_network_snapshot)
+HubMonitorUI .down.> NetworkSnapshot : displays KPI,\nmap & alerts
+
+MonitoringService .right.> OpResult : wraps result
+MonitoringService .right.> BillingService : reads settled\nledger (read-only)
+MonitoringService .right.> ChargingService : invokes INT-02\n(get_bill)
+
+MonitoringService -down-> NetworkSnapshot : creates >
+MonitoringService .down.> OccupancySnapshot : computes >
+MonitoringService .down.> RevenueReport : aggregates >
+MonitoringService .down.> Alert : evaluates &\nmanages >
+MonitoringService -down-> "1..*" Hub : reads state &\nsyncs lock >
+
+NetworkSnapshot "1" *-down- "1..*" OccupancySnapshot : contains >
+NetworkSnapshot "1" *-down- "1" RevenueReport : summarizes >
+NetworkSnapshot "1" o-down- "0..*" Alert : includes active >
+
+OccupancySnapshot "*" -down-> "1" Hub : captures state of >
+Alert "*" -down-> "1" Hub : raised at >
+
+Hub -down-> OccupancyLevel : classifies >
+OccupancySnapshot .down.> OccupancyLevel : typed by
+Alert -down-> AlertSeverity : has >
+Alert -down-> AlertType : categorized as >
+
+note right of Hub
+  **Nguyên tắc Bảo toàn Sức chứa & Doanh thu:**
+  1. Invariant chỗ đỗ: available_slots + present_vehicles
+     + incoming_reserved + background_load == capacity.
+  2. Tách biệt tài chính: Tiền cọc đang giữ (held_deposit)
+     và nợ (debt) KHÔNG cộng vào doanh thu thực thu.
+  3. Ngưỡng chuẩn: Normal <70%, Warning 70-<85%,
+     Critical 85-<100%, Full >=100% (Khóa nhận đặt mới).
+end note
+
+@enduml
