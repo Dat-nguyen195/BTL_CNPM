@@ -11,6 +11,7 @@ export const AuthPage: React.FC = () => {
     email: '',
     full_name: '',
     password: '',
+    role: 'STUDENT',
   });
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -27,10 +28,7 @@ export const AuthPage: React.FC = () => {
         });
         await login(res.data.access_token, res.data.user);
       } else {
-        const res = await api.post('/api/auth/register', {
-          ...form,
-          role: 'STUDENT',
-        });
+        const res = await api.post('/api/auth/register', form);
         await login(res.data.access_token, res.data.user);
       }
     } catch (err: any) {
@@ -64,25 +62,15 @@ export const AuthPage: React.FC = () => {
           <div className="flex border-b pb-2 mb-4">
             <button
               type="button"
-              onClick={() => {
-                setIsLogin(true);
-                setError('');
-              }}
-              className={`flex-1 py-2 font-semibold text-sm ${
-                isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'
-              }`}
+              onClick={() => { setIsLogin(true); setError(''); }}
+              className={`flex-1 py-2 font-semibold text-sm ${isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'}`}
             >
               Đăng nhập
             </button>
             <button
               type="button"
-              onClick={() => {
-                setIsLogin(false);
-                setError('');
-              }}
-              className={`flex-1 py-2 font-semibold text-sm ${
-                !isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'
-              }`}
+              onClick={() => { setIsLogin(false); setError(''); }}
+              className={`flex-1 py-2 font-semibold text-sm ${!isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'}`}
             >
               Đăng ký tài khoản
             </button>
@@ -96,6 +84,17 @@ export const AuthPage: React.FC = () => {
 
           {!isLogin && (
             <>
+              <div>
+                <label className="block text-xs font-medium text-slate-600 mb-1">Vai trò tài khoản</label>
+                <select
+                  value={form.role}
+                  onChange={(e) => setForm({ ...form, role: e.target.value })}
+                  className="w-full px-3 py-2 border rounded-lg text-sm bg-white"
+                >
+                  <option value="STUDENT">Sinh viên (STUDENT)</option>
+                  <option value="OPERATOR">Điều hành trạm (OPERATOR)</option>
+                </select>
+              </div>
               <div>
                 <label className="block text-xs font-medium text-slate-600 mb-1">Mã số SV / Nhân viên</label>
                 <div className="relative">

@@ -27,6 +27,10 @@ class ReturnRequest(BaseModel):
     return_hub_id: str
     duration_minutes: int = Field(default=25, ge=1, le=600)
 
+class RerouteBookingRequest(BaseModel):
+    booking_id: str
+    new_destination_hub_id: str
+
 class RegisterPersonalEVRequest(BaseModel):
     plate: str = Field(..., min_length=5, max_length=20)
     type: str = Field(..., pattern=r"^(scooter|bike|car)$")
@@ -50,3 +54,18 @@ class DispatchCreateRequest(BaseModel):
     destination_hub_id: str
     vehicle_ids: List[str]
     reason: str
+
+class IncidentIsolateRequest(BaseModel):
+    hub_id: str
+    target_type: str = Field(..., pattern=r"^(VEHICLE|PORT)$")
+    vehicle_id: Optional[str] = None
+
+class SimMetroSurgeRequest(BaseModel):
+    target_hub_id: str = "HUB-002"
+    num_new_students: int = Field(default=20, ge=1, le=100)
+    seed: int = 42
+
+class SimPortFailureRequest(BaseModel):
+    target_hub_id: str = "HUB-004"
+    num_ports_down: int = Field(default=3, ge=1, le=20)
+    seed: int = 42
