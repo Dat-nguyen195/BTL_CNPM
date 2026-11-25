@@ -1,0 +1,80 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont{Liberation Mono}[Scale=MatchLowercase]
+\usepackage[vietnamese]{babel}
+\usepackage[a4paper,left=2.7cm,right=2.3cm,top=2.35cm,bottom=2.4cm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,graphicx,calc,booktabs,longtable,tabularx,array,multirow}
+\usepackage{float,pdflscape,xcolor,enumitem,indentfirst,fancyhdr,titlesec,caption}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes.geometric,arrows.meta,positioning,shadows}
+\usepackage{fvextra}
+\usepackage{hyperref,xurl,bookmark}
+\graphicspath{{../assets/}{../assets/screenshots/}{../../diagrams/}{./}}
+\definecolor{hubblue}{HTML}{124159}
+\definecolor{hublink}{HTML}{165D75}
+\hypersetup{unicode=true,colorlinks=true,allcolors=hublink,bookmarksnumbered=true,
+  pdftitle={Smart E-Mobility Hub - Báo cáo tổng kết Submission 4},
+  pdfauthor={Nhóm BEE BRAVE, L02, CO3001, HK261}}
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{2}
+\setlength{\emergencystretch}{3em}
+\newlength{\reporttablewidth}
+\pdfstringdefDisableCommands{\def\allowbreak{}}
+\captionsetup{font=small,labelfont=bf}
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries\color{hubblue}}{\thechapter.}{0.7em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{16pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[L]{\small CO3001 -- Công nghệ Phần mềm -- HK261}%
+  \fancyhead[R]{\small BEE BRAVE | Submission 4}%
+  \fancyfoot[C]{\thepage}%
+}
+\pagestyle{plain}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\pandocbounded}[1]{#1}
+% Pandoc images share a maximum size and retain their aspect ratio.
+\setkeys{Gin}{width=\linewidth,height=.71\textheight,keepaspectratio}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,fontsize=\small}
+\newcommand{\evidencefigure}[3]{%
+  \begin{figure}[H]\centering
+  \includegraphics[width=\linewidth,height=.71\textheight,keepaspectratio]{#1}
+  \caption{#2}\label{#3}\end{figure}}
+\newcommand{\demoscreen}[4]{%
+  \clearpage\section{#1}#2
+  \evidencefigure{figures/demo/#3}{#4}{fig:demo-#3}}
+\begin{document}
+\shorthandoff{"}
+\pagenumbering{gobble}
+\input{sections/cover}
+\pagenumbering{roman}
+\input{sections/team}
+\tableofcontents
+\listoffigures
+\clearpage
+\pagenumbering{arabic}
+\input{sections/overview}
+\part{Phân tích và đặc tả yêu cầu}
+\chapter{Đặc tả hệ thống}
+\input{build/generated/requirements}
+\input{sections/use-cases}
+\part{Thiết kế giao diện và tương tác}
+\input{build/generated/interaction}
+\chapter{Tương tác với bộ phát cảm biến}
+\label{chap:iot-interaction}
+Bản tin cảm biến đi từ tiến trình phát độc lập đến feed SQLite. Mỗi phiên giao diện
+đọc feed theo chu kỳ 2 giây khi bật IoT. Mã bản tin trùng bị loại ở đầu ghi.
+Khi đọc, hệ thống kiểm tra Hub, chỉ số cổng và thứ tự thời gian. Chỉ bản tin hợp lệ
+mới cập nhật snapshot và tăng phiên bản trạng thái. SS3 hiển thị cảnh báo và SS7
+dùng phiên bản mới để kiểm tra preview.
+\evidencefigure{../../diagrams/telemetry/flow.png}{Sequence xử lý bản tin IoT mô phỏng.}{fig:iot-sequence}
+\evidencefigure{../../diagrams/telemetry/activity.png}{Activity tiếp nhận và áp dụng bản tin.}{fig:iot-activity}
+\part{Thiết kế kiến trúc và hiện thực}
+\input{build/generated/architecture}
+\input{sections/runtime}
+\part{Trình diễn và bàn giao}
+\input{sections/demo}
+\input{sections/ai}
+\end{document}

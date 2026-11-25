@@ -1,0 +1,48 @@
+\chapter{Kết quả kiểm tra và bàn giao}
+\section{Kiểm tra lại revision bàn giao}
+\noindent\begin{tabularx}{\linewidth}{@{}p{.37\linewidth}X@{}}
+\toprule
+\textbf{Kiểm tra} & \textbf{Kết quả quan sát}\\
+\midrule
+Pytest & 82 ca đạt trên Python 3.12. Bao gồm giữ chỗ, trả xe, hóa đơn, vòng đời sạc,
+mô phỏng, trạng thái phiên và xử lý bản tin. Gói đã giải nén cũng chạy đủ 82 ca.\\
+Kiểm tra kỹ thuật S2 & Đạt cấu trúc hồ sơ, truy vết 17 use case, cú pháp 54 sơ đồ PlantUML và kiểm thử.\\
+Kiểm tra kỹ thuật S3 & Đạt chế độ \texttt{--technical-only} với 17 use case và 73 mục mô tả phương thức.\\
+Kiểm tra trình duyệt & Hai cửa sổ SS3 đã mở trước khi phát và tự hiện cảnh báo.
+SS7 từ chối preview tạo trước sự kiện.\\
+\bottomrule
+\end{tabularx}
+
+\section{Bản tin trong chuỗi demo}
+\begin{description}
+\item[Mã] \texttt{b120ca85a0fe42c4932a3e9a362d6a14}
+\item[Đích] HUB-001, cổng 1, loại \texttt{OFFLINE}
+\item[Thời điểm phát] 10:23:50.930330 ngày 24/11/2026 (UTC+7)
+\item[Thời điểm ghi SQLite] 10:23:50.930358 ngày 24/11/2026 (UTC+7)
+\item[Quan sát trên UI] 2,27 và 3,36 giây kể từ lúc gọi tiến trình phát, theo thứ tự
+kiểm tra cửa sổ. Khoảng đo gồm thời gian khởi động tiến trình và lấy kết quả UI.
+\end{description}
+Đối chiếu Hình~\ref{fig:demo-10-ss7-stale.png} và
+\path{docs/report/submission_4/evidence/demo-run.json}.
+Kết quả áp dụng cho lần chạy local này. Chỉ tiêu tải đồng thời, độ sẵn sàng và
+độ trễ khi triển khai trên mạng chưa có phép đo tương ứng.
+
+\section{Thành phần gói nộp}
+Gói nộp gồm một PDF báo cáo cuối và thư mục \path{source/} chứa mã Python,
+seed, tests, cấu hình chạy, nguồn LaTeX và dữ liệu liên quan được dùng khi dựng báo cáo.
+Mã được chốt tại \texttt{aae0877}; tệp LaTeX và bằng chứng trình diễn bổ sung cho Submission 4.
+Cách dựng báo cáo và cách tìm các nguồn tham chiếu nằm tại
+\path{docs/report/submission_4/README.md}.
+Tệp ZIP là gói bàn giao. PDF có thể dùng riêng nếu LMS cung cấp ô tải báo cáo.
+Tại thời điểm chuẩn bị gói, ứng dụng đã được kiểm chứng local. Triển khai server
+nhóm cần máy đích và quyền truy cập để kiểm tra từ máy khác.
+
+\section{Nguồn đối chiếu}
+\begin{enumerate}
+\item Đề \path{BTL_SoftwareEngineering_HK261_v1.pdf}, trang 3--6, và yêu cầu bổ sung của
+giảng viên về báo cáo, mã nguồn và giới hạn dung lượng ZIP.
+\item Submission 1, báo cáo phân tích và \path{docs/requirements-analysis.md}.
+\item Submission 2, nguồn thiết kế giao diện, tương tác và ma trận truy vết.
+\item Submission 3, báo cáo thiết kế chung và tài liệu lớp/phương thức theo phân hệ.
+\item Hướng dẫn và thiết kế hiện hành tại \path{docs/current/}; mã và test từ revision \texttt{aae0877}.
+\end{enumerate}

@@ -15,6 +15,7 @@
 | Tài liệu | Đường dẫn | Mô tả nội dung |
 | :--- | :--- | :--- |
 | **Phân tích yêu cầu (Requirements Analysis)** | [`requirements-analysis.md`](./requirements-analysis.md) | Ma trận Stakeholder, Danh sách User Stories (SS1–SS7), Mapping Functional Requirements, Bảng 17 Canonical UCs |
+| **Báo cáo Submission 4** | [Nguồn LaTeX và hướng dẫn dựng](report/submission_4/README.md) | Báo cáo tổng kết, kịch bản demo và gói nộp |
 | **Ma trận truy vết (Traceability Matrix)** | [`traceability/submission_2.md`](./traceability/submission_2.md) | Truy vết 30 US, 23 FR, 17 Canonical UCs và mã kiểm thử tự động |
 | **Báo cáo kiểm toán & Kế hoạch (Audit & Plan)** | [Bằng chứng S2](audit/submission_2/) · [Kế hoạch](current/plan.md) | Báo cáo kiểm toán chất lượng Submission #2 và kế hoạch triển khai |
 | **Kế hoạch & Phân công (Tasks Assignment)** | [`tasks-assignment.md`](./tasks-assignment.md) | Phân chia công việc 7 thành viên, lộ trình các Sprint, quy định đóng góp |

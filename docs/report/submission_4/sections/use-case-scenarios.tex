@@ -1,0 +1,119 @@
+\section{Kịch bản use case theo phân hệ}
+Các bảng dưới đây tóm lược đặc tả cá nhân trong \path{docs/diagrams/Use-case detail-scenario/}.
+Mã và thứ tự use case theo ma trận chung. Xác thực, barie và thiết bị được mô phỏng
+trong các thao tác của MVP. Luồng nghiệp vụ chạy trong từng phiên Streamlit.
+
+\newcommand{\casebrief}[7]{%
+  \subsection[#1: #2]{#1: #2}%
+  \noindent\begin{tabularx}{\linewidth}{@{}>{\bfseries\raggedright\arraybackslash}p{.22\linewidth}X@{}}
+  \toprule
+  Phụ trách & #3 \\
+  Tác nhân & #4 \\
+  Điều kiện trước & #5 \\
+  Luồng chính & #6 \\
+  \midrule
+  Điều kiện sau và nhánh xử lý & #7 \\
+  \bottomrule
+  \end{tabularx}\par}
+
+\casebrief{UC\_SS1\_01}{Tra cứu, đặt và nhận xe}
+{Nguyễn Thành Đạt}{Sinh viên, ví nội bộ và khóa mô phỏng.}
+{Hub có xe dùng chung khả dụng đủ pin, sinh viên không có lượt đang hoạt động và ví đủ cọc.}
+{Chọn Hub và xe, nhập voucher nếu có, xác nhận giữ xe. Hệ thống khóa cọc, giữ xe 30 phút và cấp PIN. Sinh viên xác nhận nhận xe bằng PIN.}
+{Xe sang \texttt{IN\_USE}, chỗ tại Hub xuất phát được giải phóng. PIN sai giữ nguyên lượt. Tại đúng hạn mà chưa nhận, lượt hết hạn và hệ thống quyết toán no-show.}
+
+\casebrief{UC\_SS1\_02}{Trả xe và quyết toán}
+{Nguyễn Thành Đạt}{Sinh viên, ví nội bộ và Hub đích.}
+{Lượt đang di chuyển, Hub trả có chỗ còn trống hoặc có chỗ đã giữ cho lượt đó.}
+{Chọn Hub trả và xác nhận. Hệ thống cập nhật vị trí xe, tình trạng pin, thời lượng và quãng đường mô phỏng, sau đó quyết toán cước và tiền cọc.}
+{Lượt hoàn tất và lưu hóa đơn. Nếu Hub đầy, chọn Hub khác hoặc nhận gợi ý. Nếu thiếu tiền, ghi nợ phần còn lại. Lượt đã hoàn tất không được quyết toán lại.}
+
+\casebrief{UC\_SS1\_03}{Hủy giữ xe}
+{Nguyễn Thành Đạt}{Sinh viên và ví nội bộ.}
+{Lượt giữ xe còn ở trạng thái \texttt{RESERVED}.}
+{Sinh viên xác nhận hủy trước hạn. Hệ thống trả xe về danh sách khả dụng, giải phóng chỗ đã giữ ở đích và trả cọc.}
+{Lượt chuyển \texttt{CANCELLED}. Từ mốc hết hạn, áp dụng no-show. Lượt đã nhận xe không thể hủy theo quy trình này.}
+
+\casebrief{UC\_SS2\_01}{Đăng ký xe điện cá nhân}
+{Nguyễn Anh Tài}{Sinh viên.}
+{Có phiên người dùng demo để liên kết hồ sơ.}
+{Nhập biển số, loại xe và thông tin pin. Hệ thống chuẩn hóa biển số, kiểm tra hợp lệ và cấp mã xe.}
+{Hồ sơ được lưu và có thể chọn khi đặt dịch vụ. Hãng xe có thể bỏ trống. Biển số trùng hoặc loại xe/dung lượng pin không hợp lệ bị từ chối.}
+
+\casebrief{UC\_SS2\_02}{Đặt chỗ đỗ và nhu cầu sạc}
+{Nguyễn Anh Tài}{Sinh viên và ví nội bộ.}
+{Xe thuộc người đặt, Hub có chỗ, thời điểm đến hợp lệ và ví đủ cọc.}
+{Chọn xe, Hub, thời điểm đến và nhu cầu sạc. Hệ thống giữ chỗ đỗ, khóa cọc và lập lượt đặt với hạn check-in 30 phút tính từ thời điểm đến.}
+{Lượt ở trạng thái \texttt{RESERVED}. Chỉ đỗ thì bỏ nhu cầu sạc. Hủy trước hạn được hoàn cọc. Hết hạn thì giải phóng chỗ và xử lý no-show.}
+
+\casebrief{UC\_SS2\_03}{Check-in xe cá nhân}
+{Nguyễn Anh Tài}{Sinh viên, cổng vào mô phỏng và bộ lập lịch SS5.}
+{Có lượt giữ cho đúng xe và Hub trong cửa sổ check-in hợp lệ.}
+{Xác nhận check-in. Hệ thống ghi giờ vào, chuyển chỗ giữ thành chỗ có xe. Nếu có nhu cầu sạc thì đưa yêu cầu vào SS5 để cấp cổng khả dụng.}
+{Lượt chuyển \texttt{CHECKED\_IN}. Xe đợi nếu chưa cấp được cổng. Đến sớm bị từ chối và đến đúng mốc hết hạn bị xử lý no-show.}
+
+\casebrief{UC\_SS2\_04}{Check-out và thanh toán tổng hợp}
+{Nguyễn Anh Tài}{Sinh viên, cổng ra mô phỏng, ví nội bộ và SS5.}
+{Xe có lượt \texttt{CHECKED\_IN} đang hoạt động.}
+{Xác nhận rời trạm. Hệ thống chốt thời gian đỗ và phí theo giờ bắt đầu, kết thúc phiên sạc nếu có, tổng hợp điện năng, phí quá giờ và quyết toán ví.}
+{Chỗ đỗ và cổng đã cấp được giải phóng, hóa đơn được lưu, lượt hoàn tất. Chỉ đỗ thì không thu phí sạc. Thiếu số dư thì ghi nợ. Check-out lặp bị từ chối.}
+
+\casebrief{UC\_SS3\_01}{Giám sát mạng lưới Hub}
+{Phạm Tiến Đạt}{Nhân viên vận hành, quản trị viên theo thiết kế và bộ phát cảm biến mô phỏng.}
+{Dữ liệu Hub đã được nạp. Bật IoT nếu cần nhận bản tin trên giao diện.}
+{Mở dashboard, theo dõi sức chứa, xe, cổng sạc, doanh thu, giao dịch và công suất. Khi bật IoT, mỗi phiên định kỳ đọc feed và làm mới màn hình đang mở.}
+{Hiển thị snapshot của phiên. Nếu chưa bật feed, màn hình dùng dữ liệu mô phỏng hiện có. Dữ liệu ví và phiên sạc không được chia sẻ giữa các cửa sổ.}
+
+\casebrief{UC\_SS3\_02}{Cảnh báo chiếm dụng Hub và sự cố IoT}
+{Phạm Tiến Đạt}{Nhân viên vận hành, kỹ thuật viên và bộ phát cảm biến mô phỏng.}
+{Có dữ liệu sức chứa, ngưỡng cảnh báo và trạng thái cổng của Hub.}
+{Dashboard phân mức lấp đầy ở 70, 85 và 100 phần trăm. Bản tin hợp lệ cập nhật trạng thái cổng. Operator kiểm tra cảnh báo và chuyển sang màn hình xử lý phù hợp.}
+{Hub đầy không nhận đặt chỗ mới theo điều kiện sức chứa. Bản tin trùng ID, cũ hoặc sai đích không tạo thêm tác động vận hành.}
+
+\casebrief{UC\_SS4\_01}{Điều phối phương tiện giữa các Hub}
+{Đặng Hoàng Quý Nhân}{Nhân viên vận hành và hệ thống quản lý Hub.}
+{Hub nguồn có xe chung khả dụng. Hub đích khác nguồn và có đủ chỗ giữ.}
+{Chọn Hub nguồn, Hub đích và xe. Tạo lệnh giữ chỗ ở đích và đưa xe vào trạng thái trung chuyển. Sau khi xe đến, xác nhận tiếp nhận.}
+{Xe được ghi nhận tại Hub đích, chỗ giữ được chuyển thành chỗ có xe. Thiếu xe hợp lệ hoặc thiếu chỗ thì không lập lệnh.}
+
+\casebrief{UC\_SS4\_02}{Báo cáo và xử lý sự cố phương tiện}
+{Đặng Hoàng Quý Nhân}{Nhân viên vận hành và kỹ thuật viên.}
+{Phương tiện cần xử lý được nhận diện tại Hub.}
+{Nhập đối tượng, mức độ và mô tả lỗi. Hệ thống ghi nhận và cách ly xe. Kỹ thuật viên tiếp nhận rồi xác nhận đã khắc phục.}
+{Nhật ký ghi các bước xử lý và tài nguyên được khôi phục theo thao tác xác nhận. Sự cố chưa xử lý vẫn hiển thị trong danh sách theo dõi.}
+
+\casebrief{UC\_SS5\_01}{Ưu tiên sạc và cấp cổng}
+{Dương Đăng Khoa}{Nhân viên vận hành sạc, SS2 và bộ lập lịch.}
+{Có yêu cầu chờ và dữ liệu tài nguyên, điểm pin và công suất Hub.}
+{Tính điểm theo mức pin và ưu tiên booking, dùng thời điểm yêu cầu để phá hòa. Cấp cổng theo thứ tự ưu tiên trong giới hạn số cổng và công suất.}
+{Xe được cấp cổng có phiên sạc. Xe còn lại tiếp tục chờ. Nếu mất cổng, phiên bị ảnh hưởng được xử lý và giữ phần điện, phí đã tích lũy.}
+
+\casebrief{UC\_SS5\_02}{Theo dõi sạc và phí chiếm dụng}
+{Dương Đăng Khoa}{Nhân viên vận hành sạc và người sử dụng dịch vụ.}
+{Có phiên sạc hoặc yêu cầu chờ tại Hub.}
+{Theo dõi phiên, dùng bước mô phỏng để cập nhật pin và điện năng. Khi đạt mức pin mục tiêu thì bắt đầu ân hạn rút sạc. Xác nhận rút sạc để trả cổng.}
+{Phiên lập biên nhận hoặc chuyển số liệu vào hóa đơn SS2. Nếu giữ cổng sau 15 phút ân hạn thì phát sinh phí. Sự cố cổng không làm mất số điện đã nạp.}
+
+\casebrief{UC\_SS6\_01}{Mô phỏng đợt tăng nhu cầu Metro}
+{Hoàng Văn Tấn}{Nhà phân tích hoặc nhân viên vận hành, bộ mô phỏng.}
+{Đã nạp snapshot Hub và có số lượng sinh viên giả lập.}
+{Chọn Hub và quy mô đợt đến. Sinh preview trên bản sao, so sánh số người tiếp nhận được và số chưa phục vụ, sau đó quyết định áp dụng.}
+{Preview chưa đổi trạng thái vận hành. Có thể đổi Hub hoặc quy mô. Apply bị từ chối nếu phiên bản dữ liệu đã đổi.}
+
+\casebrief{UC\_SS6\_02}{Dự báo nhu cầu và hàng đợi 24 giờ}
+{Hoàng Văn Tấn}{Nhà phân tích hoặc người hoạch định vận hành.}
+{Có bộ tham số nhu cầu, công suất phục vụ giả định và khoảng dự báo.}
+{Điều chỉnh tỉ lệ đến và hệ số tăng. Bộ dự báo sinh chuỗi theo giờ và hiển thị lượng đến, hàng chờ, thời gian chờ và doanh thu giả định.}
+{Kết quả chỉ phục vụ phân tích. Tăng nhu cầu để xem kịch bản tải cao hoặc giảm để so sánh. Dự báo không làm thay đổi ví hay doanh thu đã thu.}
+
+\casebrief{UC\_SS7\_01}{Mô phỏng lỗi cổng sạc}
+{Nguyễn Trung Nguyên}{Kỹ thuật viên hoặc nhân viên vận hành, bộ mô phỏng hạ tầng.}
+{Có snapshot Hub và số cổng với trạng thái đã biết.}
+{Chọn Hub, số cổng hỏng rồi tạo preview. Xem tác động tới cổng và phiên sạc, xem gợi ý Hub khác và xác nhận Apply nếu phù hợp.}
+{Apply cập nhật trạng thái phiên khi dữ liệu khớp phiên bản gốc. Nếu có bản tin làm phiên bản đổi, chạy lại preview. Có thể khôi phục cổng qua thao tác mô phỏng.}
+
+\casebrief{UC\_SS7\_02}{Gợi ý Hub thay thế và điều hướng}
+{Nguyễn Trung Nguyên}{Sinh viên, nhân viên vận hành và bộ định tuyến.}
+{Hub ban đầu thiếu chỗ hoặc năng lực sạc cần thiết, có dữ liệu trạng thái và vị trí Hub lân cận.}
+{Từ kết quả cảnh báo hoặc preview, lọc và xếp các Hub còn tài nguyên theo khoảng cách. Khi sinh viên xác nhận chuyển Hub cho lượt thuê, kiểm tra lại chỗ trước khi chuyển giữ.}
+{Thay đổi đích chỉ xảy ra khi xác nhận hợp lệ. Có thể chọn Hub khác thủ công. Nếu phương án hết chỗ hoặc không có ứng viên, giữ nguyên lượt hiện có và chọn lại.}

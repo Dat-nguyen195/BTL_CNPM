@@ -123,3 +123,26 @@ def test_personal_unplug_overstay_ui_then_operator_confirmation():
     assert not app.exception
     assert app.session_state["personal_reservations"][0]["invoice"]["operator_confirmed_at"]
     assert app.session_state["wallet"] == wallet_before
+
+
+def test_dashboard_separates_offline_ports_from_occupied_ports(tmp_path, monkeypatch):
+    from pathlib import Path
+    from streamlit.testing.v1 import AppTest
+
+    feed = tmp_path / "dashboard.db"
+    monkeypatch.setenv("EMOBILITY_IOT_ENABLED", "1")
+    monkeypatch.setenv("EMOBILITY_IOT_DB", str(feed))
+    event = dict(event_id="dashboard-offline", hub_id="HUB-001", port_id="1",
+                 event_type="OFFLINE", occurred_at=datetime.now(timezone.utc).isoformat())
+    assert publish_event(event, feed)
+    app_file = Path(__file__).resolve().parents[1] / "src/app.py"
+    app = AppTest.from_file(str(app_file)).run()
+    app.sidebar.radio[0].set_value(app.sidebar.radio[0].options[2]).run()
+
+    assert not app.exception
+    assert any("OFFLINE" in alert.value for alert in app.warning)
+    assert not any("Bình thường / Đồng bộ" in alert.value for alert in app.info)
+    energy = next(table.value for table in app.dataframe if "Cổng offline" in table.value)
+    hub = energy.iloc[0]
+    assert hub["Cổng offline"] == 1
+    assert hub["Cổng đang chiếm dụng"] + hub["Cổng trống"] + hub["Cổng offline"] == 10

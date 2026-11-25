@@ -1,0 +1,79 @@
+\chapter{Hiện thực tại revision bàn giao}
+\label{chap:runtime}
+\section{Kiến trúc chạy local}
+Trình duyệt truy cập ứng dụng Streamlit. \path{src/app.py} điều hướng sang các màn hình
+trong \path{src/components/}. Các module \path{src/core/} xử lý nghiệp vụ. Seed sáu Hub
+nằm trong \path{src/data/mock_hubs.json}. Ví, lượt đặt, phương tiện và phiên sạc được
+lưu trong trạng thái phiên. Bộ phát \path{scripts/iot_producer.py} ghi bản tin vào SQLite.
+Khi bật IoT, mỗi phiên đọc và áp dụng feed lên snapshot của mình.
+Sơ đồ triển khai khi bật IoT được trình bày ở Hình~\ref{fig:s3-1}.
+\evidencefigure{../../diagrams/telemetry/classes.png}{Hợp đồng và mô hình dữ liệu của luồng IoT.}{fig:runtime-classes}
+\begin{center}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}X@{}}
+\toprule
+\textbf{Module} & \textbf{Trách nhiệm chính}\\
+\midrule
+\path{core/booking.py} & Giữ xe dùng chung, nhận và trả, hủy hoặc tự hết hạn, chuyển chỗ giữ và tạo hóa đơn.\\
+\path{core/personal_ev.py} & Đăng ký xe cá nhân, giữ chỗ đỗ, check-in, gửi yêu cầu sạc và check-out.\\
+\path{core/scheduler.py} & Xếp hàng sạc, cấp cổng trong giới hạn công suất, tích lũy điện năng và giải phóng cổng.\\
+\path{core/billing.py} & Khóa và giải phóng cọc, ghi sổ cái, quyết toán và ghi nợ.\\
+\path{core/telemetry.py} & Lưu, kiểm tra và đọc lại feed. Áp dụng thay đổi trước khi hiển thị phân hệ đang mở.\\
+\path{core/simulator.py} & Dự báo nhu cầu và tạo snapshot What-if. Preview chứa phiên bản dữ liệu để kiểm tra khi Apply.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Quy tắc đầu cuối của bản demo}
+\begin{itemize}
+\item \textbf{SS1 và SS2.} Cọc giữ chỗ là 50.000~đ. SS1 giữ xe trong 30 phút
+kể từ lúc đặt. SS2 chấp nhận check-in trong 30 phút tính từ giờ hẹn.
+No-show thu 10.000~đ và hoàn 40.000~đ. Hóa đơn SS1 ghi quãng đường mô phỏng theo
+thời lượng nhân 15~km/h.
+\item \textbf{SS2 và SS5.} Giữ chỗ đỗ đồng thời ghi nhận nhu cầu sạc. Check-in
+chuyển chỗ giữ thành vị trí xe đang đỗ, sau đó scheduler cấp cổng nếu còn khả năng.
+Nếu chưa cấp được cổng, xe chờ. Check-out đọc thời gian đỗ từ đồng hồ demo và
+điện năng, phí quá giờ từ phiên sạc. Hóa đơn được quyết toán một lần trước khi
+giải phóng lượt đỗ. SS3 hỗ trợ xác nhận đã đối soát hóa đơn.
+\item \textbf{Chính sách mô phỏng.} Giá đỗ mặc định 5.000~đ cho mỗi giờ bắt đầu,
+tối thiểu một giờ, cấu hình qua \path{EMOBILITY_PARKING_HOURLY_VND}. Đây là giả định
+dùng khi trình diễn. Điện tính 7.000~đ/kWh trong các khung 06:00--09:00 và
+16:00--19:30, 3.000~đ/kWh ở giờ khác. Phí chiếm dụng là 10.000~đ mỗi khối
+15 phút bắt đầu sau 15 phút ân hạn.
+\item \textbf{SS6 và SS7.} Dự báo 24 giờ dùng mô hình 8 lượt phục vụ/giờ và
+đơn giá giả định do người vận hành nhập. Preview được tính trên bản sao.
+Apply yêu cầu phiên bản live khớp với phiên bản dùng khi tạo preview.
+\end{itemize}
+
+\section{Phương thức xử lý bản tin và phiên sạc}
+\begin{description}[style=nextline,leftmargin=0pt,labelindent=0pt]
+\item[\texttt{feed\_path()} và \texttt{connect\_feed(path)}]
+Lấy đường dẫn từ biến môi trường, mở SQLite và tạo bảng sự kiện nếu thiếu.
+\item[\texttt{publish\_event(event, path)}]
+Kiểm tra trường bắt buộc, loại bản tin và múi giờ của thời điểm phát.
+Thêm thời điểm nhận, ghi theo khóa duy nhất \texttt{event\_id}
+và trả về trạng thái đã ghi hoặc trùng.
+\item[\texttt{consume\_events(state, path)}]
+Đọc theo cursor của phiên. Xác minh Hub, chỉ số cổng và thứ tự thời gian.
+Ghi kết quả \texttt{APPLIED}, \texttt{STALE} hoặc \texttt{REJECTED}.
+\item[\texttt{apply\_hub\_snapshot(state, hubs)}]
+Áp dụng snapshot hợp lệ, tăng phiên bản, xử lý phiên sạc bị ảnh hưởng bởi
+giảm năng lực và giữ số liệu đã tích lũy.
+\item[\texttt{allocate\_hub\_ports(state, hub\_id)}]
+Chọn yêu cầu chờ theo điểm ưu tiên, số cổng khả dụng và trần công suất.
+Đồng bộ bản ghi xe, lượt đỗ và mã phiên sạc.
+\item[\texttt{release\_charging\_session(state, session\_id)}]
+Kết thúc phiên đúng mã, tích lũy điện năng và phí sang lượt đỗ nếu có.
+Hoàn cổng về số cổng khả dụng trong giới hạn năng lực đang hoạt động.
+\end{description}
+
+\section{Giới hạn và bài học}
+Trạng thái nghiệp vụ riêng theo phiên giới hạn khả năng dùng chung booking, ví và
+lịch sạc giữa nhiều người dùng. Feed chỉ chia sẻ bản tin ngoại vi. Seed lưu số cổng
+tổng hợp nên chỉ số trong bản tin chưa ánh xạ chính xác đến ổ cắm của từng phiên sạc.
+Đăng nhập, thanh toán, đồng hồ, cảm biến và barie được mô phỏng trong MVP.
+Giá đỗ, chất lượng dịch vụ dưới tải lớn và truy cập từ máy ngoài cần xác nhận riêng.
+\par
+Luồng SS2--SS5 cho thấy điện năng và thời gian chiếm cổng nên được lấy từ phiên sạc,
+vì nhập lại tại check-out tạo hai nguồn số liệu cho một hóa đơn. Luồng SS7 cho thấy
+preview cần mang phiên bản dữ liệu để thao tác Apply có thể từ chối kết quả đã cũ.
+Tách feed IoT khỏi quy trình bấm nút giúp kiểm tra hai cách cập nhật trong cùng demo.

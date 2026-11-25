@@ -1,0 +1,45 @@
+{
+  "event": {
+    "event_id": "7985cc2c8f1f4a9eb41eb3e09d5d44d3",
+    "hub_id": "HUB-001",
+    "port_id": "1",
+    "event_type": "OFFLINE",
+    "occurred_at": "2026-11-24T04:35:44.574349+00:00",
+    "received_at": "2026-11-24T04:35:44.574365+00:00",
+    "result": "APPLIED",
+    "before": {
+      "total": 10,
+      "available": 4
+    },
+    "after": {
+      "total": 10,
+      "available": 4,
+      "offline": 1
+    }
+  },
+  "observers": [
+    {
+      "window": 1,
+      "seconds_from_producer_start_to_observation": 1.94,
+      "visible_caption": "Bản tin đã áp dụng: 7985cc2c8f1f4a9eb41eb3e09d5d44d3 · HUB-001 · Cổng 1 · OFFLINE",
+      "image_sha256": "bee4d57dcb6907620d8b3ead9b95c1b8a5d7bbb682d009f1423740e93bb9451f"
+    },
+    {
+      "window": 2,
+      "seconds_from_producer_start_to_observation": 2.47,
+      "visible_caption": "Bản tin đã áp dụng: 7985cc2c8f1f4a9eb41eb3e09d5d44d3 · HUB-001 · Cổng 1 · OFFLINE",
+      "image_sha256": "d28b36dd2c5544d2482c98c87f599263d0a257ee01b9d1d5c983f7a730834553"
+    }
+  ],
+  "preview_rejected": true,
+  "manual_refresh": false,
+  "ss1_incorrect_pin_rejected": true,
+  "ss1_return_invoice": true,
+  "ss2_ss5_checkout_invoice": true,
+  "revision": "aae0877 (baseline plus working-tree fixes)",
+  "date": "2026-11-24",
+  "environment": "Chrome headless via Selenium; Streamlit on 127.0.0.1:18542; isolated SQLite feed",
+  "both_dashboards_open_before_event": true,
+  "port_counts_source": "Independent replay from the same isolated SQLite feed against the original seed",
+  "dashboard_source_sha256": "2b4b3e12ad1691f4b80237eb8cdd4cff7cb144091c7361c9f2ed5c1ddf63e722"
+}

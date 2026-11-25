@@ -1,0 +1,37 @@
+\chapter{Trình diễn MVP theo chuỗi màn hình}
+\label{chap:demo}
+\begin{landscape}
+\demoscreen{SS1: Giữ xe dùng chung}
+  {Chọn Hub và xe có đủ pin, sau đó xác nhận đặt. Ví ghi khoản cọc 50.000~đ và hệ thống tạo lượt giữ xe.}
+  {01-ss1-book.png}{Lượt đặt xe cùng trạng thái giữ cọc.}
+\demoscreen{SS1: Nhận, trả và xem hóa đơn}
+  {Xác thực PIN trong hạn, chọn Hub trả và hoàn tất quyết toán. Hóa đơn đã lưu hiển thị ở tab trả xe.}
+  {02-ss1-invoice.png}{Hóa đơn chuyến đi trong phiên.}
+\demoscreen{SS2: Đăng ký, đặt chỗ và check-in}
+  {Đăng ký xe cá nhân, đặt chỗ có nhu cầu sạc và xác thực check-in. Trước bước sạc, tab check-out đọc đồng hồ năng lượng từ SS5.}
+  {03-ss2-meter.png}{Xe đã vào Hub và điện năng đo từ SS5.}
+\demoscreen{SS5: Tiến hành phiên sạc}
+  {Mở tab Phiên sạc và Công suất, thực hiện một bước sạc 15 phút. Bảng phiên sạc hiển thị pin, điện năng và trạng thái.}
+  {04-ss5-tick.png}{Danh sách phiên sạc sau bước mô phỏng.}
+\demoscreen{SS2: Quyết toán và rời trạm}
+  {Quay lại SS2, chọn quyết toán và rời trạm. Hệ thống chốt thời gian đỗ, điện năng và phí phát sinh thành một hóa đơn.}
+  {05-ss2-invoice.png}{Hóa đơn tổng hợp của xe cá nhân.}
+\demoscreen{SS4: Báo cáo sự cố phương tiện}
+  {Ghi nhận sự cố từ màn hình Báo cáo và Xử lý sự cố. Bản ghi có mã và trạng thái \texttt{REPORTED}.}
+  {06-ss4-incident.png}{Sự cố mới được ghi trong danh sách xử lý.}
+\demoscreen{SS6: Xem trước đợt tăng nhu cầu}
+  {Chạy Metro Surge, xem sức chứa Hub và các chỉ số trước/sau mô phỏng. Apply là thao tác riêng sau khi xem trước.}
+  {07-ss6-preview.png}{So sánh tải của Hub trong preview Metro Surge.}
+\demoscreen{SS7: Tạo preview trước bản tin}
+  {Tạo Failure Preview và giữ màn hình này. Preview lưu phiên bản trạng thái tại thời điểm chạy mô phỏng.}
+  {08-ss7-preview.png}{Bản xem trước sự cố hạ tầng và đề xuất điều hướng.}
+\demoscreen{SS3: Cửa sổ thứ nhất nhận cảnh báo}
+  {Trong khi SS3 đang mở, tiến trình độc lập gửi sự kiện OFFLINE cho HUB-001, cổng 1. Cảnh báo và mã sự kiện xuất hiện tự động. Lần chạy kiểm chứng ghi mã \path{7985cc2c8f1f4a9eb41eb3e09d5d44d3}.}
+  {09-ss3-observer-1.png}{Cửa sổ SS3 thứ nhất quan sát cổng OFFLINE.}
+\demoscreen{SS3: Cửa sổ thứ hai nhận cảnh báo}
+  {Cửa sổ thứ hai hiển thị cùng mã sự kiện ở trên mà không bấm nút cập nhật. Khi đối chiếu feed trên seed, cổng offline tăng từ 0 lên 1 trong tổng số 10 cổng của HUB-001. Số cổng trống vẫn là 4.}
+  {09-ss3-observer-2.png}{Cửa sổ SS3 thứ hai quan sát cùng thay đổi.}
+\demoscreen{SS7: Thử áp dụng preview cũ}
+  {Quay lại SS7 và bấm Áp dụng. Ứng dụng yêu cầu chạy lại mô phỏng vì phiên bản dữ liệu đã đổi.}
+  {10-ss7-stale.png}{Thông báo từ chối và dòng bản tin đi kèm.}
+\end{landscape}

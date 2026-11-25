@@ -42,7 +42,7 @@
 | Framework UI | Streamlit |
 | Xử lý dữ liệu | Pandas |
 | Trực quan hoá | Plotly, Matplotlib |
-| Dữ liệu | In-memory JSON (st.session_state) |
+| Dữ liệu | Trạng thái nghiệp vụ theo phiên (st.session_state) và feed cảm biến SQLite khi bật IoT |
 | Quản lý mã nguồn | Git + GitHub |
 
 ---
@@ -194,3 +194,11 @@ Xem [hướng dẫn real-time](docs/current/REALTIME_DEMO.md) để chạy ứng
 venv/bin/python scripts/package_submission_2.py
 (cd output/submission_2 && sha256sum -c SHA256SUMS.txt)
 ```
+
+
+## Submission 4
+
+Báo cáo tổng kết dùng LaTeX và giữ nội dung, sơ đồ của Submission 1–3,
+bổ sung kịch bản use case rút gọn, bản hiện thực, chuỗi màn hình demo và khai báo AI.
+Xem [cấu trúc nguồn và lệnh dựng](docs/report/submission_4/README.md).
+Bản ZIP bàn giao do `scripts/package_submission_4.py` tạo trong `output/submission_4/`.

@@ -36,15 +36,23 @@ def render():
 
     sim_time = st.session_state.get("current_sim_time", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
+    offline_total = 0
     for hub in hubs:
         offline = hub.get("charging_ports", {}).get("offline", 0)
+        offline_total += offline
         if offline:
             st.warning(f"Cảnh báo IoT mô phỏng: {hub['name']} có {offline} cổng sạc OFFLINE. Chuyển SS4/SS7 để xử lý.")
 
     # Thanh điều khiển & Refresh Telemetry
     top_col1, top_col2 = st.columns([3, 1])
     with top_col1:
-        st.info(f"🕒 **Thời gian Telemetry IoT:** `{sim_time}` (Trạng thái cảm biến: **Bình thường / Đồng bộ**)")
+        port_summary = f"{offline_total} cổng OFFLINE" if offline_total else "Không có cổng OFFLINE"
+        st.info(f"🕒 **Đồng hồ mô phỏng:** `{sim_time}` · **{port_summary}**")
+        latest = next((event for event in reversed(st.session_state.get("telemetry_log", []))
+                       if event["result"] == "APPLIED"), None)
+        if latest:
+            st.caption(f"Bản tin đã áp dụng: {latest['event_id']} · {latest['hub_id']} · "
+                       f"Cổng {latest['port_id']} · {latest['event_type']}")
     with top_col2:
         if st.button("🔄 Cập nhật Telemetry", key="btn_refresh_telemetry"):
             st.rerun()
@@ -179,11 +187,13 @@ def render():
 
         power_data = []
         for h in hubs:
-            busy_ports = h["charging_ports"]["total"] - h["charging_ports"]["available"]
-            est_kw = sum(s.port_kw for s in getattr(st.session_state.get("charging_scheduler"), "_active_sessions", {}).values() if s.hub_id == h["hub_id"] and s.status == "CHARGING")  # Giả định 7.4 kW mỗi cổng đang sạc
+            offline_ports = h["charging_ports"].get("offline", 0)
+            busy_ports = h["charging_ports"]["total"] - h["charging_ports"]["available"] - offline_ports
+            est_kw = sum(s.port_kw for s in getattr(st.session_state.get("charging_scheduler"), "_active_sessions", {}).values() if s.hub_id == h["hub_id"] and s.status == "CHARGING")
             power_data.append({
                 "Hub": h["name"].replace("Hub ", ""),
-                "Cổng đang sạc": busy_ports,
+                "Cổng đang chiếm dụng": busy_ports,
+                "Cổng offline": offline_ports,
                 "Cổng trống": h["charging_ports"]["available"],
                 "Công suất ước tính (kW)": round(est_kw, 1),
                 "Tải so với trần 150kW (%)": f"{(est_kw / HUB_POWER_CAP_KW * 100):.1f}%"

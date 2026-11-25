@@ -144,7 +144,7 @@ def check_puml_files():
 
 def check_unit_tests():
     cmd = [
-        str(REPO_ROOT / "venv" / "bin" / "python"),
+        sys.executable,
         "-m", "pytest", "-q", "tests/"
     ]
     env = os.environ.copy()
