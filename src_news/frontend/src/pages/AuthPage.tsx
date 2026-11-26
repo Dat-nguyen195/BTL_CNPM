@@ -61,25 +61,15 @@ export const AuthPage: React.FC = () => {
           <div className="flex border-b pb-2 mb-4">
             <button
               type="button"
-              onClick={() => {
-                setIsLogin(true);
-                setError('');
-              }}
-              className={`flex-1 py-2 font-semibold text-sm ${
-                isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'
-              }`}
+              onClick={() => { setIsLogin(true); setError(''); }}
+              className={`flex-1 py-2 font-semibold text-sm ${isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'}`}
             >
               Đăng nhập
             </button>
             <button
               type="button"
-              onClick={() => {
-                setIsLogin(false);
-                setError('');
-              }}
-              className={`flex-1 py-2 font-semibold text-sm ${
-                !isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'
-              }`}
+              onClick={() => { setIsLogin(false); setError(''); }}
+              className={`flex-1 py-2 font-semibold text-sm ${!isLogin ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'}`}
             >
               Đăng ký tài khoản
             </button>

@@ -1,4 +1,3 @@
-# backend/app/routers/personal_ev.py
 import uuid, math
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException
@@ -8,13 +7,48 @@ from app.security import get_current_user
 from app.policies import (
     PARKING_HOURLY_VND, PEV_OFFPEAK_KWH_RATE, PEV_PEAK_KWH_RATE,
     PEV_RESERVATION_DEPOSIT_VND, PEV_ARRIVAL_EXPIRY_MINUTES,
-    OVERSTAY_GRACE_MINUTES, OVERSTAY_RATE_PER_BLOCK_VND, is_peak_hour
+    PEV_NOSHOW_PENALTY_VND, OVERSTAY_GRACE_MINUTES,
+    OVERSTAY_RATE_PER_BLOCK_VND, is_peak_hour
 )
 
 router = APIRouter(prefix="/api/personal-ev", tags=["SS2 Personal EV"])
 
+def _sweep_expired_pev(user_id: str):
+    now = datetime.now(timezone.utc)
+    reserved = supabase.table("personal_reservations").select("*").eq("owner_id", user_id).eq("status", "RESERVED").execute().data
+    for r in reserved:
+        if not r.get("arrival_deadline"):
+            continue
+        deadline = datetime.fromisoformat(r["arrival_deadline"].replace("Z", "+00:00"))
+        if now >= deadline:
+            supabase.table("personal_reservations").update({"status": "EXPIRED"}).eq("reservation_id", r["reservation_id"]).execute()
+            hub = supabase.table("hubs").select("*").eq("hub_id", r["hub_id"]).execute().data
+            if hub:
+                supabase.table("hubs").update({
+                    "available_slots": hub[0]["available_slots"] + 1,
+                    "destination_holds": max(0, hub[0]["destination_holds"] - 1)
+                }).eq("hub_id", hub[0]["hub_id"]).execute()
+            wallet = supabase.table("wallets").select("*").eq("user_id", user_id).execute().data[0]
+            if wallet["held_deposit"] >= PEV_RESERVATION_DEPOSIT_VND:
+                refund = PEV_RESERVATION_DEPOSIT_VND - PEV_NOSHOW_PENALTY_VND
+                new_held = wallet["held_deposit"] - PEV_RESERVATION_DEPOSIT_VND
+                new_bal = wallet["balance"] + refund
+                supabase.table("wallets").update({"balance": new_bal, "held_deposit": new_held}).eq("user_id", user_id).execute()
+                supabase.table("ledger_transactions").insert({
+                    "tx_id": f"TX-{uuid.uuid4().hex[:8].upper()}",
+                    "user_id": user_id,
+                    "tx_type": "PENALTY_PEV_NOSHOW",
+                    "amount": -PEV_NOSHOW_PENALTY_VND,
+                    "balance_after": new_bal,
+                    "held_after": new_held,
+                    "debt_after": wallet["debt"],
+                    "booking_id": r["reservation_id"],
+                    "note": "Phạt đặt chỗ xe cá nhân quá hạn check-in"
+                }).execute()
+
 @router.get("/my")
 async def get_my_personal_evs(current_user: dict = Depends(get_current_user)):
+    _sweep_expired_pev(current_user["user_id"])
     evs = supabase.table("personal_evs").select("*").eq("owner_id", current_user["user_id"]).execute().data
     res = supabase.table("personal_reservations").select("*").eq("owner_id", current_user["user_id"]).order("arrival_deadline", desc=True).execute().data
     return {"vehicles": evs, "reservations": res}
@@ -50,6 +84,12 @@ async def reserve_slot(body: ReservePersonalSlotRequest, current_user: dict = De
     if not vehicles:
         raise HTTPException(status_code=404, detail="Không tìm thấy xe cá nhân.")
 
+    _sweep_expired_pev(user_id)
+
+    active = supabase.table("personal_reservations").select("reservation_id").eq("ev_id", body.ev_id).eq("owner_id", user_id).in_("status", ["RESERVED", "CHECKED_IN"]).execute()
+    if active.data:
+        raise HTTPException(status_code=400, detail=f"Xe {body.ev_id} đang có lượt đặt chỗ #{active.data[0]['reservation_id']} chưa hoàn tất.")
+
     hubs = supabase.table("hubs").select("*").eq("hub_id", body.hub_id).execute().data
     if not hubs:
         raise HTTPException(status_code=404, detail="Không tìm thấy Hub.")
@@ -63,14 +103,26 @@ async def reserve_slot(body: ReservePersonalSlotRequest, current_user: dict = De
     if not wallets:
         raise HTTPException(status_code=409, detail="Tài khoản chưa có ví.")
     wallet = wallets[0]
+    if wallet["debt"] > 0:
+        raise HTTPException(status_code=400, detail="Tài khoản đang có nợ chưa thanh toán.")
     if wallet["balance"] < PEV_RESERVATION_DEPOSIT_VND:
         raise HTTPException(status_code=400, detail="Số dư ví không đủ 50,000đ đặt cọc.")
 
     res_id = f"PRES-{uuid.uuid4().hex[:6].upper()}"
-    supabase.table("wallets").update({
-        "balance": wallet["balance"] - PEV_RESERVATION_DEPOSIT_VND,
-        "held_deposit": wallet["held_deposit"] + PEV_RESERVATION_DEPOSIT_VND
-    }).eq("user_id", user_id).execute()
+    new_bal = wallet["balance"] - PEV_RESERVATION_DEPOSIT_VND
+    new_held = wallet["held_deposit"] + PEV_RESERVATION_DEPOSIT_VND
+    supabase.table("wallets").update({"balance": new_bal, "held_deposit": new_held}).eq("user_id", user_id).execute()
+    supabase.table("ledger_transactions").insert({
+        "tx_id": f"TX-{uuid.uuid4().hex[:8].upper()}",
+        "user_id": user_id,
+        "tx_type": "HOLD_DEPOSIT",
+        "amount": -PEV_RESERVATION_DEPOSIT_VND,
+        "balance_after": new_bal,
+        "held_after": new_held,
+        "debt_after": wallet["debt"],
+        "booking_id": res_id,
+        "note": f"Tạm khóa cọc đặt chỗ xe cá nhân {body.ev_id}"
+    }).execute()
 
     supabase.table("hubs").update({
         "available_slots": hub["available_slots"] - 1,
@@ -91,9 +143,10 @@ async def reserve_slot(body: ReservePersonalSlotRequest, current_user: dict = De
 
 @router.post("/checkin/{reservation_id}")
 async def checkin_pev(reservation_id: str, current_user: dict = Depends(get_current_user)):
+    _sweep_expired_pev(current_user["user_id"])
     r_res = supabase.table("personal_reservations").select("*").eq("reservation_id", reservation_id).eq("owner_id", current_user["user_id"]).execute()
     if not r_res.data or r_res.data[0]["status"] != "RESERVED":
-        raise HTTPException(status_code=400, detail="Lệnh đặt chỗ không hợp lệ.")
+        raise HTTPException(status_code=400, detail="Lệnh đặt chỗ không hợp lệ hoặc đã quá hạn.")
     res = r_res.data[0]
     hub = supabase.table("hubs").select("*").eq("hub_id", res["hub_id"]).execute().data[0]
     updates = {"destination_holds": max(0, hub["destination_holds"] - 1)}
@@ -121,8 +174,7 @@ async def checkout_pev(body: CheckoutPersonalRequest, current_user: dict = Depen
     supabase.table("hubs").update(hub_updates).eq("hub_id", hub["hub_id"]).execute()
 
     parking_fee = math.ceil(body.duration_hours) * PARKING_HOURLY_VND
-    now_local = datetime.now()
-    rate = PEV_PEAK_KWH_RATE if is_peak_hour(now_local.time()) else PEV_OFFPEAK_KWH_RATE
+    rate = PEV_PEAK_KWH_RATE if is_peak_hour(datetime.now().time()) else PEV_OFFPEAK_KWH_RATE
     energy_fee = round(body.kwh_charged * rate) if res["request_charging"] else 0
     billable_overstay = max(0, body.overstay_minutes - OVERSTAY_GRACE_MINUTES) if res["request_charging"] else 0
     overstay_fee = ((billable_overstay + 14) // 15) * OVERSTAY_RATE_PER_BLOCK_VND
@@ -133,12 +185,26 @@ async def checkout_pev(body: CheckoutPersonalRequest, current_user: dict = Depen
     new_held = max(0, wallet["held_deposit"] - PEV_RESERVATION_DEPOSIT_VND)
     deducted = min(released_bal, total_amount)
     debt = max(0, total_amount - released_bal)
+    new_bal = released_bal - deducted
+    new_debt = wallet["debt"] + debt
 
     supabase.table("wallets").update({
-        "balance": released_bal - deducted,
+        "balance": new_bal,
         "held_deposit": new_held,
-        "debt": wallet["debt"] + debt
+        "debt": new_debt
     }).eq("user_id", user_id).execute()
+
+    supabase.table("ledger_transactions").insert({
+        "tx_id": f"TX-{uuid.uuid4().hex[:8].upper()}",
+        "user_id": user_id,
+        "tx_type": "SETTLE_PEV_FEE",
+        "amount": -total_amount,
+        "balance_after": new_bal,
+        "held_after": new_held,
+        "debt_after": new_debt,
+        "booking_id": body.reservation_id,
+        "note": f"Quyết toán xe cá nhân ({total_amount:,}đ)"
+    }).execute()
 
     invoice = {
         "invoice_id": f"PINV-{uuid.uuid4().hex[:6].upper()}",
