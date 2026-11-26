@@ -51,7 +51,8 @@
 
 ```
 BTL_CNPM/
-├── src/                  # Streamlit, nghiệp vụ, dữ liệu mẫu
+├── src/                  # Phiên bản 1: thiết kế tổng thể bằng Streamlit
+├── src_news/             # Phiên bản 2: bản web đóng gói và phân quyền
 ├── tests/                # Kiểm thử nghiệp vụ và tích hợp
 ├── scripts/              # Bộ phát IoT, kiểm tra, đóng gói
 ├── docs/
@@ -79,11 +80,16 @@ BTL_CNPM/
 
 ## 🚀 Cài đặt & Chạy ứng dụng
 
-### Yêu cầu
+### Phiên bản 1 — Thiết kế tổng thể
+
+Phiên bản Streamlit minh họa kiến trúc và luồng nghiệp vụ của cả bảy phân hệ
+SS1–SS7. Báo cáo và minh chứng demo dùng phiên bản này.
+
+#### Yêu cầu
 - Python 3.10 trở lên
 - pip (Python package manager)
 
-### Cài đặt
+#### Cài đặt
 
 ```bash
 # Clone repository
@@ -99,15 +105,22 @@ source venv/bin/activate        # Linux/Mac
 pip install -r requirements.txt
 ```
 
-### Chạy ứng dụng
+#### Khởi động
 
-Bản demo Submission 4 dùng Streamlit. Từ thư mục gốc của repo, chạy:
+Từ thư mục gốc của repo, chạy:
 
 ```bash
 streamlit run src/app.py
 ```
 
-Ứng dụng sẽ mở tại: `http://localhost:8501`
+Ứng dụng sẽ mở tại `http://localhost:8501`.
+
+### Phiên bản 2 — Bản web đóng gói có phân quyền
+
+Bản React/FastAPI chạy bằng Docker Compose với PostgreSQL và dữ liệu mẫu.
+User (`STUDENT`) tự đăng ký để dùng dịch vụ. Operator (`OPERATOR`) được quản trị viên cấp
+quyền điều phối, xử lý sự cố và lập lịch sạc. Hai phiên bản có dữ liệu riêng.
+Xem các bước chạy và cấp quyền trong [hướng dẫn Phiên bản 2](src_news/README.md).
 
 ---
 

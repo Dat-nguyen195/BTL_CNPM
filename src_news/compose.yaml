@@ -1,0 +1,55 @@
+name: emobility-v2
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: emobility
+      POSTGRES_USER: emobility
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env using the README}
+    volumes:
+      - web-data:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "emobility", "-d", "emobility", "-h", "127.0.0.1"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+    networks: [data]
+
+  rest:
+    image: postgrest/postgrest:v12.2.12
+    environment:
+      PGRST_DB_URI: postgres://emobility:${POSTGRES_PASSWORD}@db:5432/emobility
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: emobility_backend
+      PGRST_OPENAPI_MODE: disabled
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [data]
+
+  api:
+    build: ./backend
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Set JWT_SECRET_KEY in .env using the README}
+      POSTGREST_URL: http://rest:3000
+    depends_on:
+      - rest
+    networks: [data, app]
+
+  web:
+    build: ./frontend
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - api
+    networks: [app]
+
+networks:
+  data:
+    internal: true
+  app:
+
+volumes:
+  web-data:

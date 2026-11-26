@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 from typing import Optional, List
 
 class RegisterRequest(BaseModel):
@@ -8,6 +8,13 @@ class RegisterRequest(BaseModel):
     email: EmailStr
     full_name: str = Field(..., min_length=2, max_length=100)
     password: str = Field(..., min_length=8, max_length=72)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_size(cls, password: str) -> str:
+        if len(password.encode()) > 72:
+            raise ValueError("Mật khẩu không được dài quá 72 byte UTF-8.")
+        return password
 
 class LoginRequest(BaseModel):
     email: EmailStr

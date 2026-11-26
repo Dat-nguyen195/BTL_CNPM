@@ -1,113 +1,69 @@
-# 🚲 Smart E-Mobility Hub – ĐHQG-HCM
+# Smart E-Mobility Hub — Phiên bản 2
 
-Hệ thống quản lý, đặt xe điện dùng chung, đặt lịch sạc xe điện cá nhân, giám sát mật độ trạm Hub và lập lịch sạc thông minh tại khu đô thị ĐHQG-HCM.
+Bản web đã đóng gói, dùng React, FastAPI và PostgreSQL. Người dùng thông thường
+(`STUDENT`) tự đăng ký để đặt xe dùng chung và đăng ký, giữ chỗ cho xe cá nhân.
+Điều phối viên (`OPERATOR`) đăng nhập bằng tài khoản đã được người quản trị
+cấp quyền để điều phối xe, xử lý sự cố, cấp cổng sạc và chạy mô phỏng.
+FastAPI đọc vai trò từ cơ sở dữ liệu và kiểm tra quyền cho các thao tác vận hành.
 
-## 📁 Cấu trúc thư mục
+## Chạy bản đóng gói trên máy
 
-```text
-.
-├── backend/          # REST API (Python FastAPI + Supabase)
-├── frontend/         # Giao diện người dùng (React + TypeScript + Vite + Tailwind CSS)
-└── README.md
+Cài Docker với Docker Compose v2. Ở repo, mở terminal trong `src_news/`.
+Nếu giải nén ZIP nộp bài, mở terminal trong `source/phien_ban_2/`.
+Tạo tệp `.env` trong thư mục này. Lệnh sau in hai chuỗi ngẫu nhiên gồm 64 ký tự hex:
+
+```sh
+docker run --rm python:3.12-slim python -c "import secrets; print(secrets.token_hex(32)); print(secrets.token_hex(32))"
 ```
 
-Đây là bản thử nghiệm React/FastAPI từ PR #26. Bản demo chính của dự án dùng Streamlit, với hướng dẫn trong [README ở thư mục gốc](../README.md). Hai ứng dụng có cấu hình và dữ liệu riêng.
+Sao chép `.env.example` thành `.env`, điền một chuỗi vào `JWT_SECRET_KEY` và
+chuỗi còn lại vào `POSTGRES_PASSWORD`. Giữ các giá trị này trên những lần chạy lại
+và giữ tệp `.env` trên máy.
 
-Bản thử nghiệm cần một dự án Supabase/PostgreSQL đã có schema tương thích và dữ liệu trạm, xe mẫu để chạy các luồng đặt xe và sạc. Thư mục này chưa kèm migration hoặc seed để tạo cơ sở dữ liệu từ đầu. Các thao tác cập nhật ví, trạm và đặt chỗ qua nhiều truy vấn cần được chạy thử trên Supabase trước khi dùng để demo.
-
-## 🛠️ Yêu cầu hệ thống
-
-* **Git**
-* **Python** `3.10+`
-* **Node.js** `18+` & **npm**
-* Tài khoản **Supabase** (PostgreSQL)
-
----
-
-## 🚀 Hướng dẫn tải về và chạy dự án
-
-### 1. Clone mã nguồn
-
-```bash
-git clone https://github.com/Dat-nguyen195/BTL_CNPM.git
-cd BTL_CNPM/src_news
+```sh
+docker compose up --build -d
+docker compose ps
 ```
 
----
+Mở <http://localhost:8080>. Kiểm tra API ở <http://localhost:8080/health>
+(kết quả `{"status":"ok"}`). Đăng nhập và mở màn hình Hub để kiểm tra dữ liệu.
+Lần đầu cần Internet để tải image và thư viện. PostgreSQL khởi tạo trạm, xe mẫu
+khi volume còn trống. Dữ liệu giữ qua `docker compose down`.
 
-### 2. Cài đặt & Chạy Backend (Port `8000`)
+### Thử hai vai trò
 
-Mở **Terminal 1**, di chuyển vào thư mục `backend` và cài đặt môi trường:
+1. Tạo một tài khoản sinh viên ở trang đăng ký. Xác nhận có thể xem Hub, đặt xe
+   còn pin hoặc đăng ký xe cá nhân và giữ chỗ. Các chức năng điều phối bị khóa.
+2. Tạo tài khoản thứ hai, dùng email và mã số khác. Ví dụ email
+   `operator@example.com`. Người chạy demo cấp vai trò qua PostgreSQL từ chính
+   thư mục Compose. Thay email trong câu lệnh nếu đã đăng ký email khác.
 
-```bash
-cd backend
+   ```sh
+   docker compose exec db psql -U emobility -d emobility -c "UPDATE public.users SET role = 'OPERATOR' WHERE email = 'operator@example.com';"
+   ```
 
-# Tạo môi trường ảo
-python -m venv .venv
+   Kiểm tra lệnh trả `UPDATE 1`, rồi đăng xuất và đăng nhập lại bằng tài khoản
+   này. Mở điều phối trạm hoặc cấp cổng sạc và xác nhận thao tác được bật.
+3. Dừng hai dịch vụ ứng dụng và các dịch vụ dữ liệu bằng `docker compose down`.
 
-# Kích hoạt môi trường ảo
-source .venv/bin/activate          # Linux / macOS
-# .venv\Scripts\activate           # Windows (CMD/PowerShell)
+Các phiên đặt chỗ và ví ở bản web dùng PostgreSQL riêng. Thiết bị, điện năng
+nhập ở luồng check-out và giao dịch thanh toán dùng dữ liệu mô phỏng. Phần
+What-if của bản web hiển thị kết quả ước tính. Luồng IoT qua SQLite và kiểm
+tra phiên bản preview khi Apply nằm ở bản Streamlit (phiên bản 1).
 
-# Cài đặt thư viện
-pip install -r requirements.txt
-```
+## Tùy chọn chạy từ mã nguồn với Supabase
 
-Tạo file `.env` trong thư mục `backend/` (sao chép từ `.env.example`) và điền thông tin kết nối Supabase của bạn:
+Trong một dự án Supabase dành cho demo, chạy lần lượt `db/01-schema.sql` và
+`db/02-seed.sql` qua SQL Editor trên cơ sở dữ liệu chưa có các bảng ứng dụng.
+Tập lệnh `db/03-local-postgrest.sql` chỉ dành cho Docker Compose.
+Nếu đã dùng một schema thử nghiệm cũ, dùng database demo riêng để tránh xung
+đột tên bảng. Dùng SQL Editor để cấp vai trò `OPERATOR` như ví dụ trên.
 
-```env
-SUPABASE_URL=https://<your-project-id>.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=<your-service-role-secret-key>
-JWT_SECRET_KEY=thay-doi-chuoi-bi-mat-cua-ban
-```
-
-> Dùng khóa service role ở backend. Giữ khóa trong `.env` cục bộ và không đưa vào cấu hình frontend hoặc commit.
-
-Khởi động server Backend:
-
-```bash
-uvicorn app.main:app --reload --port 8000
-```
-
-* API chạy tại: `http://localhost:8000`
-* Tài liệu API (Swagger UI): `http://localhost:8000/docs`
-
----
-
-### 3. Cài đặt & Chạy Frontend (Port `5173`)
-
-Mở **Terminal 2** (giữ nguyên Terminal 1 đang chạy Backend), di chuyển vào thư mục `frontend`:
-
-```bash
-cd frontend
-
-# Cài đặt dependencies
-npm ci
-npm run build
-```
-
-*(Tùy chọn)* Nếu Backend không chạy ở `http://localhost:8000`, tạo file `frontend/.env` để cấu hình địa chỉ API:
-
-```env
-VITE_API_BASE_URL=http://localhost:8000
-```
-
-Khởi động server Frontend:
-
-```bash
-npm run dev
-```
-
-* Truy cập ứng dụng trên trình duyệt tại: **`http://localhost:5173`**
-
----
-
-## 💡 Hướng dẫn sử dụng nhanh
-
-1. **Tạo tài khoản**: Vào tab **Đăng ký tài khoản**, nhập MSSV, Họ tên, Email và Mật khẩu ($\ge 8$ ký tự). Tài khoản mới mặc định có vai trò `STUDENT` và nhận sẵn **`150,000₫`** trong ví.
-2. **Đặt & Trả xe (SS1)**:
-   * Chọn **Hub xuất phát** $\rightarrow$ chọn xe có pin $\ge 20\%$ $\rightarrow$ nhấn **Xác nhận đặt giữ xe** (tạm khóa cọc `50,000₫` và nhận mã PIN 4 số).
-   * Nhập mã PIN để **Mở khóa & Nhận xe**.
-   * Khi kết thúc, chọn Hub trả xe và thời gian đi để **Trả xe & Quyết toán** (miễn phí 30 phút đầu; sau 30 phút tính `500₫/phút`, hỗ trợ mã `SVBK50` giảm 50% và `VNU2026` giảm 30%).
-3. **Xe điện cá nhân (SS2)**: Đăng ký biển số xe cá nhân và đặt khung giờ sạc tại các trạm Hub.
-4. **Giám sát & Lập lịch sạc (SS3 & SS5)**: Theo dõi tình trạng lấp đầy từng trạm và danh sách ưu tiên sạc. *(Để dùng quyền điều phối viên `OPERATOR`, chỉnh cột `role` của user thành `OPERATOR` trực tiếp trong bảng `users` trên Supabase).*
+1. Trong `backend/`, dùng Python 3.12 để tạo và kích hoạt môi trường ảo.
+   Chạy `python -m pip install -r requirements.txt`, sao chép
+   `backend/.env.example` thành `backend/.env`, điền URL, khóa service role và
+   một khóa JWT ngẫu nhiên. Khóa service role chỉ dùng ở backend.
+   Chạy `python -m uvicorn app.main:app --port 8000`.
+2. Trong terminal thứ hai ở `frontend/`, dùng Node.js 22 và chạy
+   `npm ci`, rồi `npm run dev`. Mở <http://localhost:5173>.
+   Dùng `npm run build` để kiểm tra bản dựng frontend.

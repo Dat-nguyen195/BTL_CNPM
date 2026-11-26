@@ -627,7 +627,7 @@ export const Dashboard: React.FC = () => {
                   <div>
                     <strong>{d.dispatch_id}</strong>: {d.source_hub_id} → {d.destination_hub_id} • Xe: <code>{(d.vehicle_ids || []).join(', ')}</code> • {d.reason}
                   </div>
-                  {isOperator && (
+                  {isOperator && !d.received_at && (
                     <button onClick={() => handleReceiveDispatch(d.dispatch_id)} className="px-3 py-1.5 bg-emerald-600 text-white rounded font-semibold">
                       Xác nhận đã nhận xe
                     </button>

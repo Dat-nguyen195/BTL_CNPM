@@ -150,11 +150,13 @@ async def checkin_pev(reservation_id: str, current_user: dict = Depends(get_curr
     res = r_res.data[0]
     hub = supabase.table("hubs").select("*").eq("hub_id", res["hub_id"]).execute().data[0]
     updates = {"destination_holds": max(0, hub["destination_holds"] - 1)}
-    if res["request_charging"] and hub["ports_available"] > 0:
+    charging_allocated = bool(res["request_charging"] and hub["ports_available"] > 0)
+    if charging_allocated:
         updates["ports_available"] = hub["ports_available"] - 1
     supabase.table("hubs").update(updates).eq("hub_id", hub["hub_id"]).execute()
     supabase.table("personal_reservations").update({
         "status": "CHECKED_IN",
+        "charging_allocated": charging_allocated,
         "check_in_time": datetime.now(timezone.utc).isoformat()
     }).eq("reservation_id", reservation_id).execute()
     return {"message": "Check-in thành công! Barie đã mở."}
@@ -169,14 +171,14 @@ async def checkout_pev(body: CheckoutPersonalRequest, current_user: dict = Depen
     hub = supabase.table("hubs").select("*").eq("hub_id", res["hub_id"]).execute().data[0]
 
     hub_updates = {"available_slots": hub["available_slots"] + 1}
-    if res["request_charging"]:
+    if res["charging_allocated"]:
         hub_updates["ports_available"] = min(hub["ports_total"], hub["ports_available"] + 1)
     supabase.table("hubs").update(hub_updates).eq("hub_id", hub["hub_id"]).execute()
 
     parking_fee = math.ceil(body.duration_hours) * PARKING_HOURLY_VND
     rate = PEV_PEAK_KWH_RATE if is_peak_hour(datetime.now().time()) else PEV_OFFPEAK_KWH_RATE
-    energy_fee = round(body.kwh_charged * rate) if res["request_charging"] else 0
-    billable_overstay = max(0, body.overstay_minutes - OVERSTAY_GRACE_MINUTES) if res["request_charging"] else 0
+    energy_fee = round(body.kwh_charged * rate) if res["charging_allocated"] else 0
+    billable_overstay = max(0, body.overstay_minutes - OVERSTAY_GRACE_MINUTES) if res["charging_allocated"] else 0
     overstay_fee = ((billable_overstay + 14) // 15) * OVERSTAY_RATE_PER_BLOCK_VND
     total_amount = parking_fee + energy_fee + overstay_fee
 

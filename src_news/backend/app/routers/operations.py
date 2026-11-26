@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from app.schemas import DispatchCreateRequest, IncidentIsolateRequest
 from app.database import supabase
@@ -124,6 +125,9 @@ async def receive_dispatch(
     supabase.table("hubs").update({
         "destination_holds": max(0, dst_hub["destination_holds"] - len(vids))
     }).eq("hub_id", dst_hub["hub_id"]).execute()
+    supabase.table("dispatches").update({
+        "received_at": datetime.now(timezone.utc).isoformat()
+    }).eq("dispatch_id", dispatch_id).execute()
     return {"message": f"Đã tiếp nhận {len(vids)} xe tại {dst_hub['name']}!"}
 
 @router.post("/incidents/isolate")

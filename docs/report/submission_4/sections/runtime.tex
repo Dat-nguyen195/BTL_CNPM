@@ -1,6 +1,6 @@
 \chapter{Hiện thực tại revision bàn giao}
 \label{chap:runtime}
-\section{Kiến trúc chạy local}
+\section{Phiên bản 1: Thiết kế tổng thể}
 Trình duyệt truy cập ứng dụng Streamlit. \path{src/app.py} điều hướng sang các màn hình
 trong \path{src/components/}. Các module \path{src/core/} xử lý nghiệp vụ. Seed sáu Hub
 nằm trong \path{src/data/mock_hubs.json}. Ví, lượt đặt, phương tiện và phiên sạc được
@@ -22,6 +22,22 @@ Sơ đồ triển khai khi bật IoT được trình bày ở Hình~\ref{fig:s3-
 \bottomrule
 \end{tabularx}
 \end{center}
+
+\section{Phiên bản 2: Bản web đóng gói và phân quyền}
+
+Thư mục \path{source/phien_ban_2/} trong ZIP cung cấp bản web React và FastAPI.
+Docker Compose khởi động giao diện, API, PostgREST và PostgreSQL. Giao diện
+gọi API qua cùng địa chỉ web. PostgreSQL lưu tài khoản, ví, lượt đặt và trạng
+thái trạm trong volume riêng. Tập lệnh SQL khởi tạo cấu trúc bảng và xe mẫu.
+
+Tài khoản đăng ký công khai nhận vai trò \texttt{STUDENT} để sử dụng dịch vụ
+đặt xe và đăng ký chỗ đỗ hoặc sạc. Người quản trị cấp vai trò
+\texttt{OPERATOR} cho tài khoản điều phối viên. FastAPI kiểm tra quyền trên
+các yêu cầu điều phối, xử lý sự cố, cấp cổng sạc và mô phỏng.
+Tệp \path{HUONG_DAN.txt} trong ZIP chỉ cách chạy và thử hai vai trò.
+
+Phần demo và bằng chứng IoT trong báo cáo áp dụng cho phiên bản~1.
+Hai phiên bản có cơ chế lưu dữ liệu riêng và được khởi động độc lập.
 
 \section{Quy tắc đầu cuối của bản demo}
 \begin{itemize}

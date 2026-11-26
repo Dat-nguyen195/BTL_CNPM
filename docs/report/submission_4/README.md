@@ -20,7 +20,9 @@ UML của repo. Các chương thiết kế dùng báo cáo tổng Submission 3 v
 đã chỉnh ở mốc `aae0877`. Kịch bản của 17 use case được tóm lược ngay sau danh mục
 use case trong thân PDF. Đặc tả cá nhân đầy đủ và sơ đồ nằm trong `ca_nhan/`
 của ZIP. Ma trận truy vết và bộ test được lưu tại repo.
-Phần hiện thực ghi rõ kiến trúc MVP và phạm vi đã kiểm chứng.
+Phần hiện thực mô tả hai phiên bản trong ZIP. Phiên bản 1 là bản Streamlit
+minh họa thiết kế tổng thể. Phiên bản 2 là bản web đóng gói, phân quyền
+người dùng và điều phối viên. Hướng dẫn ZIP ghi cách chạy từng phiên bản.
 
 Dữ liệu IoT phát trên loopback và được quan sát ở hai cửa sổ đã mở trước lúc phát.
 Mã bản tin, trạng thái trước/sau từ lần đọc lại feed và hash ảnh nằm trong
