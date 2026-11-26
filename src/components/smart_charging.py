@@ -17,7 +17,7 @@ from datetime import datetime
 from core.scheduler import SmartChargingScheduler, ChargingRequest, allocate_hub_ports, release_charging_session
 from core.policies import HUB_POWER_CAP_KW, OVERSTAY_GRACE_MINUTES, OVERSTAY_RATE_PER_BLOCK_VND, get_kwh_rate
 from core.billing import settle_overstay_charging
-from core.state import bump_state_version
+from core.state import advance_demo_clock, bump_state_version
 
 def _init_ss5():
     hubs = st.session_state.get("hubs", [])
@@ -128,11 +128,7 @@ $$Score = 0.5 \\times (100 - SoC) + 100 \\times I(SoC < 20) + 60 \\times I(has\\
             st.info("Mô phỏng nạp pin thời gian thực: mỗi bước nạp năng lượng tương ứng vào pin xe.")
         with sim_cols[1]:
             if st.button("⏩ Mô phỏng +15 phút sạc", key="btn_tick_ss5"):
-                events = scheduler.advance_simulation_tick(minutes=15, sim_time=st.session_state.get("current_sim_time"))
-                from core.state import advance_sim_time
-                advance_sim_time(st.session_state, minutes=15)
-                bump_state_version(st.session_state)
-                st.session_state.setdefault("charging_notifications", []).extend(events)
+                advance_demo_clock(st.session_state)
                 st.rerun()
 
         for ev in st.session_state.get("charging_notifications", [])[-10:]:

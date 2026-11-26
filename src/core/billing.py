@@ -166,6 +166,8 @@ def settle_shared_rental(
     held = wallet.get("held_deposit", 0)
     deposit_to_release = min(held, SHARED_DEPOSIT_VND)
     wallet["held_deposit"] = held - deposit_to_release
+    refund_amount = 0
+    deducted_from_available = 0
     
     # Net transaction from deposit
     if deposit_to_release >= final_fee:
@@ -184,6 +186,7 @@ def settle_shared_rental(
         # Deposit was not enough
         shortfall = final_fee - deposit_to_release
         current_balance = wallet.get("balance", 0)
+        deducted_from_available = min(current_balance, shortfall)
         if current_balance >= shortfall:
             wallet["balance"] = current_balance - shortfall
             debt_incurred = 0
@@ -219,6 +222,8 @@ def settle_shared_rental(
         "discount": rental_cost["discount"],
         "total_fee": final_fee,
         "deposit_released": deposit_to_release,
+        "refund_amount": refund_amount,
+        "deducted_from_available": deducted_from_available,
         "debt_incurred": debt_incurred,
         "status": "PAID" if debt_incurred == 0 else "PARTIAL_DEBT"
     }

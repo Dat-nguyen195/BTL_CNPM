@@ -243,6 +243,35 @@ def _tab_pickup():
         else:
             st.error(f"❌ {msg}")
 
+def _render_shared_invoice(invoice):
+    fee = invoice.get("total_fee", invoice.get("final_cost", 0))
+    deposit = invoice["deposit_released"]
+    debt = invoice["debt_incurred"]
+    refund = invoice.get("refund_amount", max(0, deposit - fee))
+    deducted = invoice.get("deducted_from_available", max(0, fee - deposit - debt))
+    free_minutes = invoice.get("free_minutes", invoice.get("free_minutes_applied", 0))
+    base_fee = invoice.get("base_fee", invoice.get("gross_rental_fee", 0))
+    discount = invoice.get("discount", invoice.get("voucher_discount", 0))
+    st.subheader("🧾 Hóa đơn chuyến đi gần nhất")
+    st.markdown(f"""
+| Trường thông tin | Giá trị chi tiết |
+|:---|:---|
+| **Mã hóa đơn** | `{invoice['invoice_id']}` |
+| **Mã chuyến đi** | `{invoice['booking_id']}` |
+| **Quãng đường mô phỏng** | {invoice.get("distance_km", "Chưa có")} km · {invoice.get("distance_source", "")} |
+| **Tổng thời lượng** | {invoice['duration_minutes']} phút (Miễn phí: {free_minutes} phút) |
+| **Thời gian tính phí** | {invoice['billable_minutes']} phút × {SHARED_RATE_PER_MINUTE:,.0f}₫ |
+| **Phí thuê gộp** | {base_fee:,.0f} ₫ |
+| **Giảm giá voucher** | -{discount:,.0f} ₫ |
+| **Chi phí thực tế** | **{fee:,.0f} ₫** |
+| **Tiền cọc đã giải phóng** | {deposit:,.0f} ₫ |
+| **Số tiền hoàn về ví** | **+{refund:,.0f} ₫** |
+| **Số tiền trừ thêm từ ví** | -{deducted:,.0f} ₫ |
+| **Công nợ ghi nhận** | {debt:,.0f} ₫ |
+    """)
+    if debt > 0:
+        st.warning(f"Số dư không đủ. Hệ thống ghi nhận công nợ **{debt:,.0f} ₫**.")
+
 def _tab_return():
     """Luồng trả xe One-way: Chọn Hub đích → Quyết toán → E-Invoice bền vững."""
     user = st.session_state["current_user"]
@@ -256,8 +285,7 @@ def _tab_return():
         last_inv = st.session_state.get("last_invoice")
         if last_inv:
             st.divider()
-            st.subheader("🧾 Hóa đơn chuyến đi gần nhất")
-            st.json(last_inv)
+            _render_shared_invoice(last_inv)
         return
 
     st.subheader("🔄 Trả xe One-Way & Quyết toán chi phí")
@@ -320,28 +348,7 @@ def _tab_return():
         )
         if ok and invoice:
             st.session_state["last_invoice"] = invoice
-            st.success(f"🎉 {msg}")
-            
-            st.subheader("🧾 HÓA ĐƠN ĐIỆN TỬ (E-INVOICE)")
-            st.markdown(f"""
-| Trường thông tin | Giá trị chi tiết |
-|:---|:---|
-| **Mã hóa đơn** | `{invoice['invoice_id']}` |
-| **Mã chuyến đi** | `{invoice['booking_id']}` |
-| **Quãng đường mô phỏng** | {invoice.get("distance_km", "Chưa có")} km · {invoice.get("distance_source", "")} |
-| **Tổng thời lượng** | {invoice['duration_minutes']} phút (Miễn phí: {invoice['free_minutes_applied']} phút) |
-| **Thời gian tính phí** | {invoice['billable_minutes']} phút × {SHARED_RATE_PER_MINUTE:,.0f}₫ |
-| **Phí thuê gộp** | {invoice['gross_rental_fee']:,.0f} ₫ |
-| **Giảm giá Voucher** | -{invoice['voucher_discount']:,.0f} ₫ |
-| **Chi phí thực tế** | **{invoice['final_cost']:,.0f} ₫** |
-| **Tiền cọc đã giải phóng** | {SHARED_DEPOSIT_VND:,.0f} ₫ |
-| **Số tiền hoàn về ví** | **+{invoice['refund_amount']:,.0f} ₫** |
-| **Số tiền trừ thêm từ ví** | -{invoice['deducted_from_available']:,.0f} ₫ |
-| **Công nợ ghi nhận** | {invoice['debt_incurred']:,.0f} ₫ |
-            """)
-            if invoice['debt_incurred'] > 0:
-                st.error(f"⚠️ Do số dư khả dụng không đủ, khoản nợ **{invoice['debt_incurred']:,.0f}₫** đã được ghi nhận vào tài khoản của bạn.")
-            st.balloons()
+            st.session_state["shared_checkout_message"] = msg
             st.rerun()
         else:
             st.error(f"❌ {msg}")
@@ -400,6 +407,9 @@ def render():
     with tab2:
         _tab_pickup()
     with tab3:
+        checkout_message = st.session_state.pop("shared_checkout_message", None)
+        if checkout_message:
+            st.success(f"🎉 {checkout_message}")
         _tab_return()
     with tab4:
         _tab_cancel()
@@ -411,8 +421,9 @@ def render():
         st.subheader("📋 Lịch sử đặt xe & Chuyến đi của sinh viên")
         hist_rows = []
         for b in reversed(bookings):
-            inv = b.get("invoice", {})
-            cost_str = f"{inv.get('final_cost', 0):,.0f}₫" if inv else "—"
+            inv = b.get("invoice") or {}
+            fee = inv.get("total_fee", inv.get("final_cost"))
+            cost_str = f"{fee:,.0f}₫" if fee is not None else "—"
             hist_rows.append({
                 "Mã đặt chỗ": b.get("booking_id"),
                 "Mã xe": b.get("vehicle_id"),

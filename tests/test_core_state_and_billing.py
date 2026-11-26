@@ -210,6 +210,8 @@ def test_no_silent_debt_loss():
     inv = settle_shared_rental(wallet, cost, booking_id="BK-DEBT-01")
     
     assert inv["status"] == "PARTIAL_DEBT"
+    assert inv["refund_amount"] == 0
+    assert inv["deducted_from_available"] == 5_000
     assert inv["debt_incurred"] == 15_000
     assert wallet["balance"] == 0
     assert wallet["debt"] == 15_000  # Explicitly recorded debt!

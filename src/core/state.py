@@ -295,6 +295,16 @@ def advance_sim_time(session_state_dict: Any, minutes: int = 15) -> str:
     session_state_dict["state_version"] = session_state_dict.get("state_version", 1) + 1
     return new_str
 
+def advance_demo_clock(state: Any, minutes: int = 15) -> None:
+    """Advance the shared demo clock and the charging sessions it drives."""
+    scheduler = state.get("charging_scheduler")
+    if scheduler is not None:
+        events = scheduler.advance_simulation_tick(
+            minutes=minutes, sim_time=state.get("current_sim_time")
+        )
+        state.setdefault("charging_notifications", []).extend(events)
+    advance_sim_time(state, minutes)
+
 def bump_state_version(session_state_dict: Any):
     """Increments the monotonic state version."""
     session_state_dict["state_version"] = session_state_dict.get("state_version", 1) + 1

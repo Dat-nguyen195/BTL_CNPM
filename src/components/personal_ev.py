@@ -24,6 +24,7 @@ from core.personal_ev import (
     check_out_personal_ev,
     cancel_personal_reservation
 )
+from core.state import advance_demo_clock
 from core.policies import (
     PEV_PARKING_FEE_PER_VISIT_VND,
     PEV_OFFPEAK_KWH_RATE_VND,
@@ -45,6 +46,23 @@ def _init_pev_state():
             "name": "Nguyễn Văn A",
             "role": "STUDENT"
         }
+
+def _render_personal_invoice(invoice):
+    rate = f"{invoice['energy_rate']:,.0f} ₫/kWh" if invoice["kwh_charged"] else "Không phát sinh điện năng"
+    st.subheader("🧾 Hóa đơn quyết toán xe cá nhân gần nhất")
+    st.markdown(f"""
+| Hạng mục quyết toán | Chi tiết thanh toán |
+|:---|:---|
+| **Mã hóa đơn** | `{invoice['invoice_id']}` |
+| **Biển số xe** | **{invoice['plate']}** |
+| **Thời gian đỗ** | {invoice['duration_hours']:g} giờ · **{invoice['parking_fee']:,.0f} ₫** |
+| **Điện năng sạc** | {invoice['kwh_charged']} kWh · **{invoice['energy_fee']:,.0f} ₫** |
+| **Đơn giá điện bình quân** | {rate} |
+| **Phí chiếm cổng sau khi đầy pin** | {invoice['overstay_minutes']} phút (ân hạn {OVERSTAY_GRACE_MINUTES} phút) · **{invoice['overstay_fee']:,.0f} ₫** |
+| **Tổng chi phí** | **{invoice['total_amount']:,.0f} ₫** |
+| **Đã trừ từ ví** | **{invoice['deducted_from_wallet']:,.0f} ₫** |
+| **Ghi nhận nợ** | **{invoice['debt_incurred']:,.0f} ₫** |
+    """)
 
 def render():
     """Render giao diện Subsystem 2 – Đăng ký & Vận hành dịch vụ Xe điện Cá nhân."""
@@ -202,6 +220,9 @@ def render():
     # ═══════════════════════════════════════════════
     with tab_out:
         st.subheader("🧾 Check-out, Giải phóng cổng sạc & Quyết toán chi phí")
+        checkout_message = st.session_state.pop("personal_checkout_message", None)
+        if checkout_message:
+            st.success(f"🎉 {checkout_message}")
         checked_in_res = [
             r for r in st.session_state.get("personal_reservations", [])
             if r.get("owner_id") == user["user_id"] and r.get("status") == "CHECKED_IN"
@@ -209,12 +230,11 @@ def render():
 
         if not checked_in_res:
             st.info("📭 Không có xe nào đang đỗ/sạc tại Hub cần check-out.")
-            last_inv = st.session_state.get("last_pev_invoice")
-            if last_inv:
-                st.divider()
-                st.subheader("🧾 Hóa đơn quyết toán xe cá nhân gần nhất")
-                st.json(last_inv)
         else:
+            if st.button("⏩ Mô phỏng thêm 15 phút", key="ss2_advance_demo_clock",
+                         help="Tua đồng hồ chung và cập nhật điện năng, thời gian chiếm cổng của phiên sạc."):
+                advance_demo_clock(st.session_state)
+                st.rerun()
             for r in checked_in_res:
                 st.warning(
                     f"**Xe đang tại Hub:** {r['plate']} (Hub: **{r['hub_name']}**)\n\n"
@@ -243,7 +263,7 @@ def render():
                         kwh = _measured
                         st.metric("Điện năng đo từ SS5", f"{_measured:.2f} kWh")
                         if _measured <= 0:
-                            st.caption("Chưa nạp điện: tua giờ (+15 phút) để phiên sạc tích lũy điện năng.")
+                            st.caption("Bấm Mô phỏng thêm 15 phút để phiên sạc tích lũy điện năng.")
                     elif r.get("request_charging"):
                         kwh = 0.0
                         st.metric("Điện năng đo từ SS5", "0.00 kWh")
@@ -253,12 +273,11 @@ def render():
                         st.metric("Điện năng", "Không đăng ký sạc")
                 with col_sim3:
                     # Phí quá giờ do SS5 tính trên phiên sạc; SS2 chỉ hiển thị và quyết toán một lần.
-                    overstay = 0
                     _over_fee = r.get("accrued_overstay_fee", 0) + (_sess.overstay_fee if _sess else 0)
-                    _over_min = _sess.overstay_minutes if _sess else 0
+                    _over_min = r.get("accrued_overstay_minutes", 0) + (_sess.overstay_minutes if _sess else 0)
                     st.metric("Phí quá giờ (SS5)", f"{_over_fee:,.0f} ₫")
-                    if _sess and _sess.status in ("GRACE_PERIOD", "OVERSTAY"):
-                        st.caption(f"Đã sạc đầy, chiếm cổng {_over_min} phút (ân hạn 15 phút).")
+                    if _over_min or (_sess and _sess.status in ("GRACE_PERIOD", "OVERSTAY")):
+                        st.caption(f"Chiếm cổng sau khi đầy pin: {_over_min} phút (ân hạn {OVERSTAY_GRACE_MINUTES} phút mỗi phiên).")
 
                 if st.button(f"💳 Quyết toán & Rời trạm ({r['plate']})", type="primary", key=f"btn_checkout_{r['reservation_id']}"):
                     ok, inv, msg = check_out_personal_ev(
@@ -266,30 +285,18 @@ def render():
                         reservation_id=r["reservation_id"],
                         duration_hours=dur_hrs,
                         kwh_charged=kwh,
-                        overstay_minutes=overstay
                     )
                     if ok and inv:
                         st.session_state["last_pev_invoice"] = inv
-                        st.success(f"🎉 {msg}")
-                        st.markdown(f"""
-| Hạng mục quyết toán | Chi tiết thanh toán |
-|:---|:---|
-| **Mã hóa đơn** | `{inv['invoice_id']}` |
-| **Biển số xe** | **{inv['plate']}** |
-| **Phí đỗ xe** | **{inv['parking_fee']:,.0f} ₫** |
-| **Điện năng sạc** | {inv['kwh_charged']} kWh · **{inv['energy_fee']:,.0f} ₫** |
-| **Đơn giá điện bình quân** | {f"{inv['energy_rate']:,.0f} ₫/kWh" if inv['kwh_charged'] else 'Không phát sinh điện năng'} |
-| **Phí đỗ quá hạn (Overstay)** | {inv['overstay_minutes']} phút (Miễn phí {OVERSTAY_GRACE_MINUTES}p) = **{inv['overstay_fee']:,.0f} ₫** |
-| **Tổng chi phí** | **{inv['total_amount']:,.0f} ₫** |
-| **Đã trừ từ ví** | **-{inv['deducted_from_wallet']:,.0f} ₫** |
-| **Ghi nhận nợ** | **{inv['debt_incurred']:,.0f} ₫** |
-                        """)
-                        if inv["debt_incurred"] > 0:
-                            st.error(f"⚠️ Do số dư khả dụng không đủ, khoản nợ **{inv['debt_incurred']:,.0f} ₫** đã được ghi nợ vào tài khoản.")
-                        st.balloons()
+                        st.session_state["personal_checkout_message"] = msg
                         st.rerun()
                     else:
                         st.error(f"❌ {msg}")
+
+        last_inv = st.session_state.get("last_pev_invoice")
+        if last_inv:
+            st.divider()
+            _render_personal_invoice(last_inv)
 
     # ═══════════════════════════════════════════════
     # BẢNG TỔNG KẾT XE ĐÃ ĐĂNG KÝ
